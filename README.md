@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
+ 
+<style>   
         #cerezo{
     border: 1px solid black;
     display: inline-block;
