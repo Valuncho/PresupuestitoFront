@@ -70,9 +70,13 @@ h2{
 <body>
     <img src="blob:https://web.whatsapp.com/740b3679-609b-4eff-b892-183c1586adaa" alt="">
     <h2>Paleta de colores para el front</h2>    
-    <h3 >cerezo</h3>  
-    <h3 color="#E1BF92">abedul</h3>  
-    <h3 color="#F9D596">arce</h3>  
-    <h3 color="#63493C">nogal</h3>  
+    <div class="flex-container">
+        <div><h3 id="cerezo">cerezo</h3></div>
+        <div><h3 id="abedul">abedul</h3></div> 
+        <div><h3 id="arce">arce</h3></div> 
+        <div><h3 id="nogal">nogal</h3></div>
+        <div><h3 id="blanquecino">blanquecino</h3></div>
+    </div>
+    <h2>Fuentes de texto para el front</h2> 
 </body>
 </html>
