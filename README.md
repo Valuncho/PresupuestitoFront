@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-<style>   
+</head>
+<body>
+    <style>   
         #cerezo{
     border: 1px solid black;
     display: inline-block;
@@ -66,9 +67,7 @@
 h2{
     text-align: center;
 }
-    </style>
-</head>
-<body>
+</style>
     <img src="blob:https://web.whatsapp.com/740b3679-609b-4eff-b892-183c1586adaa" alt="">
     <h2>Paleta de colores para el front</h2>    
     <div class="flex-container">
