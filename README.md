@@ -5,11 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h3{
+            color:"#753710";
+        }
+    </style>
 </head>
 <body>
-    ![image](https://github.com/Valuncho/PresupuestitoFront/assets/115189362/38e9d4e1-da7f-4a1f-99cb-4c315496d193)
-    <h2>colores para el front</h2>    
-    <h3 color="#753710">cerezo</h3>  
+    <img src="blob:https://web.whatsapp.com/740b3679-609b-4eff-b892-183c1586adaa" alt="">
+    <h2>Paleta de colores para el front</h2>    
+    <h3 >cerezo</h3>  
     <h3 color="#E1BF92">abedul</h3>  
     <h3 color="#F9D596">arce</h3>  
     <h3 color="#63493C">nogal</h3>  
