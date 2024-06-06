@@ -6,9 +6,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        h3{
-            color:"#753710";
-        }
+        #cerezo{
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    background-color: #753710;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+#abedul{
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    background-color: #E1BF92;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+#arce{
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    background-color: #F9D596;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+#nogal{
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    background-color: #63493C;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+#blanquecino{
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    background-color: #FAF9f6;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+
+.flex-container{
+    display: flex;
+    justify-content: center;
+}
+
+h2{
+    text-align: center;
+}
     </style>
 </head>
 <body>
