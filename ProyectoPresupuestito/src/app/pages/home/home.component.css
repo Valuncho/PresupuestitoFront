@@ -1,0 +1,25 @@
+
+.Menu h3{
+  font-size: 2em;
+  text-align: center;
+  margin: 1em;
+}
+button{
+  background-color: var(--arce);
+  margin: .4em;
+  padding: .4em;
+  width: 90%;
+  border-radius: 5px;
+}
+
+.Menu{
+  margin: 20px;
+  background-color: var(--gris);
+  border-radius: 5px;
+  width: 30vw;
+  display: flex;
+  flex-direction:column ;
+  
+  justify-content: space-around;
+  
+}

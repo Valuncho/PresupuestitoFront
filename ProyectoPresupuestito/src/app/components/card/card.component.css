@@ -1,0 +1,37 @@
+.Card{
+    background-color: var(--arce);
+    display: flex; 
+    justify-content: space-between;
+    align-items:center;
+    padding:.3em;
+    border-radius: 15px;
+    margin: 10px 0;
+    
+  }
+  .Card-Detailes{
+    margin: 0 10px;
+  }
+  
+  .Card-Options{
+    display: flex;
+  }
+  
+  .Card-Options .Button{
+    background-color: var(--gris);
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin:.9em;
+    width: 2em;
+    height:2em;
+  }
+  .Card-Options .Button span{
+    display: inline-block; margin: auto;
+  }
+  .Card-Options .Button span:hover{
+    color: var(--cerezo);
+    cursor: pointer;
+  }
+  

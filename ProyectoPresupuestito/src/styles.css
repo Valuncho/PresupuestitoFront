@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root{
+    --cerezo: #753710;
+    --abedul: #E1BF92;
+    --arce: #F9D596;
+    --nogal:#63493C;
+    --blanquecino:#FAF9F6;
+    --gris:#D9D9D9;
+    --negro:#160A03;
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+section{
+    margin: 1em;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+article{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.List{
+    background-color: var(--gris);
+    padding: 1em;
+    border-radius: 10px 10px;
+    display:flex;
+    flex-direction:column;
+    overflow: hidden;
+    overflow-y: visible;
+    height:70vh;
+    
+}
+.List .CardContainer{
+    overflow: hidden;
+    overflow-y: visible;
+}
+.Details{
+    background-color: var(--gris);
+    padding: 1em;
+    border-radius: 10px 10px;
+
+}
+.Details h4{
+    margin: 10px;
+}
+
+.Details-title, .List-title{
+    text-decoration: underline;
+}

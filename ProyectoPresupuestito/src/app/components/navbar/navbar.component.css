@@ -1,0 +1,26 @@
+
+nav{
+    background-color:var(--nogal);
+    width: 100vw;
+}
+ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-between;
+}
+li{
+    margin: 1em;
+    padding: .3em;
+    border-radius: 5px;
+    background-color: var(--abedul);
+    width: 15%;
+    text-align: center;
+}
+
+a{
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
