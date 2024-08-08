@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th class="Descripcion">Descripción</th>
+            <th>Monto</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (payment of pagos; track $index) {
+            <tr>
+                <td>{{payment.date | date:'dd/MM/yyyy'}}</td>
+                <td>{{payment.description}}</td>
+                <td>{{payment.amount | currency}}</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2">Total</td>
+            <td>{{total | currency}}</td>
+        </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,19 @@
+button{
+    background-color: var(--gris);
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin:.9em;
+    width: 2em;
+    height:2em;
+  }
+  button span{
+    display: inline-block; margin: auto;
+  }
+button span:hover{
+
+    color: var(--cerezo);
+    cursor: pointer;
+  }

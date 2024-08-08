@@ -1,0 +1,76 @@
+
+    <section class="Arriba">
+        <article>
+            <div class="Detalle">
+                <h3>Detalle del presupuesto</h3>
+                <div class="Interior">
+                    <p>Descripcion: {{currentBudget?.description}}</p>
+                    <p>Fecha confección: {{currentBudget?.createdDate | date:'short' }}</p>
+                    <p>Fecha limite: {{currentBudget?.deadLine | date:'short'}}</p>
+                    <p>Estado: {{currentBudget?.Status}}</p>
+                    <p>Precio final: {{currentBudget?.cost | currency }}</p>
+                </div>
+                
+            </div>
+            <div class="Detalle">
+                <h3>Fotos del trabajo</h3>
+                <div class="Interior">
+                    @if (currentWork != undefined) {
+                        @for (img of currentWork.images; track img; let idx = $index) {
+                            <img [src]="img" [alt]="img">
+                        }
+                    }@else{
+                        <img src="" alt="placeholder">
+                    }
+                </div>
+                
+            </div>
+        </article>
+        <article>
+            <div class="Detalle Centro">
+                <h3>Trabajos</h3>
+                
+                    @for (work of currentBudget?.works; track work.idWork; let idx = $index) {
+                        <app-work 
+                        [Work]="currentBudget!.works[idx]" 
+                        [idWork]="currentBudget!.works[idx].idWork"
+                        (isClick)="seleccionar($event)"
+                        (isEdit)="editWork($event)" 
+                        (isDeleted)="deleteWork($event)" 
+                        >
+                        </app-work>
+                    }
+                </div>
+        
+            <button>Ir al area de trabajo</button>
+        </article>
+        <article>
+            <div class="Detalle">
+                <h3>Detalles de trabajo</h3>
+                <div class="Interior">
+                    @if (currentWork != undefined) {
+                        <p>Orden: {{currentWork.order}}</p>
+                        <p>Notas : {{currentWork.notes}}</p>
+                        <p>Horas estimadas: {{currentWork.estimatedHoursWorked}}</p>
+                        <p>Fecha limite: {{currentWork.deadline | date:'short'}}</p>
+                        <p>Costo: {{currentWork.costPrice | currency}}</p>
+                        <p>Estado : {{currentWork.status}}</p>
+                        
+                    }@else{
+                        <p>Orden: </p>
+                        <p>Notas : </p>
+                        <p>Horas estimadas: </p>
+                        <p>Fecha limite: </p>
+                        <p>Costo: </p>
+                        <p>Estado : </p>
+                    }
+                </div>
+            </div>
+            <div class="Detalle">
+                <h3>Materiales de trabajo</h3>
+                <div class="Interior">
+
+                </div>
+            </div>
+        </article>
+    </section>

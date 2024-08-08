@@ -1,4 +1,5 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=Inter:wght@100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
 :root{
     --cerezo: #753710;
     --abedul: #E1BF92;
@@ -7,29 +8,38 @@
     --blanquecino:#FAF9F6;
     --gris:#D9D9D9;
     --negro:#160A03;
+    --titulo: "Merriweather Sans", sans-serif;
+    --dato:  "Inter Tight", sans-serif;
+    --otro: "Teachers", sans-serif;
+    
 }
 *{
     padding: 0;
     margin: 0;
+    user-select: none;
 }
 
 body{
     height: 100vh;
     width: 100vw;
+    overflow: none;
 }
 main{
     display: flex;
     flex-direction: column;
     width: 100vw;
+    height: 100vh;
+    
 }
 
 section{
     margin: 1em;
-    
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    align-items: center;
+    height: 100%;
+    overflow-y: auto;
 }
 article{
     display: flex;
@@ -57,7 +67,7 @@ article{
     background-color: var(--gris);
     padding: 1em;
     border-radius: 10px 10px;
-
+    margin: 1em;
 }
 .Details h4{
     margin: 10px;
@@ -65,4 +75,88 @@ article{
 
 .Details-title, .List-title{
     text-decoration: underline;
+    font-family: var(--otro);
+}
+button{
+    border: none;
+    
+}
+
+.Arriba {
+    align-items: flex-start;
+}
+
+/*Forms*/
+
+form{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--gris);
+    width: 40vw;
+    padding: 1em;
+    border-radius: 10px 10px;
+    overflow: hidden;
+    overflow-y: auto;
+    height:76vh;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    padding: 1em;
+}
+
+.Botones{
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.Botones button{
+    background-color: var(--cerezo);
+    color: var(--blanquecino);
+    border-radius: 10px ;
+    padding: 10px;
+    width: 30%;
+}
+form input, form textarea, form select{
+    border: none;
+    border-radius: 8px;
+    background-color: var(--arce);
+    padding: 10px;
+    margin: 8px;
+    width: 90%;
+}
+
+form textarea{
+resize: vertical;
+}
+
+/*Detalles*/
+
+.Detalle{
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    border: 5px solid var(--cerezo);
+    text-align: center;
+    height: 40vh;
+    width: 60vw;
+}
+.Detalle h3{
+    font-family: var(--titulo);
+    font-weight: bolder;
+    letter-spacing: 1px;
+}
+.Detalle .Interior{
+    background-color: var(--arce);
+    padding: inherit;
+    border-radius: inherit;
+    text-align: left;
+    line-height:3em;
+}
+
+
+.Centro{
+    height: 80vh;
 }

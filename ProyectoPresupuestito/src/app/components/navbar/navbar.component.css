@@ -11,16 +11,27 @@ ul{
     justify-content: space-between;
 }
 li{
+    cursor: pointer;
     margin: 1em;
     padding: .3em;
     border-radius: 5px;
     background-color: var(--abedul);
     width: 15%;
     text-align: center;
-}
-
-a{
     text-align: center;
     color: black;
     text-decoration: none;
+    font-family: var(--otro);
+    font-size:large ;
 }
+
+li:hover{
+    color: var(--nogal);
+    background-color: var(--blanquecino);
+}
+.active{
+    font-weight: bold;
+    color: var(--cerezo);
+    background-color: var(--gris);
+}
+  

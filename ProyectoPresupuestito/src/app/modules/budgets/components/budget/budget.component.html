@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class="Card">
+    <div class="Card-Detailes">        
+        <h4>{{Budget?.Status}}</h4>
+        <h4>Precio: {{Budget?.cost | currency}}</h4>
+        <h4>Fecha elaboración: {{Budget?.createdDate| date:'dd/MM/yyyy'}}</h4>
+        
+    </div>
+    <div class="Card-Options">
+        <app-button-card [url]="botones[0].url" [icon]="botones[0].icon"></app-button-card>
+        <app-button-card [url]="botones[1].url" [icon]="botones[1].icon" (click)="edit()"></app-button-card>
+        <app-button-card [url]="botones[2].url" [icon]="botones[2].icon" (click)="deleteC()"></app-button-card>
+    </div>
+</div>
+

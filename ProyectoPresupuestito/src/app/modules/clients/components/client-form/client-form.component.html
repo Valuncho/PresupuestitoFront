@@ -1,0 +1,30 @@
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <legend class="List-title">Cargar cliente</legend>
+    <label for="name">Nombre:</label>
+    <input type="text" name="name" id="name" placeholder="Nombre..." formControlName="name">
+    <label for="lastName">Apellido:</label>
+    <input type="text" name="lastName" id="lastName" placeholder="Apellido..." formControlName="lastName">
+    <label for="direction">Dirección:</label>
+    <input type="text" name="direction" id="direction" placeholder="Direcion..." formControlName="direction">
+    <label for="phoneNumber">Número celular:</label>
+    <input type="text" name="phoneNumber" id="phoneNumber" placeholder="Telefono..." formControlName="phoneNumber">
+    <label for="mail">Correo electornico:</label>
+    <input type="mail" name="mail" id="mail" placeholder="Email..."  formControlName="mail">
+    <label for="dni">DNI:</label>
+    <input type="text" name="dni" id="dni" placeholder="DNI..." formControlName="dni">
+    <label for="cuit">CUIT:</label>
+    <input type="text" name="cuit" id="cuit" placeholder="CUIT..." formControlName="cuit">
+  </fieldset>
+  <fieldset class="Botones">
+    <button type="reset" (click)="setUp($event)">Limpiar</button>
+    
+    <button type="submit" [disabled]="!canSubmit">
+      @if (isEdit) {
+        Actualizar
+      }@else {
+        Guardar
+      }
+    </button>
+  </fieldset>
+</form>

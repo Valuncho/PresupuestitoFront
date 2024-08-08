@@ -4,8 +4,12 @@ import { Work } from "./Work";
 export interface Budget
 {
     idBudget : number;
-    works : Work[];
+    works :Work[];
+    createdDate: Date;
+    deadLine: Date;
     description: string;
     cost : number;
-    payments : Payment[];
+    Status : string;
+    payments? : Payment[];
+    
 }

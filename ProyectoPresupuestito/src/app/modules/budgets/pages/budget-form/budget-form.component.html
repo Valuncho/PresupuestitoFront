@@ -1,0 +1,32 @@
+<section>
+  <app-budget-list/>
+  <form [formGroup]="BudgetForm" (ngSubmit)="onSubmit()" >
+    <fieldset>
+      <legend class="List-title"> {{ isEdit ? 'Actualizar un presupuesto' : 'Crear un presupuesto' }}</legend>
+      <label for="createdDate">Fecha elaboración:</label>
+      <input type="date" name="createdDate" id="createdDate" formControlName="createdDate">
+      <label for="deadLine">Fecha limite:</label>
+      <input type="date" name="deadLine" id="deadLine" formControlName="deadLine">
+      <label for="description">Descripción:</label>
+      <textarea name="description" id="description" formControlName="description"></textarea>
+      <label for="cost">Precio final:</label>
+      <input type="number" name="cost" id="cost" placeholder="Valor total" formControlName="cost"> 
+      <label for="cost">Estado:</label>
+      <select formControlName="estado">
+        @for (option of options; track $index) {
+          <option [value]="option">{{option | uppercase}}</option>
+        }
+      </select>
+    </fieldset>
+    <fieldset class="Botones">
+      <button (click)="BudgetForm.reset()">Limpiar</button>
+      <button type="submit">
+        {{ isEdit ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </fieldset>
+  </form>
+  
+</section>
+
+
+

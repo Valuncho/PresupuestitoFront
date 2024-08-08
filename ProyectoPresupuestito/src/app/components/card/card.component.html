@@ -5,19 +5,11 @@
         <h4>{{Person?.phoneNumber}}</h4>
     </div>
     <div class="Card-Options">
-        <div class="Button" >
-          <span class="material-symbols-sharp">payments</span>
-        </div>
-        <div class="Button" routerLink = "/budget">
-          <span class="material-symbols-sharp">edit_note</span>
-        </div>
-        
-        <div class="Button">
-          <span class="material-symbols-sharp">edit</span>
-        </div>
-        <div class="Button">
-          <span class="material-symbols-sharp">delete</span>
-        </div>
+        <app-button-card [url]="botones[3].url" [icon]="botones[3].icon"></app-button-card>
+        <app-button-card [url]="botones[4].url" [icon]="botones[4].icon"></app-button-card>
+        <app-button-card [url]="botones[0].url" [icon]="botones[0].icon" (click)="select()"></app-button-card>
+        <app-button-card [url]="botones[1].url" [icon]="botones[1].icon" (click)="edit()"></app-button-card>
+        <app-button-card [url]="botones[1].url" [icon]="botones[2].icon" (click)="deleteC()"></app-button-card>
     </div>
 </div>
 

@@ -1,0 +1,14 @@
+<div class="List">
+    <h3 class="List-title">Listado de clientes</h3>
+    <div class="CardContainer">
+      @for (client of clients(); track client) {
+        <app-card 
+        [Person]="client.oPerson" 
+        [IdClient]="client.idClient"
+        (isSelected)="handleSelectClient($event)"
+        (isEdit)="handleEditClient($event)" 
+        (isDeleted)="handleDeleteClient($event)" 
+        ></app-card>
+      }
+    </div>
+  </div>

@@ -1,0 +1,31 @@
+
+<section>
+    <article>
+        <div class="Details">
+            <h3 class="Details-title">Detalle del cliente</h3>
+            <h4>Nombre completo: {{client()?.oPerson?.lastName}} {{client()?.oPerson?.name}}  </h4>
+            <h4>Numero de contacto: {{client()?.oPerson?.phoneNumber}}</h4>
+            <h4>Correo electronico: {{client()?.oPerson?.mail}}</h4>
+            <h4>Direccion: {{client()?.oPerson?.direction}}</h4>
+            <h4>DNI: {{client()?.oPerson?.dni}}</h4>
+            <h4>CUIT: {{client()?.oPerson?.cuit}}</h4>
+        </div>
+    
+        <div class="Details">
+            <h3 class="Details-title">Pagos del cliente</h3>
+            <app-payments-table [pagos]="payments" />
+        </div>
+        
+    </article>
+    <article>
+        <app-budget-list/>
+    </article>
+    <article>
+        <div class="Details">
+            <h3 class="Details-title">Pagos del cliente</h3>
+
+            <app-payments-table [pagos]="payments" />
+        </div>
+    </article>
+    
+</section>

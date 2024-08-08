@@ -4,7 +4,7 @@ export interface Work
 {
     idWork: number;
     order : number;
-    materials : Item[];
+    materials : any[];
     estimatedHoursWorked: number;
     deadline : Date;
     costPrice: number;
