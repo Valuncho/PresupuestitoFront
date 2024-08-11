@@ -13,6 +13,7 @@ import { ButtonCardComponent } from '../../../../components/button-card/button-c
 export class BudgetComponent {
   @Input() Budget: Budget | undefined;
   @Input() idBudget: number = 0;
+  @Output() isSelect = new EventEmitter<number>();
   @Output() isEdit = new EventEmitter<number>();
   @Output() isDeleted = new EventEmitter<number>();
   botones: Array<{  url: string; icon: string }> =[];
@@ -29,6 +30,9 @@ export class BudgetComponent {
   }
   constructor() {
    
+  }
+  select(){
+    this.isSelect.emit(this.idBudget);
   }
   edit(){
     this.isEdit.emit(this.idBudget);

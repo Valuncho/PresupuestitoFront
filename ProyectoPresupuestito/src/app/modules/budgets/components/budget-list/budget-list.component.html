@@ -1,10 +1,11 @@
 <div class="List">
+  
     <h3 class="List-title">Listado de presupuestos</h3>
     @for (budget of budgets(); track budget) {
       <app-budget 
       [Budget]="budget" 
       [idBudget]="budget.idBudget"
-      
+      (isSelect)="handleSelectBudget($event)"
       />
     }
   </div>

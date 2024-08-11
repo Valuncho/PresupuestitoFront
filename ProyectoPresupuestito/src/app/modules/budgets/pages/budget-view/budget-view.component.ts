@@ -1,21 +1,20 @@
 import { Component, inject } from '@angular/core';
-import { NavbarComponent } from "../../../../components/navbar/navbar.component";
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { Budget } from '../../../../core/model/Budget';
-
 import { BudgetService } from '../../../../core/services/budget.service';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { state } from '@angular/animations';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { BudgetListComponent } from "../../components/budget-list/budget-list.component";
+import { BudgetFormComponent } from "../../components/budget-form/budget-form.component";
+
 @Component({
-  selector: 'app-budget-form',
+  selector: 'app-budget-view',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, ReactiveFormsModule, CommonModule, BudgetListComponent],
-  templateUrl: './budget-form.component.html',
-  styleUrl: './budget-form.component.css'
+  imports: [BudgetListComponent, BudgetFormComponent],
+  templateUrl: './budget-view.component.html',
+  styleUrl: './budget-view.component.css'
 })
-export class BudgetFormComponent {
+export class BudgetViewComponent {
+
   private budgetService = inject(BudgetService);
 
   selectedBudget? : Budget;
@@ -60,6 +59,4 @@ export class BudgetFormComponent {
   onSubmit(){
     console.log(this.BudgetForm.value);
   }
-  
 }
-

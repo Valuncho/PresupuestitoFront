@@ -13,7 +13,7 @@ import { ButtonCardComponent } from "../button-card/button-card.component";
 export class CardComponent {
   @Input() Person: Person | undefined;
   @Input() IdClient: number = 0;
-  
+  @Output() action = new EventEmitter<number>();
   @Output() isSelected = new EventEmitter<number>();
   @Output() isEdit = new EventEmitter<number>();
   @Output() isDeleted = new EventEmitter<number>();
@@ -34,6 +34,9 @@ export class CardComponent {
    
   }
   
+  newBudget(){
+    this.action.emit(this.IdClient)
+  }
   select(){
     this.isSelected.emit(this.IdClient);
   }

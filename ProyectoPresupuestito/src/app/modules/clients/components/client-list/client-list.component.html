@@ -1,14 +1,25 @@
 <div class="List">
     <h3 class="List-title">Listado de clientes</h3>
+    <app-client-search 
+    [clients]="getAllClients()"
+    (results)="handleSearch($event)"
+    (sortedResults)="handleSearch($event)"
+    />
     <div class="CardContainer">
-      @for (client of clients(); track client) {
+      @for (client of clients() | paginate: { itemsPerPage: pageSize, currentPage: page } ; track client) {
         <app-card 
         [Person]="client.oPerson" 
         [IdClient]="client.idClient"
+        (action)="handleAction($event)"
         (isSelected)="handleSelectClient($event)"
         (isEdit)="handleEditClient($event)" 
         (isDeleted)="handleDeleteClient($event)" 
         ></app-card>
       }
     </div>
+    <pagination-controls 
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      (pageChange)="pageChange($event)"
+    ></pagination-controls>
   </div>

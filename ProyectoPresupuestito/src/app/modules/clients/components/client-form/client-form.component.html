@@ -1,5 +1,38 @@
 <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
   <fieldset>
+
+    @if (clientForm.invalid && clientForm.dirty) {
+      <div class="invalid">
+        
+        @if (clientForm.get('name')?.invalid && clientForm.get('lastName')?.invalid) {
+          <p>El nombre y apellido es obligatorio.</p>
+        }
+        
+        @if (clientForm.get('direction')?.invalid) {
+          <p>La dirección de entrega es obligatoria.</p>
+        }
+
+        @if (clientForm.get('phoneNumber')?.invalid) {
+          <p>El número de telefono es obligatorio.</p>
+        }
+
+        @if(clientForm.get('mail')?.invalid ){
+          <p>Ingrese un correo eléctronico válido.</p>
+        }
+        
+        @if(clientForm.get('dni')?.invalid ){
+          <p>El dni debe ser mínimo de 7 caracteres y máximo 10.</p>
+          <p>Debe ir sin puntos.</p>
+        }
+
+        @if(clientForm.get('cuit')?.invalid ){
+          <p>El dni debe ser mínimo de 10 caracteres y máximo 13.</p>
+          <p>Debe ir sin puntos ni guiones.</p>
+        }
+    
+      </div>
+    }     
+    
     <legend class="List-title">Cargar cliente</legend>
     <label for="name">Nombre:</label>
     <input type="text" name="name" id="name" placeholder="Nombre..." formControlName="name">
@@ -9,17 +42,17 @@
     <input type="text" name="direction" id="direction" placeholder="Direcion..." formControlName="direction">
     <label for="phoneNumber">Número celular:</label>
     <input type="text" name="phoneNumber" id="phoneNumber" placeholder="Telefono..." formControlName="phoneNumber">
-    <label for="mail">Correo electornico:</label>
-    <input type="mail" name="mail" id="mail" placeholder="Email..."  formControlName="mail">
+    <label for="mail">Correo eléctornico:</label>
+    <input type="email" name="mail" id="mail" placeholder="Email..."  formControlName="mail">
     <label for="dni">DNI:</label>
     <input type="text" name="dni" id="dni" placeholder="DNI..." formControlName="dni">
     <label for="cuit">CUIT:</label>
     <input type="text" name="cuit" id="cuit" placeholder="CUIT..." formControlName="cuit">
   </fieldset>
   <fieldset class="Botones">
-    <button type="reset" (click)="setUp($event)">Limpiar</button>
+    <button type="reset" (click)="resetForm($event)">Limpiar</button>
     
-    <button type="submit" [disabled]="!canSubmit">
+    <button type="submit" [disabled]="!canSubmit" [class.disactive]="!canSubmit">
       @if (isEdit) {
         Actualizar
       }@else {

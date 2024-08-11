@@ -22,49 +22,9 @@ import { ClientListComponent } from "../../components/client-list/client-list.co
 })
 export class ClientViewComponent {
   private clientService = inject(ClientService);
-    clients = signal<Client[]>([]);
     
-    constructor(private dialog: MatDialog) {
-     // this.clientService.getClients().subscribe(clients =>{
-       // this.clients.set(clients);
-      //})
-      
-    }
+    
   
-    handleEditClient($Event : any){
-      this.clientService.setAction('edit');
-      this.clientService.setSelectedClient($Event)
-    }
-
-    handleDeleteClient($Event : any){
-      let indexToRemove = 0;      
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        data: {
-          mensaje: `¿Estás seguro de que deseas eliminar al cliente con ID ${$Event}?`
-        }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          for (let i = 0; i < this.clients.length; i++) {
-            if (this.clients()[i].idClient === $Event) {
-              indexToRemove = i;
-              break;
-            }
-          }
-      
-          if (indexToRemove !== undefined) {
-            
-            //this.clientService.handleDeleteClient($Event, indexToRemove)
-            this.clientService.getClients();
-          }
-          
-        }
-      });
-
-    }
-  
-   
 
   }
   

@@ -12,7 +12,36 @@ import { toObservable } from '@angular/core/rxjs-interop';
 export class ClientService {
   private budgetService = inject(BudgetService);
   
-  private clients = signal<Client[]>([
+  clientes : Client[] = [
+    {
+      idClient: 1001,
+      oPerson: {
+          idPerson: 1,
+          name: "John",
+          lastName: "Doe",
+          direction: "123 Main St",
+          phoneNumber: "1234567890",
+          mail: "johndoe@example.com",
+          dni: "123456789",
+          cuit: "30-12345678-9"
+      }
+    },
+    {
+        idClient: 1002,
+        oPerson: {
+            idPerson: 2,
+            name: "Jane",
+            lastName: "Smith",
+            direction: "456 Elm St",
+            phoneNumber: "9876543210",
+            mail: "janesmith@example.com",
+            dni: "987654321",
+            cuit: "30-98765432-1"
+        }
+    }
+  ]
+
+  public loadClients = signal<Client[]>([
     {
       idClient: 1001,
       oPerson: {
@@ -43,7 +72,7 @@ export class ClientService {
   private clientsHistory : ClientHistory [] = [
     {
       idClientHistory: 1,
-      oClient: this.clients()[0],
+      oClient: this.loadClients()[0],
       budgets: [
         this.budgetService.getBudgetById(1)!,
         this.budgetService.getBudgetById(2)!
@@ -52,7 +81,7 @@ export class ClientService {
     },
     {
       idClientHistory: 2,
-      oClient: this.clients()[1],
+      oClient: this.loadClients()[1],
       budgets: [
         this.budgetService.getBudgetById(3)!,
         this.budgetService.getBudgetById(4)!
@@ -63,19 +92,29 @@ export class ClientService {
   ]
 
 
+  private _clientesSubject = new BehaviorSubject<Client[]>([]);
+  
+
+
   private selectedClient = signal<Client>(this.getEmptyClient());
 
-  clients$ = toObservable(this.clients);
+  //private clients$ = asObservable(this.clients);
   selectedClient$ = toObservable(this.selectedClient);
 
 
   constructor() {
-
+    this._clientesSubject.next(this.clientes);
   }
-
+  get clients(){
+    return this._clientesSubject.asObservable();
+  }
   //Metodos que se conectarian con el back
   getClients(){
-    return this.clients$;
+    return this._clientesSubject.asObservable();
+  }
+
+  getSingal(){
+    return this.loadClients();
   }
 
   postClient(client : Client) : number{
@@ -161,7 +200,8 @@ export class ClientService {
   }
   
   getClientById(clientId: number): Client | undefined {
-    return this.clients().find(client => client.idClient === clientId);
+    //return this.loadClients().find(client => client.idClient === clientId);
+    return this.clientes.find(client => client.idClient === clientId);
   }
 
   //Metodos que se conectan con los componentes
@@ -170,7 +210,9 @@ export class ClientService {
   }
 
   addNewClient(client : Client){
-    this.clients().push(client);
+    //this.loadClients.update(prevState => [...prevState, client]);
+    this.clientes.push(client);
+    this._clientesSubject.next(this.clientes);
   }
 
   handlePostClient(client : Client){
@@ -184,7 +226,8 @@ export class ClientService {
 
   }
   handleDeleteClient(clientId : number){
-    this.clients.update((clients)=> clients.filter((client)=> client.idClient !== clientId));
+    this.clientes = this.clientes.filter((client)=> client.idClient !== clientId);
+    this._clientesSubject.next(this.clientes);
     this.deleteClient(clientId)
     
   }

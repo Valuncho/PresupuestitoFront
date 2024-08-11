@@ -49,6 +49,11 @@ export class BudgetListComponent {
   
   }
 
+  handleSelectBudget($Event : number){
+    this.budgetService.setSelectedBudget($Event)
+    this.router.navigate(['/budget/detail/',$Event]);
+  }
+
   handleGetBudgets(){
     this.budgetService.getBudgets().subscribe({
       next : (budgets)=>{

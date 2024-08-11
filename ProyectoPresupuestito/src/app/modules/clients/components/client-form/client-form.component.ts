@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { booleanAttribute, Component, EventEmitter, inject, input, Input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../../../components/navbar/navbar.component';
 import { ListComponent } from "../../../../components/list/list.component";
@@ -10,6 +10,9 @@ import { Person } from '../../../../core/model/Person';
 import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from "../../../../components/confirmation-dialog/confirmation-dialog.component";
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { setUpLocationSync } from '@angular/router/upgrade';
 
 @Component({
   selector: 'app-client-form',
@@ -19,72 +22,90 @@ import { ConfirmationDialogComponent } from "../../../../components/confirmation
   styleUrl: './client-form.component.css'
 })
 export class ClientFormComponent {
+  
   private clientService = inject(ClientService);
-
-  currentClient = signal<Client>(this.clientService.getEmptyClient());
-
-
+  private notificationService = inject(NotificationService);
+  currentClient : Client = this.clientService.getEmptyClient();
+  clientId? : number;
   isEdit : boolean = false;
 
   clientForm : FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('',[ Validators.required]),
     lastName: new FormControl('', Validators.required),
     direction : new FormControl('', Validators.required),
     phoneNumber : new FormControl('', Validators.required),
-    mail: new FormControl('', [Validators.required, Validators.email]),
-    dni : new FormControl('', Validators.required),
-    cuit : new FormControl('', Validators.required),
+    mail: new FormControl('', [Validators.email]),
+    dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
+    cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
   });
 
-  constructor() {
+  constructor(
+    private router : Router,
+    private activatedRoute: ActivatedRoute
+    ){
+    }
 
-    
-
-    this.clientService.accionSeleccionada$.subscribe(accion =>{
-      switch (accion) {
-        case 'edit':
-          this.isEdit = true;
-          break;
-      }
-    })
-  }
-
-  ngOnInit(){
-    this.clientService.getSelectedClient().subscribe(client =>{
-      this.currentClient.set(client);
-      this.clientForm.patchValue(this.currentClient()!.oPerson);
-    })
-
-  }
+    ngOnInit(): void {
+      this.setUp();
+      this.onEditHandler();
+    }
 
   get canSubmit(){
-    return this.clientForm.get('name')?.valid && this.clientForm.get('phoneNumber')?.valid;
+    let  flag : boolean = false;
+    if(
+      this.clientForm.get('name')?.valid && 
+      this.clientForm.get('lastName')?.valid && 
+      this.clientForm.get('direction')?.valid && 
+      this.clientForm.get('phoneNumber')?.valid
+    ){
+      flag = true;
+    }
+    return flag;
   }
   
+
+
   onSubmit(){
-    this.currentClient()!.oPerson = this.clientForm.value;
+    this.currentClient.oPerson = this.clientForm.value;
+    console.log('cliente a cargar: ')
+    console.log(this.currentClient);
     if(this.isEdit){
       this.isEdit = false;
-      console.log('our');
-      this.clientService.handleUpdateClient(this.currentClient()!);
+      this.clientService.handleUpdateClient(this.currentClient);
+      this.notificationService.showNotification("Cliente editado con éxito!");
     }else{
-      this.clientService.handlePostClient(this.currentClient()!);
+      this.clientService.handlePostClient(this.currentClient);
+      this.notificationService.showNotification("Cliente guardado con éxito!");
     }
+    this.currentClient = this.clientService.getEmptyClient();
     this.clientForm.reset();
   
   }
 
-  setUp($Event : Event){
-    console.log("limpiar");
+  setUp(){
     this.clientForm.reset();
     this.isEdit = false;
-    this.currentClient.set(this.clientService.getEmptyClient());
-    
+    this.currentClient = this.clientService.getEmptyClient();
+  }
+
+  resetForm($Event : Event){
+    this.setUp();
+    this.router.navigate(["/client"]);
     $Event.preventDefault();
   }
-  
- 
 
-  
- 
+  onEditHandler(){
+    this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
+    if(this.clientId){
+        this.isEdit = true;
+        this.clientService.getSelectedClient().subscribe(client =>{
+        this.currentClient= client;
+        this.clientForm.patchValue(this.currentClient.oPerson);
+      })
+    }else{
+      this.isEdit = false;
+    }
+    
+      
+  }
 }
