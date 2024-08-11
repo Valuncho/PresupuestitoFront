@@ -11,6 +11,10 @@ import { BudgetListComponent } from "../budget-list/budget-list.component";
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
 import { ClientSearchComponent } from "../../../clients/components/client-search/client-search.component";
+import { ModalService } from '../../../../core/services/utils/modal.service';
+import { ClientFormComponent } from '../../../clients/components/client-form/client-form.component';
+import { ClientViewComponent } from '../../../clients/pages/client-view/client-view.component';
+import { ClientListComponent } from '../../../clients/components/client-list/client-list.component';
 @Component({
   selector: 'app-budget-form',
   standalone: true,
@@ -22,11 +26,15 @@ export class BudgetFormComponent {
   
   private budgetService = inject(BudgetService);
   private clientService = inject(ClientService);
+  private modalService = inject(ModalService);
+
   selectedBudget? : Budget;
   isEdit : boolean = false;
   budgets : Budget[] | undefined = [];
   clientId = signal<number>(0);
-  currentClient = signal<Client>(this.clientService.getEmptyClient());
+
+  currentClient : Client = this.clientService.getEmptyClient();
+
   BudgetForm : FormGroup = new FormGroup({
     createdDate : new FormControl(new Date()),
     deadLine : new FormControl(new Date()),
@@ -42,9 +50,11 @@ export class BudgetFormComponent {
 
   constructor(private activatedRoute: ActivatedRoute){}
 
+
+
   getClients() : Client[]{
     let c : Client[] = [];
-    this.clientService.getClients().subscribe(clients =>{
+    this.clientService.clients.subscribe(clients =>{
       c = clients;
     })
     return c;
@@ -52,14 +62,19 @@ export class BudgetFormComponent {
   }
 
   ngOnInit(){
+    this.clientService.selectedClient.subscribe(client =>{
+      this.currentClient=client;
+      this.BudgetForm.patchValue({idClient:this.currentClient.idClient});
+    });
+
     this.activatedRoute.paramMap.subscribe(params => {
       if(params.has('clientId')){
         
         this.clientId.set(parseInt(params.get('clientId')!));
         this.clientSearchEnable = false;
         this.clientService.setSelectedClient(this.clientId());
-        this.clientService.getSelectedClient().subscribe(client =>{
-          this.currentClient.set(client);
+        this.clientService.selectedClient.subscribe(client =>{
+          this.currentClient=client;
         });
         console.log(this.clientId());
         this.BudgetForm.patchValue({idClient:this.clientId()})
@@ -75,6 +90,11 @@ export class BudgetFormComponent {
 
   }
   
+  openClientForm(){
+    this.modalService.openModal<ClientListComponent,Client>(ClientListComponent);
+  
+  }
+
   onClientSelected(clientId: number) {
     console.log('Cliente seleccionado:', clientId);
     this.BudgetForm.patchValue({idClient:clientId})

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { Client } from '../../../../core/model/Client';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import * as lodash from 'lodash';
+import { Client } from '../../../../core/model/Client';
+
 @Component({
   selector: 'app-client-search',
   standalone: true,
@@ -10,6 +11,7 @@ import * as lodash from 'lodash';
   templateUrl: './client-search.component.html',
   styleUrl: './client-search.component.css'
 })
+
 export class ClientSearchComponent {
   @Input() clients : Client[] = [];
   @Output() clientSelected = new EventEmitter<number>();
@@ -24,9 +26,7 @@ export class ClientSearchComponent {
     this.filteredClients = this.clients;
   }
 
-  select(){
-    this.clientSelected.emit(this.idClient.value!);
-  }
+  
   sort(){
     let sorted : Client[] = []
     switch(this.filtro.value){

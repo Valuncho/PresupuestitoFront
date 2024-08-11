@@ -92,12 +92,14 @@ form{
     display: flex;
     flex-direction: column;
     background-color: var(--gris);
-    width: 40vw;
+    min-width: 50vh;
+    max-width: 40vw;
     padding: 1em;
     border-radius: 10px 10px;
     overflow: hidden;
     overflow-y: auto;
     height:76vh;
+    margin: 0 auto;
 }
 
 fieldset{

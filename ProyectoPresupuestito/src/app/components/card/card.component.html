@@ -4,12 +4,12 @@
         <h4>{{Person?.lastName}} {{Person?.name}}</h4>
         <h4>{{Person?.phoneNumber}}</h4>
     </div>
-    <div class="Card-Options">
-        <app-button-card [url]="botones[3].url" [icon]="botones[3].icon"></app-button-card>
-        <app-button-card [url]="botones[4].url" [icon]="botones[4].icon" (click)="newBudget()"></app-button-card>
-        <app-button-card [url]="botones[0].url" [icon]="botones[0].icon" (click)="select()"></app-button-card>
-        <app-button-card [url]="botones[1].url" [icon]="botones[1].icon" (click)="edit()"></app-button-card>
-        <app-button-card [url]="botones[1].url" [icon]="botones[2].icon" (click)="deleteC()"></app-button-card>
+    <div class="Card-Options"> 
+        
+        <app-button-card [icon]="botones[3].icon" (click)="newBudget()"></app-button-card>
+        <app-button-card [icon]="botones[0].icon" (click)="view()"></app-button-card>
+        <app-button-card [icon]="botones[1].icon" (click)="edit()"></app-button-card>
+        <app-button-card [icon]="botones[2].icon" (click)="deleteC()"></app-button-card>
     </div>
 </div>
 

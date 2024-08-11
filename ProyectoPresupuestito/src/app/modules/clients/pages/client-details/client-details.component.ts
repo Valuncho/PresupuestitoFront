@@ -31,11 +31,13 @@ export class ClientDetailsComponent {
   }
 
   ngOnInit(): void {
-    this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
+    //this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
+    this.clientService.selectedClient.subscribe(client =>{
+      this.client.set(client);
+    })
+
     
-    this.client.set(this.clientService.getClientById(this.id));
-    
-    this.budgets = this.clientService.getBudgets(this.id);
+    this.budgets = this.clientService.getBudgets(this.client()?.idClient!);
     
     this.payments =  this.budgets?.flatMap(budget => budget.payments || []);
     

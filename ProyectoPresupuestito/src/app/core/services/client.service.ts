@@ -12,7 +12,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 export class ClientService {
   private budgetService = inject(BudgetService);
   
-  clientes : Client[] = [
+  private clientes : Client[] = [
     {
       idClient: 1001,
       oPerson: {
@@ -40,39 +40,10 @@ export class ClientService {
         }
     }
   ]
-
-  public loadClients = signal<Client[]>([
-    {
-      idClient: 1001,
-      oPerson: {
-          idPerson: 1,
-          name: "John",
-          lastName: "Doe",
-          direction: "123 Main St",
-          phoneNumber: "1234567890",
-          mail: "johndoe@example.com",
-          dni: "123456789",
-          cuit: "30-12345678-9"
-      }
-    },
-    {
-        idClient: 1002,
-        oPerson: {
-            idPerson: 2,
-            name: "Jane",
-            lastName: "Smith",
-            direction: "456 Elm St",
-            phoneNumber: "9876543210",
-            mail: "janesmith@example.com",
-            dni: "987654321",
-            cuit: "30-98765432-1"
-        }
-    }
-  ]);
   private clientsHistory : ClientHistory [] = [
     {
       idClientHistory: 1,
-      oClient: this.loadClients()[0],
+      oClient: this.clientes[0],
       budgets: [
         this.budgetService.getBudgetById(1)!,
         this.budgetService.getBudgetById(2)!
@@ -81,7 +52,7 @@ export class ClientService {
     },
     {
       idClientHistory: 2,
-      oClient: this.loadClients()[1],
+      oClient: this.clientes[1],
       budgets: [
         this.budgetService.getBudgetById(3)!,
         this.budgetService.getBudgetById(4)!
@@ -90,33 +61,22 @@ export class ClientService {
     }
 
   ]
-
+  private clienteSeleccionado : Client = this.getEmptyClient();
 
   private _clientesSubject = new BehaviorSubject<Client[]>([]);
-  
-
-
-  private selectedClient = signal<Client>(this.getEmptyClient());
-
-  //private clients$ = asObservable(this.clients);
-  selectedClient$ = toObservable(this.selectedClient);
-
+  private _selectedClientSubject = new BehaviorSubject<Client>(this.clienteSeleccionado);
 
   constructor() {
     this._clientesSubject.next(this.clientes);
   }
-  get clients(){
-    return this._clientesSubject.asObservable();
-  }
+ 
   //Metodos que se conectarian con el back
   getClients(){
-    return this._clientesSubject.asObservable();
+    
   }
-
-  getSingal(){
-    return this.loadClients();
+  getClientById(clientId: number): Client | undefined {
+    return this.clientes.find(client => client.idClient === clientId);
   }
-
   postClient(client : Client) : number{
     //peticion post al back
     let id = Math.floor(Math.random() * 91) + 10;
@@ -124,7 +84,6 @@ export class ClientService {
     console.log('Nuevo id' + id);
     return id;
   }
-
   putClient(client : Client){
     //peticion post al back
     console.log('Peticion put exitosa');
@@ -136,31 +95,8 @@ export class ClientService {
     console.log('Cliente eliminado con id' + clientId);
   }
 
-  
 
-  actions : string[] = [
-    'see', 'save', 'edit', 'delete'
-  ]
-
-
-
-  currentAction = signal<string>(this.actions[0]);
-  
-  private clienteSeleccionadoSource = new BehaviorSubject<Client | null>(null);
-  clienteSeleccionado$ = this.clienteSeleccionadoSource.asObservable();
-
-  private accionSeleccionadaSourse = new BehaviorSubject<String>(this.actions[0]);
-  accionSeleccionada$ = this.accionSeleccionadaSourse.asObservable();
-
-  seleccionarCliente(cliente: Client) {
-    this.clienteSeleccionadoSource.next(cliente);
-  }
-  seleccionarAccion(accion : string){
-    this.accionSeleccionadaSourse.next(accion);
-  }
-
-  
-  
+  //Metodos propios del front
   getEmptyClient() : Client{
     
     const emptyClient: Client = {
@@ -178,35 +114,39 @@ export class ClientService {
     };
     return emptyClient;
   }
-  getAction() : string{
-    return this.currentAction();
+  
+  get clients(){
+    return this._clientesSubject.asObservable();
+  }
+  
+  getClienHistory(clientId : number) : ClientHistory{
+    return this.clientsHistory.find(history => history.oClient.idClient === clientId)!;
   }
 
-  setAction(action : string){
-    this.currentAction.set(action);
-    this.seleccionarAccion(this.getAction());
+  get selectedClient(){
+    return this._selectedClientSubject.asObservable();
   }
 
-  getSelectedClient() : Observable<Client>{
-    return this.selectedClient$;
-  }
   setSelectedClient(clientId: number){
-    this.selectedClient.set(this.getClientById(clientId)!);
-    //this.seleccionarCliente(this.getSelectedClient());
+    this.clienteSeleccionado = this.getClientById(clientId)!;
+    this._selectedClientSubject.next(this.clienteSeleccionado);
     
   }
   resetSelectedClient(){
-    this.selectedClient.set(this.getEmptyClient());
+    this.clienteSeleccionado = this.getEmptyClient();
+    this._selectedClientSubject.next(this.clienteSeleccionado); 
   }
   
-  getClientById(clientId: number): Client | undefined {
-    //return this.loadClients().find(client => client.idClient === clientId);
-    return this.clientes.find(client => client.idClient === clientId);
+  getBudgets(idClient: number): Budget[] | undefined{
+    const budgets = this.clientsHistory
+    .filter(element => element.oClient.idClient === idClient)
+    .flatMap(element => element.budgets);
+    return budgets.length > 0 ? budgets : undefined;
+    
   }
 
   //Metodos que se conectan con los componentes
   handleGetClients(){
-
   }
 
   addNewClient(client : Client){
@@ -223,25 +163,12 @@ export class ClientService {
 
   handleUpdateClient(client : Client){
     this.putClient(client);
-
   }
+
   handleDeleteClient(clientId : number){
     this.clientes = this.clientes.filter((client)=> client.idClient !== clientId);
     this._clientesSubject.next(this.clientes);
-    this.deleteClient(clientId)
-    
-  }
-
-getClienHistory(clientId : number) : ClientHistory{
-  return this.clientsHistory.find(history => history.oClient.idClient === clientId)!;
-}
-
-  getBudgets(idClient: number): Budget[] | undefined{
-    const budgets = this.clientsHistory
-    .filter(element => element.oClient.idClient === idClient)
-    .flatMap(element => element.budgets);
-    return budgets.length > 0 ? budgets : undefined;
-    
+    this.deleteClient(clientId);
   }
 
 }

@@ -1,34 +1,29 @@
-import { booleanAttribute, Component, EventEmitter, inject, input, Input, Output, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../../../components/navbar/navbar.component';
-import { ListComponent } from "../../../../components/list/list.component";
-import { AboutComponent } from "../../../../pages/about/about.component";
-import { CardComponent } from "../../../../components/card/card.component";
-import { ClientService } from '../../../../core/services/client.service';
-import { Client } from '../../../../core/model/Client';
-import { Person } from '../../../../core/model/Person';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from "../../../../components/confirmation-dialog/confirmation-dialog.component";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
-import { setUpLocationSync } from '@angular/router/upgrade';
+import { ClientService } from '../../../../core/services/client.service';
+import { Client } from '../../../../core/model/Client';
 
 @Component({
   selector: 'app-client-form',
   standalone: true,
-  imports: [NavbarComponent, ListComponent, AboutComponent, CardComponent,CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.css'
 })
 export class ClientFormComponent {
-  
-  private clientService = inject(ClientService);
+  //Utils
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private notificationService = inject(NotificationService);
+  private clientService = inject(ClientService);
+  //Properties
   currentClient : Client = this.clientService.getEmptyClient();
   clientId? : number;
   isEdit : boolean = false;
-
+  //Form
   clientForm : FormGroup = new FormGroup({
     name: new FormControl('',[ Validators.required]),
     lastName: new FormControl('', Validators.required),
@@ -39,16 +34,10 @@ export class ClientFormComponent {
     cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
   });
 
-  constructor(
-    private router : Router,
-    private activatedRoute: ActivatedRoute
-    ){
-    }
-
-    ngOnInit(): void {
-      this.setUp();
-      this.onEditHandler();
-    }
+  ngOnInit(): void {
+    this.setUp();
+    this.onEditHandler();
+  }
 
   get canSubmit(){
     let  flag : boolean = false;
@@ -63,25 +52,6 @@ export class ClientFormComponent {
     return flag;
   }
   
-
-
-  onSubmit(){
-    this.currentClient.oPerson = this.clientForm.value;
-    console.log('cliente a cargar: ')
-    console.log(this.currentClient);
-    if(this.isEdit){
-      this.isEdit = false;
-      this.clientService.handleUpdateClient(this.currentClient);
-      this.notificationService.showNotification("Cliente editado con éxito!");
-    }else{
-      this.clientService.handlePostClient(this.currentClient);
-      this.notificationService.showNotification("Cliente guardado con éxito!");
-    }
-    this.currentClient = this.clientService.getEmptyClient();
-    this.clientForm.reset();
-  
-  }
-
   setUp(){
     this.clientForm.reset();
     this.isEdit = false;
@@ -98,14 +68,28 @@ export class ClientFormComponent {
     this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
     if(this.clientId){
         this.isEdit = true;
-        this.clientService.getSelectedClient().subscribe(client =>{
-        this.currentClient= client;
-        this.clientForm.patchValue(this.currentClient.oPerson);
+        this.clientService.selectedClient.subscribe(client =>{
+          this.currentClient= client;
+          this.clientForm.patchValue(this.currentClient.oPerson);
       })
     }else{
       this.isEdit = false;
     }
-    
-      
   }
+
+  onSubmit(){
+    this.currentClient.oPerson = this.clientForm.value;
+
+    if(this.isEdit){
+      this.clientService.handleUpdateClient(this.currentClient);
+      this.notificationService.showNotification("Cliente editado con éxito!");
+    }else{
+      this.clientService.handlePostClient(this.currentClient);
+      this.notificationService.showNotification("Cliente guardado con éxito!");
+    }
+    this.setUp();
+  }
+
+
+  
 }

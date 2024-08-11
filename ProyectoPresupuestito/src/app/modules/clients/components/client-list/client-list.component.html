@@ -11,7 +11,8 @@
         [Person]="client.oPerson" 
         [IdClient]="client.idClient"
         (action)="handleAction($event)"
-        (isSelected)="handleSelectClient($event)"
+        (isView)="handleViewClient($event)"
+        
         (isEdit)="handleEditClient($event)" 
         (isDeleted)="handleDeleteClient($event)" 
         ></app-card>
@@ -22,4 +23,7 @@
       nextLabel="Siguiente"
       (pageChange)="pageChange($event)"
     ></pagination-controls>
+    @if(options){
+      <button (click)="addClientHandler()">Agregar cliente</button>
+    }
   </div>

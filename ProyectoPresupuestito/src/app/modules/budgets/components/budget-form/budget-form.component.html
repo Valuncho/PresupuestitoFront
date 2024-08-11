@@ -4,14 +4,10 @@
     <fieldset>
       <legend class="List-title"> {{ isEdit ? 'Actualizar un presupuesto' : 'Crear un presupuesto' }}</legend>
       <label for="client">Cliente</label>
-      @if (clientSearchEnable) {
-        <app-client-search
-      [clients] = "getClients()"
-      (clientSelected)="onClientSelected($event)"
-      />
-      }
-      <input type="text" [value]="this.currentClient().oPerson.name" >
-      <input type="hidden" [value]="this.currentClient().idClient" name="idClient" formControlName="idClient">
+      
+      <input type="text" (click)="openClientForm()" [value]="this.currentClient.oPerson.name" readonly >
+      
+      <input type="hidden" [value]="this.currentClient.idClient" name="idClient" formControlName="idClient">
       <label for="createdDate">Fecha elaboración:</label>
       <input type="date" name="createdDate" id="createdDate" formControlName="createdDate">
       <label for="deadLine">Fecha limite:</label>
