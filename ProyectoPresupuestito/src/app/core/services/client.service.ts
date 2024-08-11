@@ -10,8 +10,9 @@ import { toObservable } from '@angular/core/rxjs-interop';
   providedIn: 'root'
 })
 export class ClientService {
+  //Utils
   private budgetService = inject(BudgetService);
-  
+  //Properties
   private clientes : Client[] = [
     {
       idClient: 1001,
@@ -77,6 +78,7 @@ export class ClientService {
   getClientById(clientId: number): Client | undefined {
     return this.clientes.find(client => client.idClient === clientId);
   }
+  
   postClient(client : Client) : number{
     //peticion post al back
     let id = Math.floor(Math.random() * 91) + 10;
@@ -84,12 +86,13 @@ export class ClientService {
     console.log('Nuevo id' + id);
     return id;
   }
+
   putClient(client : Client){
     //peticion post al back
     console.log('Peticion put exitosa');
     console.log(client);
-
   }
+
   deleteClient(clientId : number){
     console.log('Peticion delete exitosa');
     console.log('Cliente eliminado con id' + clientId);
@@ -150,7 +153,6 @@ export class ClientService {
   }
 
   addNewClient(client : Client){
-    //this.loadClients.update(prevState => [...prevState, client]);
     this.clientes.push(client);
     this._clientesSubject.next(this.clientes);
   }
@@ -159,6 +161,12 @@ export class ClientService {
     const id = this.postClient(client);
     client.idClient = id;
     this.addNewClient(client);
+    const emptyHistory : ClientHistory = {
+      idClientHistory: id,
+      oClient: client,
+      budgets: []
+    }
+    this.clientsHistory.push(emptyHistory);
   }
 
   handleUpdateClient(client : Client){

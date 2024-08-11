@@ -1,17 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Work } from '../../../core/model/Work';
+import { Work } from '../../../../core/model/Work';
 import { CommonModule } from '@angular/common';
-import { ButtonCardComponent } from '../../../components/button-card/button-card.component';
+import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 
 @Component({
-  selector: 'app-work',
+  selector: 'app-work-card',
   standalone: true,
   imports: [CommonModule, ButtonCardComponent],
-  templateUrl: './work.component.html',
-  styleUrl: './work.component.css'
+  templateUrl: './work-card.component.html',
+  styleUrl: './work-card.component.css'
 })
-export class WorkComponent {
+export class WorkCardComponent {
 
+  
   @Input() Work: Work | undefined;
   @Input() idWork: number = 0;
   @Output() isClick = new EventEmitter<number>();

@@ -1,17 +1,18 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Budget } from '../model/Budget';
 import { WorkService } from './work.service';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ClientHistory } from '../model/ClientHistory';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BudgetService {
+  //Utils
   private workService = inject(WorkService);
-
-  private budgets = signal<Budget[]>([
+  //Properties
+  private budgets : Budget[] = 
+  [
     {
       idBudget: 1,
       works: [
@@ -22,7 +23,7 @@ export class BudgetService {
       deadLine: new Date('2023-12-22'),
       description: 'Kitchen renovation',
       cost: 5000,
-      Status: 'Parado',
+      Status: 'Cancelado',
       payments: [
         { idPayment:1, amount: 1000, date: new Date('2023-09-20'), description: "Primer pago" },
         { idPayment:2, amount: 3000, date: new Date('2023-10-20'), description: "Segundo pago" },
@@ -51,7 +52,7 @@ export class BudgetService {
       deadLine: new Date('2023-10-15'),
       description: 'Renovación de habitaciones',
       cost: 4200,
-      Status: 'Elaboración',
+      Status: 'En proceso',
       payments: [
         { idPayment:4, amount: 1000, date: new Date('2023-09-15'), description: "Primer pago" },
         { idPayment:5, amount: 3200, date: new Date('2023-10-15'), description: "Cancelacion deuda" }
@@ -64,17 +65,19 @@ export class BudgetService {
       deadLine: new Date('2024-03-31'),
       description: 'Ampliación de espacio exterior',
       cost: 8500,
-      Status: 'Elaboración',
+      Status: 'En proceso',
       payments: []
-    }])
-    
-  private selectedBudget = signal<Budget>(this.getEmptyBudget());
+    }]  
+  private selectedBudget : Budget = this.getEmptyBudget();
+  private estados : string[] = ['Presupuestado','Aprobado','Rechazado','En proceso','Entregado','Cancelado'];
 
-  budgets$ = toObservable(this.budgets);
-  selectedBudget$ = toObservable(this.selectedBudget)
+  private _budgetsSubject = new BehaviorSubject<Budget[]>([]);
+  private _selectedBudgetSubject = new BehaviorSubject<Budget>(this.selectedBudget);
+
   
-  ;
-  constructor() { }
+  constructor() {
+    this._budgetsSubject.next(this.budgets);
+   }
 
   getEmptyBudget() : Budget{
     
@@ -91,23 +94,13 @@ export class BudgetService {
     return EmptyBudget;
   }
 
+  //Metodos back
   getBudgets(){
-    return this.budgets$;
+    return this._budgetsSubject.asObservable();
   }
 
   getBudgetById(id: number): Budget | undefined {
-    return this.budgets().find(budget => budget.idBudget === id);
-  }
-
-  getSelectedBudget() : Observable<Budget>{
-    return this.selectedBudget$;
-  }
-
-  setSelectedBudget(budgetId: number){
-    this.selectedBudget.set(this.getBudgetById(budgetId)!);
-  }
-  resetSelectedBudget(){
-    this.selectedBudget.set(this.getEmptyBudget());
+    return this.budgets.find(budget => budget.idBudget === id);
   }
 
   postBudget(budget : Budget) : number{
@@ -129,6 +122,26 @@ export class BudgetService {
     console.log('Presupuesto eliminado con id: ' + budgetId);
   }
 
+  //Metodos 
+  
+  getEstados(){
+    return this.estados;
+  }
+
+  getSelectedBudget(){
+    return this._selectedBudgetSubject.asObservable();
+  }
+
+  setSelectedBudget(budgetId: number){
+    this.selectedBudget = this.getBudgetById(budgetId)!;
+    this._selectedBudgetSubject.next(this.selectedBudget);
+  }
+
+  resetSelectedBudget(){
+    this.selectedBudget = this.getEmptyBudget();
+    this._selectedBudgetSubject.next(this.selectedBudget);
+  }
+
 
   //Metodos que se conectan con los componentes
   handleGetBudgets(){
@@ -136,7 +149,8 @@ export class BudgetService {
   }
 
   addNewBudget(budget : Budget){
-    this.budgets().push(budget);
+    this.budgets.push(budget);
+    this._budgetsSubject.next(this.budgets);
   }
 
   handlePostBudget(budget : Budget){
@@ -149,16 +163,20 @@ export class BudgetService {
     this.putBudget(budget);
 
   }
+
   handleDeleteBudget(budgetId : number){
-    this.budgets.update((budgets)=> budgets.filter((budget)=> budget.idBudget !== budgetId));
+    this.budgets = this.budgets.filter((budget)=> budget.idBudget !== budgetId);
+    this._budgetsSubject.next(this.budgets);
     this.deleteBudget(budgetId)
-    
   }
 
   getClientBudgets(history: ClientHistory): Budget[] | undefined{
     const budgets = history.budgets;
     return budgets.length > 0 ? budgets : undefined;
-    
+  }
+
+  getClientBudgetsByClientId(clientId : number){
+
   }
 
 

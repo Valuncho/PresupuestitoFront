@@ -8,45 +8,49 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../../../core/services/client.service';
 import { isParameter } from 'typescript';
+import { BudgetCardComponent } from "../budget-card/budget-card.component";
+import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
+import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-budget-list',
   standalone: true,
-  imports: [BudgetComponent],
+  imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule],
   templateUrl: './budget-list.component.html',
   styleUrl: './budget-list.component.css'
 })
 export class BudgetListComponent {
-  private budgetService = inject(BudgetService)
-  private clientService = inject(ClientService)
-  budgets = signal<Budget[]>([]);
-  clientId = signal<number>(0);
-  
-   url = window.location.href;
-   searchParams = new URLSearchParams(this.url);
+  //Utils
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private notificationService = inject(NotificationService);
+  private budgetService = inject(BudgetService);
+  private clientService = inject(ClientService);
+  //Properties
+  budgets : Budget[] = [];
+  clientId : number = 0
 
-  constructor(
-    private dialog: MatDialog,
-    private router: Router, 
-    private activatedRoute: ActivatedRoute,
-    private location: Location
-  ){
-  //  this.handleGetClients();
-   // this.clientService.resetSelectedClient();
-  }
-  ngOnInit(){
-    this.activatedRoute.paramMap.subscribe(params => {
-      if(params.has('clientId')){
-        this.clientId.set(parseInt(params.get('clientId')!));
-        let history = this.clientService.getClienHistory(this.clientId());
-        this.budgets.set(this.budgetService.getClientBudgets(history)!);
-      }else{
-        this.handleGetBudgets();
-      }
-      
-      
-    });
+  //Pagination
+  page : number = 1;
+  itemsPerPage : number = 5;
+
   
+  ngOnInit(){
+    this.clientService.selectedClient.subscribe(client =>{
+      console.log(client);
+      if(client.idClient != 0){
+        this.budgets = this.clientService.getBudgets(client.idClient)!;
+      }else{
+        this.budgetService.getBudgets().subscribe(budgets =>{
+          this.budgets = budgets;
+        })
+      }
+    })
+    
+
+   
+    
   }
 
   handleSelectBudget($Event : number){
@@ -54,13 +58,42 @@ export class BudgetListComponent {
     this.router.navigate(['/budget/detail/',$Event]);
   }
 
-  handleGetBudgets(){
-    this.budgetService.getBudgets().subscribe({
-      next : (budgets)=>{
-      
-        this.budgets.set(budgets);
-      }
-    }
-    )
+  handleAction($Event : any){
+    this.budgetService.setSelectedBudget($Event)
+    this.router.navigate(['/work/new/',$Event]);
   }
+
+  handleView($Event : any){
+    this.budgetService.setSelectedBudget($Event)
+    this.router.navigate(['/budget/detail']);
+  }
+  
+  handleEdit($Event : any){
+    
+    this.budgetService.setSelectedBudget($Event)
+    this.router.navigate(['/budget/edit']);
+  }
+
+  handleDelete($Event : any){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        mensaje: `¿Estás seguro de que deseas eliminar al presupuesto con ID ${$Event}?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.budgetService.handleDeleteBudget($Event);
+        this.notificationService.showNotification("Presupuesto eliminado con éxito");
+        this.router.navigate(['/budget']); 
+      }
+    });
+    
+  }
+
+  //Pagination
+  pageChange(page: number) {
+    this.page = page;
+  }
+
 }

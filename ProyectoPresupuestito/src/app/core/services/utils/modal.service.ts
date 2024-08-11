@@ -16,6 +16,9 @@ export class ModalService {
         });
     }
     
+    getModal(){
+        return this._dialog;
+    }
     closeModal() : void{
         this._dialog.closeAll();
     }

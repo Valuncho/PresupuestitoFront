@@ -1,10 +1,9 @@
-import { Component, Input, inject, provideExperimentalZonelessChangeDetection, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NavbarComponent } from '../../../../components/navbar/navbar.component';
 import { Client } from '../../../../core/model/Client';
 import { CommonModule } from '@angular/common';
 import { ClientService } from '../../../../core/services/client.service';
 import { ActivatedRoute } from '@angular/router';
-import { BudgetComponent } from '../../../budgets/components/budget/budget.component';
 import { Budget } from '../../../../core/model/Budget';
 import { PaymentsTableComponent } from "../../../payments/components/payments-table/payments-table.component";
 import { Payment } from '../../../../core/model/Payment';

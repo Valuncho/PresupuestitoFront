@@ -31,14 +31,14 @@
                 <h3>Trabajos</h3>
                 
                     @for (work of currentBudget?.works; track work.idWork; let idx = $index) {
-                        <app-work 
+                        <app-work-card
                         [Work]="currentBudget!.works[idx]" 
                         [idWork]="currentBudget!.works[idx].idWork"
                         (isClick)="seleccionar($event)"
                         (isEdit)="editWork($event)" 
                         (isDeleted)="deleteWork($event)" 
-                        >
-                        </app-work>
+                        />
+                        
                     }
                 </div>
         
