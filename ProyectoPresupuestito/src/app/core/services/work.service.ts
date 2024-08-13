@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Work } from '../model/Work';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Work } from '../model/Work';
 export class WorkService {
 
   
-  works : Work[] = [
+  private works : Work[] = [
 
     {   
       idWork: 1,
@@ -16,7 +17,7 @@ export class WorkService {
       estimatedHoursWorked: 8,
       deadline: new Date('2024-12-31'),
       costPrice: 300,
-      status: 'Pending',
+      status: 'Pendiente de aprobación',
       notes: 'Build a wooden table',
       images: ['image1.jpg', 'image2.png']
     },
@@ -27,7 +28,7 @@ export class WorkService {
       estimatedHoursWorked: 5,
       deadline: new Date('2025-01-15'),
       costPrice: 250,
-      status: 'In Progress',
+      status: 'En proceso',
       notes: 'Paint the walls',
       images: ['image3.jpg']
   },
@@ -38,7 +39,7 @@ export class WorkService {
     estimatedHoursWorked: 12,
     deadline: new Date('2024-11-15'),
     costPrice: 450,
-    status: 'Completed',
+    status: 'Entregado',
     notes: 'Build a bookshelf',
     images: ['image4.jpg', 'image5.png']
   },
@@ -49,7 +50,7 @@ export class WorkService {
     estimatedHoursWorked: 3,
     deadline: new Date('2024-10-01'),
     costPrice: 120,
-    status: 'In Progress',
+    status: 'En proceso',
     notes: 'Fix the fence',
     images: []
   },
@@ -60,7 +61,7 @@ export class WorkService {
     estimatedHoursWorked: 15,
     deadline: new Date('2025-02-28'),
     costPrice: 600,
-    status: 'Pending',
+    status: 'Pendiente de aprobación',
     notes: 'Renovate the kitchen',
     images: ['image6.jpg', 'image7.png', 'image8.jpg']
   },
@@ -71,7 +72,7 @@ export class WorkService {
     estimatedHoursWorked: 2,
     deadline: new Date('2024-09-15'),
     costPrice: 80,
-    status: 'Completed',
+    status: 'Entregado',
     notes: 'Clean the garage',
     images: []
 },
@@ -82,22 +83,60 @@ export class WorkService {
   estimatedHoursWorked: 4,
   deadline: new Date('2024-12-10'),
   costPrice: 150,
-  status: 'In Progress',
+  status: 'En proceso',
   notes: 'Build a birdhouse',
   images: ['image9.jpg']
 }
 
   ];
+   
+  private selectedWork : Work = this.getEmptyWork();
 
+
+
+  private _worksSubject = new BehaviorSubject<Work[]>(this.works);
+  private _selectedWorkSubject = new BehaviorSubject<Work>(this.selectedWork);
+
+  private estados : string[] = ['Presupuestado','Pendiente de aprobación','Aprobado','En proceso','Entregado','Cancelado'];
   constructor() { }
 
-  getWorks(): Work[] {
-    return this.works;
+  getEmptyWork() : Work{
+    const work : Work = {
+      idWork: 0,
+      order: 0,
+      materials: [],
+      estimatedHoursWorked: 8,
+      deadline: new Date(),
+      costPrice: 0,
+      status: 'Presupuestado',
+      notes: '',
+      images: []
+    }
+    return work;
+  }
+
+  getWorks(){
+    return this._worksSubject.asObservable();
   }
 
   getWorkById(workId: number): Work | undefined {
     return this.works.find(work => work.idWork === workId);
   }
+
+  getSelectedWork(){
+    return this._selectedWorkSubject.asObservable();
+  }
+
+  setSelectedWork(work : Work){
+    this.selectedWork = work;
+    this._selectedWorkSubject.next(this.selectedWork);
+  }
+
+  getEstados(){
+    return this.estados;
+  }
+
+  
 /*
   getMaterials(idWork: number): Work[] | undefined{
     const budgets = this.clientsHistory

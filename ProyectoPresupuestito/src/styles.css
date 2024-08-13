@@ -37,7 +37,7 @@ section{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items:flex-start;
     height: 100%;
     overflow-y: auto;
 }
@@ -49,6 +49,7 @@ article{
 
 
 .List{
+    align-self: flex-start;
     background-color: var(--gris);
     padding: 1em;
     border-radius: 10px 10px;
@@ -56,7 +57,9 @@ article{
     flex-direction:column;
     overflow: hidden;
     overflow-y: visible;
-    height:70vh;
+    height: 75vh;
+    
+    width: 50vw;
     
 }
 .List .CardContainer{
@@ -75,7 +78,7 @@ article{
 
 .Details-title, .List-title{
     text-decoration: underline;
-    font-family: var(--otro);
+    font-family: var(--titulo);
 }
 button{
     border: none;
@@ -114,13 +117,7 @@ fieldset{
     justify-content: space-evenly;
 }
 
-.Botones button{
-    background-color: var(--cerezo);
-    color: var(--blanquecino);
-    border-radius: 10px ;
-    padding: 10px;
-    width: 30%;
-}
+
 form label{
     font-family: var(--otro);
 }
@@ -158,8 +155,12 @@ resize: vertical;
     background-color: var(--arce);
     padding: inherit;
     border-radius: inherit;
+    
+}
+.Detalle p, .Details p{
+    font-family: var(--dato);
     text-align: left;
-    line-height:3em;
+    line-height:1em;
 }
 
 
@@ -172,3 +173,41 @@ resize: vertical;
     height: 40vh;
     width: 40vh;
 }
+
+/*Cards*/
+
+.Card{
+    background-color: var(--arce);
+    display: flex; 
+    justify-content: space-between;
+    align-items:center;
+    padding:.3em;
+    border-radius: 15px;
+    margin: 10px 0;
+    font-family: var(--dato);
+  }
+  .Card-Detailes{
+    margin: 0 10px;
+  }
+  
+  .Card-Options{
+    display: flex;
+  }
+  
+/*Botones*/
+
+.Botones button, .Boton1{
+    background-color: var(--cerezo);
+    color: var(--blanquecino);
+    border-radius: 10px ;
+    padding: 10px;
+    width: 30%;
+    font-family: var(--otro);
+}
+.Boton1{
+    margin: 5px 0 ;
+    width: 100%;
+
+}
+
+  

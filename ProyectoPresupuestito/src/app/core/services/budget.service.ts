@@ -3,6 +3,7 @@ import { Budget } from '../model/Budget';
 import { WorkService } from './work.service';
 import { BehaviorSubject } from 'rxjs';
 import { ClientHistory } from '../model/ClientHistory';
+import { Work } from '../model/Work';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class BudgetService {
     {
       idBudget: 1,
       works: [
-       this.workService.getWorks()[0],
-       this.workService.getWorks()[1],
+       this.workService.getWorkById(1)!,
+       this.workService.getWorkById(2)!,
       ], // Replace with actual work data if needed
       createdDate: new Date('2023-08-20'),
       deadLine: new Date('2023-12-22'),
@@ -33,8 +34,8 @@ export class BudgetService {
     {
       idBudget: 2,
       works: [
-        this.workService.getWorks()[2],
-        this.workService.getWorks()[3],
+        this.workService.getWorkById(3)!,
+        this.workService.getWorkById(4)!,
       ],
       createdDate: new Date('2024-01-15'),
       deadLine: new Date('2024-02-15'),
@@ -47,7 +48,7 @@ export class BudgetService {
     },
     {
       idBudget: 3,
-      works: [this.workService.getWorks()[4]],
+      works: [this.workService.getWorkById(5)!],
       createdDate: new Date('2023-09-15'),
       deadLine: new Date('2023-10-15'),
       description: 'Renovación de habitaciones',
@@ -60,7 +61,10 @@ export class BudgetService {
     },
     {
       idBudget: 4,
-      works: [this.workService.getWorks()[5]],
+      works: [
+        this.workService.getWorkById(6)!,
+        this.workService.getWorkById(7)!
+      ],
       createdDate: new Date('2024-02-01'),
       deadLine: new Date('2024-03-31'),
       description: 'Ampliación de espacio exterior',
@@ -175,9 +179,10 @@ export class BudgetService {
     return budgets.length > 0 ? budgets : undefined;
   }
 
-  getClientBudgetsByClientId(clientId : number){
-
+  getBudgetByWork(work : Work){
+    return this.budgets.find(budget => budget.works.some(w => w.idWork === work.idWork))!;
   }
+
 
 
 }

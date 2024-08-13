@@ -1,0 +1,21 @@
+<div class="Detalle">
+    <h3 class="Detail-title">Detalles de trabajo</h3>
+    <div class="Interior">
+        <p>Orden: {{currentWork?.order}}</p>
+        <p>Notas : {{currentWork?.notes}}</p>
+        <p>Horas estimadas: {{currentWork?.estimatedHoursWorked}}</p>
+        <p>Fecha limite: {{currentWork?.deadline | date:'short'}}</p>
+        <p>Costo: {{currentWork?.costPrice | currency}}</p>
+        <p>Estado : {{currentWork?.status}}</p>
+    </div>
+</div>
+<div class="Detalle">
+    <h3>Materiales de trabajo</h3>
+    <div class="Interior">
+
+    </div>
+</div>
+@if (options) {
+    <button class="Boton1"(click)="goToBudgetDetail()">Ir al presupuesto</button>
+    <button class="Boton1" (click)="goToWorkArea()">Ir al area de trabajo</button>
+}

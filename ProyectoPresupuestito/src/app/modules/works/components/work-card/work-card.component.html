@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="Card">
     <div class="Card-Detailes">        
-        <h4>{{Work?.status}}</h4>
-        <h4>Precio: {{Work?.costPrice| currency}}</h4>
-        <h4>Fecha : {{Work?.deadline| date:'short'}}</h4>    
-        <h4>Nota: {{Work?.notes}}</h4>
+        <p>{{Work?.status}}</p>
+        <p>Precio: {{Work?.costPrice| currency}}</p>
+        <p>Fecha : {{Work?.deadline| date:'short'}}</p>    
+        <p>Nota: {{Work?.notes}}</p>
     </div>
     <div class="Card-Options">
         <app-button-card [url]="botones[0].url" [icon]="botones[0].icon" (click)="select()"></app-button-card>

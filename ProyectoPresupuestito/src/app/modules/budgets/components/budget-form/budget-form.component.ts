@@ -36,7 +36,6 @@ export class BudgetFormComponent {
   currentClient : Client = this.clientService.getEmptyClient();
   isEdit : boolean = false;
   budgets : Budget[] | undefined = [];
-  clientId = signal<number>(0);
   
 
   BudgetForm : FormGroup = new FormGroup({
