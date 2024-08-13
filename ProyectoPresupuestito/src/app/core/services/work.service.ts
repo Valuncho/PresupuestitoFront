@@ -1,19 +1,31 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Work } from '../model/Work';
 import { BehaviorSubject } from 'rxjs';
+import { MaterialService } from './material.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkService {
 
-  
-  private works : Work[] = [
+  private materialService = inject(MaterialService);
 
+  private works : Work[] = [
     {   
       idWork: 1,
       order: 1001,
-      materials: ["Pintura", "madura"],
+      materials: [
+        {
+          idItem:1,
+          material: this.materialService.getMaterialById(4)!,
+          quantity: 2
+        },
+        {
+          idItem:2,
+          material: this.materialService.getMaterialById(8)!,
+          quantity: 7
+        },
+      ],
       estimatedHoursWorked: 8,
       deadline: new Date('2024-12-31'),
       costPrice: 300,
@@ -24,7 +36,9 @@ export class WorkService {
     {
       idWork: 2,
       order: 1002,
-      materials: ["Pintura", "madura"],
+      materials: [
+
+      ],
       estimatedHoursWorked: 5,
       deadline: new Date('2025-01-15'),
       costPrice: 250,
@@ -35,7 +49,18 @@ export class WorkService {
   {
     idWork: 3,
     order: 1003,
-    materials: ["Pintura", "madura"],
+    materials: [
+      {
+        idItem:3,
+        material: this.materialService.getMaterialById(3)!,
+        quantity: 2
+      },
+      {
+        idItem:4,
+        material: this.materialService.getMaterialById(9)!,
+        quantity: 7
+      },
+    ],
     estimatedHoursWorked: 12,
     deadline: new Date('2024-11-15'),
     costPrice: 450,
@@ -46,7 +71,7 @@ export class WorkService {
   {
     idWork: 4,
     order: 1004,
-    materials: ["Los"],
+    materials: [],
     estimatedHoursWorked: 3,
     deadline: new Date('2024-10-01'),
     costPrice: 120,
@@ -57,7 +82,7 @@ export class WorkService {
   {
     idWork: 5,
     order: 1005,
-    materials: ["asdasd"],
+    materials: [],
     estimatedHoursWorked: 15,
     deadline: new Date('2025-02-28'),
     costPrice: 600,
