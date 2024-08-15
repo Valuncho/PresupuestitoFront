@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import * as lodash from 'lodash';
 import { Client } from '../../../../core/model/Client';
+import * as lodash from 'lodash';
 
 @Component({
   selector: 'app-client-search',

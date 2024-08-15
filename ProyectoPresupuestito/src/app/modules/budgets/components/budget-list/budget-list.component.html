@@ -1,6 +1,6 @@
 <div class="List">
-  
     <h3 class="List-title">Listado de presupuestos</h3>
+    <app-budget-search/>
     @for (budget of budgets | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget) {
       <app-budget-card 
       [Budget]="budget" 
