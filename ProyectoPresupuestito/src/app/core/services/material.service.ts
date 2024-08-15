@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import { Category } from '../model/Category';
 import { SubCategoryMaterial } from '../model/SubCategoryMaterial';
 import { Material } from '../model/Material';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaterialService {
+  //Utils
 
+
+
+  //Data
   private categories : Category[]=[
     {
       idCategory: 1,
@@ -154,7 +159,7 @@ export class MaterialService {
       subCategory: this.subCategories[6] 
     },
     {
-      idMaterial: 8,
+      idMaterial: 9,
       name: 'Nogal',
       description: 'Madera blanda de color claro',
       color: 'Amarillo claro',
@@ -164,7 +169,7 @@ export class MaterialService {
       subCategory: this.subCategories[6] 
     },
     {
-      idMaterial: 9,
+      idMaterial: 10,
       name: 'Abedul',
       description: 'Madera blanda de color claro',
       color: 'Amarillo claro',
@@ -174,7 +179,7 @@ export class MaterialService {
       subCategory: this.subCategories[6] 
     },
     {
-      idMaterial: 4,
+      idMaterial:11,
       name: 'MDF Melamínico',
       description: 'Panel aglomerado recubierto con melamina',
       color: 'Blanco',
@@ -184,6 +189,106 @@ export class MaterialService {
       subCategory: this.subCategories[7] 
     }
   ]
+
+  //Properties
+  private selectedMaterial : Material = this.getEmptyMaterial();
+  private selectedSubCategory : SubCategoryMaterial = this.getEmptySubCategory();
+  private selectedCategory : Category = this.getEmptyCategory();
+
+  private _materialsSubject = new BehaviorSubject<Material[]>([]);
+  private _selectedMaterialSubject = new BehaviorSubject<Material>(this.selectedMaterial);
+
+  private _SubCategoriesSubject = new BehaviorSubject<SubCategoryMaterial[]>(this.subCategories);
+  private _selectedSubCategorySubject = new BehaviorSubject<SubCategoryMaterial>(this.selectedSubCategory);
+
+  private _CategoriesSubject = new BehaviorSubject<Category[]>(this.categories);
+  private _selectedCategorySubject = new BehaviorSubject<Category>(this.selectedCategory);
+  
+  
+
+  //Metodos back
+  getMaterials(){
+
+  }
+
+  postMaterial(){
+ //peticion post al back
+    let id = Math.floor(Math.random() * 91) + 10;
+    console.log('Peticion post exitosa');
+    console.log('Nuevo id' + id);
+    return id;
+  }
+
+  putMaterial(){
+    
+  }
+
+  deleteMaterial(){
+
+  }
+  
+  //Metodos 
+
+  //Getters
+  getMaterialsHandler(){
+    return this._materialsSubject.asObservable();
+  }
+  getSubCategoriesHandler(){
+    return this._SubCategoriesSubject.asObservable();
+  }
+  getCategoriesHandler(){
+    return this._CategoriesSubject.asObservable();
+  }
+  getSelectedMaterial(){
+    return this._selectedMaterialSubject.asObservable();
+  }
+  getSelectedSubCategory(){
+    return this._selectedSubCategorySubject.asObservable();
+  }
+  getSelectedCategory(){
+    return this._selectedCategorySubject.asObservable();
+  }
+
+  getEmptyMaterial() : Material{
+    return {
+        idMaterial: 0,
+        name: '',
+        description: '',
+        color: '',
+        brand: '',
+        measure: '',
+        unitOfMeasure: '',
+        subCategory : this.getEmptySubCategory()
+      
+    }
+  }
+  getEmptySubCategory() : SubCategoryMaterial{
+    return {
+      idCategoryMaterial: 0,
+      name: '',
+      category: this.getEmptyCategory()
+    }
+  }
+  getEmptyCategory() : Category{
+    return{
+      idCategory: 0,
+      name: ''
+    }
+  }
+
+  //Setters
+  setSelectedMaterial(material : Material){
+    this.selectedMaterial = material;
+    this._selectedMaterialSubject.next(this.selectedMaterial);
+  }
+  setSelectedSubCategory(subCategory : SubCategoryMaterial){
+    this.selectedSubCategory = subCategory;
+    this._selectedSubCategorySubject.next(this.selectedSubCategory);
+  }
+  setSelectedCategory(category : Category){
+    this.selectedCategory = category;
+    this._selectedCategorySubject.next(this.selectedCategory);
+  }
 
   // Función para obtener un material por su ID
   getMaterialById(id: number): Material | undefined {
@@ -201,5 +306,12 @@ export class MaterialService {
   }
 
 
-  constructor() { }
+  
+
+  constructor() { 
+    console.log(this.materials)
+    this._materialsSubject.next(this.materials)
+  }
+
+
 }

@@ -1,12 +1,67 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MaterialCardComponent } from '../material-card/material-card.component';
+import { Material } from '../../../../core/model/Material';
+import { MaterialService } from '../../../../core/services/material.service';
+import { Work } from '../../../../core/model/Work';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MaterialSearchComponent } from "../material-search/material-search.component";
+import { WorkService } from '../../../../core/services/work.service';
 
 @Component({
   selector: 'app-material-list',
   standalone: true,
-  imports: [],
+  imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, MaterialSearchComponent],
   templateUrl: './material-list.component.html',
   styleUrl: './material-list.component.css'
 })
 export class MaterialListComponent {
+  //Utils
+  private materialService = inject(MaterialService);
 
+  private router = inject(Router);
+  private activedRoute = inject(ActivatedRoute);
+  //Properties
+  
+  materials : Material[] = []
+  materialsToDisplay : Material[] = []
+  items : number = 5
+  page : number = 1
+
+  ngOnInit(): void {
+    this.materialService.getMaterialsHandler().subscribe(materials =>{
+      this.materials = materials;
+    })
+    if(this.router.url == '/material'){
+      this.materialsToDisplay = this.materials;
+    }
+      
+    
+  }
+
+
+  getAllMaterials() : Material[]{
+    let m : Material[] = [];
+    this.materialService.getMaterialsHandler().subscribe(materials=>{
+      m = materials;
+    }) 
+    return m;
+  }
+
+   //Search
+   handleSearch($Event : Material[]){
+    this.page = 1
+    this.materialsToDisplay = $Event;
+  }
+  seleccionar($Event : number){
+    let m = this.materialService.getMaterialById($Event)!;
+    this.materialService.setSelectedMaterial(m);
+  } 
+  editar($Event : number){}
+  eliminar($Event : number){}
+  pageChange(page: number) {
+    this.page = page;
+  }
 }
+

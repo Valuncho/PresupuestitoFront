@@ -1,85 +1,77 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Client } from '../model/Client';
 import { ClientHistory } from '../model/ClientHistory';
 import { BudgetService } from './budget.service';
 import { Budget } from '../model/Budget';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClientService {
   //Utils
   private budgetService = inject(BudgetService);
   //Properties
-  private clientes : Client[] = [
+  private clientes: Client[] = [
     {
       idClient: 1001,
       oPerson: {
-          idPerson: 1,
-          name: "John",
-          lastName: "Doe",
-          direction: "123 Main St",
-          phoneNumber: "1234567890",
-          mail: "johndoe@example.com",
-          dni: "123456789",
-          cuit: "30-12345678-9"
-      }
+        idPerson: 1,
+        name: 'John',
+        lastName: 'Doe',
+        direction: '123 Main St',
+        phoneNumber: '1234567890',
+        mail: 'johndoe@example.com',
+        dni: '123456789',
+        cuit: '30-12345678-9',
+      },
     },
     {
-        idClient: 1002,
-        oPerson: {
-            idPerson: 2,
-            name: "Jane",
-            lastName: "Smith",
-            direction: "456 Elm St",
-            phoneNumber: "9876543210",
-            mail: "janesmith@example.com",
-            dni: "987654321",
-            cuit: "30-98765432-1"
-        }
-    }
-  ]
-  private clientsHistory : ClientHistory [] = [
+      idClient: 1002,
+      oPerson: {
+        idPerson: 2,
+        name: 'Jane',
+        lastName: 'Smith',
+        direction: '456 Elm St',
+        phoneNumber: '9876543210',
+        mail: 'janesmith@example.com',
+        dni: '987654321',
+        cuit: '30-98765432-1',
+      },
+    },
+  ];
+  private clientsHistory: ClientHistory[] = [
     {
       idClientHistory: 1,
       oClient: this.clientes[0],
       budgets: [
         this.budgetService.getBudgetById(1)!,
-        this.budgetService.getBudgetById(2)!
-        
-      ]
+        this.budgetService.getBudgetById(2)!,
+      ],
     },
     {
       idClientHistory: 2,
       oClient: this.clientes[1],
       budgets: [
         this.budgetService.getBudgetById(3)!,
-        this.budgetService.getBudgetById(4)!
-        
-      ]
-    }
+        this.budgetService.getBudgetById(4)!,
+      ],
+    },
+  ];
+  private clienteSeleccionado: Client = this.getEmptyClient();
 
-  ]
-  private clienteSeleccionado : Client = this.getEmptyClient();
+  private _clientesSubject = new BehaviorSubject<Client[]>(this.clientes);
+  private _selectedClientSubject = new BehaviorSubject<Client>(
+    this.clienteSeleccionado
+  );
 
-  private _clientesSubject = new BehaviorSubject<Client[]>([]);
-  private _selectedClientSubject = new BehaviorSubject<Client>(this.clienteSeleccionado);
-
-  constructor() {
-    this._clientesSubject.next(this.clientes);
-  }
- 
   //Metodos que se conectarian con el back
-  getClients(){
-    
-  }
+  getClients() {}
   getClientById(clientId: number): Client | undefined {
-    return this.clientes.find(client => client.idClient === clientId);
+    return this.clientes.find((client) => client.idClient === clientId);
   }
-  
-  postClient(client : Client) : number{
+
+  postClient(client: Client): number {
     //peticion post al back
     let id = Math.floor(Math.random() * 91) + 10;
     console.log('Peticion post exitosa');
@@ -87,21 +79,19 @@ export class ClientService {
     return id;
   }
 
-  putClient(client : Client){
+  putClient(client: Client) {
     //peticion post al back
     console.log('Peticion put exitosa');
     console.log(client);
   }
 
-  deleteClient(clientId : number){
+  deleteClient(clientId: number) {
     console.log('Peticion delete exitosa');
     console.log('Cliente eliminado con id' + clientId);
   }
 
-
   //Metodos propios del front
-  getEmptyClient() : Client{
-    
+  getEmptyClient(): Client {
     const emptyClient: Client = {
       idClient: 0,
       oPerson: {
@@ -112,71 +102,71 @@ export class ClientService {
         phoneNumber: '',
         mail: '',
         dni: '',
-        cuit: ''
-      }
+        cuit: '',
+      },
     };
     return emptyClient;
   }
-  
-  get clients(){
+
+  get clients() {
     return this._clientesSubject.asObservable();
   }
-  
-  getClienHistory(clientId : number) : ClientHistory{
-    return this.clientsHistory.find(history => history.oClient.idClient === clientId)!;
+
+  getClienHistory(clientId: number): ClientHistory {
+    return this.clientsHistory.find(
+      (history) => history.oClient.idClient === clientId
+    )!;
   }
 
-  get selectedClient(){
+  get selectedClient() {
     return this._selectedClientSubject.asObservable();
   }
 
-  setSelectedClient(clientId: number){
+  setSelectedClient(clientId: number) {
     this.clienteSeleccionado = this.getClientById(clientId)!;
     this._selectedClientSubject.next(this.clienteSeleccionado);
-    
   }
-  resetSelectedClient(){
+  resetSelectedClient() {
     this.clienteSeleccionado = this.getEmptyClient();
-    this._selectedClientSubject.next(this.clienteSeleccionado); 
+    this._selectedClientSubject.next(this.clienteSeleccionado);
   }
-  
-  getBudgets(idClient: number): Budget[] | undefined{
+
+  getBudgets(idClient: number): Budget[] | undefined {
     const budgets = this.clientsHistory
-    .filter(element => element.oClient.idClient === idClient)
-    .flatMap(element => element.budgets);
+      .filter((element) => element.oClient.idClient === idClient)
+      .flatMap((element) => element.budgets);
     return budgets.length > 0 ? budgets : undefined;
-    
   }
 
   //Metodos que se conectan con los componentes
-  handleGetClients(){
-  }
+  handleGetClients() {}
 
-  addNewClient(client : Client){
+  addNewClient(client: Client) {
     this.clientes.push(client);
     this._clientesSubject.next(this.clientes);
   }
 
-  handlePostClient(client : Client){
+  handlePostClient(client: Client) {
     const id = this.postClient(client);
     client.idClient = id;
     this.addNewClient(client);
-    const emptyHistory : ClientHistory = {
+    const emptyHistory: ClientHistory = {
       idClientHistory: id,
       oClient: client,
-      budgets: []
-    }
+      budgets: [],
+    };
     this.clientsHistory.push(emptyHistory);
   }
 
-  handleUpdateClient(client : Client){
+  handleUpdateClient(client: Client) {
     this.putClient(client);
   }
 
-  handleDeleteClient(clientId : number){
-    this.clientes = this.clientes.filter((client)=> client.idClient !== clientId);
+  handleDeleteClient(clientId: number) {
+    this.clientes = this.clientes.filter(
+      (client) => client.idClient !== clientId
+    );
     this._clientesSubject.next(this.clientes);
     this.deleteClient(clientId);
   }
-
 }

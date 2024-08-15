@@ -12,6 +12,7 @@ import { BudgetService } from '../../../../core/services/budget.service';
   templateUrl: './work-view.component.html',
   styleUrl: './work-view.component.css'
 })
+
 export class WorkViewComponent {
 
 }

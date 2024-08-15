@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { Budget } from '../../../../core/model/Budget';
 import { set } from 'lodash';
+import {BudgetViewComponent} from "../../../budgets/pages/budget-view/budget-view.component";
 
 @Component({
   selector: 'app-work',
   standalone: true,
-  imports: [CommonModule, ButtonCardComponent],
+  imports: [CommonModule, ButtonCardComponent, BudgetViewComponent],
   templateUrl: './work.component.html',
   styleUrl: './work.component.css'
 })
@@ -26,7 +27,7 @@ export class WorkComponent {
 
   ngOnInit(): void {
 
-    
+
 
     this.workService.getSelectedWork().subscribe(work=>{
       this.currentWork = work;
@@ -37,7 +38,7 @@ export class WorkComponent {
       }
     })
 
-    
+
   }
 
   setBudget(){
@@ -45,7 +46,7 @@ export class WorkComponent {
     this.budgetService.setSelectedBudget(budget.idBudget);
   }
 
-  
+
   goToWorkArea(){
     this.setBudget()
     this.router.navigate(["/work/edit"]);
@@ -56,5 +57,5 @@ export class WorkComponent {
     console.log("qhe")
     this.router.navigate(["/budget/detail"]);
   }
-   
+
 }

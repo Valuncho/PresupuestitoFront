@@ -1,1 +1,26 @@
-<p>material-list works!</p>
+<div class="List">
+  <h3 class="List-title">Listado de materiales</h3>
+  <app-material-search
+    [material]="getAllMaterials()"
+    (results)="handleSearch($event)"
+    (sortedResults)="handleSearch($event)"
+  />
+  <div>
+    @for (material of materialsToDisplay | paginate:{ itemsPerPage: items,
+    currentPage: page }; track material.idMaterial; let idx = $index) {
+    <app-material-card
+      [Material]="material"
+      [idMaterial]="material.idMaterial"
+      (isClick)="seleccionar($event)"
+      (isEdit)="editar($event)"
+      (isDeleted)="eliminar($event)"
+    />
+    }
+  </div>
+
+  <pagination-controls
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    (pageChange)="pageChange($event)"
+  />
+</div>

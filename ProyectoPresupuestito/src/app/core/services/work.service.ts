@@ -116,13 +116,10 @@ export class WorkService {
   ];
    
   private selectedWork : Work = this.getEmptyWork();
-
-
-
   private _worksSubject = new BehaviorSubject<Work[]>(this.works);
   private _selectedWorkSubject = new BehaviorSubject<Work>(this.selectedWork);
-
   private estados : string[] = ['Presupuestado','Pendiente de aprobación','Aprobado','En proceso','Entregado','Cancelado'];
+
   constructor() { }
 
   getEmptyWork() : Work{
