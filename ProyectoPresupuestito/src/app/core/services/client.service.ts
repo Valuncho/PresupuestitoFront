@@ -121,12 +121,6 @@ export class ClientService {
     return this._clientesSubject.asObservable();
   }
 
-  getClienHistory(clientId: number): ClientHistory {
-    return this.clientsHistory.find(
-      (history) => history.oClient.idClient === clientId
-    )!;
-  }
-
   get selectedClient() {
     return this._selectedClientSubject.asObservable();
   }
@@ -141,11 +135,22 @@ export class ClientService {
 
   setSelectedClient(clientId: number) {
     this.clienteSeleccionado = this.getClientById(clientId)!;
+    this.fichaSeleccionada = this.getClienHistory(clientId)!;
+    this._selectedHistorySubject.next(this.fichaSeleccionada);
     this._selectedClientSubject.next(this.clienteSeleccionado);
   }
   resetSelectedClient() {
     this.clienteSeleccionado = this.getEmptyClient();
+    this.fichaSeleccionada = this.getEmptyHistory();
+    this._selectedHistorySubject.next(this.fichaSeleccionada);
     this._selectedClientSubject.next(this.clienteSeleccionado);
+  }
+
+  
+  getClienHistory(clientId: number): ClientHistory {
+    return this.clientsHistory.find(
+      (history) => history.oClient.idClient === clientId
+    )!;
   }
 
   getBudgets(idClient: number): Budget[] | undefined {
@@ -185,5 +190,20 @@ export class ClientService {
     );
     this._clientesSubject.next(this.clientes);
     this.deleteClient(clientId);
+  }
+
+  handleDeleteBudged(budgetId : number){
+    this.fichaSeleccionada.budgets = this.deleteBudgetById(this.fichaSeleccionada.budgets, budgetId);
+    this._selectedHistorySubject.next(this.fichaSeleccionada);
+  }
+
+  deleteBudgetById(budgets: Budget[], idAEliminar: number): Budget[] {
+    const indice = budgets.findIndex(budget => budget.idBudget === idAEliminar);
+  
+    if (indice !== -1) {
+      budgets.splice(indice, 1);
+    }
+  
+    return budgets;
   }
 }

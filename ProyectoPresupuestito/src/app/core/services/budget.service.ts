@@ -4,6 +4,7 @@ import { WorkService } from './work.service';
 import { BehaviorSubject } from 'rxjs';
 import { ClientHistory } from '../model/ClientHistory';
 import { Work } from '../model/Work';
+import { ClientService } from './client.service';
 
 @Injectable({
   providedIn: 'root',
@@ -203,8 +204,9 @@ export class BudgetService {
       (budget) => budget.idBudget !== budgetId
     );
 
+    
     console.log(this.budgets);
-
+    
     this._budgetsSubject.next(this.budgets);
 
     
@@ -220,5 +222,16 @@ export class BudgetService {
     return this.budgets.find((budget) =>
       budget.works.some((w) => w.idWork === work.idWork)
     )!;
+  }
+
+
+  deleteBudgetById(budgets: Budget[], idAEliminar: number): Budget[] {
+    const indice = budgets.findIndex(budget => budget.idBudget === idAEliminar);
+  
+    if (indice !== -1) {
+      budgets.splice(indice, 1);
+    }
+  
+    return budgets;
   }
 }

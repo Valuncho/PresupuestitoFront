@@ -44,16 +44,13 @@ export class BudgetListComponent {
       this.budgets = budgets;
       })
 
-  this.clientService.selectedClient.subscribe(client =>{
-    if(client.idClient != 0){
-    this.budgetsToDisplay = this.clientService.getBudgets(client.idClient)!;
-    }else{
-    this.budgetsToDisplay = this.budgets;
-    }
-  })
-
-
-
+      this.clientService.selectedHistory.subscribe(history =>{
+        if(history.idClientHistory!=0){
+          this.budgetsToDisplay = history.budgets;
+        }else{
+          this.budgetsToDisplay = this.budgets;
+        }
+      })
 
   }
 
@@ -87,6 +84,7 @@ export class BudgetListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.clientService.handleDeleteBudged($Event)
         this.budgetService.handleDeleteBudget($Event);
         this.notificationService.showNotification("Presupuesto eliminado con éxito");
         this.router.navigate(['/budget']);
