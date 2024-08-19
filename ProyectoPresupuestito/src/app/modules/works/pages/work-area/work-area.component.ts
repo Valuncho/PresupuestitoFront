@@ -4,6 +4,7 @@ import { WorkComponent } from "../../components/work/work.component";
 import { MaterialListComponent } from "../../../materials/components/material-list/material-list.component";
 import { WorkService } from '../../../../core/services/work.service';
 import { Router } from '@angular/router';
+import {BudgetService} from "../../../../core/services/budget.service";
 
 @Component({
   selector: 'app-work-area',
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 export class WorkAreaComponent {
   //Util
   private workService = inject(WorkService);
+  private budgetService = inject(BudgetService);
   private router = inject(Router);
   private currentWork = this.workService.getEmptyWork();
   ngOnInit(): void {
@@ -25,5 +27,9 @@ export class WorkAreaComponent {
       this.router.navigate(['/work'])
     }
   }
-  
+
+  ngOnDestroy(){
+    this.budgetService.resetSelectedBudget();
+  }
+
 }

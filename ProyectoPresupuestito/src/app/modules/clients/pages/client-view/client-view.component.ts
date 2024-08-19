@@ -13,6 +13,8 @@ import { ClientListComponent } from "../../components/client-list/client-list.co
 
 export class ClientViewComponent {
   private clientService = inject(ClientService);
-    
+
+
+
 }
-  
+

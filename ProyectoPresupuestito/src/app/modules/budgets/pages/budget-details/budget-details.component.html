@@ -5,12 +5,12 @@
                 <h3>Detalle del presupuesto</h3>
                 <div class="Interior">
                     <p>Descripcion: {{currentBudget?.description}}</p>
-                    <p>Fecha confección: {{currentBudget?.createdDate | date:'short' }}</p>
-                    <p>Fecha limite: {{currentBudget?.deadLine | date:'short'}}</p>
+                    <p>Fecha confección: {{currentBudget?.createdDate | date:'dd/MM/yyyy' }}</p>
+                    <p>Fecha limite: {{currentBudget?.deadLine | date:'dd/MM/yyyy'}}</p>
                     <p>Estado: {{currentBudget?.Status}}</p>
                     <p>Precio final: {{currentBudget?.cost | currency }}</p>
                 </div>
-                
+
             </div>
             <div class="Detalle">
                 <h3>Fotos del trabajo</h3>
@@ -23,25 +23,25 @@
                         <img src="" alt="placeholder">
                     }
                 </div>
-                
+
             </div>
         </article>
         <article>
             <div class="Detalle Centro">
                 <h3>Trabajos</h3>
-                
+
                     @for (work of currentBudget?.works; track work.idWork; let idx = $index) {
                         <app-work-card
-                        [Work]="currentBudget!.works[idx]" 
+                        [Work]="currentBudget!.works[idx]"
                         [idWork]="currentBudget!.works[idx].idWork"
                         (isClick)="seleccionar($event)"
-                        (isEdit)="editWork($event)" 
-                        (isDeleted)="deleteWork($event)" 
+                        (isEdit)="editWork($event)"
+                        (isDeleted)="deleteWork($event)"
                         />
-                        
+
                     }
                 </div>
-        
+
             <button class="Boton1" (click)="goToWorkArea()">Ir al area de trabajo</button>
         </article>
         <article>

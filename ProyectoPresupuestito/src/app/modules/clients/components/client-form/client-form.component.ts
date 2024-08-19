@@ -42,16 +42,16 @@ export class ClientFormComponent {
   get canSubmit(){
     let  flag : boolean = false;
     if(
-      this.clientForm.get('name')?.valid && 
-      this.clientForm.get('lastName')?.valid && 
-      this.clientForm.get('direction')?.valid && 
+      this.clientForm.get('name')?.valid &&
+      this.clientForm.get('lastName')?.valid &&
+      this.clientForm.get('direction')?.valid &&
       this.clientForm.get('phoneNumber')?.valid
     ){
       flag = true;
     }
     return flag;
   }
-  
+
   setUp(){
     this.clientForm.reset();
     this.isEdit = false;
@@ -65,12 +65,11 @@ export class ClientFormComponent {
   }
 
   onEditHandler(){
-    this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
-    if(this.clientId){
-        this.isEdit = true;
-        this.clientService.selectedClient.subscribe(client =>{
-          this.currentClient= client;
-          this.clientForm.patchValue(this.currentClient.oPerson);
+    if(this.router.url == "/client/edit"){
+      this.isEdit = true;
+      this.clientService.selectedClient.subscribe(client =>{
+        this.currentClient= client;
+        this.clientForm.patchValue(this.currentClient.oPerson);
       })
     }else{
       this.isEdit = false;
@@ -91,5 +90,5 @@ export class ClientFormComponent {
   }
 
 
-  
+
 }

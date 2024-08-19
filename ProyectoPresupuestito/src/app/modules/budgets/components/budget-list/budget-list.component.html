@@ -1,18 +1,18 @@
 <div class="List">
     <h3 class="List-title">Listado de presupuestos</h3>
     <app-budget-search/>
-    @for (budget of budgets | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget) {
-      <app-budget-card 
-      [Budget]="budget" 
+    @for (budget of budgetsToDisplay | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget) {
+      <app-budget-card
+      [Budget]="budget"
       [idBudget]="budget.idBudget"
       (isSelect)="handleSelectBudget($event)"
         (action)="handleAction($event)"
         (isView)="handleView($event)"
-        (isEdit)="handleEdit($event)" 
-        (isDeleted)="handleDelete($event)" 
+        (isEdit)="handleEdit($event)"
+        (isDeleted)="handleDelete($event)"
       />
     }
-    <pagination-controls 
+    <pagination-controls
       previousLabel="Anterior"
       nextLabel="Siguiente"
       (pageChange)="pageChange($event)"

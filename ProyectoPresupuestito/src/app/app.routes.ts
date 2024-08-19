@@ -18,20 +18,17 @@ export const routes: Routes = [
 
     {path: 'client', component: ClientViewComponent},
     {path: 'client/detail', component: ClientDetailsComponent},
-    {path: 'client/edit/:clientId', component: ClientViewComponent},
+    {path: 'client/edit', component: ClientViewComponent},
     
     {path: 'budget', component: BudgetViewComponent},
     {path: 'budget/detail', component: BudgetDetailsComponent},
-    {path: 'budget/new/:clientId', component: BudgetViewComponent},
     {path: 'budget/edit', component: BudgetViewComponent},
 
     {path: 'work', component: WorkViewComponent},
     {path: 'work/detail', component: WorkDetailsComponent},
-    {path: 'work/new', component: WorkAreaComponent},
     {path: 'work/edit', component: WorkAreaComponent},
     
     {path: 'material', component: MaterialViewComponent},
-    {path: 'material/new', component: MaterialFormViewComponent},
     {path: 'material/edit', component: MaterialFormViewComponent},
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},

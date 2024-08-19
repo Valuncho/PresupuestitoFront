@@ -185,10 +185,11 @@ export class BudgetService {
     this._budgetsSubject.next(this.budgets);
   }
 
-  handlePostBudget(budget: Budget) {
+  handlePostBudget(budget: Budget) : number{
     const id = this.postBudget(budget);
     budget.idBudget = id;
     this.addNewBudget(budget);
+    return  id;
   }
 
   handleUpdateBudget(budget: Budget) {
@@ -196,10 +197,17 @@ export class BudgetService {
   }
 
   handleDeleteBudget(budgetId: number) {
+    
+    console.log(budgetId)
     this.budgets = this.budgets.filter(
       (budget) => budget.idBudget !== budgetId
     );
+
+    console.log(this.budgets);
+
     this._budgetsSubject.next(this.budgets);
+
+    
     this.deleteBudget(budgetId);
   }
 

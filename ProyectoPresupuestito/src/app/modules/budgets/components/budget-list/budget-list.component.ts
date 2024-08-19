@@ -30,28 +30,31 @@ export class BudgetListComponent {
   private clientService = inject(ClientService);
   //Properties
   budgets : Budget[] = [];
+  budgetsToDisplay : Budget[] = [];
   clientId : number = 0
 
   //Pagination
   page : number = 1;
   itemsPerPage : number = 5;
 
-  
-  ngOnInit(){
-    this.clientService.selectedClient.subscribe(client =>{
-      console.log(client);
-      if(client.idClient != 0){
-        this.budgets = this.clientService.getBudgets(client.idClient)!;
-      }else{
-        this.budgetService.getBudgets().subscribe(budgets =>{
-          this.budgets = budgets;
-        })
-      }
-    })
-    
 
-   
-    
+  ngOnInit(){
+
+    this.budgetService.getBudgets().subscribe(budgets =>{
+      this.budgets = budgets;
+      })
+
+  this.clientService.selectedClient.subscribe(client =>{
+    if(client.idClient != 0){
+    this.budgetsToDisplay = this.clientService.getBudgets(client.idClient)!;
+    }else{
+    this.budgetsToDisplay = this.budgets;
+    }
+  })
+
+
+
+
   }
 
   handleSelectBudget($Event : number){
@@ -61,16 +64,16 @@ export class BudgetListComponent {
 
   handleAction($Event : any){
     this.budgetService.setSelectedBudget($Event)
-    this.router.navigate(['/work/new/',$Event]);
+    this.router.navigate(['/work/new']);
   }
 
   handleView($Event : any){
     this.budgetService.setSelectedBudget($Event)
     this.router.navigate(['/budget/detail']);
   }
-  
+
   handleEdit($Event : any){
-    
+
     this.budgetService.setSelectedBudget($Event)
     this.router.navigate(['/budget/edit']);
   }
@@ -86,10 +89,10 @@ export class BudgetListComponent {
       if (result) {
         this.budgetService.handleDeleteBudget($Event);
         this.notificationService.showNotification("Presupuesto eliminado con éxito");
-        this.router.navigate(['/budget']); 
+        this.router.navigate(['/budget']);
       }
     });
-    
+
   }
 
   //Pagination

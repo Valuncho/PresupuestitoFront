@@ -1,32 +1,39 @@
-import { Component, inject, signal } from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import { NavbarComponent } from "../../../../components/navbar/navbar.component";
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Budget } from '../../../../core/model/Budget';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { state } from '@angular/animations';
 import { BudgetListComponent } from "../budget-list/budget-list.component";
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
 import { ClientSearchComponent } from "../../../clients/components/client-search/client-search.component";
 import { ModalService } from '../../../../core/services/utils/modal.service';
-import { ClientFormComponent } from '../../../clients/components/client-form/client-form.component';
-import { ClientViewComponent } from '../../../clients/pages/client-view/client-view.component';
 import { ClientListComponent } from '../../../clients/components/client-list/client-list.component';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
+
+import {MatDatepickerIntl, MatDatepickerModule} from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 @Component({
   selector: 'app-budget-form',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, ReactiveFormsModule, CommonModule, BudgetListComponent, ClientSearchComponent],
+  imports: [NavbarComponent, FormsModule, ReactiveFormsModule, CommonModule, BudgetListComponent, ClientSearchComponent, MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule],
   templateUrl: './budget-form.component.html',
   styleUrl: './budget-form.component.css'
 })
 export class BudgetFormComponent {
+
   //Utils
+  private readonly _adapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
+  private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
   private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
   private notificationService = inject(NotificationService);
   private modalService = inject(ModalService);
   private budgetService = inject(BudgetService);
@@ -35,47 +42,29 @@ export class BudgetFormComponent {
   currentBudget : Budget = this.budgetService.getEmptyBudget();
   currentClient : Client = this.clientService.getEmptyClient();
   isEdit : boolean = false;
-  budgets : Budget[] | undefined = [];
-  
-
+  estados : string[] = this.budgetService.getEstados();
+  //Form
   BudgetForm : FormGroup = new FormGroup({
-    createdDate : new FormControl(new Date().getDate().toLocaleString().split('T')[0], Validators.required),
-    deadLine : new FormControl(new Date(), Validators.required),
-    description : new FormControl('', Validators.required),
+    createdDate : new FormControl('', Validators.required),
+    deadLine : new FormControl('', Validators.required),
+    description : new FormControl('Descripción', Validators.required),
     cost : new FormControl(1000, Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
     idClient : new FormControl('', Validators.required),
-    client : new FormControl('')
+    client : new FormControl('Seleccionar cliente')
   });
 
-  clientSearchEnable = true;
-  
-  estados : string[] = this.budgetService.getEstados();
-
-  
-
-
-
-  getClients() : Client[]{
-    let c : Client[] = [];
-    this.clientService.clients.subscribe(clients =>{
-      c = clients;
-    })
-    return c;
-    
-  }
 
   ngOnInit(){
+
+    this.setDateFortmat('es');
+
     this.budgetService.getSelectedBudget().subscribe(budget =>{
       this.currentBudget = budget;
-      console.log(this.currentBudget)
       if(this.router.url == '/budget/edit'){
         this.onEdit();
       }
     })
-
-    
-    
 
     this.clientService.selectedClient.subscribe(client =>{
       this.currentClient=client;
@@ -85,10 +74,16 @@ export class BudgetFormComponent {
 
   }
 
+  setDateFortmat(format : string){
+    this._locale.set(format);
+    this._adapter.setLocale(this._locale());
+  }
+
   setUp(){
     this.BudgetForm.reset();
     this.isEdit = false;
     this.currentBudget = this.budgetService.getEmptyBudget();
+    this.clientService.resetSelectedClient();
   }
 
   resetForm($Event : Event){
@@ -98,7 +93,7 @@ export class BudgetFormComponent {
   }
 
   openClientForm(){
-    this.modalService.openModal<ClientListComponent,Client>(ClientListComponent);  
+    this.modalService.openModal<ClientListComponent,Client>(ClientListComponent);
   }
 
   onClientSelected(clientId: number) {
@@ -109,18 +104,13 @@ export class BudgetFormComponent {
 
   onEdit(){
     this.isEdit = true;
-
-    
-      console.log(this.currentBudget);
       this.BudgetForm.patchValue(this.currentBudget);
       this.BudgetForm.patchValue({cost : this.currentBudget.cost});
       this.BudgetForm.patchValue({description : this.currentBudget.description});
-      this.BudgetForm.patchValue({createdDate : this.currentBudget.createdDate.toISOString().split('T')[0]});
-      this.BudgetForm.patchValue({deadLine : this.currentBudget.deadLine.toISOString().split('T')[0]});
+      this.BudgetForm.patchValue({createdDate : this.currentBudget.createdDate});
+      this.BudgetForm.patchValue({deadLine : this.currentBudget.deadLine});
       this.BudgetForm.patchValue({estado: this.currentBudget.Status })
       this.BudgetForm.get('client')?.disabled;
-    
-    
   }
   onSubmit(){
     this.toBudget();
@@ -130,8 +120,10 @@ export class BudgetFormComponent {
     }else{
       let history = this.clientService.getClienHistory(this.BudgetForm.get('idClient')?.value);
       history.budgets.push(this.currentBudget);
-      this.budgetService.handlePostBudget(this.currentBudget);
-      this.notificationService.showNotification("Presupuesto creado con éxito!");
+      let id = this.budgetService.handlePostBudget(this.currentBudget);
+      this.notificationService.showNotification("Presupuesto creado con éxito!" + id);
+      this.budgetService.setSelectedBudget(id);
+      this.router.navigate(["/work/edit"]);
     }
     this.setUp();
   }

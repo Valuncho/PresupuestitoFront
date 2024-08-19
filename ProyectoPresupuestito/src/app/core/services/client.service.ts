@@ -59,11 +59,12 @@ export class ClientService {
     },
   ];
   private clienteSeleccionado: Client = this.getEmptyClient();
-
+  private fichaSeleccionada: ClientHistory = this.getEmptyHistory();
   private _clientesSubject = new BehaviorSubject<Client[]>(this.clientes);
-  private _selectedClientSubject = new BehaviorSubject<Client>(
-    this.clienteSeleccionado
-  );
+  private _historiesSubject = new BehaviorSubject<ClientHistory[]>(this.clientsHistory);
+
+  private _selectedClientSubject = new BehaviorSubject<Client>(this.clienteSeleccionado);
+  private _selectedHistorySubject = new BehaviorSubject<ClientHistory>(this.fichaSeleccionada);
 
   //Metodos que se conectarian con el back
   getClients() {}
@@ -92,7 +93,7 @@ export class ClientService {
 
   //Metodos propios del front
   getEmptyClient(): Client {
-    const emptyClient: Client = {
+    return  {
       idClient: 0,
       oPerson: {
         idPerson: 0,
@@ -105,7 +106,15 @@ export class ClientService {
         cuit: '',
       },
     };
-    return emptyClient;
+
+  }
+
+  getEmptyHistory() : ClientHistory{
+    return {
+      idClientHistory: 0,
+      oClient : this.getEmptyClient(),
+      budgets : []
+    }
   }
 
   get clients() {
@@ -120,6 +129,14 @@ export class ClientService {
 
   get selectedClient() {
     return this._selectedClientSubject.asObservable();
+  }
+
+  get ClientHistories(){
+    return this._historiesSubject.asObservable();
+  }
+
+  get selectedHistory(){
+    return this._selectedHistorySubject.asObservable();
   }
 
   setSelectedClient(clientId: number) {
