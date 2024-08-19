@@ -3,14 +3,23 @@ import { Client } from '../model/Client';
 import { ClientHistory } from '../model/ClientHistory';
 import { BudgetService } from './budget.service';
 import { Budget } from '../model/Budget';
-import { BehaviorSubject } from 'rxjs';
-
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ClientSelectors } from '../../modules/clients/state';
+import { clients } from '../../modules/clients/state/client.selectors';
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
   //Utils
   private budgetService = inject(BudgetService);
+  private store = inject(Store);
+
+  private clients$ : Observable<Client[]> = this.store.select(clients);
+
+  getClientes(){
+    return this.clients$;
+  }
   //Properties
   private clientes: Client[] = [
     {
@@ -60,7 +69,7 @@ export class ClientService {
   ];
   private clienteSeleccionado: Client = this.getEmptyClient();
   private fichaSeleccionada: ClientHistory = this.getEmptyHistory();
-  private _clientesSubject = new BehaviorSubject<Client[]>(this.clientes);
+  private _clientesSubject = new BehaviorSubject<Client[]>([]);
   private _historiesSubject = new BehaviorSubject<ClientHistory[]>(this.clientsHistory);
 
   private _selectedClientSubject = new BehaviorSubject<Client>(this.clienteSeleccionado);
@@ -121,7 +130,7 @@ export class ClientService {
     return this._clientesSubject.asObservable();
   }
 
-  get selectedClient() {
+  get selectedClient() : Observable<Client> {
     return this._selectedClientSubject.asObservable();
   }
 
@@ -197,8 +206,8 @@ export class ClientService {
     this._selectedHistorySubject.next(this.fichaSeleccionada);
   }
 
-  deleteBudgetById(budgets: Budget[], idAEliminar: number): Budget[] {
-    const indice = budgets.findIndex(budget => budget.idBudget === idAEliminar);
+  deleteBudgetById(budgets: Budget[], id: number): Budget[] {
+    const indice = budgets.findIndex(budget => budget.idBudget === id);
   
     if (indice !== -1) {
       budgets.splice(indice, 1);

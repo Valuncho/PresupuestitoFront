@@ -5,18 +5,15 @@
     (results)="handleSearch($event)"
     (sortedResults)="handleSearch($event)"
   />
-  <div class="CardContainer">
-    @for (client of clients() | paginate: { itemsPerPage: pageSize, currentPage:
-    page } ; track client) {
-    <app-card
+  <div class="CardContainer" *ngIf="clients$ | async as clients">
+    <app-card *ngFor="let client of clients | paginate: { itemsPerPage: pageSize, currentPage:page }"
       [Person]="client.oPerson"
       [IdClient]="client.idClient"
       (action)="handleAction($event)"
       (isView)="handleViewClient($event)"
       (isEdit)="handleEditClient($event)"
       (isDeleted)="handleDeleteClient($event)"
-    ></app-card>
-    }
+    />
   </div>
   <pagination-controls
     previousLabel="Anterior"
