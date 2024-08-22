@@ -2,7 +2,6 @@ import { Component, EventEmitter, inject, Input, Output, signal } from '@angular
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Client } from '../../../../core/model/Client';
-import * as lodash from 'lodash';
 import { ClientService } from '../../../../core/services/client.service';
 
 @Component({

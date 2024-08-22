@@ -5,8 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
-import { Store } from '@ngrx/store';
-import { ClientViewActions } from '../../state';
+
 
 @Component({
   selector: 'app-client-form',
@@ -17,7 +16,6 @@ import { ClientViewActions } from '../../state';
 })
 export class ClientFormComponent {
   //Utils
-  private store = inject(Store);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private notificationService = inject(NotificationService);
@@ -70,10 +68,9 @@ export class ClientFormComponent {
   onEditHandler(){
     if(this.router.url == "/client/edit"){
       this.isEdit = true;
-      this.clientService.selectedClient.subscribe(client =>{
-        this.currentClient= client;
-        this.clientForm.patchValue(this.currentClient.oPerson);
-      })
+      this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
+      this.currentClient = this.clientService.getClientById(this.clientId)!;
+      this.clientForm.patchValue(this.currentClient.oPerson);
     }else{
       this.isEdit = false;
     }
@@ -81,14 +78,11 @@ export class ClientFormComponent {
 
   onSubmit(){
     this.currentClient.oPerson = this.clientForm.value;
-    let client : Client = this.currentClient;
     if(this.isEdit){
       this.clientService.handleUpdateClient(this.currentClient);
-      this.store.dispatch(ClientViewActions.updateClient({client}));
       this.notificationService.showNotification("Cliente editado con éxito!");
     }else{
       this.clientService.handlePostClient(this.currentClient);
-      this.store.dispatch(ClientViewActions.addClient({client}));
       this.notificationService.showNotification("Cliente guardado con éxito!");
     }
     this.setUp();
