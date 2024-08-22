@@ -155,6 +155,7 @@ export class ClientService {
     this._selectedHistorySubject.next(this.fichaSeleccionada);
     this._selectedClientSubject.next(this.clienteSeleccionado);
   }
+  
   resetSelectedClient() {
     this.clienteSeleccionado = this.getEmptyClient();
     this.fichaSeleccionada = this.getEmptyHistory();

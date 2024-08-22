@@ -77,17 +77,17 @@ export class ClientListComponent {
   //Card
   handleAction($Event : any){
     this.clientService.setSelectedClient($Event)
-    this.router.navigate(['/budget']);
+    this.router.navigate(['/budget/new/',$Event]);
   }
 
   handleViewClient($Event : any){
     this.clientService.setSelectedClient($Event)
-    this.router.navigate(['/client/detail']);
+    this.router.navigate(['/client/detail/',$Event]);
   }
 
   handleEditClient($Event : any){
     this.clientService.setSelectedClient($Event)
-    this.router.navigate(['/client/edit']);
+    this.router.navigate(['/client/edit/',$Event]);
   }
 
   handleDeleteClient($Event : any){
