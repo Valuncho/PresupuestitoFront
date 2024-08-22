@@ -66,14 +66,18 @@ export class ClientFormComponent {
   }
 
   onEditHandler(){
-    if(this.router.url == "/client/edit"){
-      this.isEdit = true;
-      this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
-      this.currentClient = this.clientService.getClientById(this.clientId)!;
-      this.clientForm.patchValue(this.currentClient.oPerson);
-    }else{
-      this.isEdit = false;
+    this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
+    if(this.clientId){
+      let url = "/client/edit/" + this.clientId;
+      if(this.router.url == url){
+        this.isEdit = true;
+        this.currentClient = this.clientService.getClientById(this.clientId)!;
+        this.clientForm.patchValue(this.currentClient.oPerson);
+      }else{
+        this.isEdit = false;
+      }
     }
+    
   }
 
   onSubmit(){
