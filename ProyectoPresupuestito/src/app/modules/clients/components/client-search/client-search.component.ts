@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Client } from '../../../../core/model/Client';
 import * as lodash from 'lodash';
+import { ClientService } from '../../../../core/services/client.service';
 
 @Component({
   selector: 'app-client-search',
@@ -12,7 +13,8 @@ import * as lodash from 'lodash';
   styleUrl: './client-search.component.css',
 })
 export class ClientSearchComponent {
-  @Input() clients: Client[] = [];
+  private clientService = inject(ClientService);
+  
   @Output() clientSelected = new EventEmitter<number>();
   @Output() results = new EventEmitter<Client[]>();
   @Output() sortedResults = new EventEmitter<Client[]>();
@@ -22,12 +24,16 @@ export class ClientSearchComponent {
   filteredClients: Client[] = [];
 
   ngOnInit() {
-    this.filteredClients = this.clients;
+    this.clientService.getAllClients().subscribe({
+      next : (clients) =>{
+        this.filteredClients = clients;
+      }
+    })
   }
 
   sort() {
     let sorted: Client[] = [];
-    switch (this.filtro.value) {
+    /*switch (this.filtro.value) {
       case 'alfabeticamente':
         sorted = lodash.orderBy(
           this.clients.map((client) => ({
@@ -62,13 +68,13 @@ export class ClientSearchComponent {
     }
     console.log(sorted);
     console.log('ordenado');
-    this.filteredClients = sorted;
+    this.filteredClients = sorted;*/
     this.sortedResults.emit(this.filteredClients);
   }
 
   search() {
     console.log(this.busqueda.value);
-    this.filteredClients = this.clients.filter(
+    /*this.filteredClients = this.clients.filter(
       (client) =>
         client.oPerson.name
           .toLowerCase()
@@ -86,7 +92,7 @@ export class ClientSearchComponent {
           ?.toString()
           .includes(this.busqueda.value!.toLowerCase())
     );
-
+*/
     this.sortedResults.emit(this.filteredClients);
   }
 }

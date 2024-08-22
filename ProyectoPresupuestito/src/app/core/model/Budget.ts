@@ -11,5 +11,4 @@ export interface Budget
     cost : number;
     Status : string;
     payments? : Payment[];
-    
 }

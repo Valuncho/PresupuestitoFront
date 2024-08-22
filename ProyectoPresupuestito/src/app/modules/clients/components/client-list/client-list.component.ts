@@ -10,29 +10,30 @@ import { ClientSearchComponent } from "../client-search/client-search.component"
 import { CardComponent } from '../../../../components/card/card.component';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { Store } from '@ngrx/store';
-import { ClientSelectors, ClientViewActions } from "../../state/index"
+
+
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-client-list',
   standalone: true,
   imports: [ClientSearchComponent, CardComponent, NgxPaginationModule, CommonModule],
+  
   templateUrl: './client-list.component.html',
-  styleUrl: './client-list.component.css'
+  styleUrl: './client-list.component.css',
+  
 })
 
 export class ClientListComponent {
   //Utils
-  private store = inject(Store);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private notificationService = inject(NotificationService);
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
   //Properties
-  clients$ : Observable<Client[]> = this.clientService.getClientes();
+  clients : Client[] = [];
   searchedClients : Client[] = [];
   client? : Client;
   //BudgetForm
@@ -44,21 +45,18 @@ export class ClientListComponent {
 
   ngOnInit(): void {
 
-    this.store.dispatch(ClientViewActions.init())
-
     if(this.router.url == '/budget' || this.router.url == '/budget/new/'){
       console.log(this.router.url)
       this.options = true;
     }
 
-    
-    this.clientService.clients.subscribe({
+    this.clientService.getAllClients().subscribe({
       next : (clientes)=>{
-       // this.clients.set(clientes);
-      }
-    })
+          this.clients = clientes;
+          this.searchedClients = clientes;
+       }
+    });
 
-  
   }
 
 //BudgetForm
@@ -66,20 +64,14 @@ export class ClientListComponent {
     this.modalService.openModal<ClientFormComponent,Client>(ClientFormComponent);
   }
 
-  getAllClients() : Client[]{
-    let allClients : Client[] = [];
-    this.clientService.clients.subscribe(clients=>{
-      allClients = clients;
-    })
-
-    return allClients
-  }
-
-
   //Search
   handleSearch($Event : Client[]){
     this.page = 1
-  //  this.clients.set($Event);
+    this.clientService.getClientsBySearch("filto").subscribe({
+      next : (clients) =>{
+        this.searchedClients = clients;
+      }
+    })
   }
 
   //Card
@@ -108,7 +100,7 @@ export class ClientListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const client = this.clientService.getClientById($Event)!;
-        this.store.dispatch(ClientViewActions.deleteClient({client}))
+        
         this.clientService.handleDeleteClient($Event)
         this.notificationService.showNotification("Cliente eliminado con éxito");
         this.router.navigate(['/client']);

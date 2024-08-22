@@ -17,16 +17,16 @@ export const routes: Routes = [
     {path: 'about', component: AboutComponent},
 
     {path: 'client', component: ClientViewComponent},
-    {path: 'client/detail', component: ClientDetailsComponent},
-    {path: 'client/edit', component: ClientViewComponent},
+    {path: 'client/detail/:clientId', component: ClientDetailsComponent},
+    {path: 'client/edit/:clientId', component: ClientViewComponent},
     
     {path: 'budget', component: BudgetViewComponent},
-    {path: 'budget/detail', component: BudgetDetailsComponent},
-    {path: 'budget/edit', component: BudgetViewComponent},
+    {path: 'budget/detail/:budgetId', component: BudgetDetailsComponent},
+    {path: 'budget/edit/:budgetId', component: BudgetViewComponent},
 
     {path: 'work', component: WorkViewComponent},
-    {path: 'work/detail', component: WorkDetailsComponent},
-    {path: 'work/edit', component: WorkAreaComponent},
+    {path: 'work/detail/:workId', component: WorkDetailsComponent},
+    {path: 'work/edit/:workId', component: WorkAreaComponent},
     
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/edit', component: MaterialFormViewComponent},

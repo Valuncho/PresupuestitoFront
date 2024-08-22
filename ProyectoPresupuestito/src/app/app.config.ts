@@ -6,6 +6,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideStore } from '@ngrx/store';
 import { ClientsReducer, clientsStateFeatureKey } from './modules/clients/state';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideEffects, EffectsModule } from '@ngrx/effects';
+import {ClientEffect} from "./modules/clients/state/index";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({
        'clientsState' : ClientsReducer
     }),
+
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]
 };

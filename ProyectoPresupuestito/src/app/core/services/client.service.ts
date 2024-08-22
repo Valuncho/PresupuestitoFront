@@ -3,23 +3,15 @@ import { Client } from '../model/Client';
 import { ClientHistory } from '../model/ClientHistory';
 import { BudgetService } from './budget.service';
 import { Budget } from '../model/Budget';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { ClientSelectors } from '../../modules/clients/state';
-import { clients } from '../../modules/clients/state/client.selectors';
+import {BehaviorSubject, delay, Observable, of} from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
   //Utils
   private budgetService = inject(BudgetService);
-  private store = inject(Store);
-
-  private clients$ : Observable<Client[]> = this.store.select(clients);
-
-  getClientes(){
-    return this.clients$;
-  }
+  
   //Properties
   private clientes: Client[] = [
     {
@@ -76,9 +68,20 @@ export class ClientService {
   private _selectedHistorySubject = new BehaviorSubject<ClientHistory>(this.fichaSeleccionada);
 
   //Metodos que se conectarian con el back
-  getClients() {}
+  getAllClients() : Observable<Client[]>{
+    return this._clientesSubject.asObservable();
+  }
+
   getClientById(clientId: number): Client | undefined {
     return this.clientes.find((client) => client.idClient === clientId);
+  }
+
+  getClientsBySearch(search : string) : Observable<Client[]>{
+    return this._clientesSubject.asObservable();
+  }
+
+  getSortClients(sort : string) : Observable<Client[]>{
+    return this._clientesSubject.asObservable();
   }
 
   postClient(client: Client): number {
@@ -99,6 +102,10 @@ export class ClientService {
     console.log('Peticion delete exitosa');
     console.log('Cliente eliminado con id' + clientId);
   }
+
+
+
+
 
   //Metodos propios del front
   getEmptyClient(): Client {
@@ -155,7 +162,7 @@ export class ClientService {
     this._selectedClientSubject.next(this.clienteSeleccionado);
   }
 
-  
+
   getClienHistory(clientId: number): ClientHistory {
     return this.clientsHistory.find(
       (history) => history.oClient.idClient === clientId
@@ -208,11 +215,11 @@ export class ClientService {
 
   deleteBudgetById(budgets: Budget[], id: number): Budget[] {
     const indice = budgets.findIndex(budget => budget.idBudget === id);
-  
+
     if (indice !== -1) {
       budgets.splice(indice, 1);
     }
-  
+
     return budgets;
   }
 }
