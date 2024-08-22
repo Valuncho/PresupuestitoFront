@@ -1,4 +1,4 @@
-import { Supplier } from "./supplier";
+import { Supplier } from "./Supplier";
 
 export interface SupplierHistory
 {

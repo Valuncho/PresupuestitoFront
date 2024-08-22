@@ -33,6 +33,8 @@ export const routes: Routes = [
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/new', component: MaterialFormViewComponent},
     {path: 'material/edit', component: MaterialFormViewComponent},
+
+    //{path: 'supplier', component: SupplierViewComponent}
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},
 

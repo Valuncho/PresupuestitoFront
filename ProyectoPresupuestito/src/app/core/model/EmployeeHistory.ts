@@ -3,7 +3,7 @@ import { Salary } from "./Salary";
 
 export interface EmployeeHistory
 {
-    idEmployee : number;
+    idEmployeeHistory : number;
     oEmployee : Employee;
     oSalary : Salary[];
 }
