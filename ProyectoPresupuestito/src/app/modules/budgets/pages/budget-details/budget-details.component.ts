@@ -18,25 +18,19 @@ import { WorkCardComponent } from "../../../works/components/work-card/work-card
 })
 export class BudgetDetailsComponent {
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private budgetService = inject(BudgetService);
   private workService = inject(WorkService);
-  currentBudget : Budget | undefined = {
-    idBudget: 0,
-    works: [],
-    createdDate: new Date(),
-    deadLine: new Date(),
-    description: "",
-    cost: 0,
-    Status: "",
-    payments: [],
-  };
+  currentBudget : Budget  = this.budgetService.getEmptyBudget()
   budgetId? : number;
 
   currentWork? : Work;
 
-  constructor(private activatedRoute: ActivatedRoute){}
+  
 
   ngOnInit(){
+    this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);    
+    
     this.budgetService.getSelectedBudget().subscribe(budget =>{
       this.currentBudget = budget;
     })
@@ -57,3 +51,4 @@ export class BudgetDetailsComponent {
 
   }
 }
+

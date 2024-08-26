@@ -34,6 +34,7 @@ export class BudgetFormComponent {
   private readonly _adapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
   private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private notificationService = inject(NotificationService);
   private modalService = inject(ModalService);
   private budgetService = inject(BudgetService);
@@ -41,6 +42,7 @@ export class BudgetFormComponent {
   //Properties
   currentBudget : Budget = this.budgetService.getEmptyBudget();
   currentClient : Client = this.clientService.getEmptyClient();
+  budgetId : number = 0;
   isEdit : boolean = false;
   estados : string[] = this.budgetService.getEstados();
   //Form
@@ -59,21 +61,29 @@ export class BudgetFormComponent {
 
     this.setDateFortmat('es');
 
-    this.budgetService.getSelectedBudget().subscribe(budget =>{
-      this.currentBudget = budget;
-      if(this.router.url == '/budget/edit'){
-        this.onEdit();
-      }
-    })
-
+    this.OnEditHandler();
+    
     this.clientService.selectedClient.subscribe(client =>{
       this.currentClient=client;
       this.BudgetForm.patchValue({idClient:this.currentClient.idClient});
       this.BudgetForm.patchValue({client:this.currentClient.oPerson.lastName + ' ' + this.currentClient.oPerson.name});
     });
 
-  }
+    
 
+  }
+  OnEditHandler(){
+    this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
+    let url = "/budget/edit/" + this.budgetId;
+    if(this.router.url == url){
+      this.budgetService.getBudgetById(this.budgetId).subscribe(budget =>{
+        this.currentBudget = budget;
+      })
+      this.onEdit()
+    }else{
+      this.isEdit = false;
+    }
+  }
   setDateFortmat(format : string){
     this._locale.set(format);
     this._adapter.setLocale(this._locale());

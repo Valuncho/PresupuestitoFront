@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Budget } from '../model/Budget';
 import { WorkService } from './work.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ClientHistory } from '../model/ClientHistory';
 import { Work } from '../model/Work';
 
@@ -97,7 +97,9 @@ export class BudgetService {
       payments: [],
     },
   ];
+
   private selectedBudget: Budget = this.getEmptyBudget();
+
   private estados: string[] = [
     'Presupuestado',
     'Aprobado',
@@ -135,7 +137,21 @@ export class BudgetService {
     return this._budgetsSubject.asObservable();
   }
 
-  getBudgetById(id: number): Budget | undefined {
+  getBudgetById(id : number) : Observable<Budget>{
+    this.selectedBudget = this.budgets.find((budget) => budget.idBudget === id)!;
+    return of(this.selectedBudget);
+  }
+
+  getBudgetsByCreatedDate(){
+
+  }
+
+  getBudgetsByDeadLine(){
+
+  }
+
+
+  getPresupuestoById(id: number): Budget | undefined {
     return this.budgets.find((budget) => budget.idBudget === id);
   }
 
@@ -168,7 +184,7 @@ export class BudgetService {
   }
 
   setSelectedBudget(budgetId: number) {
-    this.selectedBudget = this.getBudgetById(budgetId)!;
+   // this.selectedBudget = this.getPresupuestoById(budgetId)!;
     this._selectedBudgetSubject.next(this.selectedBudget);
   }
 

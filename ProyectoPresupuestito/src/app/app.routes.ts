@@ -31,6 +31,7 @@ export const routes: Routes = [
     {path: 'work/edit/:budgetId', component: WorkAreaComponent},
     
     {path: 'material', component: MaterialViewComponent},
+    {path: 'material/add', component: MaterialFormViewComponent},
     {path: 'material/edit', component: MaterialFormViewComponent},
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},

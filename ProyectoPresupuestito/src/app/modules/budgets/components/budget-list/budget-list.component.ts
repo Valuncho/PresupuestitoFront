@@ -56,23 +56,23 @@ export class BudgetListComponent {
 
   handleSelectBudget($Event : number){
     this.budgetService.setSelectedBudget($Event)
-    this.router.navigate(['/budget/detail']);
+    this.router.navigate(['/budget/detail/', $Event]);
   }
 
   handleAction($Event : any){
     this.budgetService.setSelectedBudget($Event)
-    this.router.navigate(['/work/new']);
+    this.router.navigate(['/work/new/',$Event ]);
   }
 
   handleView($Event : any){
     this.budgetService.setSelectedBudget($Event)
-    this.router.navigate(['/budget/detail']);
+    this.router.navigate(['/budget/detail/', $Event]);
   }
 
   handleEdit($Event : any){
 
     this.budgetService.setSelectedBudget($Event)
-    this.router.navigate(['/budget/edit']);
+    this.router.navigate(['/budget/edit/',$Event]);
   }
 
   handleDelete($Event : any){

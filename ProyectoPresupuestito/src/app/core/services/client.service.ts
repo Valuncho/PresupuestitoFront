@@ -46,16 +46,16 @@ export class ClientService {
       idClientHistory: 1,
       oClient: this.clientes[0],
       budgets: [
-        this.budgetService.getBudgetById(1)!,
-        this.budgetService.getBudgetById(2)!,
+        this.budgetService.getPresupuestoById(1)!,
+        this.budgetService.getPresupuestoById(2)!,
       ],
     },
     {
       idClientHistory: 2,
       oClient: this.clientes[1],
       budgets: [
-        this.budgetService.getBudgetById(3)!,
-        this.budgetService.getBudgetById(4)!,
+        this.budgetService.getPresupuestoById(3)!,
+        this.budgetService.getPresupuestoById(4)!,
       ],
     },
   ];
@@ -155,7 +155,7 @@ export class ClientService {
     this._selectedHistorySubject.next(this.fichaSeleccionada);
     this._selectedClientSubject.next(this.clienteSeleccionado);
   }
-  
+
   resetSelectedClient() {
     this.clienteSeleccionado = this.getEmptyClient();
     this.fichaSeleccionada = this.getEmptyHistory();

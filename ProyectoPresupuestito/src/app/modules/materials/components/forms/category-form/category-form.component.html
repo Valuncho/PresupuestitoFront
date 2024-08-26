@@ -1,1 +1,30 @@
-<p>category-form works!</p>
+<div>
+    <form [formGroup]="CategoryForm" (ngSubmit)="onSubmit()" >
+      <fieldset>
+        <legend class="List-title"> {{ isEdit ? 'Actualizar un Rubro' : 'Crear un Rubro' }}</legend>
+        @if(CategoryForm.invalid && CategoryForm.dirty){
+          <div class="invalid">
+            @if (CategoryForm.get('name')?.invalid){
+              <p>Debe escribir el nombre.</p>
+            }
+          </div>
+        }
+  
+        <label for="name">Nombre</label>
+        <input type="text" name="name" id="name">
+      </fieldset>
+      <fieldset class="Botones">
+        <button type="reset" (click)="resetForm($event)">Limpiar</button>
+  
+        <button type="submit" [disabled]="!CategoryForm.valid" [class.disactive]="!CategoryForm.valid">
+          @if (isEdit) {
+            Actualizar
+          }@else {
+            Guardar
+          }
+        </button>
+      </fieldset>
+    </form>
+  
+  </div>
+  

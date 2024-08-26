@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MaterialListComponent } from "../../components/material-list/material-list.component";
+import { MaterialListComponent } from "../../components/lists/material-list/material-list.component";
 import { MaterialComponent } from "../../components/material/material.component";
 
 @Component({

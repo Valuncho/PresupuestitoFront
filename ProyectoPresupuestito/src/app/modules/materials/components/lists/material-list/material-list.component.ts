@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { MaterialCardComponent } from '../material-card/material-card.component';
-import { Material } from '../../../../core/model/Material';
-import { MaterialService } from '../../../../core/services/material.service';
-import { Work } from '../../../../core/model/Work';
+import { MaterialCardComponent } from '../../material-card/material-card.component';
+import { Material } from '../../../../../core/model/Material';
+import { MaterialService } from '../../../../../core/services/material.service';
+import { Work } from '../../../../../core/model/Work';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MaterialSearchComponent } from "../material-search/material-search.component";
-import { WorkService } from '../../../../core/services/work.service';
+import { MaterialSearchComponent } from "../../material-search/material-search.component";
+import { WorkService } from '../../../../../core/services/work.service';
 
 @Component({
   selector: 'app-material-list',
