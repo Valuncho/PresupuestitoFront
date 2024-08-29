@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { WorkListComponent } from "../../components/work-list/work-list.component";
-import { WorkComponent } from "../../components/work/work.component";
+import { WorkComponent } from "../../components/work-detail/work-detail.component";
 import { WorkFormComponent } from '../../components/work-form/work-form.component';
 import { Router } from '@angular/router';
 import { BudgetService } from '../../../../core/services/budget.service';

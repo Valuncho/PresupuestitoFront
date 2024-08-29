@@ -23,6 +23,7 @@ import { BudgetSearchComponent } from "../budget-search/budget-search.component"
 })
 export class BudgetListComponent {
   //Utils
+  private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private notificationService = inject(NotificationService);
@@ -32,13 +33,19 @@ export class BudgetListComponent {
   budgets : Budget[] = [];
   budgetsToDisplay : Budget[] = [];
   clientId : number = 0
-
+  options : boolean = false;
   //Pagination
   page : number = 1;
   itemsPerPage : number = 5;
 
 
   ngOnInit(){
+    this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
+    const clientUrl = "/client/detail/"+this.clientId;
+    if(this.router.url == clientUrl){
+      console.log(this.router.url)
+      this.options = true;
+    }
 
     this.budgetService.getBudgets().subscribe(budgets =>{
       this.budgets = budgets;
@@ -97,5 +104,7 @@ export class BudgetListComponent {
   pageChange(page: number) {
     this.page = page;
   }
+
+ 
 
 }

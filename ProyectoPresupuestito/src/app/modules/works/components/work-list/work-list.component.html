@@ -1,8 +1,10 @@
 <div class="List">
-  
-    <h3 class="List-title">Listado de trabajos</h3>
+        <h3 class="List-title">Listado de trabajos</h3>
     <app-work-search/>
-        @for (work of worksToDisplay | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; track work.idWork; let idx = $index) {
+
+
+        @for (work of worksToDisplay | paginate: { itemsPerPage: worksToPage, currentPage: workPage }; track work.idWork; let idx = $index) {
+
             <app-work-card
             [Work]="work" 
             [idWork]="work.idWork"
@@ -22,6 +24,5 @@
           <button class="Boton1" (click)="addWorkHandler()">Agregar trabajo</button>
           <button class="Boton1" (click)="onSaveWorksHandler()">Guardar</button>
         }
-
 
     </div>

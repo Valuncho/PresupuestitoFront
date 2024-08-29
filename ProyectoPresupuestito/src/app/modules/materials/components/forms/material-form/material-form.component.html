@@ -9,9 +9,20 @@
             }
           </div>
         }
-  
-        <label for="name">Nombre</label>
+        @if (!isEdit) {
+          <label for="supplier">Proveedor:</label>
+          <input type="text" id="supplier" (click)="openSupplierForm()" placeholder="Seleccionar proveedor" readonly formControlName="supplier">
+          <!--<input type="hidden" [value]="this.currentSupplier.idPerson" name="idSupplier" formControlName="idSupplier"/>-->
+        }
+        <label for="name">Nombre:</label>
         <input type="text" name="name" id="name">
+        <label for="description">Descripción:</label>
+        <textarea name="description" id="description"></textarea>
+        <label for="brand">Marca:</label>
+        <input type="text" name="brand" id="brand">
+        <label for="color">Color:</label>
+        <input type="text" name="color" id="color">
+         
       </fieldset>
       <fieldset class="Botones">
         <button type="reset" (click)="resetForm($event)">Limpiar</button>

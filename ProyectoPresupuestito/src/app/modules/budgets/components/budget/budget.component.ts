@@ -11,6 +11,6 @@ import { ButtonCardComponent } from '../../../../components/button-card/button-c
   styleUrl: './budget.component.css'
 })
 export class BudgetComponent {
-  
+ @Input()  budget! : Budget;
   
 }

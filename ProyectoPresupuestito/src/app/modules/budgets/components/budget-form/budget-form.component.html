@@ -10,12 +10,7 @@
           @if (BudgetForm.get('createdDate')?.invalid){
             <p>Debe seleccionar una fecha de confección.</p>
           }
-          @if (BudgetForm.get('deadLine')?.invalid){
-            <p>Debe seleccionar una fecha de finalización.</p>
-          }
-          @if (BudgetForm.get('cost')?.invalid){
-            <p>Debe seleccionar un costo estimativo final.</p>
-          }
+      
           @if (BudgetForm.get('description')?.invalid){
             <p>Debe redactar una breve descripción del presupuesto.</p>
           }
@@ -26,7 +21,7 @@
       }
 
       @if (!isEdit) {
-        <label for="client">Cliente</label>
+        <label for="client">Cliente:</label>
         <input type="text" id="client" (click)="openClientForm()" placeholder="Seleccionar cliente" readonly formControlName="client">
         <input type="hidden" [value]="this.currentClient.idClient" name="idClient" formControlName="idClient">
       }
@@ -36,17 +31,9 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </div>
-      <label for="deadLine">Fecha limite:</label>
-      <div class="dateHandler">
-        <input matInput [matDatepicker]="picker2" name="deadLine" id="deadLine" formControlName="deadLine">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </div>
 
       <label for="description">Descripción:</label>
       <textarea name="description" id="description" formControlName="description"></textarea>
-      <label for="cost">Precio final:</label>
-      <input type="number" name="cost" id="cost" placeholder="Valor total" formControlName="cost">
       <label for="cost">Estado:</label>
       <select formControlName="estado">
         @for (option of estados; track $index) {

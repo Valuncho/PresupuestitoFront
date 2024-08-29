@@ -1,16 +1,11 @@
 
 <section>
     <article>
-        <div class="Details">
-            <h3 class="Details-title">Detalle del cliente</h3>
-            <p>Nombre completo: {{client()?.oPerson?.lastName}} {{client()?.oPerson?.name}}  </p>
-            <p>Numero de contacto: {{client()?.oPerson?.phoneNumber}}</p>
-            <p>Correo electronico: {{client()?.oPerson?.mail}}</p>
-            <p>Direccion: {{client()?.oPerson?.direction}}</p>
-            <p>DNI: {{client()?.oPerson?.dni}}</p>
-            <p>CUIT: {{client()?.oPerson?.cuit}}</p>
-        </div>
-    
+        <app-client
+        [client] = "currentClient"
+        />
+        <button class="Boton1"(click)="goToBudgetForm()">Crear presupuesto nuevo</button>
+        
         <div class="Details">
             <h3 class="Details-title">Pagos del cliente</h3>
             <app-payments-table [pagos]="payments" />
@@ -20,12 +15,6 @@
     <article>
         <app-budget-list/>
     </article>
-    <article>
-        <div class="Details">
-            <h3 class="Details-title">Pagos del cliente</h3>
-
-            <app-payments-table [pagos]="payments" />
-        </div>
-    </article>
+    
     
 </section>

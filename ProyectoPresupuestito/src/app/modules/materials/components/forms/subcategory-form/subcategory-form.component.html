@@ -1,7 +1,7 @@
 <div>
     <form [formGroup]="SubCategoryForm" (ngSubmit)="onSubmit()" >
       <fieldset>
-        <legend class="List-title"> {{ isEdit ? 'Actualizar un Sub-Rubro' : 'Crear un Rubro' }}</legend>
+        <legend class="List-title"> {{ isEdit ? 'Actualizar un Sub-Rubro' : 'Crear un Sub-Rubro' }}</legend>
         @if(SubCategoryForm.invalid && SubCategoryForm.dirty){
           <div class="invalid">
             @if (SubCategoryForm.get('name')?.invalid){
@@ -12,6 +12,10 @@
   
         <label for="name">Nombre</label>
         <input type="text" name="name" id="name">
+        <label for="category"></label>
+        <select name="category" id="category">
+          <!--FOR-->
+        </select>
       </fieldset>
       <fieldset class="Botones">
         <button type="reset" (click)="resetForm($event)">Limpiar</button>

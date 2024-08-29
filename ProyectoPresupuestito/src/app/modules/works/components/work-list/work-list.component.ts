@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { WorkCardComponent } from '../work-card/work-card.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Budget } from '../../../../core/model/Budget';
@@ -10,11 +10,13 @@ import { Work } from '../../../../core/model/Work';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { WorkFormComponent } from '../work-form/work-form.component';
 import { WorkSearchComponent } from "../work-search/work-search.component";
+import { CommonModule } from '@angular/common';
+import { toUpper } from 'lodash';
 
 @Component({
   selector: 'app-work-list',
   standalone: true,
-  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent],
+  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent,CommonModule],
   templateUrl: './work-list.component.html',
   styleUrl: './work-list.component.css',
 })
@@ -27,20 +29,41 @@ export class WorkListComponent {
   private budgetService = inject(BudgetService);
   private workService = inject(WorkService);
   //Properties
-  currentBudget: Budget = this.budgetService.getEmptyBudget();
-  works: Work[] = [];
-  worksToDisplay: Work[] = [];
-  options: Boolean = false;
 
+  
+  @Input() currentBudget!: Budget;
+  @Input() works: Work[] = [];
+  worksToDisplay!: Work[];
+  options: Boolean = false;
+  budgetId : number = 0;
   //Pagination
-  page: number = 1;
-  itemsPerPage: number = 5;
+  workPage: number = 1;
+  worksToPage: number = 5;
 
   ngOnInit(): void {
+    
+    this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
+    let budgetDetailUrl = "/budget/detail/" + this.budgetId;
+    let budgetworkArealUrl = "/work/edit/" + this.budgetId;
+
+    if(budgetworkArealUrl == this.router.url){
+      this.options = true;
+    }
+    
+
     const w = this.workService.getWorks().subscribe((works) => {
-      this.works = works;
+      
+      if(this.router.url ==budgetDetailUrl){
+        this.worksToDisplay = this.currentBudget.works;
+      }else(
+        this.works = works
+      )
+      
     });
-    this.budgetService.getSelectedBudget().subscribe((budget) => {
+
+   
+      
+    /*this.budgetService.getSelectedBudget().subscribe((budget) => {
       this.currentBudget = budget;
       if (
         this.currentBudget.idBudget != 0 &&
@@ -51,7 +74,7 @@ export class WorkListComponent {
       } else {
         this.worksToDisplay = this.works;
       }
-    });
+    });*/
   }
 
   ngOnDestroy(): void {
@@ -70,12 +93,14 @@ export class WorkListComponent {
   addWorkHandler() {
     this.modalService.openModal(WorkFormComponent);
   }
+  goToWorkArea(){
+    this.router.navigate(['/work/edit']);
+  }
   onSaveWorksHandler() {
-    //this.currentBudget
-    this.router.navigate(['/budget/detail']);
+    this.router.navigate(['/budget/detail',this.budgetId]);
   }
   //Pagination
   pageChange(page: number) {
-    this.page = page;
+    this.workPage = page;
   }
 }

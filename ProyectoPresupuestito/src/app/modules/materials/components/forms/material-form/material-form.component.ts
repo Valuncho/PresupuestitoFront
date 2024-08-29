@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Person } from '../../../../../core/model/Person';
 
 
 @Component({
@@ -11,10 +12,14 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class MaterialFormComponent {
   isEdit : boolean = false;
+  currentSupplier! : Person; 
   MaterialForm : FormGroup = new FormGroup({
 
   })
 
+  openSupplierForm(){
+    
+  }
   resetForm($Event : Event){
 
   }
