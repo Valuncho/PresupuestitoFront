@@ -37,7 +37,6 @@
   .Searcher-button:hover{
     background-color: var(--blanquecino);
     color:var(--nogal);
-   
   }
   
   .Searcher select {
