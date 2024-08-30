@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Supplier } from '../../../../core/model/Supplier';
-import { FormControl } from '@angular/forms';
+import * as lodash from 'lodash';
+
+
 
 @Component({
     selector: 'app-supplier-search',
     standalone: true,
-    imports: [
-        CommonModule,
-    ],
-    template: `<p>supplier-search works!</p>`,
+    imports: [CommonModule,ReactiveFormsModule],
+    template: './supplier-search.component.html',
     styleUrl: './supplier-search.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SupplierSearchComponent { 
 
@@ -33,16 +33,16 @@ export class SupplierSearchComponent {
     let sorted : Supplier[] = []
     switch(this.filtro.value){
       case 'alfabeticamente':
-        //sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['asc']);
+        sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['asc']);
         break;
       case 'alfabeticamente2':
-        //sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['desc']);
+        sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['desc']);
         break;
       case'dni':
-        //sorted = lodash.orderBy(this.suppliers, ['oPerson.dni'], ['asc']);
+        sorted = lodash.orderBy(this.suppliers, ['oPerson.dni'], ['asc']);
         break;
       default:
-        //sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['asc']);
+        sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['asc']);
 
     }
     console.log(sorted)    
@@ -55,7 +55,7 @@ export class SupplierSearchComponent {
     
     console.log(this.busqueda.value);
     this.filteredSupplierss = this.suppliers.filter(supplier =>
-        supplier.oPerson.name.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
+      supplier.oPerson.name.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
       supplier.oPerson.lastName.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
       supplier.oPerson.mail?.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
       supplier.oPerson.phoneNumber?.toString().includes(this.busqueda.value!.toLowerCase()) ||

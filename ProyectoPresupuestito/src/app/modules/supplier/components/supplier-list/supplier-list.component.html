@@ -1,19 +1,19 @@
 <div class="List">
-    <h3 class="List-title">Listado de clientes</h3>
+    <h3 class="List-title">Listado de proveedores</h3>
     <app-client-search 
-    [clients]="getAllClients()"
+    [clients]="getAllSuppliers()"
     (results)="handleSearch($event)"
     (sortedResults)="handleSearch($event)"
     />
     <div class="CardContainer">
-      @for (client of clients() | paginate: { itemsPerPage: pageSize, currentPage: page } ; track client) {
+      @for (supplier of suppliers() | paginate: { itemsPerPage: pageSize, currentPage: page } ; track supplier) {
         <app-card 
-        [Person]="client.oPerson" 
-        [IdClient]="client.idClient"
+        [Person]="supplier.oPerson" 
+        [IdSupplier]="supplier.idSupplier"
         (action)="handleAction($event)"
-        (isView)="handleViewClient($event)"
-        (isEdit)="handleEditClient($event)" 
-        (isDeleted)="handleDeleteClient($event)" 
+        (isView)="handleViewSupplier($event)"
+        (isEdit)="handleEditSupplier($event)" 
+        (isDeleted)="handleDeleteSupplier($event)" 
         ></app-card>
       }
     </div>
@@ -23,6 +23,6 @@
       (pageChange)="pageChange($event)"
       />
     @if(options){
-      <button class="Boton1" (click)="addClientHandler()">Agregar cliente</button>
+      <button class="Boton1" (click)="addSupplierHandler()">Agregar proveedor</button>
     }
 </div>

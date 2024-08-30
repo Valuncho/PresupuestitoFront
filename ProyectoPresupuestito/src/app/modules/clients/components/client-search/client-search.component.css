@@ -1,4 +1,3 @@
-
 .Searcher{
   
     border-radius: 15px;
@@ -16,7 +15,7 @@
     border-bottom: 1px solid var(--negro);
     width: 50%;
     padding: 4px;
-     color:var(--blanquecino);
+    color:var(--blanquecino);
     text-decoration: underline;
   }
   .Searcher input[type="text"]:focus{
