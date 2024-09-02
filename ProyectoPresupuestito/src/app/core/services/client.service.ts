@@ -69,19 +69,12 @@ export class ClientService {
 
   //Metodos que se conectarian con el back
   getAllClients() : Observable<Client[]>{
+    
     return this._clientesSubject.asObservable();
   }
 
   getClientById(clientId: number): Client | undefined {
     return this.clientes.find((client) => client.idClient === clientId);
-  }
-
-  getClientsBySearch(search : string) : Observable<Client[]>{
-    return this._clientesSubject.asObservable();
-  }
-
-  getSortClients(sort : string) : Observable<Client[]>{
-    return this._clientesSubject.asObservable();
   }
 
   postClient(client: Client): number {
@@ -148,6 +141,16 @@ export class ClientService {
   get selectedHistory(){
     return this._selectedHistorySubject.asObservable();
   }
+
+  
+  getClientsBySearch(search : string) : Observable<Client[]>{
+    return this._clientesSubject.asObservable();
+  }
+
+  getSortClients(sort : string) : Observable<Client[]>{
+    return this._clientesSubject.asObservable();
+  }
+
 
   setSelectedClient(clientId: number) {
     this.clienteSeleccionado = this.getClientById(clientId)!;
