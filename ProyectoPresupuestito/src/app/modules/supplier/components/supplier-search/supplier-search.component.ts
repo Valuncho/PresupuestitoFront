@@ -10,7 +10,7 @@ import * as lodash from 'lodash';
     selector: 'app-supplier-search',
     standalone: true,
     imports: [CommonModule,ReactiveFormsModule],
-    template: './supplier-search.component.html',
+    templateUrl: './supplier-search.component.html',
     styleUrl: './supplier-search.component.css',
 })
 export class SupplierSearchComponent { 

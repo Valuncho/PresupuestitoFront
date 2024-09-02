@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SupplierListComponent } from '../supplier-list/supplier-list.component';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SupplierService } from '../../../../core/services/supplier.service';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
@@ -10,7 +10,7 @@ import { Supplier } from '../../../../core/model/Supplier';
 @Component({
     selector: 'app-supplier-form',
     standalone: true,
-    imports: [CommonModule,SupplierFormComponent,SupplierListComponent],
+    imports: [CommonModule,SupplierFormComponent,SupplierListComponent,ReactiveFormsModule],
     templateUrl: './supplier-form.component.html',
     styleUrl: './supplier-form.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,7 +32,8 @@ export class SupplierFormComponent {
         phoneNumber : new FormControl('', Validators.required),
         mail: new FormControl('', [Validators.email]),
         dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
-        cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)])
+        cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
+        note: new FormControl('')
     });
 
     ngOnInit(): void {
