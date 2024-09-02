@@ -11,6 +11,8 @@ import { WorkViewComponent } from './modules/works/pages/work-view/work-view.com
 import { WorkDetailsComponent } from './modules/works/pages/work-details/work-details.component';
 import { MaterialViewComponent } from './modules/materials/pages/material-view/material-view.component';
 import { MaterialFormViewComponent } from './modules/materials/pages/material-form-view/material-form-view.component';
+import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
+import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -33,6 +35,9 @@ export const routes: Routes = [
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},
     {path: 'material/edit', component: MaterialFormViewComponent},
+
+    {path: 'supplier', component: SupplierViewComponent},
+    {path: 'supplier/Details', component: SupplierDetailsComponent},
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},
 
