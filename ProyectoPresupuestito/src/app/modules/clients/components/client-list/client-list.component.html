@@ -7,7 +7,7 @@
 
   
     @for (client of this.searchedClients | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
-      <app-card 
+      <app-client-card 
       [Person]="client.oPerson"
       [IdClient]="client.idClient"
       (action)="handleAction($event)"

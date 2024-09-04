@@ -11,7 +11,7 @@ import {BehaviorSubject, delay, Observable, of} from 'rxjs';
 export class ClientService {
   //Utils
   private budgetService = inject(BudgetService);
-  
+
   //Properties
   private clientes: Client[] = [
     {
@@ -24,7 +24,7 @@ export class ClientService {
         phoneNumber: '1234567890',
         mail: 'johndoe@example.com',
         dni: '123456789',
-        cuit: '30-12345678-9',
+        cuit: '30123456789',
       },
     },
     {
@@ -69,7 +69,7 @@ export class ClientService {
 
   //Metodos que se conectarian con el back
   getAllClients() : Observable<Client[]>{
-    
+
     return this._clientesSubject.asObservable();
   }
 
@@ -142,7 +142,7 @@ export class ClientService {
     return this._selectedHistorySubject.asObservable();
   }
 
-  
+
   getClientsBySearch(search : string) : Observable<Client[]>{
     return this._clientesSubject.asObservable();
   }

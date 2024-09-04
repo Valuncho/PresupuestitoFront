@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component'; 
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 import {RouterLink} from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { CardComponent } from "../../components/card/card.component";
+
 import { ClientService } from '../../core/services/client.service';
 import { Client } from '../../core/model/Client';
 @Component({

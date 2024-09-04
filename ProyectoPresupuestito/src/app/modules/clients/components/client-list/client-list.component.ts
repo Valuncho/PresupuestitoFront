@@ -7,7 +7,7 @@ import { NotificationService } from '../../../../core/services/utils/notificatio
 import { Client } from '../../../../core/model/Client';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { ClientSearchComponent } from "../client-search/client-search.component";
-import { CardComponent } from '../../../../components/card/card.component';
+import { ClientCardComponent } from '../client-card/client-card.component';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -18,11 +18,10 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-client-list',
   standalone: true,
-  imports: [ClientSearchComponent, CardComponent, NgxPaginationModule, CommonModule],
-  
+  imports: [ClientSearchComponent, ClientCardComponent, NgxPaginationModule, CommonModule],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.css',
-  
+
 })
 
 export class ClientListComponent {
@@ -100,7 +99,7 @@ export class ClientListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const client = this.clientService.getClientById($Event)!;
-        
+
         this.clientService.handleDeleteClient($Event)
         this.notificationService.showNotification("Cliente eliminado con éxito");
         this.router.navigate(['/client']);

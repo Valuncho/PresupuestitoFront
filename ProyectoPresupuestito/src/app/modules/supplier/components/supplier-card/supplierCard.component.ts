@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Person } from '../../../core/model/Person';
-import { ButtonCardComponent } from '../../../components/button-card/button-card.component';
+import { Person } from '../../../../core/model/Person';
+import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 
 @Component({
     selector: 'app-supplier-card',

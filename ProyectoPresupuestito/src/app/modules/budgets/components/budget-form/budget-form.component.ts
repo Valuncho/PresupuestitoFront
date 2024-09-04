@@ -1,5 +1,5 @@
 import {Component, computed, inject, signal} from '@angular/core';
-import { NavbarComponent } from "../../../../components/navbar/navbar.component";
+import { NavbarComponent } from '../../../../components/navbar/navbar.component';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Budget } from '../../../../core/model/Budget';
 import { BudgetService } from '../../../../core/services/budget.service';

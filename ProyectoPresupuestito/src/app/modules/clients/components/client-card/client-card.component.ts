@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Person } from '../../core/model/Person';
-import { ButtonCardComponent } from "../button-card/button-card.component";
+import { Person } from '../../../../core/model/Person';
+import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
+
 
 @Component({
-  selector: 'app-card',
+  selector: 'app-client-card',
   standalone: true,
   imports: [CommonModule, ButtonCardComponent],
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  templateUrl: './client-card.component.html',
+  styleUrl: './client-card.component.css'
 })
-export class CardComponent {
+export class ClientCardComponent {
   @Input() Person: Person | undefined;
   @Input() IdClient: number = 0;
   @Output() isView = new EventEmitter<number>();
