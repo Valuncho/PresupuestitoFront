@@ -92,6 +92,4 @@ export class ClientFormComponent {
     this.setUp();
   }
 
-
-
 }

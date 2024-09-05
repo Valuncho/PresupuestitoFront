@@ -1,0 +1,28 @@
+<div class="List">
+    <h3 class="List-title">Listado de empleados</h3>
+    <app-employee-search
+        (results)="handleSearch($event)"
+        (sortedResults)="handleSearch($event)"
+    />
+    
+    @for (employee of this.searchedEmployees | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
+        <app-employee-Card 
+        [Person]="employee.oPerson"
+        [IdEmployee]="employee.idEmployee"
+        (action)="handleAction($event)"
+        (isView)="handleViewEmployee($event)"
+        (isEdit)="handleEditEmployee($event)"
+        (isDeleted)="handleDeleteEmployee($event)"
+        />
+    }
+    
+    
+    <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChange)="pageChange($event)"
+    />
+    @if(options){
+    <button class="Boton1" (click)="addEmployeeHandler()">Agregar empleado</button>
+    }
+</div>

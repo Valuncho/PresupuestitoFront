@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class="Searcher">
+    <div class="Interior">
+        <span class="material-symbols-sharp">search</span>
+        <input type="text" (keyup)="search()" [formControl]="busqueda">
+        <select [formControl]="filtro" (change)="sort()">
+            <option [selected]="true">Ordenar</option>
+            <option value="alfabeticamente">Ordenar alfabeticamente</option>
+            <!--<option value="alfabeticamente">Ordenar trabajos activos</option>-->
+        </select>
+    </div>
+
+</div>
