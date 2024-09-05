@@ -30,9 +30,7 @@ export class MaterialListComponent {
   page : number = 1
 
   ngOnInit(): void {
-    this.materialService.getMaterialsHandler().subscribe(materials =>{
-      this.materials = materials;
-    })
+  
     if(this.router.url == '/material'){
       this.materialsToDisplay = this.materials;
     }
@@ -41,13 +39,7 @@ export class MaterialListComponent {
   }
 
 
-  getAllMaterials() : Material[]{
-    let m : Material[] = [];
-    this.materialService.getMaterialsHandler().subscribe(materials=>{
-      m = materials;
-    }) 
-    return m;
-  }
+ 
 
    //Search
    handleSearch($Event : Material[]){
@@ -56,7 +48,7 @@ export class MaterialListComponent {
   }
   seleccionar($Event : number){
     let m = this.materialService.getMaterialById($Event)!;
-    this.materialService.setSelectedMaterial(m);
+    ;
   } 
   editar($Event : number){}
   eliminar($Event : number){}

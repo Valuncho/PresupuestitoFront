@@ -1,7 +1,7 @@
 <div class="List">
   <h3 class="List-title">Listado de materiales</h3>
   <app-material-search
-    [material]="getAllMaterials()"
+    [material]="materials"
     (results)="handleSearch($event)"
     (sortedResults)="handleSearch($event)"
   />

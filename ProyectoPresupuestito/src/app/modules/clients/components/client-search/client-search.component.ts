@@ -23,7 +23,7 @@ export class ClientSearchComponent {
   filteredClients: Client[] = [];
 
   ngOnInit() {
-    this.clientService.getAllClients().subscribe({
+    this.clientService.getClients().subscribe({
       next : (clients) =>{
         this.filteredClients = clients;
       }

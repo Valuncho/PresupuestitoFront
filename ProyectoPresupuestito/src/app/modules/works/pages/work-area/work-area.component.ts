@@ -20,16 +20,15 @@ export class WorkAreaComponent {
   private router = inject(Router);
   private currentWork = this.workService.getEmptyWork();
   ngOnInit(): void {
+    /*
     this.workService.getSelectedWork().subscribe(work =>{
       this.currentWork = work;
     })
     if( this.currentWork == this.workService.getEmptyWork())  {
       this.router.navigate(['/work'])
-    }
+    }*/
   }
 
-  ngOnDestroy(){
-    this.budgetService.resetSelectedBudget();
-  }
+
 
 }

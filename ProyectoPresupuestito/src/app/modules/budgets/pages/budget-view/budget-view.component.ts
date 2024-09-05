@@ -44,7 +44,7 @@ export class BudgetViewComponent {
   onEdit(){
     this.isEdit = true;
     let id = parseInt(this.activatedRoute.snapshot.params['budgetId']);
-    this.selectedBudget = this.budgetService.getPresupuestoById(id);
+    //this.selectedBudget = this.budgetService.getPresupuestoById(id);
     if(this.selectedBudget){
       console.log(this.selectedBudget);
       this.BudgetForm.patchValue(this.selectedBudget);

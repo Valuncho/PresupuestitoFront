@@ -85,7 +85,7 @@ export class WorkListComponent {
 
   seleccionar($Event: number) {
     let w = this.workService.getWorkById($Event)!;
-    this.workService.setSelectedWork(w);
+    
   }
   editar($Event: number) {}
   eliminar($Event: number) {}

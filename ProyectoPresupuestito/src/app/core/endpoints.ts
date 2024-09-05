@@ -28,7 +28,38 @@ export const ENDPOINTS = {
     getDeadlineById: '/budgets/deadline/:id',
     post: '/budgets',
     update: '/budgets/:id',
-    deltete: '/budgets/:id',
+    delete: '/budgets/:id',
   },
-
+  // Works
+  works: {
+    getAll: '/works',
+    getById: '/works/:id',
+    post: '/works',
+    update: '/works/:id',
+    delete: '/works/:id',
+  },
+  //Materials
+  materials: {
+    getAll: '/materials',
+    getById: '/materials/:id',
+    post: '/materials',
+    update: '/materials/:id',
+    delete: '/materials/:id',
+  },
+  //SubCategories
+  subCategories: {
+    getAll: '/subCategories',
+    getById: '/subCategories/:id',
+    post: '/subCategories',
+    update: '/subCategories/:id',
+    delete: '/subCategories/:id',
+  },
+  //Categories
+  categories: {
+    getAll: '/categories',
+    getById: '/categories/:id',
+    post: '/categories',
+    update: '/categories/:id',
+    delete: '/categories/:id',
+  },
 };

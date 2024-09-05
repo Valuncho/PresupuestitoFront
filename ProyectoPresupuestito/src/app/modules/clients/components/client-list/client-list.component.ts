@@ -48,14 +48,17 @@ export class ClientListComponent {
       console.log(this.router.url)
       this.options = true;
     }
-
-    this.clientService.getAllClients().subscribe({
+    this.clientService.getClients().subscribe(clients =>{
+      this.clients = clients
+    })
+/*
+    this.clientService.getClients().subscribe({
       next : (clientes)=>{
           this.clients = clientes;
           this.searchedClients = clientes;
        }
     });
-
+*/
   }
 
 //BudgetForm
@@ -66,26 +69,27 @@ export class ClientListComponent {
   //Search
   handleSearch($Event : Client[]){
     this.page = 1
+    /*
     this.clientService.getClientsBySearch("filto").subscribe({
       next : (clients) =>{
         this.searchedClients = clients;
       }
-    })
+    })*/
   }
 
   //Card
   handleAction($Event : any){
-    this.clientService.setSelectedClient($Event)
+    
     this.router.navigate(['/budget/new/',$Event]);
   }
 
   handleViewClient($Event : any){
-    this.clientService.setSelectedClient($Event)
+    
     this.router.navigate(['/client/detail/',$Event]);
   }
 
   handleEditClient($Event : any){
-    this.clientService.setSelectedClient($Event)
+    
     this.router.navigate(['/client/edit/',$Event]);
   }
 

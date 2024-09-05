@@ -53,10 +53,6 @@ export class BudgetDetailsComponent {
       this.currentBudget  = budget;
     })
     
-    this.budgetService.getSelectedBudget().subscribe(budget =>{
-      this.currentBudget = budget;
-      
-    })
   }
 
   goToWorkArea(){
@@ -70,8 +66,8 @@ export class BudgetDetailsComponent {
   }
 
   seleccionar(workId : number){
-    this.currentWork = this.workService.getWorkById(workId)!;
-    this.workService.setSelectedWork(this.currentWork);
+    //this.currentWork = this.workService.getWorkById(workId)!;
+    //this.workService.setSelectedWork(this.currentWork);
   }
   editWork($Event : number){
 

@@ -23,20 +23,18 @@ export class ClientDetailsComponent {
   private clientService = inject(ClientService);
   id : number  = 0;
   currentClient! : Client;
-  client = signal<Client | undefined>(undefined);
+  
   budgets : Budget[] | undefined = [];
   payments: Payment[] | undefined = [];
   
   ngOnInit(): void {
     this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
-
-    this.clientService.selectedClient.subscribe(client =>{
-      this.client.set(client);
+    this.clientService.getClientById(this.id).subscribe(client =>{
       this.currentClient = client;
     })
 
     
-    this.budgets = this.clientService.getBudgets(this.client()?.idClient!);
+   // this.budgets = this.clientService.getBudgets(this.client()?.idClient!);
     
     this.payments =  this.budgets?.flatMap(budget => budget.payments || []);
     

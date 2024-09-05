@@ -45,40 +45,31 @@ export class BudgetListComponent {
     if(this.router.url == clientUrl){
       console.log(this.router.url)
       this.options = true;
+      this.clientService.getClientHistoryById(this.clientId).subscribe(history =>{
+        this.budgetsToDisplay = history.budgets;
+      })
+    }else{
+      this.budgetService.getBudgets().subscribe(budgets =>{
+        this.budgets = budgets;
+        })
     }
 
-    this.budgetService.getBudgets().subscribe(budgets =>{
-      this.budgets = budgets;
-      })
-
-      this.clientService.selectedHistory.subscribe(history =>{
-        if(history.idClientHistory!=0){
-          this.budgetsToDisplay = history.budgets;
-        }else{
-          this.budgetsToDisplay = this.budgets;
-        }
-      })
 
   }
 
   handleSelectBudget($Event : number){
-    this.budgetService.setSelectedBudget($Event)
     this.router.navigate(['/budget/detail/', $Event]);
   }
 
   handleAction($Event : any){
-    this.budgetService.setSelectedBudget($Event)
     this.router.navigate(['/work/new/',$Event ]);
   }
 
   handleView($Event : any){
-    this.budgetService.setSelectedBudget($Event)
     this.router.navigate(['/budget/detail/', $Event]);
   }
 
   handleEdit($Event : any){
-
-    this.budgetService.setSelectedBudget($Event)
     this.router.navigate(['/budget/edit/',$Event]);
   }
 
@@ -91,7 +82,7 @@ export class BudgetListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.clientService.handleDeleteBudged($Event)
+        
         this.budgetService.handleDeleteBudget($Event);
         this.notificationService.showNotification("Presupuesto eliminado con éxito");
         this.router.navigate(['/budget']);

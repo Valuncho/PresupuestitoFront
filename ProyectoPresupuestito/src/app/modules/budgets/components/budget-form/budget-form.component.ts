@@ -62,13 +62,13 @@ export class BudgetFormComponent {
     this.setDateFortmat('es');
 
     this.OnEditHandler();
-    
+    /*
     this.clientService.selectedClient.subscribe(client =>{
       this.currentClient=client;
       this.BudgetForm.patchValue({idClient:this.currentClient.idClient});
       this.BudgetForm.patchValue({client:this.currentClient.oPerson.lastName + ' ' + this.currentClient.oPerson.name});
     });
-
+  */
     
 
   }
@@ -93,7 +93,7 @@ export class BudgetFormComponent {
     this.BudgetForm.reset();
     this.isEdit = false;
     this.currentBudget = this.budgetService.getEmptyBudget();
-    this.clientService.resetSelectedClient();
+    
   }
 
   resetForm($Event : Event){
@@ -128,11 +128,11 @@ export class BudgetFormComponent {
       this.budgetService.handleUpdateBudget(this.currentBudget);
       this.notificationService.showNotification("Presupuesto editado con éxito!");
     }else{
-      let history = this.clientService.getClienHistory(this.BudgetForm.get('idClient')?.value);
-      history.budgets.push(this.currentBudget);
+      //let history = this.clientService.getClienHistory(this.BudgetForm.get('idClient')?.value);
+      
       let id = this.budgetService.handlePostBudget(this.currentBudget);
       this.notificationService.showNotification("Presupuesto creado con éxito!" + id);
-      this.budgetService.setSelectedBudget(id);
+      
       this.router.navigate(["/work/edit"]);
     }
     this.setUp();

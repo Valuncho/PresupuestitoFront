@@ -71,7 +71,7 @@ export class ClientFormComponent {
       let url = "/client/edit/" + this.clientId;
       if(this.router.url == url){
         this.isEdit = true;
-        this.currentClient = this.clientService.getClientById(this.clientId)!;
+        //this.currentClient = this.clientService.getClientById(this.clientId)!;
         this.clientForm.patchValue(this.currentClient.oPerson);
       }else{
         this.isEdit = false;
