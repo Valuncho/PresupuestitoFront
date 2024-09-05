@@ -21,7 +21,7 @@ export class SupplierFormComponent {
     private notificationService = inject(NotificationService);
     private supplierService = inject(SupplierService);
     //Properties
-    currentSupplier : Supplier = this.supplierService.getEmptySupplier();
+    //currentSupplier : Supplier = this.supplierService.getEmptySupplier();
     supplierId? : number;
     isEdit : boolean = false;
     //Form
@@ -35,7 +35,7 @@ export class SupplierFormComponent {
         cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
         note: new FormControl('')
     });
-
+    
     ngOnInit(): void {
         this.setUp();
         this.onEditHandler();

@@ -5,7 +5,7 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 import { SupplierService } from '../../../../core/services/supplier.service';
 import { ModalService } from '../../../../core/services/utils/modal.service';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
-import { SupplierCardComponent } from '../../supplier-card/supplierCard.component';
+import { SupplierCardComponent } from '../supplier-card/supplierCard.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SupplierSearchComponent } from '../supplier-search/supplier-search.component';
 import { Supplier } from '../../../../core/model/Supplier';

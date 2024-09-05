@@ -3,6 +3,8 @@ import { Supplier } from '../model/Supplier';
 import { SupplierHistory } from '../model/SupplierHistory';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { API_URL, ENDPOINTS } from '../endpoints';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -10,6 +12,8 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class SupplierService {
   //Properties
+  private http = inject(HttpClient);
+  
   private suppliers : Supplier[] = [
     {
       idSupplier: 1001,
@@ -51,92 +55,55 @@ export class SupplierService {
     }
 
   ]
-  private SupplierSeleccionado : Supplier = this.getEmptySupplier();
 
-  private _suppliersSubject = new BehaviorSubject<Supplier[]>([]);
-  private _selectedSupplierSubject = new BehaviorSubject<Supplier>(this.SupplierSeleccionado);
-
-  constructor() {
-    this._suppliersSubject.next(this.suppliers);
-  }
- 
-  //Metodos que se conectarian con el back
-  getSuppliers(){
-    
-  }
-  getSupplierById(supplierId: number): Supplier | undefined {
-    return this.suppliers.find(supplier => supplier.idSupplier === supplierId);
-  }
+  //METODOS HTTP ----------------------------------------------------------------------------------------------
   
-  postSupplier(supplier : Supplier) : number{
-    //peticion post al back
-    let id = Math.floor(Math.random() * 91) + 10;
-    console.log('Peticion post exitosa');
-    console.log('Nuevo id' + id);
-    return id;
-  }
-
-  putSupplier(supplier : Supplier){
-    //peticion post al back
-    console.log('Peticion put exitosa');
-    console.log(supplier);
-  }
-
-  deleteSupplier(supplierId : number){
-    console.log('Peticion delete exitosa');
-    console.log('Cliente eliminado con id' + supplierId);
-  }
-
-
-  //Metodos propios del front
-  getEmptySupplier() : Supplier{
+    /**
+     * retorna todos los empleados guardados
+     * @returns un array de empleados como un observable
+     */
     
-    const emptySupplier: Supplier = {
-      idSupplier: 0,
-      note: '',
-      oPerson: {
-        idPerson: 0,
-        name: '',
-        lastName: '',
-        direction: '',
-        phoneNumber: '',
-        mail: '',
-        dni: '',
-        cuit: ''
-      }
-    };
-    return emptySupplier;
-  }
-  
-  get supplierss(){
-    return this._suppliersSubject.asObservable();
-  }
-  
-  getSupplierHistory(supplierId : number) : SupplierHistory{
-    return this.suppliersHistory.find(history => history.oSupplier.idSupplier === supplierId)!;
-  }
+    getEmployees(): Observable<Supplier[]>{
+      return this.http.get<Supplier[]>(API_URL+ENDPOINTS.supplier.getAll);
+    }
 
-  get selectedSupplier(){
-    return this._selectedSupplierSubject.asObservable();
-  }
-
-  setSelectedSupplier(supplierId: number){
-    this.SupplierSeleccionado = this.getSupplierById(supplierId)!;
-    this._selectedSupplierSubject.next(this.SupplierSeleccionado);
+  /**
+   * retorna al empleado solicitado por id 
+   * @param idSupplier 
+   * @returns un empleado como un observable  
+   */
     
-  }
-  resetSelectedSupplier(){
-    this.SupplierSeleccionado = this.getEmptySupplier();
-    this._selectedSupplierSubject.next(this.SupplierSeleccionado); 
-  }
+    getSupplierById(idSupplier : Number){
+        const url = API_URL+ENDPOINTS.supplier.getById.replace(':id', idSupplier.toString());
+        return this.http.get<Supplier>(url);
+    }
+
+    /**
+     * Envia un objeto empleado
+     * @param supplier 
+     * @returns Un Observable que emite un array de empleados
+     */
+    
+    postSupplier(supplier : Supplier){
+        const url = API_URL+ENDPOINTS.supplier.post;
+        return this.http.post(url,supplier);
+    }
+
+    /**
+     * suspende a un empleado
+     * @param Supplier 
+     * @returns un observable que emite el empleado actualizado
+     */
+    
+    deleteSupplier(supplier: Supplier){
+      const url = API_URL + ENDPOINTS.supplier.update;
+      return this.http.put(url, supplier);
+    }
+
 
   //Metodos que se conectan con los componentes
+  /*
   handleGetSupplier(){
-  }
-
-  addNewSupplier(supplier : Supplier){
-    this.suppliers.push(supplier);
-    this._suppliersSubject.next(this.suppliers);
   }
 
   handlePostSupplier(supplier : Supplier){
@@ -158,6 +125,6 @@ export class SupplierService {
     this.suppliers = this.suppliers.filter((supplier)=> supplier.idSupplier !== supplierId);
     this._suppliersSubject.next(this.suppliers);
     this.deleteSupplier(supplierId);
-  }
+  }*/
 
 }

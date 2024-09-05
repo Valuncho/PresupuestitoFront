@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Person } from '../../../core/model/Person';
-import { ButtonCardComponent } from '../../../components/button-card/button-card.component';
+import { Person } from '../../../../core/model/Person';
+import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
+import { Employee } from '../../../../core/model/Employee';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-employee-card',
