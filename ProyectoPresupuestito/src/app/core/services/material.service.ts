@@ -207,9 +207,14 @@ export class MaterialService {
   
 
   //Metodos back
+  /**
+   * Se conecta con el endpoint GetAll del backend.
+   * @returns Un observable con un array de Materiales.
+   */
   getMaterials(){
 
   }
+
 
   postMaterial(){
  //peticion post al back
@@ -227,6 +232,56 @@ export class MaterialService {
 
   }
   
+  /**
+   * 
+   * @returns 
+   */
+  getSubCategories(){
+
+  }
+  
+  postSubCategory(){
+  //peticion post al back
+    let id = Math.floor(Math.random() * 91) + 10;
+    console.log('Peticion post exitosa');
+    console.log('Nuevo id' + id);
+    return id;
+  }
+   
+  putSubCategory(){
+    
+  }
+   
+  deleteSubCategory(){
+
+  }
+     
+  /**
+   * 
+   * @returns 
+   */
+  getCategories(){
+
+  }
+  
+  postCategory(newCategory : Category){
+    console.log(newCategory);
+    let id = Math.floor(Math.random() * 91) + 10;
+    console.log('Peticion post exitosa');
+    console.log('Nuevo id' + id);
+    return id;
+  }
+   
+  putCategory(Category : Category){
+    console.log(Category);
+  }
+   
+  deleteCategory(){
+
+  }
+
+
+
   //Metodos 
 
   //Getters
@@ -309,7 +364,7 @@ export class MaterialService {
   
 
   constructor() { 
-    console.log(this.materials)
+    //console.log(this.materials)
     this._materialsSubject.next(this.materials)
   }
 

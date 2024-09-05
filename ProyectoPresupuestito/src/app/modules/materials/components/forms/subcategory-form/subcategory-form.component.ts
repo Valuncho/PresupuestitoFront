@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-subcategory-form',
@@ -12,7 +12,8 @@ export class SubcategoryFormComponent {
 
   isEdit : boolean = false;
   SubCategoryForm : FormGroup = new FormGroup({
-
+    name : new FormControl('', Validators.required),
+    idCategory : new FormControl(0, Validators.required)
   })
 
   resetForm($Event : Event){

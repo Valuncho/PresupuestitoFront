@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MaterialService } from '../../../../../core/services/material.service';
+import { Category } from '../../../../../core/model/Category';
 
 @Component({
   selector: 'app-category-form',
@@ -9,15 +11,27 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './category-form.component.css'
 })
 export class CategoryFormComponent {
+  //Utils
+  private materialService = inject(MaterialService);
+  //Properties
   isEdit : boolean = false;
   CategoryForm : FormGroup = new FormGroup({
-
+    name : new FormControl('', Validators.required)
   })
 
   resetForm($Event : Event){
 
   }
+  
   onSubmit(){
+    
+    let newCategory : Category = this.materialService.getEmptyCategory();
+    newCategory.name = this.CategoryForm.value["name"]
+    if(this.isEdit){
+      this.materialService.postCategory(newCategory);
+    }else{
+      this.materialService.putCategory(newCategory);
+    }
 
   }
 

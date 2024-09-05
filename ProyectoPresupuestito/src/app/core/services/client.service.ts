@@ -4,14 +4,17 @@ import { ClientHistory } from '../model/ClientHistory';
 import { BudgetService } from './budget.service';
 import { Budget } from '../model/Budget';
 import {BehaviorSubject, delay, Observable, of} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { API_URL, ENDPOINTS } from '../endpoints';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
   //Utils
+  private http = inject(HttpClient);
   private budgetService = inject(BudgetService);
-
+  
   //Properties
   private clientes: Client[] = [
     {
@@ -24,7 +27,7 @@ export class ClientService {
         phoneNumber: '1234567890',
         mail: 'johndoe@example.com',
         dni: '123456789',
-        cuit: '30123456789',
+        cuit: '30-12345678-9',
       },
     },
     {
@@ -68,35 +71,67 @@ export class ClientService {
   private _selectedHistorySubject = new BehaviorSubject<ClientHistory>(this.fichaSeleccionada);
 
   //Metodos que se conectarian con el back
-  getAllClients() : Observable<Client[]>{
+
+  /**
+   * Retorna todos los clientes disponibles guardados.
+   * @returns Un array de clientes como un observable.
+   */
+  getClients() : Observable<Client[]> {
+    return this.http.get<Client[]>(API_URL+ENDPOINTS.clients.getAll);   
+  }
+
+  /**
+   * Retorna al cliente solicitado por id.
+   * @param idClient id del cliente solicitado.
+   * @returns Un cliente como un observable.
+   */
+  getClientById(idClient : number) : Observable<Client> {
+    const url = API_URL+ENDPOINTS.clients.getById.replace(':id', idClient.toString());
+    return this.http.get<Client>(url);   
+  }
+
+  /**
+   * Método para crear un cliente nuevo.
+   * @param client cliente a cargar en la base de datos
+   * @returns 
+   */
+  postClient(client: Client){
+    const url = API_URL+ENDPOINTS.clients.post;
+    return this.http.post(url,client);
+  }
+
+  /**
+   * Método para actualizar información de un cliente existente.
+   * @param client cliente actualizado.
+   * @returns 
+   */
+  putClient(client: Client) {
+    const url = API_URL+ENDPOINTS.clients.update;
+    return this.http.post(url,client);
+  }
+
+  /**
+   * Método para marcar como borrado a un cliente existente.
+   * @param idClient id del cliente a eliminar.
+   * @returns 
+   */
+  deleteClient(idClient: number) {
+    const url = API_URL+ENDPOINTS.clients.delete;
+    return this.http.post(url,idClient);
+  }
+
+
+
+  getAllClients() : Observable<Client[]>{    
 
     return this._clientesSubject.asObservable();
   }
-
+/*
   getClientById(clientId: number): Client | undefined {
     return this.clientes.find((client) => client.idClient === clientId);
   }
-
-  postClient(client: Client): number {
-    //peticion post al back
-    let id = Math.floor(Math.random() * 91) + 10;
-    console.log('Peticion post exitosa');
-    console.log('Nuevo id' + id);
-    return id;
-  }
-
-  putClient(client: Client) {
-    //peticion post al back
-    console.log('Peticion put exitosa');
-    console.log(client);
-  }
-
-  deleteClient(clientId: number) {
-    console.log('Peticion delete exitosa');
-    console.log('Cliente eliminado con id' + clientId);
-  }
-
-
+*/
+  
 
 
 
@@ -142,7 +177,7 @@ export class ClientService {
     return this._selectedHistorySubject.asObservable();
   }
 
-
+  
   getClientsBySearch(search : string) : Observable<Client[]>{
     return this._clientesSubject.asObservable();
   }
@@ -153,7 +188,7 @@ export class ClientService {
 
 
   setSelectedClient(clientId: number) {
-    this.clienteSeleccionado = this.getClientById(clientId)!;
+    //this.clienteSeleccionado = this.getClientById(clientId)!;
     this.fichaSeleccionada = this.getClienHistory(clientId)!;
     this._selectedHistorySubject.next(this.fichaSeleccionada);
     this._selectedClientSubject.next(this.clienteSeleccionado);
@@ -189,15 +224,8 @@ export class ClientService {
   }
 
   handlePostClient(client: Client) {
-    const id = this.postClient(client);
-    client.idClient = id;
+    this.postClient(client);
     this.addNewClient(client);
-    const emptyHistory: ClientHistory = {
-      idClientHistory: id,
-      oClient: client,
-      budgets: [],
-    };
-    this.clientsHistory.push(emptyHistory);
   }
 
   handleUpdateClient(client: Client) {
