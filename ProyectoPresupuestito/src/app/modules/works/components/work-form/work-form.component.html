@@ -1,5 +1,4 @@
 
-<div>
     <form [formGroup]="WorkForm" (ngSubmit)="onSubmit()" >
       <fieldset>
         <legend class="List-title"> {{ isEdit ? 'Actualizar un trabajo' : 'Crear un trabajo' }}</legend>
@@ -30,12 +29,7 @@
             Guardar
           }
         </button>
-      </fieldset>
-      {{WorkForm.value | json}}
-      {{WorkForm.valid| json}}
+      </fieldset>     
     </form>
-    
-  </div>
-  
-  
+
   

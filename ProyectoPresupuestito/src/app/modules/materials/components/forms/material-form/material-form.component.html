@@ -22,6 +22,12 @@
         <input type="text" name="brand" id="brand">
         <label for="color">Color:</label>
         <input type="text" name="color" id="color">
+        <label for="subCategory">Sub rubro</label>
+        <select name="subCategory" id="subCategory">
+          @for (item of subCategories; track $index) {
+            <option value="{{item.idCategoryMaterial}}">{{item.name}}</option>
+          }
+        </select>
          
       </fieldset>
       <fieldset class="Botones">

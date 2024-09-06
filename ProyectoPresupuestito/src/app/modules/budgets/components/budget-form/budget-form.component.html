@@ -10,7 +10,9 @@
           @if (BudgetForm.get('createdDate')?.invalid){
             <p>Debe seleccionar una fecha de confección.</p>
           }
-      
+          @if (BudgetForm.get('deadLine')?.invalid){
+            <p>Debe seleccionar una fecha de finalización.</p>
+          }
           @if (BudgetForm.get('description')?.invalid){
             <p>Debe redactar una breve descripción del presupuesto.</p>
           }
@@ -30,6 +32,12 @@
         <input matInput [matDatepicker]="picker" name="createdDate" id="createdDate" formControlName="createdDate" >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+      </div>
+      <label for="deadLine">Fecha limite:</label>
+      <div class="dateHandler">
+        <input matInput [matDatepicker]="picker2" name="deadLine" id="deadLine" formControlName="deadLine">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
       </div>
 
       <label for="description">Descripción:</label>

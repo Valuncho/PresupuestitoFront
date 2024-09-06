@@ -12,9 +12,11 @@
   
         <label for="name">Nombre</label>
         <input type="text" name="name" id="name">
-        <label for="category"></label>
+        <label for="category">Rubro:</label>
         <select name="category" id="category">
-          <!--FOR-->
+          @for (item of categories; track $index) {
+            <option value="{{item.idCategory}}">{{item.name}}</option>
+          }
         </select>
       </fieldset>
       <fieldset class="Botones">
