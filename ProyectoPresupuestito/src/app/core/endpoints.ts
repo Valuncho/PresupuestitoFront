@@ -46,5 +46,51 @@ export const ENDPOINTS = {
         update: '/employee/:id',
         delete: '/employee/:id',
     },
+    //work
+    works: {
+    getAll: '/works',
+    getById: '/works/:id',
+    post: '/works',
+    update: '/works/:id',
+    delete: '/works/:id',
+    },
+    //Materials
+    materials: {
+        getAll: '/materials',
+        getById: '/materials/:id',
+        post: '/materials',
+        update: '/materials/:id',
+        delete: '/materials/:id',
+    },
+    //SubCategories
+    subCategories: {
+        getAll: '/subCategories',
+        getById: '/subCategories/:id',
+        post: '/subCategories',
+        update: '/subCategories/:id',
+        delete: '/subCategories/:id',
+    },
+    //Categories
+    categories: {
+        getAll: '/categories',
+        getById: '/categories/:id',
+        post: '/categories',
+        update: '/categories/:id',
+        delete: '/categories/:id',
+    },
+    invoice: {
+        getAll: '/invoice',
+        getById: '/invoice/:id',
+        post: '/invoice',
+        update: '/invoice/:id',
+        delete: '/invoice/:id',
+    },
+    fixedCost: {
+        getAll: '/fixedCost',
+        getById: '/fixedCost/:id',
+        post: '/fixedCost',
+        update: '/fixedCost/:id',
+        delete: '/fixedCost/:id',
+    }
 
 };

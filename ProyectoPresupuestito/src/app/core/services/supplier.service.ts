@@ -63,7 +63,7 @@ export class SupplierService {
      * @returns un array de empleados como un observable
      */
     
-    getEmployees(): Observable<Supplier[]>{
+    getSuppliers(): Observable<Supplier[]>{
       return this.http.get<Supplier[]>(API_URL+ENDPOINTS.supplier.getAll);
     }
 
@@ -99,32 +99,5 @@ export class SupplierService {
       const url = API_URL + ENDPOINTS.supplier.update;
       return this.http.put(url, supplier);
     }
-
-
-  //Metodos que se conectan con los componentes
-  /*
-  handleGetSupplier(){
-  }
-
-  handlePostSupplier(supplier : Supplier){
-    const id = this.postSupplier(supplier);
-    supplier.idSupplier = id;
-    this.addNewSupplier(supplier);
-    const emptyHistory : SupplierHistory = {
-      idSupplierHistory: id,
-      oSupplier: supplier,
-    }
-    this.suppliersHistory.push(emptyHistory);
-  }
-
-  handleUpdateSupplier(supplier : Supplier){
-    this.putSupplier(supplier);
-  }
-
-  handleDeleteSupplier(supplierId : number){
-    this.suppliers = this.suppliers.filter((supplier)=> supplier.idSupplier !== supplierId);
-    this._suppliersSubject.next(this.suppliers);
-    this.deleteSupplier(supplierId);
-  }*/
 
 }
