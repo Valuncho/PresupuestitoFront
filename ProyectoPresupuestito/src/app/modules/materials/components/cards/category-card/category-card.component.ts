@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Material } from '../../../../core/model/Material';
-import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
+import { Category } from '../../../../../core/model/Category';
+import { ButtonCardComponent } from '../../../../../components/button-card/button-card.component';
 
 @Component({
-  selector: 'app-material-card',
+  selector: 'app-category-card',
   standalone: true,
   imports: [ButtonCardComponent],
-  templateUrl: './material-card.component.html',
-  styleUrl: './material-card.component.css'
+  templateUrl: './category-card.component.html',
+  styleUrl: './category-card.component.css'
 })
-export class MaterialCardComponent {
-  @Input() Material?: Material;
-  @Input() idMaterial: number = 0;
+export class CategoryCardComponent {
+  @Input() Category?: Category;
+  @Input() idCategory: number = 0;
   @Output() isClick = new EventEmitter<number>();
   @Output() isEdit = new EventEmitter<number>();
   @Output() isDeleted = new EventEmitter<number>();
@@ -26,7 +26,7 @@ export class MaterialCardComponent {
   }
 
   select(){
-    this.isClick.emit(this.idMaterial);
+    this.isClick.emit(this.idCategory);
   }
   edit(){
     
