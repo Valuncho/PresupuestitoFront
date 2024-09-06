@@ -1,6 +1,6 @@
-export interface FixedCost
+export interface Cost
 {
-    idFixedCost : number;
+    idCost : number;
     description : string;
     amount : number;
     workingDays : number;

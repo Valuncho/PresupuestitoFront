@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-    selector: 'app-employee-details',
+    selector: 'app-cost-view',
     standalone: true,
     imports: [CommonModule,],
-    templateUrl: './employee-Details.component.html',
-    styleUrl: './employee-Details.component.css',
+    templateUrl: './cost-view.component.html',
+    styleUrl: './cost-view.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeDetailsComponent { }
+export class CostViewComponent { }

@@ -13,6 +13,12 @@ import { MaterialViewComponent } from './modules/materials/pages/material-view/m
 import { MaterialFormViewComponent } from './modules/materials/pages/material-form-view/material-form-view.component';
 import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
 import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
+import { EmployeeViewComponent } from './modules/employee/pages/employee-View/employee-View.component';
+import { EmployeeDetailsComponent } from './modules/employee/pages/employee-Details/employee-Details.component';
+import { EmployeeFormComponent } from './modules/employee/components/employee-form/employee-form.component';
+import { InvoiceDetailsViewComponent } from './modules/invoice/pages/invoice-details-view/invoice-details-view.component';
+import { InvoiceMakerComponent } from './modules/invoice/pages/invoice-maker/invoice-maker.component';
+import { CostComponent } from './modules/cost/cost.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -34,10 +40,22 @@ export const routes: Routes = [
     
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},
-    {path: 'material/edit', component: MaterialFormViewComponent},
 
+    //falta el edit
     {path: 'supplier', component: SupplierViewComponent},
     {path: 'supplier/Details', component: SupplierDetailsComponent},
+
+    {path: 'employee', component: EmployeeViewComponent},
+    {path: 'employee/detail/:employeeId', component: EmployeeDetailsComponent},
+    {path: 'employee/edit', component: EmployeeFormComponent},
+
+    {path: 'invoice/details/invoiceId', component: InvoiceDetailsViewComponent},
+    {path: 'invoice/new/supplierId', component: InvoiceMakerComponent},
+    {path: 'invoice/edit/invoiceId', component: InvoiceMakerComponent},
+    
+    
+    {path: 'Cost', component: CostComponent},
+    
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},
 
