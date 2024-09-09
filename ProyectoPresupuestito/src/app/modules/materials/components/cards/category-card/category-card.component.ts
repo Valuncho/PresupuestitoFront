@@ -12,9 +12,9 @@ import { ButtonCardComponent } from '../../../../../components/button-card/butto
 export class CategoryCardComponent {
   @Input() Category?: Category;
   @Input() idCategory: number = 0;
-  @Output() isClick = new EventEmitter<number>();
-  @Output() isEdit = new EventEmitter<number>();
-  @Output() isDeleted = new EventEmitter<number>();
+  @Output() isClick = new EventEmitter<Category>();
+  @Output() isEdit = new EventEmitter<Category>();
+  @Output() isDeleted = new EventEmitter<Category>();
   botones: Array<{  icon: string }> =[];
 
   ngOnInit(){
@@ -26,12 +26,12 @@ export class CategoryCardComponent {
   }
 
   select(){
-    this.isClick.emit(this.idCategory);
+    this.isClick.emit(this.Category);
   }
   edit(){
-    
+    this.isEdit.emit(this.Category);
   }
   deleteC(){
-    
+    this.isDeleted.emit(this.Category);
   }
 }

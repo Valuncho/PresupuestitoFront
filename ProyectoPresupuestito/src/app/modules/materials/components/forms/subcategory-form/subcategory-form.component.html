@@ -11,9 +11,9 @@
         }
   
         <label for="name">Nombre</label>
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" formControlName="name">
         <label for="category">Rubro:</label>
-        <select name="category" id="category">
+        <select name="category" id="category" formControlName="category">
           @for (item of categories; track $index) {
             <option value="{{item.idCategory}}">{{item.name}}</option>
           }

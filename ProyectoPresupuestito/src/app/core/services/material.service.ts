@@ -5,12 +5,20 @@ import { Material } from '../model/Material';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_URL,ENDPOINTS } from '../endpoints';
+import { MaterialStateService } from '../states/material-state.service';
+import { NotificationService } from './utils/notification.service';
 @Injectable({
   providedIn: 'root'
 })
 export class MaterialService {
   //Utils
   private http = inject(HttpClient);
+  private state = inject(MaterialStateService);
+  private notification = inject(NotificationService);
+
+  getState(){
+    return this.state;
+  }
 
   //Metodos back
   /**
@@ -88,7 +96,14 @@ export class MaterialService {
    
   deleteCategory(Category : Category){
     const url = API_URL+ENDPOINTS.categories.delete;
-    return this.http.put(url,Category);
+    this.http.put(url,Category).subscribe({
+      next : response =>  {
+        this.notification.showNotification("Rubro eliminado")
+      },
+      error: err => {
+        this.notification.showNotification(err.name)
+      }
+    });
   }
 
   //Metodos para objetos vacios
@@ -120,10 +135,11 @@ export class MaterialService {
   }
 
 
-  
+  //States
+ 
   
 
-  }
+}
   
 
 

@@ -34,7 +34,7 @@ export const routes: Routes = [
     
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},
-    {path: 'material/edit', component: MaterialFormViewComponent},
+   
 
     {path: 'supplier', component: SupplierViewComponent},
     {path: 'supplier/Details', component: SupplierDetailsComponent},

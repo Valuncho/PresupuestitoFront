@@ -12,7 +12,24 @@ import { Category } from '../../../../../core/model/Category';
 export class SubcategoryFormComponent {
 
   isEdit : boolean = false;
-  categories : Category[] = []
+  categories : Category[]=[
+    {
+      idCategory: 1,
+      name: 'Ferretería',
+    },
+    {
+      idCategory: 2,
+      name: 'Maderas'
+    },
+    {
+      idCategory: 3,
+      name: 'Adhesivos'
+    },
+    {
+      idCategory: 4,
+      name: 'Pinturería'
+    }
+  ]
   SubCategoryForm : FormGroup = new FormGroup({
     name : new FormControl('', Validators.required),
     idCategory : new FormControl(0, Validators.required)
