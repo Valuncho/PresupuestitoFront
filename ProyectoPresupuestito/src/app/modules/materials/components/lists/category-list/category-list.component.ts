@@ -6,7 +6,7 @@ import { CategoryFormComponent } from '../../forms/category-form/category-form.c
 import { MaterialService } from '../../../../../core/services/material.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
-import { NotificationService } from '../../../../../core/services/utils/notification.service';
+
 
 @Component({
   selector: 'app-category-list',
@@ -18,7 +18,6 @@ import { NotificationService } from '../../../../../core/services/utils/notifica
 export class CategoryListComponent {
   //Utils
   private dialog = inject(MatDialog);
-  private notification = inject(NotificationService);
   private modalService = inject(ModalService);
   private materialService = inject(MaterialService);
   

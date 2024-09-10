@@ -4,7 +4,6 @@
         @for (category of categories ; track category; let idx = $index) {
         <app-category-card
           [Category]="category"
-          [idCategory]="category.idCategory"
           (isClick)="seleccionar($event)"
           (isEdit)="editar($event)"
           (isDeleted)="eliminar($event)"

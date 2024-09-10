@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Material } from '../../../../../core/model/Material';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { ButtonCardComponent } from '../../../../../components/button-card/button-card.component';
 
@@ -12,10 +11,10 @@ import { ButtonCardComponent } from '../../../../../components/button-card/butto
 })
 export class SubCategoryCardComponent {
   @Input() Subcategory?: SubCategoryMaterial;
-  @Input() idSubcategory: number = 0;
-  @Output() isClick = new EventEmitter<number>();
-  @Output() isEdit = new EventEmitter<number>();
-  @Output() isDeleted = new EventEmitter<number>();
+  
+
+  @Output() isEdit = new EventEmitter<SubCategoryMaterial>();
+  @Output() isDeleted = new EventEmitter<SubCategoryMaterial>();
   botones: Array<{  icon: string }> =[];
 
   ngOnInit(){
@@ -26,13 +25,11 @@ export class SubCategoryCardComponent {
     ];
   }
 
-  select(){
-    this.isClick.emit(this.idSubcategory);
-  }
+
   edit(){
-    
+    this.isEdit.emit(this.Subcategory);
   }
   deleteC(){
-    
+    this.isDeleted.emit(this.Subcategory);
   }
 }

@@ -11,7 +11,7 @@ import { ButtonCardComponent } from '../../../../../components/button-card/butto
 })
 export class CategoryCardComponent {
   @Input() Category?: Category;
-  @Input() idCategory: number = 0;
+
   @Output() isClick = new EventEmitter<Category>();
   @Output() isEdit = new EventEmitter<Category>();
   @Output() isDeleted = new EventEmitter<Category>();

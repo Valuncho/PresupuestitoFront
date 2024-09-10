@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { SubCategoryCardComponent } from '../../cards/sub-category-card/sub-category-card.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MaterialService } from '../../../../../core/services/material.service';
+import { ModalService } from '../../../../../core/services/utils/modal.service';
+import { SubcategoryFormComponent } from '../../forms/subcategory-form/subcategory-form.component';
+import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-subcategory-list',
@@ -10,6 +15,9 @@ import { SubCategoryCardComponent } from '../../cards/sub-category-card/sub-cate
   styleUrl: './subcategory-list.component.css'
 })
 export class SubcategoryListComponent {
+  private dialog = inject(MatDialog);
+  private modalService = inject(ModalService);
+  private materialService = inject(MaterialService);
 
   //subcategories : SubCategoryMaterial[] = []
 
@@ -80,9 +88,27 @@ export class SubcategoryListComponent {
     },
 
   ]
-  seleccionar($Event : number){
-    
-  } 
-  editar($Event : number){}
-  eliminar($Event : number){}
+
+  editar($Event : SubCategoryMaterial){
+    this.materialService.getState().setEditMode(true);
+    console.log($Event)
+    this.materialService.getState().setSubcategory($Event);
+    this.modalService.openModal<SubcategoryFormComponent,SubCategoryMaterial>(SubcategoryFormComponent);
+  }
+
+  eliminar($Event : SubCategoryMaterial){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        mensaje: `¿Estás seguro de que deseas eliminar el sub-rubro: ${$Event.name}?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.materialService.deleteSubCategory($Event);
+        //this.notification.showNotification("Rubro eliminado con éxito");
+      }
+    });
+
+  }
 }

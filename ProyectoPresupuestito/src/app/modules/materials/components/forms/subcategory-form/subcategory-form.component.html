@@ -15,7 +15,7 @@
         <label for="category">Rubro:</label>
         <select name="category" id="category" formControlName="category">
           @for (item of categories; track $index) {
-            <option value="{{item.idCategory}}">{{item.name}}</option>
+            <option value="{{item}}">{{item.name}}</option>
           }
         </select>
       </fieldset>

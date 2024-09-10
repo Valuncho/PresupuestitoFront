@@ -3,9 +3,7 @@
     <div>
         @for (category of subCategories ; track category; let idx = $index) {
         <app-sub-category-card
-          [Subcategory]="category"
-          [idSubcategory]="category.idCategoryMaterial"
-          (isClick)="seleccionar($event)"
+          [Subcategory]="category"          
           (isEdit)="editar($event)"
           (isDeleted)="eliminar($event)"
         />

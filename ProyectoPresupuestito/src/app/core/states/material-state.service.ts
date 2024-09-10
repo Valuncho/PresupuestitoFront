@@ -29,15 +29,15 @@ export class MaterialStateService {
     this.category.next(category);
   }
   
-/*
-  public getSubcategory(): SubCategoryMaterial {
-    return this.subcategory;
+
+  public getSubcategory(): Observable<SubCategoryMaterial | undefined>{
+    return this.subCategory.asObservable();
   }
 
   public setSubcategory(subcategory: SubCategoryMaterial) {
-    this.subcategory = subcategory;
+    this.subCategory.next(subcategory);
   }
-*/
+
   //Edit
   private editMode : boolean = false;
 
