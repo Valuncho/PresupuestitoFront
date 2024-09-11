@@ -25,13 +25,16 @@ export class CategoryFormComponent {
 
   ngOnInit(): void {
 
+    
+  }
+  ngAfterViewInit(): void {
+    
     if(this.isEdit){
       this.materialService.getState().getCategory().subscribe(res =>{
         this.newCategory = res!;
       })
       this.CategoryForm.setValue(this.newCategory)
     }
-    
   }
 
   resetForm($Event : Event){
@@ -41,7 +44,7 @@ export class CategoryFormComponent {
   
   onSubmit(){
     this.newCategory.name = this.CategoryForm.value["name"]
-    if(this.isEdit){
+    if(!this.isEdit){
       this.materialService.postCategory(this.newCategory);
     }else{
       this.materialService.putCategory(this.newCategory);

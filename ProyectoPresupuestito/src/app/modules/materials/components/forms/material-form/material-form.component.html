@@ -12,7 +12,7 @@
         @if (!isEdit) {
           <label for="supplier">Proveedor:</label>
           <input type="text" id="supplier" (click)="openSupplierForm()" placeholder="Seleccionar proveedor" readonly formControlName="supplier">
-          <!--<input type="hidden" [value]="this.currentSupplier.idPerson" name="idSupplier" formControlName="idSupplier"/>-->
+          <input type="hidden" [value]="" name="idSupplier" formControlName="idSupplier"/>
         }
         <label for="name">Nombre:</label>
         <input type="text" name="name" id="name" formControlName="name">

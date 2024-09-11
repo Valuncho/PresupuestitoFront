@@ -15,6 +15,7 @@ import { ConfirmationDialogComponent } from '../../../../../components/confirmat
   styleUrl: './subcategory-list.component.css'
 })
 export class SubcategoryListComponent {
+  //Utils
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private materialService = inject(MaterialService);
@@ -91,7 +92,6 @@ export class SubcategoryListComponent {
 
   editar($Event : SubCategoryMaterial){
     this.materialService.getState().setEditMode(true);
-    console.log($Event)
     this.materialService.getState().setSubcategory($Event);
     this.modalService.openModal<SubcategoryFormComponent,SubCategoryMaterial>(SubcategoryFormComponent);
   }

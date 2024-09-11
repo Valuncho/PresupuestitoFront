@@ -5,6 +5,8 @@ import { SupplierListComponent } from '../../../../supplier/components/supplier-
 import { Supplier } from '../../../../../core/model/Supplier';
 import { ModalService } from '../../../../../core/services/utils/modal.service';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
+import { MaterialService } from '../../../../../core/services/material.service';
+import { Material } from '../../../../../core/model/Material';
 
 
 @Component({
@@ -16,7 +18,13 @@ import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMateri
 })
 export class MaterialFormComponent {
   //Utils
+  private materialService = inject(MaterialService);
   private modalService = inject(ModalService);
+  //Properties
+  
+  newMaterial :  Material = this.materialService.getEmptyMaterial();
+  isEdit : boolean = this.materialService.getState().getEditMode();
+  
   //Properties
 
   subCategories : SubCategoryMaterial[] = [
@@ -87,12 +95,11 @@ export class MaterialFormComponent {
 
   ]
 
-
-  isEdit : boolean = false;
   currentSupplier! : Person; 
   //subCategories : SubCategoryMaterial[]=[]
   MaterialForm : FormGroup = new FormGroup({
-    supplier : new FormControl(0,Validators.required),
+    supplier : new FormControl('',Validators.required),
+    idSupplier : new FormControl(0,Validators.required),
     subCategory : new FormControl(0,Validators.required),
     name : new FormControl('', Validators.required),
     description : new FormControl('', Validators.required),
@@ -102,15 +109,33 @@ export class MaterialFormComponent {
 
 
   ngOnInit(): void {
-  
+    if(this.isEdit){
+      this.materialService.getState().getMaterial().subscribe(res =>{
+        this.newMaterial = res!;
+      })
+      /*
+      this.MaterialForm.patchValue({
+        name: this.newMaterial.name,
+        
+      });
+      */
+     this.MaterialForm.patchValue(this.newMaterial)
+    }
   }
+
   openSupplierForm(){
     this.modalService.openModal<SupplierListComponent,Supplier>(SupplierListComponent);
   }
   resetForm($Event : Event){
-
+    this.MaterialForm.reset();
   }
   onSubmit(){
-
+    
+    if(this.isEdit){
+      this.materialService.postMaterial(this.newMaterial);
+    }else{
+      this.materialService.putMaterial(this.newMaterial);
+      this.materialService.getState().setEditMode(false);
+    }
   }
 }

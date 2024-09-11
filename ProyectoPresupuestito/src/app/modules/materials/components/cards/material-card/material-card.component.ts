@@ -11,10 +11,10 @@ import { ButtonCardComponent } from '../../../../../components/button-card/butto
 })
 export class MaterialCardComponent {
   @Input() Material?: Material;
-  @Input() idMaterial: number = 0;
-  @Output() isClick = new EventEmitter<number>();
-  @Output() isEdit = new EventEmitter<number>();
-  @Output() isDeleted = new EventEmitter<number>();
+  
+  @Output() isClick = new EventEmitter<Material>();
+  @Output() isEdit = new EventEmitter<Material>();
+  @Output() isDeleted = new EventEmitter<Material>();
   botones: Array<{  icon: string }> =[];
 
   ngOnInit(){
@@ -26,12 +26,12 @@ export class MaterialCardComponent {
   }
 
   select(){
-    this.isClick.emit(this.idMaterial);
+    this.isClick.emit(this.Material);
   }
   edit(){
-    
+    this.isEdit.emit(this.Material);
   }
   deleteC(){
-    
+    this.isDeleted.emit(this.Material);
   }
 }

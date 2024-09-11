@@ -6,11 +6,10 @@
     (sortedResults)="handleSearch($event)"
   />
   <div>
-    @for (material of materialsToDisplay | paginate:{ itemsPerPage: items,
+    @for (material of materials | paginate:{ itemsPerPage: items,
     currentPage: page }; track material.idMaterial; let idx = $index) {
     <app-material-card
       [Material]="material"
-      [idMaterial]="material.idMaterial"
       (isClick)="seleccionar($event)"
       (isEdit)="editar($event)"
       (isDeleted)="eliminar($event)"

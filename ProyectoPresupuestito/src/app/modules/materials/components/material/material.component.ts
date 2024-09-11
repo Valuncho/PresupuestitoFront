@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Material } from '../../../../core/model/Material';
+import { MaterialService } from '../../../../core/services/material.service';
 @Component({
   selector: 'app-material',
   standalone: true,
@@ -8,22 +9,20 @@ import { Material } from '../../../../core/model/Material';
   styleUrl: './material.component.css'
 })
 export class MaterialComponent {
-
-  material : Material = {
-    idMaterial: 1,
-    name: 'Bisagra de cazoleta estándar',
-    description: 'Bisagra oculta para muebles de cocina',
-    color: 'Plateado',
-    brand: 'Hafele',
-    measure: '35mm',
-    unitOfMeasure: 'Unidad',
-    subCategory: {
-      idCategoryMaterial: 7,
-      name: 'Madera maciza',
-      category: {
-        idCategory: 1,
-        name: 'Ferretería',
-      }
-    }
+  //Util
+  private materialService = inject(MaterialService);
+  material : Material | undefined = this.materialService.getEmptyMaterial();
+  
+ngAfterViewInit(): void {
+  
+  //Add 'implements AfterViewInit' to the class.
+  this.getCurrentMaterial()
+}
+  getCurrentMaterial(){
+    this.materialService.getState().getMaterial().subscribe(res=>{
+      this.material = res;
+    },
+  
+  )
   }
 }
