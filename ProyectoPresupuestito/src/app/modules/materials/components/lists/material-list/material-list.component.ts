@@ -222,7 +222,14 @@ export class MaterialListComponent {
     if(this.router.url == '/material'){
       this.materialsToDisplay = this.materials;
     }
-      
+    this.materialService.getMaterials().subscribe(
+      {  
+        next: x => this.materials = x,  
+        error: err => console.error('An error occurred :', err),  
+        complete: () => console.log('There are no more action happen.')  
+      }
+    )
+     
     
   }
 

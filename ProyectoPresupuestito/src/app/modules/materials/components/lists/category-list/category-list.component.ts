@@ -44,7 +44,16 @@ export class CategoryListComponent {
   ]
 
 
-
+  ngOnInit(): void {
+    this.materialService.getCategories().subscribe(
+      {  
+        next: x => this.categories = x,  
+        error: err => console.error('An error occurred :', err),  
+        complete: () => console.log('There are no more action happen.')  
+      }
+    )
+    
+  }
 
   seleccionar($Event : Category){
     this.materialService.getState().setCategory($Event);

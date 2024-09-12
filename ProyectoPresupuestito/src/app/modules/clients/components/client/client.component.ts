@@ -10,5 +10,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './client.component.css'
 })
 export class ClientComponent {
+  
   @Input() client! : Client;
 }

@@ -6,7 +6,7 @@
   />
 
   
-    @for (client of this.searchedClients | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
+    @for (client of clients | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
       <app-client-card 
       [Person]="client.oPerson"
       [IdClient]="client.idClient"
