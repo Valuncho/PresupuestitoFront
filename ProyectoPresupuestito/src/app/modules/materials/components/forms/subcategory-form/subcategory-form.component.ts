@@ -42,6 +42,12 @@ export class SubcategoryFormComponent {
   })
 
   ngOnInit(): void {
+    this.materialService.getCategories().subscribe({
+      next: res => this.categories = res,  
+        error: err => console.error('An error occurred :', err),  
+        complete: () => console.log('There are no more action happen.')  
+    })
+
     if(this.isEdit){
       this.materialService.getState().getSubcategory().subscribe(res =>{
         this.newSubCategory = res!;

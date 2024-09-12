@@ -23,10 +23,6 @@ export class CategoryFormComponent {
   })
 
 
-  ngOnInit(): void {
-
-    
-  }
   ngAfterViewInit(): void {
     
     if(this.isEdit){
@@ -39,7 +35,6 @@ export class CategoryFormComponent {
 
   resetForm($Event : Event){
     this.CategoryForm.reset();
-    
   }
   
   onSubmit(){

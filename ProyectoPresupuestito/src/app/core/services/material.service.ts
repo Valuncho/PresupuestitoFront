@@ -91,7 +91,14 @@ export class MaterialService {
    
   putCategory(Category : Category){
     const url = API_URL+ENDPOINTS.categories.update;
-    return this.http.put(url,Category);
+    return this.http.put(url,Category).subscribe({
+      next : response =>  {
+        this.notification.showNotification("Rubro editado")
+      },
+      error: err => {
+        this.notification.showNotification(err.name)
+      }
+    });;
   }
    
   deleteCategory(Category : Category){
@@ -133,11 +140,6 @@ export class MaterialService {
       name: ''
     }
   }
-
-
-  //States
- 
-  
 
 }
   

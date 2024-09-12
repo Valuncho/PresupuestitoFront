@@ -15,14 +15,15 @@ export class MaterialComponent {
   
 ngAfterViewInit(): void {
   
-  //Add 'implements AfterViewInit' to the class.
-  this.getCurrentMaterial()
-}
-  getCurrentMaterial(){
-    this.materialService.getState().getMaterial().subscribe(res=>{
-      this.material = res;
-    },
+  
+  this.materialService.getState().getMaterial().subscribe(
+      {
+        next : res =>{this.material = res;},
+        error: err => console.error('An error occurred :', err),  
+        complete: () => console.log('There are no more action happen.')  
+      }
+        
   
   )
-  }
+}
 }

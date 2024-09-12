@@ -96,7 +96,7 @@ export class MaterialFormComponent {
   ]
 
   currentSupplier! : Person; 
-  //subCategories : SubCategoryMaterial[]=[]
+  
   MaterialForm : FormGroup = new FormGroup({
     supplier : new FormControl('',Validators.required),
     idSupplier : new FormControl(0,Validators.required),
@@ -109,10 +109,18 @@ export class MaterialFormComponent {
 
 
   ngOnInit(): void {
+
+    this.materialService.getSubCategories().subscribe({
+      next: res => this.subCategories = res,  
+        error: err => console.error('An error occurred :', err),  
+        complete: () => console.log('There are no more action happen.')  
+    })
+
     if(this.isEdit){
       this.materialService.getState().getMaterial().subscribe(res =>{
         this.newMaterial = res!;
       })
+
       /*
       this.MaterialForm.patchValue({
         name: this.newMaterial.name,
