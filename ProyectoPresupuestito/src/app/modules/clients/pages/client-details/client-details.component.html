@@ -2,7 +2,7 @@
 <section>
     <article>
         <app-client
-        [client] = "currentClient"
+        [client] = "currentClient.oClient"
         />
         <button class="Boton1"(click)="goToBudgetForm()">Crear presupuesto nuevo</button>
         
@@ -13,7 +13,9 @@
         
     </article>
     <article>
-        <app-budget-list/>
+        <app-budget-list 
+        [budgets] = "currentClient.budgets"
+        />
     </article>
     
     

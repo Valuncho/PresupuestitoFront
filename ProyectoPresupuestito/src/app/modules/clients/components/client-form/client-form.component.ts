@@ -34,10 +34,11 @@ export class ClientFormComponent {
     dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
     cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
   });
-
-  ngOnInit(): void {
+  
+  ngAfterViewInit(): void {
     this.setUp();
     this.onEditHandler();
+    
   }
 
   get canSubmit(){
@@ -71,6 +72,13 @@ export class ClientFormComponent {
       let url = "/client/edit/" + this.clientId;
       if(this.router.url == url){
         this.isEdit = true;
+        this.clientService.getClientById(this.clientId).subscribe(
+          {
+          next: (res:Client) => {this.currentClient = res!},
+          error: err => console.error('An error occurred :', err),  
+          complete: () => console.log('There are no more action happen.')  
+        }
+      )
         //this.currentClient = this.clientService.getClientById(this.clientId)!;
         this.clientForm.patchValue(this.currentClient.oPerson);
       }else{

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Person } from '../../../../core/model/Person';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
+import { Client } from '../../../../core/model/Client';
 
 
 @Component({
@@ -12,13 +13,12 @@ import { ButtonCardComponent } from '../../../../components/button-card/button-c
   styleUrl: './client-card.component.css'
 })
 export class ClientCardComponent {
-  @Input() Person: Person | undefined;
-  @Input() IdClient: number = 0;
-  @Output() isView = new EventEmitter<number>();
-  @Output() action = new EventEmitter<number>();
-  @Output() isSelected = new EventEmitter<number>();
-  @Output() isEdit = new EventEmitter<number>();
-  @Output() isDeleted = new EventEmitter<number>();
+  @Input() Client: Client | undefined;
+  @Output() isView = new EventEmitter<Client>();
+  @Output() action = new EventEmitter<Client>();
+  @Output() isSelected = new EventEmitter<Client>();
+  @Output() isEdit = new EventEmitter<Client>();
+  @Output() isDeleted = new EventEmitter<Client>();
   botones: Array<{ icon: string }> =[];
   //{ url: '/client/editar/'+this.IdClient+'', icon: 'edit' },
 
@@ -38,21 +38,21 @@ export class ClientCardComponent {
   }
   
   newBudget(){
-    this.action.emit(this.IdClient)
+    this.action.emit(this.Client)
   }
 
   select(){
-    this.isSelected.emit(this.IdClient);
+    this.isSelected.emit(this.Client);
   }
   view(){
-    this.isView.emit(this.IdClient);
+    this.isView.emit(this.Client);
   }
   edit(){
-    this.isEdit.emit(this.IdClient);
+    this.isEdit.emit(this.Client);
   }
 
   deleteC(){
-    this.isDeleted.emit(this.IdClient);
+    this.isDeleted.emit(this.Client);
   }
   
 

@@ -1,4 +1,4 @@
-import { Component, inject, signal, SimpleChange } from '@angular/core';
+import { Component, inject, Input, signal, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from '../../../../core/services/client.service';
@@ -32,7 +32,9 @@ export class ClientListComponent {
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
   //Properties
+  @Input() options : boolean = false;
   //clients : Client[] = [];
+  
   clients: Client[] = [
     {
       idClient: 1001,
@@ -64,31 +66,21 @@ export class ClientListComponent {
 
 
   searchedClients : Client[] = [];
-  client? : Client;
-  //BudgetForm
-  options = false;
+  
+  
   //Pagination
   page = 1
   pageSize = 5
 
 
   ngOnInit(): void {
-
-    if(this.router.url == '/budget' || this.router.url == '/budget/new/'){
-      console.log(this.router.url)
-      this.options = true;
-    }
-    this.clientService.getClients().subscribe(clients =>{
-      this.clients = clients
+     
+    this.clientService.getClients().subscribe({  
+      next: x => this.clients = x,  
+      error: err => console.error('An error occurred :', err),  
+      complete: () => console.log('There are no more action happen.')  
     })
-/*
-    this.clientService.getClients().subscribe({
-      next : (clientes)=>{
-          this.clients = clientes;
-          this.searchedClients = clientes;
-       }
-    });
-*/
+
   }
 
 //BudgetForm
@@ -108,39 +100,36 @@ export class ClientListComponent {
   }
 
   //Card
-  handleAction($Event : any){
-    
-    this.router.navigate(['/budget/new/',$Event]);
+  handleAction($Event : Client){
+
+    this.router.navigate(['/budget/new/',$Event.idClient]);
   }
 
-  handleViewClient($Event : any){
-    
-    this.router.navigate(['/client/detail/',$Event]);
+  handleViewClient($Event : Client){    
+    this.router.navigate(['/client/detail/',$Event.idClient]);
   }
 
-  handleEditClient($Event : any){
-    
-    this.router.navigate(['/client/edit/',$Event]);
+  handleEditClient($Event : Client){
+    this.router.navigate(['/client/edit/',$Event.idClient]);
   }
 
-  handleDeleteClient($Event : any){
+  handleDeleteClient($Event : Client){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar al cliente con ID ${$Event}?`
+        mensaje: `¿Estás seguro de que deseas eliminar al cliente ${$Event.oPerson.name}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const client = this.clientService.getClientById($Event)!;
-
-        this.clientService.handleDeleteClient($Event)
+        const client = this.clientService.getClientById($Event.idClient)!;
+        this.clientService.handleDeleteClient($Event.idClient)
         this.notificationService.showNotification("Cliente eliminado con éxito");
         this.router.navigate(['/client']);
       }
     });
 
-  }
+  } 
 
   //Pagination
   pageChange(page: number) {

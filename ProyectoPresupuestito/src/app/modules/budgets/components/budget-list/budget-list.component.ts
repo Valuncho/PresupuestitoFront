@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { BudgetComponent } from '../budget/budget.component';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { Budget } from '../../../../core/model/Budget';
@@ -30,7 +30,8 @@ export class BudgetListComponent {
   private budgetService = inject(BudgetService);
   private clientService = inject(ClientService);
   //Properties
-  budgets : Budget[] = [];
+  @Input() budgets : Budget[] = [];
+  
   budgetsToDisplay : Budget[] = [];
   clientId : number = 0
   options : boolean = false;
@@ -45,13 +46,13 @@ export class BudgetListComponent {
     if(this.router.url == clientUrl){
       console.log(this.router.url)
       this.options = true;
-      this.clientService.getClientHistoryById(this.clientId).subscribe(history =>{
-        this.budgetsToDisplay = history.budgets;
-      })
     }else{
-      this.budgetService.getBudgets().subscribe(budgets =>{
-        this.budgets = budgets;
-        })
+      this.budgetService.getBudgets().subscribe(
+        {
+          next: res => {this.budgets = res},
+            
+        }
+      )
     }
 
 

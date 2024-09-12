@@ -6,6 +6,7 @@ import { Budget } from '../model/Budget';
 import {BehaviorSubject, delay, Observable, of} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '../endpoints';
+import { ClientStateService } from '../states/client-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,11 @@ import { API_URL, ENDPOINTS } from '../endpoints';
 export class ClientService {
   //Util
   private http = inject(HttpClient);
+  private state = inject(ClientStateService);
+
+  getState() : ClientStateService{
+    return this.state;
+  }
 
   /**
    * Retorna todos los clientes disponibles guardados.
