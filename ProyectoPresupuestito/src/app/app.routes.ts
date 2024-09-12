@@ -18,7 +18,7 @@ import { EmployeeDetailsComponent } from './modules/employee/pages/employee-Deta
 import { EmployeeFormComponent } from './modules/employee/components/employee-form/employee-form.component';
 import { InvoiceDetailsViewComponent } from './modules/invoice/pages/invoice-details-view/invoice-details-view.component';
 import { InvoiceMakerComponent } from './modules/invoice/pages/invoice-maker/invoice-maker.component';
-import { CostComponent } from './modules/cost/cost.component';
+import { CostViewComponent } from './modules/cost/pages/cost-view/cost-view.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -54,7 +54,7 @@ export const routes: Routes = [
     {path: 'invoice/edit/invoiceId', component: InvoiceMakerComponent},
     
     
-    {path: 'Cost', component: CostComponent},
+    {path: 'cost', component: CostViewComponent},
     
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},

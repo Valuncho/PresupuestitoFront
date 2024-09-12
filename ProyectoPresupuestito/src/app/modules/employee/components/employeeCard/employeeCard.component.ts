@@ -15,15 +15,15 @@ import { Observable } from 'rxjs';
 })
 export class EmployeeCardComponent { 
 
-    @Input() Person: Person | undefined;
-    @Input() IdEmployee: number = 0;
-    @Output() isView = new EventEmitter<number>();
-    @Output() action = new EventEmitter<number>();
-    @Output() isSelected = new EventEmitter<number>();
-    @Output() isEdit = new EventEmitter<number>();
-    @Output() isDeleted = new EventEmitter<number>();
+    @Input() Employee: Employee | undefined;
+
+    @Output() isView = new EventEmitter<Employee>();
+    @Output() action = new EventEmitter<Employee>();
+    @Output() isSelected = new EventEmitter<Employee>();
+    @Output() isEdit = new EventEmitter<Employee>();
+    @Output() isDeleted = new EventEmitter<Employee>();
     botones: Array<{ icon: string }> =[];
-    //{ url: '/client/editar/'+this.IdClient+'', icon: 'edit' },
+   
     
     ngOnInit(){
         this.botones = [
@@ -35,20 +35,20 @@ export class EmployeeCardComponent {
         ];
     }
     Action(){
-        this.action.emit(this.IdEmployee)
+        this.action.emit(this.Employee)
     }
 
     select(){
-        this.isSelected.emit(this.IdEmployee);
+        this.isSelected.emit(this.Employee);
     }
     view(){
-        this.isView.emit(this.IdEmployee);
+        this.isView.emit(this.Employee);
     }
     edit(){
-        this.isEdit.emit(this.IdEmployee);
+        this.isEdit.emit(this.Employee);
     }
 
     deleteC(){
-        this.isDeleted.emit(this.IdEmployee);
+        this.isDeleted.emit(this.Employee);
     }
 }

@@ -24,7 +24,7 @@ export class EmployeeFormComponent {
     employeeId? : number;
     isEdit : boolean = false;
     //Form
-    EmployeeForm : FormGroup = new FormGroup({
+    employeeForm : FormGroup = new FormGroup({
         name: new FormControl('',[ Validators.required]),
         lastName: new FormControl('', Validators.required),
         direction : new FormControl('', Validators.required),
@@ -43,10 +43,10 @@ export class EmployeeFormComponent {
     get canSubmit(){
         let  flag : boolean = false;
         if(
-        this.EmployeeForm.get('name')?.valid &&
-        this.EmployeeForm.get('lastName')?.valid &&
-        this.EmployeeForm.get('direction')?.valid &&
-        this.EmployeeForm.get('phoneNumber')?.valid
+        this.employeeForm.get('name')?.valid &&
+        this.employeeForm.get('lastName')?.valid &&
+        this.employeeForm.get('direction')?.valid &&
+        this.employeeForm.get('phoneNumber')?.valid
         ){
         flag = true;
         }
@@ -54,7 +54,7 @@ export class EmployeeFormComponent {
     }
 
     setUp(){
-        this.EmployeeForm.reset();
+        this.employeeForm.reset();
         this.isEdit = false;
         this.currentEmployee = this.EmployeeService.getEmptyEmployee();
     }
@@ -71,8 +71,8 @@ export class EmployeeFormComponent {
         let url = "/employee/edit/" + this.employeeId;
         if(this.router.url == url){
             this.isEdit = true;
-            this.currentEmployee = this.EmployeeService.getEmployeeById(this.employeeId)!;
-            this.EmployeeForm.patchValue(this.currentEmployee.oPerson);
+            //this.currentEmployee = this.EmployeeService.getEmployeeById(this.employeeId)!;
+            this.employeeForm.patchValue(this.currentEmployee.oPerson);
         }else{
             this.isEdit = false;
         }
@@ -81,12 +81,12 @@ export class EmployeeFormComponent {
     }
 
     onSubmit(){
-        this.currentEmployee.oPerson = this.EmployeeForm.value;
+        this.currentEmployee.oPerson = this.employeeForm.value;
         if(this.isEdit){
-        this.EmployeeService.handleUpdateEmployee(this.currentEmployee);
+        //this.EmployeeService.handleUpdateEmployee(this.currentEmployee);
         this.notificationService.showNotification("empleado editado con éxito!");
         }else{
-        this.EmployeeService.handlePostEmployee(this.currentEmployee);
+        //this.EmployeeService.handlePostEmployee(this.currentEmployee);
         this.notificationService.showNotification("empleado guardado con éxito!");
         }
         this.setUp();

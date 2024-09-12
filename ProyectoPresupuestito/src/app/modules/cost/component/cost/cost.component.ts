@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
     selector: 'app-cost',
     standalone: true,
-    imports: [CommonModule,],
+    imports: [CommonModule],
     templateUrl: './cost.component.html',
     styleUrl: './cost.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

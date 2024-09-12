@@ -57,7 +57,7 @@ export class SupplierFormComponent {
     setUp(){
         this.supplierForm.reset();
         this.isEdit = false;
-        this.currentSupplier = this.supplierService.getEmptySupplier();
+        //this.currentSupplier = this.supplierService.getEmptySupplier();
     }
 
     resetForm($Event : Event){
@@ -70,23 +70,23 @@ export class SupplierFormComponent {
         this.supplierId = parseInt(this.activatedRoute.snapshot.params['supplierId']);
         if(this.supplierId){
             this.isEdit = true;
-            this.supplierService.selectedSupplier.subscribe(supplier =>{
-            this.currentSupplier= supplier;
-            this.supplierForm.patchValue(this.currentSupplier.oPerson);
-        })
+            //this.supplierService.selectedSupplier.subscribe(supplier =>{
+            //this.currentSupplier= supplier;
+            //this.supplierForm.patchValue(this.currentSupplier.oPerson);
+        //})
         }else{
         this.isEdit = false;
         }
     }
 
     onSubmit(){
-        this.currentSupplier.oPerson = this.supplierForm.value;
+        //this.currentSupplier.oPerson = this.supplierForm.value;
 
         if(this.isEdit){
-        this.supplierService.handleUpdateSupplier(this.currentSupplier);
+        //this.supplierService.handleUpdateSupplier(this.currentSupplier);
         this.notificationService.showNotification("supplier editado con éxito!");
         }else{
-        this.supplierService.handlePostSupplier(this.currentSupplier);
+        //this.supplierService.handlePostSupplier(this.currentSupplier);
         this.notificationService.showNotification("supplier guardado con éxito!");
         }
         this.setUp();

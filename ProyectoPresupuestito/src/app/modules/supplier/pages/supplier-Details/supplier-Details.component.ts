@@ -22,6 +22,8 @@ export class SupplierDetailsComponent {
     currentSupplier! : Supplier;
     supplier = signal<Supplier | undefined>(undefined);
     
+    
+    /*
     ngOnInit(): void {
         this.id = parseInt(this.activatedRoute.snapshot.params['supplierId']);
 
@@ -30,5 +32,5 @@ export class SupplierDetailsComponent {
         this.currentSupplier = supplier;
         })
         
-    }
+    }*/
 }

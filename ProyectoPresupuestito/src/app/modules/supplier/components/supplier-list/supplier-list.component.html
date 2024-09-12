@@ -8,8 +8,7 @@
     <div class="CardContainer">
       @for (supplier of suppliers() | paginate: { itemsPerPage: pageSize, currentPage: page } ; track supplier) {
         <app-supplier-card 
-        [Person]="supplier.oPerson" 
-        [IdSupplier]="supplier.idSupplier"
+        [supplier]="supplier"
         (action)="handleAction($event)"
         (isView)="handleViewSupplier($event)"
         (isEdit)="handleEditSupplier($event)" 

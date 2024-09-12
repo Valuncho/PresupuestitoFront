@@ -31,13 +31,14 @@ export class EmployeeListComponent {
     employees : Employee[] = [];
     searchedEmployees : Employee[] = [];
     employee? : Employee;
+    
     //BudgetForm
     options = false;
     //Pagination
     page = 1
     pageSize = 5
 
-
+/*
     ngOnInit(): void {
 
         this.employeeService.getAllEmployees().subscribe({
@@ -48,7 +49,7 @@ export class EmployeeListComponent {
         });
 
     }
-
+*/
     //BudgetForm
     addEmployeeHandler(){
         this.modalService.openModal<EmployeeFormComponent,Employee>(EmployeeFormComponent);
@@ -57,25 +58,26 @@ export class EmployeeListComponent {
     //Search
     handleSearch($Event : Employee[]){
         this.page = 1
+        /*
         this.employeeService.getEmployeesBySearch("filto").subscribe({
         next : (employees) =>{
             this.searchedEmployees = employees;
+        }*/
         }
-        })
-    }
+    
 
     //Card
     handleAction($Event : any){
-        this.employeeService.setSelectedEmployee($Event)
+      //  this.employeeService.setSelectedEmployee($Event)
     }
 
     handleViewEmployee($Event : any){
-        this.employeeService.setSelectedEmployee($Event)
+        //this.employeeService.setSelectedEmployee($Event)
         this.router.navigate(['/employee/detail/',$Event]);
     }
 
     handleEditEmployee($Event : any){
-        this.employeeService.setSelectedEmployee($Event)
+        //this.employeeService.setSelectedEmployee($Event)
         this.router.navigate(['/employee/edit/',$Event]);
     }
 
@@ -90,7 +92,7 @@ export class EmployeeListComponent {
         if (result) {
             const employee = this.employeeService.getEmployeeById($Event)!;
             
-            this.employeeService.handleDeleteEmployee($Event)
+           // this.employeeService.handleDeleteEmployee($Event)
             this.notificationService.showNotification("empleado eliminado con éxito");
             this.router.navigate(['/empleado']);
         }

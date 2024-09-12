@@ -4,11 +4,12 @@ import { EmployeeService } from '../../../../core/services/employee.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Employee } from '../../../../core/model/Employee';
 import { Salary } from '../../../../core/model/Salary';
+import { EmployeeComponent } from '../../components/employee/employee.component';
 
 @Component({
     selector: 'app-employee-details',
     standalone: true,
-    imports: [CommonModule,],
+    imports: [CommonModule, EmployeeComponent],
     templateUrl: './employee-Details.component.html',
     styleUrl: './employee-Details.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -35,7 +35,7 @@ export class SupplierListComponent {
     page = 1
     pageSize = 5
 
-
+/*
     ngOnInit(): void {
         this.supplierService.supplierss.subscribe({
         next : (suppliers)=>{
@@ -46,18 +46,18 @@ export class SupplierListComponent {
         this.supplierService.selectedSupplier.subscribe(supplier =>{
         this.supplier = supplier;
         })
-    }
+    }*/
 
     //BudgetForm
-    addClientHandler(){
+    addSupplierHandler(){
         this.modalService.openModal<SupplierFormComponent,Supplier>(SupplierFormComponent);
     }
     
     getAllSuppliers() : Supplier[]{
         let allSuppliers : Supplier[] = [];
-        this.supplierService.supplierss.subscribe(supplier=>{
-        allSuppliers = supplier;
-        }) 
+        //this.supplierService.supplierss.subscribe(supplier=>{
+        //allSuppliers = supplier;
+        //}) 
 
         return allSuppliers
     }
@@ -71,17 +71,17 @@ export class SupplierListComponent {
 
     //Card
     handleAction($Event : any){
-        this.supplierService.setSelectedSupplier($Event)
+        //this.supplierService.setSelectedSupplier($Event)
         //this.router.navigate(['/budget/new/',$Event]);
     }
 
     handleViewSupplier($Event : any){
-        this.supplierService.setSelectedSupplier($Event)
+        //this.supplierService.setSelectedSupplier($Event)
         this.router.navigate(['/supplier/detail']);
     }
     
     handleEditSupplier($Event : any){
-        this.supplierService.setSelectedSupplier($Event)
+        //this.supplierService.setSelectedSupplier($Event)
         this.router.navigate(['/supplier/edit/',$Event]);
     }
 
@@ -94,7 +94,7 @@ export class SupplierListComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            this.supplierService.handleDeleteSupplier($Event)
+            //this.supplierService.handleDeleteSupplier($Event)
             this.notificationService.showNotification("proveedor eliminado con éxito");
             this.router.navigate(['/supplier']); 
         }

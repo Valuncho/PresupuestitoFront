@@ -5,6 +5,7 @@ import { Employee } from '../model/Employee';
 import { EmployeeHistory } from '../model/EmployeeHistory';
 import { API_URL,ENDPOINTS } from '../endpoints';
 import { HttpClient } from '@angular/common/http';
+import { Supplier } from '../model/Supplier';
 
 @Injectable({
   providedIn: 'root'
@@ -121,5 +122,20 @@ export class EmployeeService {
     this._employeesSubject.next(this.employees);
     this.deleteEmployee(employeeId);
   }*/
-    
+  
+  getEmptyEmployee() : Employee{
+    return  {
+      idEmployee: 0,
+      oPerson: {
+        idPerson: 0,
+        name: '',
+        lastName: '',
+        direction: '',
+        phoneNumber: '',
+        mail: '',
+        dni: '',
+        cuit: '',
+      },
+    }; 
+  }
 }
