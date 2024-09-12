@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     imports: [
         CommonModule,
     ],
-    template: `<p>invoice works!</p>`,
+    templateUrl: './invoice.component.html',
     styleUrl: './invoice.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

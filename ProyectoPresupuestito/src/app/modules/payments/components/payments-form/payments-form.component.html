@@ -1,0 +1,47 @@
+<form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <fieldset>
+  
+      @if (paymentForm.invalid && paymentForm.dirty) {
+        <div class="invalid">
+          
+          @if (paymentForm.get('fecha')?.invalid) {
+            <p>fecha es obligatoria.</p>
+          }
+          
+          @if (paymentForm.get('monto')?.invalid) {
+            <p>el monto es obligatorio.</p>
+          }
+  
+          @if (paymentForm.get('metodoPago')?.invalid) {
+            <p>El metodo de pago es obligatorio.</p>
+          }
+  
+          @if(paymentForm.get('Descripcion')?.invalid ){
+            <p>la descripcion es obligatoria.</p>
+          }
+      
+        </div>
+      }     
+      
+      <legend class="List-title">Cargar cliente</legend>
+      <label for="fecha">Fecha:</label>
+      <input type="text" name="fecha" id="fecha" placeholder="fecha..." formControlName="fecha">
+      <label for="monto">Monto:</label>
+      <input type="text" name="monto" id="monto" placeholder="monto..." formControlName="monto">
+      <label for="metodoPago">Metodo de pago:</label>
+      <input type="text" name="metodoPago" id="metodoPago" placeholder="metodoPago..." formControlName="metodoPago">
+      <label for="Descripcion">Descripcion:</label>
+      <textarea name="Descripcion" id="Descripcion" placeholder="Descripcion..." formControlName="Descripcion"></textarea>
+    </fieldset>
+    <fieldset class="Botones">
+      <button type="reset" (click)="resetForm($event)">Limpiar</button>
+      
+      <button type="submit" [disabled]="!canSubmit" [class.disactive]="!canSubmit">
+        @if (isEdit) {
+          Actualizar
+        }@else {
+          Guardar
+        }
+      </button>
+    </fieldset>
+  </form>

@@ -24,7 +24,7 @@ export class EmployeeSearchComponent {
     filteredEmployees: Employee[] = [];
 
     ngOnInit() {
-        this.employeeService.getAllEmployees().subscribe({
+        this.employeeService.getEmployees().subscribe({
         next : (employees) =>{
             this.filteredEmployees = employees;
         }

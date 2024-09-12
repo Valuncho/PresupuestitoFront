@@ -1,19 +1,11 @@
 <section>
     <article>
-        <app-client
-        [client] = "currentClient"
-        />
-        <button class="Boton1"(click)="goToBudgetForm()">Crear presupuesto nuevo</button>
-        
+        <app-employee [employee] = "currentEmployee"/>
         <div class="Details">
-            <h3 class="Details-title">Pagos del cliente</h3>
+            <h3 class="Details-title">Pagos del empleado</h3>
             <app-payments-table [pagos]="payments" />
         </div>
         
-    </article>
-    <article>
-        <app-budget-list/>
-    </article>
-    
+    </article>    
     
 </section>

@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     imports: [
         CommonModule,
     ],
-    template: `<p>employee-View works!</p>`,
+    templateUrl: './employee-View.component.html',
     styleUrl: './employee-View.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

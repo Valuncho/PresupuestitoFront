@@ -14,7 +14,7 @@ import { EmployeeFormComponent } from '../employee-form/employee-form.component'
 @Component({
     selector: 'app-employee-list',
     standalone: true,
-    imports: [CommonModule,EmployeeCardComponent,NgxPaginationModule, CommonModule],
+    imports: [CommonModule,EmployeeCardComponent,NgxPaginationModule],
     templateUrl:'./employee-list.component.html',
     styleUrl: './employee-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
