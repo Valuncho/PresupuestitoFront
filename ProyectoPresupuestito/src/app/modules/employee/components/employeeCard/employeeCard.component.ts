@@ -23,7 +23,6 @@ export class EmployeeCardComponent {
     @Output() isEdit = new EventEmitter<Employee>();
     @Output() isDeleted = new EventEmitter<Employee>();
     botones: Array<{ icon: string }> =[];
-   
     
     ngOnInit(){
         this.botones = [

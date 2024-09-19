@@ -48,6 +48,11 @@ export class InvoiceService {
         return this.http.post(url,invoice);
     }
 
+    putInvoice(invoice: Invoice) {
+      const url = API_URL+ENDPOINTS.invoice.update;
+      return this.http.put(url,invoice);
+    }
+
     /**
      * suspende a un Invoice
      * @param Invoice 

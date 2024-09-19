@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Invoice } from '../../../../core/model/Invoice';
 
 @Component({
     selector: 'app-invoice',
     standalone: true,
-    imports: [
-        CommonModule,
-    ],
+    imports: [CommonModule],
     templateUrl: './invoice.component.html',
     styleUrl: './invoice.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InvoiceComponent { }
+export class InvoiceComponent { 
+    @Input() invoice! : Invoice;
+}

@@ -67,6 +67,8 @@ export class EmployeeService {
       return this.http.get<Employee[]>(API_URL+ENDPOINTS.employee.getAll);
     }
 
+    
+
   /**
    * retorna al empleado solicitado por id 
    * @param IdEmployee 
@@ -89,6 +91,12 @@ export class EmployeeService {
         return this.http.post(url,employee);
     }
 
+
+    putEmployee(employee: Employee) {
+      const url = API_URL+ENDPOINTS.employee.update;
+      return this.http.put(url,employee);
+    }
+
     /**
      * suspende a un empleado
      * @param employee 
@@ -99,6 +107,7 @@ export class EmployeeService {
       const url = API_URL + ENDPOINTS.employee.update;
       return this.http.put(url, employee);
     }
+    
 
   /*
   handlePostEmployee(employee : Employee){
