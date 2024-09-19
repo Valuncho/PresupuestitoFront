@@ -1,4 +1,4 @@
-import { Component, inject, input, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { WorkCardComponent } from '../work-card/work-card.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Budget } from '../../../../core/model/Budget';
