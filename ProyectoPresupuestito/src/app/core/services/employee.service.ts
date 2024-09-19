@@ -6,6 +6,7 @@ import { EmployeeHistory } from '../model/EmployeeHistory';
 import { API_URL,ENDPOINTS } from '../endpoints';
 import { HttpClient } from '@angular/common/http';
 import { Supplier } from '../model/Supplier';
+import { Salary } from '../model/Salary';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,10 @@ export class EmployeeService {
       return this.http.get<Employee[]>(API_URL+ENDPOINTS.employee.getAll);
     }
 
+    getSalaries(): Observable<Salary[]>{
+      return this.http.get<Salary[]>(API_URL+ENDPOINTS.salaries.getAll);
+    }
+
     
 
   /**
@@ -80,6 +85,11 @@ export class EmployeeService {
         return this.http.get<Employee>(url);
     }
 
+    getSalariesByemployeeId(IdEmployee : Number) : Observable<Salary> {
+      const url = API_URL+ENDPOINTS.employee.getById.replace(':id', IdEmployee.toString());
+      return this.http.get<Salary>(url);
+  }
+
     /**
      * Envia un objeto empleado
      * @param employee 
@@ -91,10 +101,15 @@ export class EmployeeService {
         return this.http.post(url,employee);
     }
 
+    postSalary(salaries : Salary){
+      const url = API_URL+ENDPOINTS.salaries.post;
+      return this.http.post(url,salaries);
+  }
 
-    putEmployee(employee: Employee) {
-      const url = API_URL+ENDPOINTS.employee.update;
-      return this.http.put(url,employee);
+
+    putSalary(salaries: Salary) {
+      const url = API_URL+ENDPOINTS.salaries.update;
+      return this.http.put(url,salaries);
     }
 
     /**
@@ -103,9 +118,9 @@ export class EmployeeService {
      * @returns un observable que emite el empleado actualizado
      */
     
-    deleteEmployee(employee: Employee){
-      const url = API_URL + ENDPOINTS.employee.update;
-      return this.http.put(url, employee);
+    deleteSalary(salaries: Salary){
+      const url = API_URL + ENDPOINTS.salaries.update;
+      return this.http.put(url, salaries);
     }
     
 

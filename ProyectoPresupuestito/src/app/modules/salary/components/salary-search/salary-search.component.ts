@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     imports: [
         CommonModule,
     ],
-    template: `<p>salary-search works!</p>`,
+    templateUrl: './salary-search.component.html',
     styleUrl: './salary-search.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
