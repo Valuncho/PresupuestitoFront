@@ -78,6 +78,7 @@ export const ENDPOINTS = {
         update: '/categories/:id',
         delete: '/categories/:id',
     },
+    //invoice
     invoice: {
         getAll: '/invoice',
         getById: '/invoice/:id',
@@ -85,12 +86,28 @@ export const ENDPOINTS = {
         update: '/invoice/:id',
         delete: '/invoice/:id',
     },
+    //fixedcost
     fixedCost: {
         getAll: '/fixedCost',
         getById: '/fixedCost/:id',
         post: '/fixedCost',
         update: '/fixedCost/:id',
         delete: '/fixedCost/:id',
+    },
+    //payment
+    payments:{
+        getAll: '/payment',
+        getById: '/payment/:id',
+        post: '/payment',
+        update: '/payment/:id',
+        delete: '/payment/:id',
+    },
+    //salary
+    salaries:{
+        getAll: '/salaries',
+        getById: '/salaries/:id',
+        post: '/salaries',
+        update: '/salaries/:id',
+        delete: '/salaries/:id',
     }
-
 };

@@ -21,7 +21,7 @@ import { Cost } from '../model/Cost';
          */
         
         getFixedCosts(): Observable<Cost[]>{
-        return this.http.get<Cost[]>(API_URL+ENDPOINTS.fixedCost.getAll);
+            return this.http.get<Cost[]>(API_URL+ENDPOINTS.fixedCost.getAll);
         }
 
     /**
@@ -44,6 +44,11 @@ import { Cost } from '../model/Cost';
         postFixedCost(fixedCost : Cost){
             const url = API_URL+ENDPOINTS.fixedCost.post;
             return this.http.post(url,fixedCost);
+        }
+
+        putFixedCost(fixedCost: Cost) {
+            const url = API_URL+ENDPOINTS.fixedCost.update;
+            return this.http.put(url,fixedCost);
         }
 
         /**

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { Invoice } from '../../../../core/model/Invoice';
 
@@ -14,12 +14,11 @@ import { Invoice } from '../../../../core/model/Invoice';
 export class InvoiceCardComponent {
 
     @Input() Invoice: Invoice | undefined;
-    @Input() IdInvoice: number = 0;
-    @Output() isView = new EventEmitter<number>();
-    @Output() action = new EventEmitter<number>();
-    @Output() isSelected = new EventEmitter<number>();
-    @Output() isEdit = new EventEmitter<number>();
-    @Output() isDeleted = new EventEmitter<number>();
+    @Output() isView = new EventEmitter<Invoice>();
+    @Output() action = new EventEmitter<Invoice>();
+    @Output() isSelected = new EventEmitter<Invoice>();
+    @Output() isEdit = new EventEmitter<Invoice>();
+    @Output() isDeleted = new EventEmitter<Invoice>();
     botones: Array<{ icon: string }> =[];
     //{ url: '/client/editar/'+this.IdClient+'', icon: 'edit' },
     
@@ -33,21 +32,21 @@ export class InvoiceCardComponent {
         ];
     }
     Action(){
-        this.action.emit(this.IdInvoice)
+        this.action.emit(this.Invoice)
     }
 
     select(){
-        this.isSelected.emit(this.IdInvoice);
+        this.isSelected.emit(this.Invoice);
     }
     view(){
-        this.isView.emit(this.IdInvoice);
+        this.isView.emit(this.Invoice);
     }
     edit(){
-        this.isEdit.emit(this.IdInvoice);
+        this.isEdit.emit(this.Invoice);
     }
 
     deleteC(){
-        this.isDeleted.emit(this.IdInvoice);
+        this.isDeleted.emit(this.Invoice);
     }
 
 }

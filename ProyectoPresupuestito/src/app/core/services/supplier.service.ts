@@ -89,6 +89,11 @@ export class SupplierService {
         return this.http.post(url,supplier);
     }
 
+    putSupplier(supplier: Supplier) {
+      const url = API_URL+ENDPOINTS.supplier.update;
+      return this.http.put(url,supplier);
+    }
+
     /**
      * suspende a un empleado
      * @param Supplier 
