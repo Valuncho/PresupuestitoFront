@@ -1,13 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { Work } from '../model/Work';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MaterialService } from './material.service';
+import { API_URL, ENDPOINTS } from '../endpoints';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkService {
 
+  private http = inject(HttpClient);
   private materialService = inject(MaterialService);
 
   private works : Work[] = [
@@ -114,7 +117,7 @@ export class WorkService {
 }
 
   ];
-   
+
   private selectedWork : Work = this.getEmptyWork();
   private _worksSubject = new BehaviorSubject<Work[]>(this.works);
   private _selectedWorkSubject = new BehaviorSubject<Work>(this.selectedWork);
@@ -137,12 +140,28 @@ export class WorkService {
     return work;
   }
 
-  getWorks(){
-    return this._worksSubject.asObservable();
+  getWorks() : Observable<Work[]> {
+    return this.http.get<Work[]>(API_URL+ENDPOINTS.works.getAll);   
   }
 
-  getWorkById(workId: number): Work | undefined {
-    return this.works.find(work => work.idWork === workId);
+  getWorkById(idWork : number) : Observable<Work> {
+    const url = API_URL+ENDPOINTS.works.getById.replace(':id', idWork.toString());
+    return this.http.get<Work>(url);   
+  }
+
+  postWork(work: Work){
+    const url = API_URL+ENDPOINTS.works.post;
+    return this.http.post(url,work);
+  }
+
+  putWork(work: Work) {
+    const url = API_URL+ENDPOINTS.works.update;
+    return this.http.put(url,work);
+  }
+
+  deleteWork(idWork: number) {
+    const url = API_URL+ENDPOINTS.works.delete;
+    return this.http.put(url,idWork);
   }
 
   getSelectedWork(){

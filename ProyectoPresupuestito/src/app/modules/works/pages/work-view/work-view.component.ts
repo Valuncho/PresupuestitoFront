@@ -4,11 +4,12 @@ import { WorkComponent } from "../../components/work-detail/work-detail.componen
 import { WorkFormComponent } from '../../components/work-form/work-form.component';
 import { Router } from '@angular/router';
 import { BudgetService } from '../../../../core/services/budget.service';
+import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 
 @Component({
   selector: 'app-work-view',
   standalone: true,
-  imports: [WorkListComponent, WorkComponent,WorkFormComponent],
+  imports: [WorkListComponent, WorkComponent,WorkFormComponent,ButtonCardComponent],
   templateUrl: './work-view.component.html',
   styleUrl: './work-view.component.css'
 })
