@@ -62,4 +62,18 @@ import { Cost } from '../model/Cost';
         return this.http.put(url, fixedCost);
         }
 
+        getEmptyFixedCost(): Cost{
+            return {
+                idCost: 0,
+                description : "",
+                amount : 0,
+                workingDays : 0,
+                hoursWorked : 0,
+                date : new Date(0),
+            }
+        }
+
+        handleUpdateFixedCost(fixedCost: Cost) {
+            this.putFixedCost(fixedCost);
+        }
 }

@@ -1,0 +1,57 @@
+<form [formGroup]="costForm" (ngSubmit)="onSubmit()">
+    <fieldset>
+        @if (costForm.invalid && costForm.dirty) {
+            <div class="invalid">
+            
+            @if (costForm.get('description')?.invalid) {
+                <p>la descripcion es obligatorio.</p>
+            }
+            
+            @if (costForm.get('amount')?.invalid) {
+                <p>El costo es obligatoria.</p>
+            }
+    
+            @if (costForm.get('workingDays')?.invalid) {
+                <p>Los dias de trabajo son obligatorios.</p>
+            }
+    
+            @if(costForm.get('hoursWorked')?.invalid ){
+                <p>Las horas laborales son obligatorias.</p>
+            }
+            
+            @if(costForm.get('date')?.invalid ){
+                <p>la fecha es obligatoria.</p>
+            }
+            
+        </div>
+        }     
+        
+        <legend class="List-title">Cargar costo</legend>
+        <label for="description">descripcion:</label>
+        <input type="text" name="description" id="description" placeholder="Descripcion..." formControlName="description">
+
+        <label for="amount">cantidad:</label>
+        <input type="text" name="amount" id="amount" placeholder="Cantidad..." formControlName="amount">
+
+        <label for="workingDays">dias de trabajo:</label>
+        <input type="number" name="workingDays" id="workingDays" placeholder="dias de trabajo..." formControlName="workingDays">
+
+        <label for="hoursWorked">horas de trabajo:</label>
+        <input type="number" name="hoursWorked" id="hoursWorked" placeholder="horas de trabajo..." formControlName="hoursWorked">
+
+        <label for="date">fecha:</label>
+        <input type="date" name="date" id="date" placeholder="fecha..."  formControlName="date">
+
+        </fieldset>
+        <fieldset class="Botones">
+        <button type="reset" (click)="resetForm($event)">Limpiar</button>
+        
+        <button type="submit" [disabled]="!canSubmit" [class.disactive]="!canSubmit">
+            @if (isEdit) {
+            Actualizar
+            }@else {
+            Guardar
+            }
+        </button>
+        </fieldset>
+    </form>
