@@ -168,6 +168,8 @@ form .invalid p::before{
     color:var(--negro);
 }
 
+
+
 /*Detalles*/
 .Componente {
     display: flex;

@@ -50,7 +50,8 @@ export class BudgetListComponent {
       this.budgetService.getBudgets().subscribe(
         {
           next: res => {this.budgets = res},
-            
+          error: err => console.error('An error occurred :', err),  
+          complete: () => console.log('There are no more action happen.')  
         }
       )
     }

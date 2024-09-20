@@ -3,7 +3,7 @@
     <app-work-search/>
 
 
-        @for (work of worksToDisplay | paginate: { itemsPerPage: worksToPage, currentPage: workPage }; track work.idWork; let idx = $index) {
+        @for (work of works | paginate: { itemsPerPage: worksToPage, currentPage: workPage }; track work.idWork; let idx = $index) {
 
             <app-work-card
             [Work]="work" 

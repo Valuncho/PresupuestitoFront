@@ -45,15 +45,18 @@ export class WorkListComponent {
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let budgetDetailUrl = "/budget/detail/" + this.budgetId;
     let budgetworkArealUrl = "/work/edit/" + this.budgetId;
-
+    
+    
     if(budgetworkArealUrl == this.router.url){
       this.options = true;
     }
     
 
-    const w = this.workService.getWorks().subscribe((works) => {
+    this.workService.getWorks().subscribe(
       
-      if(this.router.url ==budgetDetailUrl){
+      (works) => {
+      
+      if(this.router.url == budgetDetailUrl){
         this.worksToDisplay = this.currentBudget.works;
       }else(
         this.works = works

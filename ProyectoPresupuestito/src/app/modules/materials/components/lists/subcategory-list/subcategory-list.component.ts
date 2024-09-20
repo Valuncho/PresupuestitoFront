@@ -92,13 +92,7 @@ export class SubcategoryListComponent {
 
 
   ngOnInit(): void {
-    this.materialService.getSubCategories().subscribe(
-      {  
-        next: x => this.subCategories = x,  
-        error: err => console.error('An error occurred :', err),  
-        complete: () => console.log('There are no more action happen.')  
-      }
-    )
+    
     
   }
 

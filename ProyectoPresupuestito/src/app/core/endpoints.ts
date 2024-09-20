@@ -1,65 +1,66 @@
 // URL base de la API
-export const API_URL = 'https://presupuestito.com/api/v1';
+//export const API_URL = 'https://presupuestito.com/api/v1';
+export const API_URL = 'http://localhost:5130/api';
 
 // Endpoints para diferentes recursos
 export const ENDPOINTS = {
   // Clients
   clients: {
-    getAll: '/clients',
-    getById: '/clients/:id',
-    getByBudgetId: '/clients/:idBudget',
-    post: '/clients',
-    update: '/clients/:id',
-    delete: '/clients/:id',
+    getAll: '/Client',
+    getById: '/Client/:id',
+    getByBudgetId: '/Client/:idBudget',
+    post: '/Client',
+    update: '/Client/:id',
+    delete: '/Client/:id',
   },
   // Client Histories
   clientHistories: {
-    getAll: '/clientHistories',
-    getById: '/clientHistorie/:id',    
-    post: '/clientHistory',
-    update: '/clientHistory/:id',
+    getAll: '/ClientHistory',
+    getById: '/ClientHistory/:id',    
+    post: '/ClientHistory',
+    update: '/ClientHistory/:id',
     delete: '/clientHistory/:id',
   },
   // Budgets
   budgets: {
-    getAll: '/budgets',
-    getById: '/budgets/:id',
-    getPriceById: '/budgets/price/:id',
-    getDeadlineById: '/budgets/deadline/:id',
-    post: '/budgets',
-    update: '/budgets/:id',
-    delete: '/budgets/:id',
+    getAll: '/Budget',
+    getById: '/Budget/:id',
+    getPriceById: '/Budget/price/:id',
+    getDeadlineById: '/Budget/deadline/:id',
+    post: '/Budget',
+    update: '/Budget/:id',
+    delete: '/Budget/:id',
   },
   // Works
   works: {
-    getAll: '/works',
-    getById: '/works/:id',
-    post: '/works',
-    update: '/works/:id',
-    delete: '/works/:id',
+    getAll: '/Work',
+    getById: '/Work/:id',
+    post: '/Work',
+    update: '/Work/:id',
+    delete: '/Work/:id',
   },
   //Materials
   materials: {
-    getAll: '/materials',
-    getById: '/materials/:id',
-    post: '/materials',
-    update: '/materials/:id',
-    delete: '/materials/:id',
+    getAll: '/Material',
+    getById: '/Material/:id',
+    post: '/Material',
+    update: '/Material/:id',
+    delete: '/Material/:id',
   },
   //SubCategories
   subCategories: {
-    getAll: '/subCategories',
-    getById: '/subCategories/:id',
-    post: '/subCategories',
-    update: '/subCategories/:id',
-    delete: '/subCategories/:id',
+    getAll: '/SubCategoryMaterial',
+    getById: '/SubCategoryMaterial/:id',
+    post: '/SubCategoryMaterial',
+    update: '/SubCategoryMaterial/:id',
+    delete: '/SubCategoryMaterial/:id',
   },
   //Categories
   categories: {
-    getAll: '/categories',
-    getById: '/categories/:id',
-    post: '/categories',
-    update: '/categories/:id',
-    delete: '/categories/:id',
+    getAll: '/Category',
+    getById: '/Category/:id',
+    post: '/Category',
+    update: '/Category/:id',
+    delete: '/Category/:id',
   },
 };
