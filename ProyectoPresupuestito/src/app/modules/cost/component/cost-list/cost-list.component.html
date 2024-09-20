@@ -1,16 +1,15 @@
 <div class="List">
     <h3 class="List-title">Listado de costos</h3>
+    
     <!--
     <app-cost-search
       (results)="handleSearch($event)"
       (sortedResults)="handleSearch($event)"
-    />
+    />-->
   
-    
-      @for (cost of this.searchedClients | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
+    <!--
+      @for (cost of this.searchedFixedCost | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
         <app-cost-card 
-        [Person]="client.oPerson"
-        [IdClient]="client.idClient"
         (action)="handleAction($event)"
         (isView)="handleViewClient($event)"
         (isEdit)="handleEditClient($event)"

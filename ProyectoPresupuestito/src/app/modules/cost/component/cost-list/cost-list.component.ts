@@ -67,9 +67,9 @@ export class CostListComponent {
         })
     }
     
-    */
+    
 
-    /*
+    
     //Card
     handleAction($Event : any){
         this.costService.setSelectedClient($Event)
@@ -108,6 +108,5 @@ export class CostListComponent {
     //Pagination
     pageChange(page: number) {
         this.page = page;
-    }
-    */
+    }*/
 }

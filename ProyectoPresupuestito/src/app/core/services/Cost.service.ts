@@ -76,4 +76,6 @@ import { Cost } from '../model/Cost';
         handleUpdateFixedCost(fixedCost: Cost) {
             this.putFixedCost(fixedCost);
         }
+
+        
 }
