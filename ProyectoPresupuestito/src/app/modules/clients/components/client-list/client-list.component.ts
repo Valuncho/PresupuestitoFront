@@ -15,7 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { ErrorAlertComponent } from '../../../../components/error-alert/error-alert.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorStateService } from '../../../../core/states/error-state.service';
+import { ErrorStateService } from '../../../../core/services/utils/error-state.service';
 
 
 @Component({
@@ -81,7 +81,7 @@ export class ClientListComponent {
      
     this.clientService.getClients().subscribe({  
       next: x => this.clients = x,  
-      error: err => this.errorHandler(err),
+      error: err => console.error(err),
       complete: () => console.log('There are no more action happen.')  
     })
 
@@ -135,10 +135,6 @@ export class ClientListComponent {
 
   } 
 
-  errorHandler(error : HttpErrorResponse){
-    this.errorState.setError(error);
-    this.modalService.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
-  }
   //Pagination
   pageChange(page: number) {
     this.page = page;

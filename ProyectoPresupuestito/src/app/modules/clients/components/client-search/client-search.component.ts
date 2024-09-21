@@ -21,7 +21,7 @@ export class ClientSearchComponent {
   busqueda = new FormControl('');
   idClient = new FormControl(0);
   filteredClients: Client[] = [];
-
+/*
   ngOnInit() {
     this.clientService.getClients().subscribe({
       next : (clients) =>{
@@ -29,7 +29,7 @@ export class ClientSearchComponent {
       }
     })
   }
-
+*/
   sort() {
     let sorted: Client[] = [];
     /*switch (this.filtro.value) {

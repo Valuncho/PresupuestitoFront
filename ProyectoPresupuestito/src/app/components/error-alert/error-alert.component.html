@@ -1,10 +1,17 @@
 <div class="ErrorAlert">
     <div class="ErrorHeader">
-        <h2>Error: {{error!.name}}</h2>
+        <h2>¡Alerta de error!</h2>
     </div>
     <div class="ErrorBody">
-        <p>{{error!.message}}</p>
+        <p>Comuniquese con los tecnicos del sistema si el error persiste.</p>
         <b>Haga click en cualquier lugar de la pantalla para cerrar este aviso.</b>
+        <p (click)="showDetails()">Ver detalles...</p>
     </div>
-
+    @if (show) {
+        <div class="ErrorBody">
+            <p>Name: {{error!.name}}</p>
+            <p>Message: {{error!.message}}</p>
+            <p>Status: {{error!.statusText}}</p>
+        </div>
+    }
 </div>

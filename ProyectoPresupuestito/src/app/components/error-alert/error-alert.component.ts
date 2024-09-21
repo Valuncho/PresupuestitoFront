@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, Input } from '@angular/core';
-import { ErrorStateService } from '../../core/states/error-state.service';
+import { ErrorStateService } from '../../core/services/utils/error-state.service';
+
 
 @Component({
   selector: 'app-error-alert',
@@ -12,9 +13,19 @@ import { ErrorStateService } from '../../core/states/error-state.service';
 export class ErrorAlertComponent {
   private errorState = inject(ErrorStateService);
   error : HttpErrorResponse | undefined;
+  show : boolean = false;
+
   ngOnInit(): void {
     this.errorState.getError().subscribe(res =>
       this.error = res
     ) 
+  }
+
+  showDetails(){
+    if(this.show){
+      this.show = false;
+    }else{
+      this.show = true;
+    }
   }
 }
