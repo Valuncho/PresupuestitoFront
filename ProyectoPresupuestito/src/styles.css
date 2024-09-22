@@ -46,9 +46,9 @@ article {
     display: flex;
     flex-direction: column;
 }
-
+/*Listados*/
 .List {
-    align-self: flex-start;
+    /*align-self: flex-start;*/
     background-color: var(--gris);
     padding: 1em;
     border-radius: 10px 10px;
@@ -105,7 +105,7 @@ form {
     overflow: hidden;
     overflow-y: auto;
     height: 76vh;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
 }
 
 fieldset {
