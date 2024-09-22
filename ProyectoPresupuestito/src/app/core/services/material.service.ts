@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { API_URL,ENDPOINTS } from '../endpoints';
 import { MaterialStateService } from '../states/material-state.service';
 import { NotificationService } from './utils/notification.service';
+import { Item } from '../model/Item';
+import { InvoiceItem } from '../model/invoiceItem';
 @Injectable({
   providedIn: 'root'
 })
@@ -138,6 +140,22 @@ export class MaterialService {
     return{
       idCategory: 0,
       name: ''
+    }
+  }
+
+  getEmptyItem() : Item {
+    return {
+      idItem: 0,
+      material:this.getEmptyMaterial(),
+      quantity: 0
+    }
+  }
+  getEmptyInvoiceItem() : InvoiceItem {
+    return {
+      idInvoiceItem: 0,
+      material:this.getEmptyMaterial(),
+      quantity: 0,
+      price:0
     }
   }
 

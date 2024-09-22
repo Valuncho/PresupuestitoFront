@@ -5,11 +5,12 @@ import { MaterialListComponent } from "../../../materials/components/lists/mater
 import { WorkService } from '../../../../core/services/work.service';
 import { Router } from '@angular/router';
 import {BudgetService} from "../../../../core/services/budget.service";
+import { MaterialManagerComponent } from "../../../materials/components/forms/material-manager/material-manager.component";
 
 @Component({
   selector: 'app-work-area',
   standalone: true,
-  imports: [WorkListComponent, WorkComponent, MaterialListComponent],
+  imports: [WorkListComponent, WorkComponent, MaterialListComponent, MaterialManagerComponent],
   templateUrl: './work-area.component.html',
   styleUrl: './work-area.component.css'
 })

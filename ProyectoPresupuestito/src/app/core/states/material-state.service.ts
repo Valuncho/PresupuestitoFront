@@ -3,6 +3,8 @@ import { Material } from '../model/Material';
 import { Category } from '../model/Category';
 import { SubCategoryMaterial } from '../model/SubCategoryMaterial';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Item } from '../model/Item';
+import { InvoiceItem } from '../model/invoiceItem';
 
 @Injectable({
   providedIn: 'root'
@@ -47,4 +49,26 @@ export class MaterialStateService {
   getEditMode() : boolean{
   return this.editMode;
   }
+
+  //Items
+  private Item: BehaviorSubject<Item | undefined> = new BehaviorSubject<Item | undefined>(undefined);
+  private InvoiceItem: BehaviorSubject<InvoiceItem | undefined> = new BehaviorSubject<InvoiceItem | undefined>(undefined);
+
+  public getItem() : Observable<Item | undefined>{
+    return this.Item.asObservable();
+  }
+
+  public setItem(item: Item) {
+    this.Item.next(item);
+  }
+
+  public getInvoiceItem():Observable<InvoiceItem | undefined> {
+    return this.InvoiceItem.asObservable();
+  }
+
+  public setinvoiceItem(invoiceItem: InvoiceItem) {
+    this.InvoiceItem.next(invoiceItem);
+  }
+
+  
 }

@@ -10,11 +10,12 @@ import { MaterialFormComponent } from '../../forms/material-form/material-form.c
 import { MatDialog } from '@angular/material/dialog';
 import { ModalService } from '../../../../../core/services/utils/modal.service';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
+import { MaterialManagerComponent } from "../../forms/material-manager/material-manager.component";
 
 @Component({
   selector: 'app-material-list',
   standalone: true,
-  imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, MaterialSearchComponent],
+  imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, MaterialSearchComponent, MaterialManagerComponent],
   templateUrl: './material-list.component.html',
   styleUrl: './material-list.component.css'
 })
@@ -241,6 +242,16 @@ export class MaterialListComponent {
     this.page = 1
     this.materialsToDisplay = $Event;
   }
+  //Manager
+  /*
+  traer():Item {
+    let material : Material | undefined;
+    this.materialService.getState().getMaterial().subscribe(res =>
+      material = res
+    );
+    return material!;
+  }
+*/
   //Card
   seleccionar($Event : Material){
     this.materialService.getState().setMaterial($Event);
