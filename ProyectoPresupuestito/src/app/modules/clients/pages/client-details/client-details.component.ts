@@ -80,8 +80,7 @@ export class ClientDetailsComponent {
     this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
 
     this.clientService.getClientHistoryById(this.id).subscribe({
-        next: res => this.currentClient = res,  
-        
+        next: res => this.currentClient = res,    
     })
   }
   goToBudgetForm(){

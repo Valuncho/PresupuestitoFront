@@ -85,7 +85,6 @@ export class BudgetListComponent {
         
         this.budgetService.deleteBudget($Event).subscribe({
           next : () => {
-            this.notificationService.showNotification("Presupuesto eliminado con éxito");
             this.router.navigate(['/budget']);
           }
         });

@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { Budget } from '../model/Budget';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '../endpoints';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { ErrorStateService } from './utils/error-state.service';
 import { ModalService } from './utils/modal.service';
+import { NotificationService } from './utils/notification.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,6 +15,7 @@ export class BudgetService {
   private http = inject(HttpClient);
   private error = inject(ErrorStateService);
   private modal = inject(ModalService);
+  private notification = inject(NotificationService);
   //Properties
   
   
@@ -54,6 +56,9 @@ export class BudgetService {
   postBudget(budget: Budget) {
     const url = API_URL+ENDPOINTS.budgets.post;
     return this.http.post(url,budget).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Presupuesto creado con éxito!"); 
+      }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -65,6 +70,9 @@ export class BudgetService {
   putBudget(budget: Budget) {
     const url = API_URL+ENDPOINTS.budgets.update;
     return this.http.put(url,budget).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Presupuesto actualizado con éxito!"); 
+      }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -76,6 +84,9 @@ export class BudgetService {
   deleteBudget(budgetId: number) {
     const url = API_URL+ENDPOINTS.budgets.delete;
     return this.http.put(url,budgetId).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Presupuesto eliminado con éxito!"); 
+      }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);

@@ -12,6 +12,7 @@ export class EmployeeService {
   private employees : Employee[] = [
     {
       idEmployee: 1001,
+      salary:20,
       oPerson: {
           idPerson: 1,
           name: "John",
@@ -25,6 +26,7 @@ export class EmployeeService {
     },
     {
         idEmployee: 1002,
+        salary:20,
         oPerson: {
             idPerson: 2,
             name: "Jane",
@@ -92,6 +94,7 @@ export class EmployeeService {
     
     const emptyEmployee: Employee = {
       idEmployee: 0,
+      salary:0,
       oPerson: {
         idPerson: 0,
         name: '',

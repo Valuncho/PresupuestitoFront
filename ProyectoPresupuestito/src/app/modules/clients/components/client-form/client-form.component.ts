@@ -91,19 +91,9 @@ export class ClientFormComponent {
     console.log(this.currentClient)
     
     if(this.isEdit){
-      this.clientService.putClient(this.currentClient).subscribe(
-        {
-          next: () => this.notificationService.showNotification("Cliente editado con éxito!")  
-        }
-      );
-      
+      this.clientService.putClient(this.currentClient).subscribe();
     }else{
-      this.clientService.postClient(this.currentClient).subscribe(
-        {
-          next: () => this.notificationService.showNotification("Cliente guardado con éxito!")
-        }
-      );
-      
+      this.clientService.postClient(this.currentClient).subscribe();
     }
 
     this.setUp();

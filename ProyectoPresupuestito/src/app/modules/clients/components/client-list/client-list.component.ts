@@ -124,10 +124,10 @@ export class ClientListComponent {
         const client = this.clientService.getClientById($Event.idClient)!;
         this.clientService.deleteClient($Event.idClient).subscribe(
           {
-            next: () => this.notificationService.showNotification("Cliente eliminado con éxito!")
+            next: () => this.router.navigate(['/client'])
           }
         );
-        this.router.navigate(['/client']);
+        
       }
     });
 

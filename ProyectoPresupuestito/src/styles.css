@@ -82,6 +82,7 @@ article {
 .List-title {
     text-decoration: underline;
     font-family: var(--titulo);
+    margin-bottom: 6px;
 }
 
 button {
@@ -235,7 +236,7 @@ form .invalid p::before{
     font-family: var(--dato);
 }
 
-.Card-Detailes {
+.Card-Details {
     margin: 0 10px;
 }
 

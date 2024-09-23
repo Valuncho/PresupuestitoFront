@@ -3,13 +3,14 @@ import { Client } from '../model/Client';
 import { ClientHistory } from '../model/ClientHistory';
 import { BudgetService } from './budget.service';
 import { Budget } from '../model/Budget';
-import {BehaviorSubject, catchError, delay, Observable, of} from 'rxjs';
+import {BehaviorSubject, catchError, delay, Observable, of, tap} from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '../endpoints';
 import { ClientStateService } from '../states/client-state.service';
 import { ErrorStateService } from './utils/error-state.service';
 import { ModalService } from './utils/modal.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
+import { NotificationService } from './utils/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,7 @@ export class ClientService {
   private state = inject(ClientStateService);
   private modal = inject(ModalService);
   private error = inject(ErrorStateService);
+  private notification =inject(NotificationService);
 
   getState() : ClientStateService{
     return this.state;
@@ -30,7 +32,7 @@ export class ClientService {
    * @returns Un array de clientes como un observable.
    */
   getClients() : Observable<Client[]> {
-    return this.http.get<Client[]>(API_URL+ENDPOINTS.clients.getAll).pipe(
+    return this.http.get<Client[]>(API_URL+ENDPOINTS.clients.getAll).pipe(      
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -63,6 +65,9 @@ export class ClientService {
   postClient(client: Client){
     const url = API_URL+ENDPOINTS.clients.post;
     return this.http.post(url,client).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Cliente guardado con éxito!"); 
+      }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -79,6 +84,9 @@ export class ClientService {
   putClient(client: Client) {
     const url = API_URL+ENDPOINTS.clients.update;
     return this.http.put(url,client).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Cliente editado con éxito!"); 
+      }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -95,6 +103,9 @@ export class ClientService {
   deleteClient(idClient: number) {
     const url = API_URL+ENDPOINTS.clients.delete;
     return this.http.put(url,idClient).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Cliente eliminado con éxito!"); 
+      }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -146,16 +157,6 @@ getClientHistoryById(idClient : number) : Observable<ClientHistory> {
       budgets : []
     }
   }
-
- /*
-  getClientsBySearch(search : string) : Observable<Client[]>{
-    return this._clientesSubject.asObservable();
-  }
-
-  getSortClients(sort : string) : Observable<Client[]>{
-    return this._clientesSubject.asObservable();
-  }
-*/
 
  
 }
