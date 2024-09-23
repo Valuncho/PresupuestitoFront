@@ -6,11 +6,12 @@ import { ConfirmationDialogComponent } from '../../../../../components/confirmat
 import { MaterialService } from '../../../../../core/services/material.service';
 import { ModalService } from '../../../../../core/services/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
+import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [CategoryCardComponent],
+  imports: [CategoryCardComponent,TextCardComponent],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })

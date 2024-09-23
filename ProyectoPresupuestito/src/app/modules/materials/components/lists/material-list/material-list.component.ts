@@ -11,11 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalService } from '../../../../../core/services/utils/modal.service';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { MaterialManagerComponent } from "../../forms/material-manager/material-manager.component";
+import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 
 @Component({
   selector: 'app-material-list',
   standalone: true,
-  imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, MaterialSearchComponent, MaterialManagerComponent],
+  imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, MaterialSearchComponent, TextCardComponent],
   templateUrl: './material-list.component.html',
   styleUrl: './material-list.component.css'
 })

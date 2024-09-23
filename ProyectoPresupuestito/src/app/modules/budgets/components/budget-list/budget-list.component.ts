@@ -13,11 +13,12 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 import { NotificationService } from '../../../../core/services/utils/notification.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BudgetSearchComponent } from "../budget-search/budget-search.component";
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 @Component({
   selector: 'app-budget-list',
   standalone: true,
-  imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule, BudgetSearchComponent],
+  imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule, BudgetSearchComponent, TextCardComponent],
   templateUrl: './budget-list.component.html',
   styleUrl: './budget-list.component.css'
 })

@@ -11,6 +11,8 @@
         (isEdit)="handleEdit($event)"
         (isDeleted)="handleDelete($event)"
       />
+    }@empty {
+      <app-text-card [message]="'No hay presupuestos que mostrar.'"/>
     }
     <pagination-controls
       previousLabel="Anterior"

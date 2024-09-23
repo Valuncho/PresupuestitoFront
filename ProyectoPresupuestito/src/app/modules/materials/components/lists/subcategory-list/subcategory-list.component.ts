@@ -6,11 +6,12 @@ import { MaterialService } from '../../../../../core/services/material.service';
 import { ModalService } from '../../../../../core/services/utils/modal.service';
 import { SubcategoryFormComponent } from '../../forms/subcategory-form/subcategory-form.component';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
+import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 
 @Component({
   selector: 'app-subcategory-list',
   standalone: true,
-  imports: [SubCategoryCardComponent],
+  imports: [SubCategoryCardComponent,TextCardComponent],
   templateUrl: './subcategory-list.component.html',
   styleUrl: './subcategory-list.component.css'
 })

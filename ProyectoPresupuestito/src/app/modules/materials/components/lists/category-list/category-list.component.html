@@ -8,6 +8,8 @@
           (isEdit)="editar($event)"
           (isDeleted)="eliminar($event)"
         />
-        }
+      }@empty {
+        <app-text-card [message]="'No hay rubros que mostrar.'"/>
+      }  
       </div>
 </div>

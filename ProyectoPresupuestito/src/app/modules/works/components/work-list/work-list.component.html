@@ -12,6 +12,8 @@
             (isEdit)="editar($event)" 
             (isDeleted)="eliminar($event)" 
             />
+        }@empty {
+            <app-text-card [message]="'No hay trabajos que mostrar.'"/>
         }
         
         <pagination-controls 

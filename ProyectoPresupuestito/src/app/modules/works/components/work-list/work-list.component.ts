@@ -12,11 +12,12 @@ import { WorkFormComponent } from '../work-form/work-form.component';
 import { WorkSearchComponent } from "../work-search/work-search.component";
 import { CommonModule } from '@angular/common';
 import { toUpper } from 'lodash';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 @Component({
   selector: 'app-work-list',
   standalone: true,
-  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent,CommonModule],
+  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent,CommonModule, TextCardComponent],
   templateUrl: './work-list.component.html',
   styleUrl: './work-list.component.css',
 })
@@ -64,20 +65,7 @@ export class WorkListComponent {
       
     });
 
-   
-      
-    /*this.budgetService.getSelectedBudget().subscribe((budget) => {
-      this.currentBudget = budget;
-      if (
-        this.currentBudget.idBudget != 0 &&
-        (this.router.url == '/work/new' || this.router.url == '/work/edit')
-      ) {
-        this.worksToDisplay = this.currentBudget.works;
-        this.options = true;
-      } else {
-        this.worksToDisplay = this.works;
-      }
-    });*/
+  
   }
 
   ngOnDestroy(): void {
