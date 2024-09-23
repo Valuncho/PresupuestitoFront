@@ -7,6 +7,7 @@ import { ModalService } from '../../../../../core/services/utils/modal.service';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { Material } from '../../../../../core/model/Material';
+import { NotificationService } from '../../../../../core/services/utils/notification.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { Material } from '../../../../../core/model/Material';
 export class MaterialFormComponent {
   //Utils
   private materialService = inject(MaterialService);
+  private notificationService = inject(NotificationService);
   private modalService = inject(ModalService);
   //Properties
   
@@ -112,21 +114,12 @@ export class MaterialFormComponent {
 
     this.materialService.getSubCategories().subscribe({
       next: res => this.subCategories = res,  
-        error: err => console.error('An error occurred :', err),  
-        complete: () => console.log('There are no more action happen.')  
     })
 
     if(this.isEdit){
       this.materialService.getState().getMaterial().subscribe(res =>{
         this.newMaterial = res!;
       })
-
-      /*
-      this.MaterialForm.patchValue({
-        name: this.newMaterial.name,
-        
-      });
-      */
      this.MaterialForm.patchValue(this.newMaterial)
     }
   }
@@ -140,9 +133,17 @@ export class MaterialFormComponent {
   onSubmit(){
     
     if(this.isEdit){
-      this.materialService.postMaterial(this.newMaterial);
+      this.materialService.postMaterial(this.newMaterial).subscribe(
+        {
+          next: () => this.notificationService.showNotification("¡Material cargado con éxito!")  
+        }
+      );
     }else{
-      this.materialService.putMaterial(this.newMaterial);
+      this.materialService.putMaterial(this.newMaterial).subscribe(
+        {
+          next: () => this.notificationService.showNotification("¡Material editado con éxito!")  
+        }
+      );;
       this.materialService.getState().setEditMode(false);
     }
   }

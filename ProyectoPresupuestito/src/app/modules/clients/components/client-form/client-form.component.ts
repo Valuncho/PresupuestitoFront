@@ -73,13 +73,10 @@ export class ClientFormComponent {
       if(this.router.url == url){
         this.isEdit = true;
         this.clientService.getClientById(this.clientId).subscribe(
-          {
+        {
           next: (res:Client) => {this.currentClient = res!},
-          error: err => console.error('An error occurred :', err),  
-          complete: () => console.log('There are no more action happen.')  
         }
       )
-        //this.currentClient = this.clientService.getClientById(this.clientId)!;
         this.clientForm.patchValue(this.currentClient.oPerson);
       }else{
         this.isEdit = false;
@@ -89,14 +86,26 @@ export class ClientFormComponent {
   }
 
   onSubmit(){
+    
     this.currentClient.oPerson = this.clientForm.value;
+    console.log(this.currentClient)
+    
     if(this.isEdit){
-      this.clientService.handleUpdateClient(this.currentClient);
-      this.notificationService.showNotification("Cliente editado con éxito!");
+      this.clientService.putClient(this.currentClient).subscribe(
+        {
+          next: () => this.notificationService.showNotification("Cliente editado con éxito!")  
+        }
+      );
+      
     }else{
-      this.clientService.handlePostClient(this.currentClient);
-      this.notificationService.showNotification("Cliente guardado con éxito!");
+      this.clientService.postClient(this.currentClient).subscribe(
+        {
+          next: () => this.notificationService.showNotification("Cliente guardado con éxito!")
+        }
+      );
+      
     }
+
     this.setUp();
   }
 

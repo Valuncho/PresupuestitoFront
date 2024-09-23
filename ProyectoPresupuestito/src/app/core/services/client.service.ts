@@ -50,7 +50,6 @@ export class ClientService {
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
-        
         return of();
     })
     );   
@@ -63,7 +62,13 @@ export class ClientService {
    */
   postClient(client: Client){
     const url = API_URL+ENDPOINTS.clients.post;
-    return this.http.post(url,client);
+    return this.http.post(url,client).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
   }
 
   /**
@@ -73,7 +78,13 @@ export class ClientService {
    */
   putClient(client: Client) {
     const url = API_URL+ENDPOINTS.clients.update;
-    return this.http.put(url,client);
+    return this.http.put(url,client).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
   }
 
   /**
@@ -83,7 +94,13 @@ export class ClientService {
    */
   deleteClient(idClient: number) {
     const url = API_URL+ENDPOINTS.clients.delete;
-    return this.http.put(url,idClient);
+    return this.http.put(url,idClient).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
   }
 
 
@@ -93,7 +110,13 @@ export class ClientService {
  */
 getClientHistoryById(idClient : number) : Observable<ClientHistory> {
   const url = API_URL+ENDPOINTS.clientHistories.getById.replace(':id', idClient.toString());
-  return this.http.get<ClientHistory>(url);   
+  return this.http.get<ClientHistory>(url).pipe(
+    catchError((error: any, caught: Observable<any>): Observable<any> => {
+      this.error.setError(error);
+      this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+      return of();
+  })
+  );   
 }
 
 
@@ -133,26 +156,6 @@ getClientHistoryById(idClient : number) : Observable<ClientHistory> {
     return this._clientesSubject.asObservable();
   }
 */
-
-
-  //Metodos que se conectan con los componentes
-  handleGetClients() {}
-
-  handlePostClient(client: Client) {
-    this.postClient(client);
-  
-  }
-
-  handleUpdateClient(client: Client) {
-    this.putClient(client);
-  }
-
-  handleDeleteClient(clientId: number) {
-
-    this.deleteClient(clientId);
-  }
-
-
 
  
 }

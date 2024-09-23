@@ -10,18 +10,15 @@ import { ClientSearchComponent } from "../client-search/client-search.component"
 import { ClientCardComponent } from '../client-card/client-card.component';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
-
 import { CommonModule } from '@angular/common';
-import { ErrorAlertComponent } from '../../../../components/error-alert/error-alert.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorStateService } from '../../../../core/services/utils/error-state.service';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 
 @Component({
   selector: 'app-client-list',
   standalone: true,
-  imports: [ClientSearchComponent, ClientCardComponent, NgxPaginationModule, CommonModule],
+  imports: [ClientSearchComponent, ClientCardComponent, NgxPaginationModule, CommonModule, TextCardComponent],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.css',
 
@@ -36,7 +33,7 @@ export class ClientListComponent {
   private errorState = inject(ErrorStateService);
   private clientService = inject(ClientService);
   //Properties
-  @Input() options : boolean = false;
+  options : boolean = false;
   //clients : Client[] = [];
   
   clients: Client[] = [
@@ -81,8 +78,6 @@ export class ClientListComponent {
      
     this.clientService.getClients().subscribe({  
       next: x => this.clients = x,  
-      error: err => console.error(err),
-      complete: () => console.log('There are no more action happen.')  
     })
 
   }
@@ -127,8 +122,11 @@ export class ClientListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const client = this.clientService.getClientById($Event.idClient)!;
-        this.clientService.handleDeleteClient($Event.idClient)
-        this.notificationService.showNotification("Cliente eliminado con éxito");
+        this.clientService.deleteClient($Event.idClient).subscribe(
+          {
+            next: () => this.notificationService.showNotification("Cliente eliminado con éxito!")
+          }
+        );
         this.router.navigate(['/client']);
       }
     });

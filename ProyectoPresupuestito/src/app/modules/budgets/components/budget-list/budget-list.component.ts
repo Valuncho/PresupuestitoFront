@@ -49,9 +49,7 @@ export class BudgetListComponent {
     }else{
       this.budgetService.getBudgets().subscribe(
         {
-          next: res => {this.budgets = res},
-          error: err => console.error('An error occurred :', err),  
-          complete: () => console.log('There are no more action happen.')  
+          next: res => {this.budgets = res}
         }
       )
     }
@@ -85,9 +83,14 @@ export class BudgetListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         
-        this.budgetService.handleDeleteBudget($Event);
-        this.notificationService.showNotification("Presupuesto eliminado con éxito");
-        this.router.navigate(['/budget']);
+        this.budgetService.deleteBudget($Event).subscribe({
+          next : () => {
+            this.notificationService.showNotification("Presupuesto eliminado con éxito");
+            this.router.navigate(['/budget']);
+          }
+        });
+        
+        
       }
     });
 

@@ -14,6 +14,8 @@
       (isEdit)="handleEditClient($event)"
       (isDeleted)="handleDeleteClient($event)"
       />
+    }@empty {
+      <app-text-card [message]="'No hay clientes que mostrar'"/>
     }
   
   
@@ -22,6 +24,7 @@
     nextLabel="Siguiente"
     (pageChange)="pageChange($event)"
   />
+  
   @if(options){
   <button class="Boton1" (click)="addClientHandler()">Agregar cliente</button>
   }

@@ -125,15 +125,22 @@ export class BudgetFormComponent {
   onSubmit(){
     this.toBudget();
     if(this.isEdit){
-      this.budgetService.handleUpdateBudget(this.currentBudget);
-      this.notificationService.showNotification("Presupuesto editado con éxito!");
+      this.budgetService.putBudget(this.currentBudget).subscribe({
+        next : ()=>{
+          this.notificationService.showNotification("Presupuesto editado con éxito!");
+        }
+      });
+      
     }else{
       //let history = this.clientService.getClienHistory(this.BudgetForm.get('idClient')?.value);
       
-      let id = this.budgetService.handlePostBudget(this.currentBudget);
-      this.notificationService.showNotification("Presupuesto creado con éxito!" + id);
+      let id = this.budgetService.postBudget(this.currentBudget).subscribe({
+        next: ()=> {
+          this.notificationService.showNotification("Presupuesto creado con éxito!");
+          this.router.navigate(["/work/edit"]);
+        }
+      });
       
-      this.router.navigate(["/work/edit"]);
     }
     this.setUp();
   }

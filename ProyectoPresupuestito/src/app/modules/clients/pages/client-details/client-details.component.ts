@@ -78,18 +78,11 @@ export class ClientDetailsComponent {
   
   ngOnInit(): void {
     this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
+
     this.clientService.getClientHistoryById(this.id).subscribe({
         next: res => this.currentClient = res,  
-        error: err => console.error('An error occurred :', err),  
-        complete: () => console.log('There are no more action happen.')  
-    }
-      )
-
-    
-   // this.budgets = this.clientService.getBudgets(this.client()?.idClient!);
-    
-    this.payments =  this.budgets?.flatMap(budget => budget.payments || []);
-    
+        
+    })
   }
   goToBudgetForm(){
     this.router.navigate(["/budget/new/", this.id])

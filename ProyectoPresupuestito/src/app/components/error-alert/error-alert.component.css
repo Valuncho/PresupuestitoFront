@@ -3,8 +3,18 @@
     padding: 8px;
 }
 .ErrorHeader{
-    text-decoration: underline;
     padding: inherit;
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    
+}
+.ErrorHeader span{
+    justify-self: flex-start;
+}
+.ErrorHeader h2{
+    justify-self: flex-end;
+    text-decoration: underline;
 }
 .ErrorBody{
     padding: 10px;
