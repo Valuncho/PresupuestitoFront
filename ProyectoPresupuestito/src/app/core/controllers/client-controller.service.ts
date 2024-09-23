@@ -6,7 +6,7 @@ import { Client } from '../model/Client';
 @Injectable({
   providedIn: 'root'
 })
-export class ClientStateService {
+export class ClientControllerService {
  //Selected entities
  private clientHistory: BehaviorSubject<ClientHistory | undefined> = new BehaviorSubject<ClientHistory | undefined>(undefined);
  

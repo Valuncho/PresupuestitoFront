@@ -9,7 +9,7 @@ import { InvoiceItem } from '../model/invoiceItem';
 @Injectable({
   providedIn: 'root'
 })
-export class MaterialStateService {
+export class MaterialControllerService {
   //Selected entities
   private material: BehaviorSubject<Material | undefined> = new BehaviorSubject<Material | undefined>(undefined);
   private category: BehaviorSubject<Category | undefined> = new BehaviorSubject<Category | undefined>(undefined);

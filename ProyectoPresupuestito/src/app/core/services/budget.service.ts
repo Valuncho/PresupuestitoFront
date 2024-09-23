@@ -4,16 +4,16 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '../endpoints';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
-import { ErrorStateService } from './utils/error-state.service';
-import { ModalService } from './utils/modal.service';
-import { NotificationService } from './utils/notification.service';
+import { ErrorControllerService } from '../utils/error-controller.service';
+import { ModalService } from '../utils/modal.service';
+import { NotificationService } from '../utils/notification.service';
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetService {
   //Utils
   private http = inject(HttpClient);
-  private error = inject(ErrorStateService);
+  private error = inject(ErrorControllerService);
   private modal = inject(ModalService);
   private notification = inject(NotificationService);
   //Properties

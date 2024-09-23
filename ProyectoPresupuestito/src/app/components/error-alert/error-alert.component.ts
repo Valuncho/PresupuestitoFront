@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, Input } from '@angular/core';
-import { ErrorStateService } from '../../core/services/utils/error-state.service';
+import { Component, inject } from '@angular/core';
+import { ErrorControllerService } from '../../core/utils/error-controller.service';
 
 
 @Component({
@@ -11,12 +11,12 @@ import { ErrorStateService } from '../../core/services/utils/error-state.service
   styleUrl: './error-alert.component.css'
 })
 export class ErrorAlertComponent {
-  private errorState = inject(ErrorStateService);
+  private errorController = inject(ErrorControllerService);
   error : HttpErrorResponse | undefined;
   show : boolean = false;
 
   ngOnInit(): void {
-    this.errorState.getError().subscribe(res =>
+    this.errorController.getError().subscribe(res =>
       this.error = res
     ) 
   }

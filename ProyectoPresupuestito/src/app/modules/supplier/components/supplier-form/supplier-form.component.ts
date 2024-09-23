@@ -4,7 +4,7 @@ import { SupplierListComponent } from '../supplier-list/supplier-list.component'
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SupplierService } from '../../../../core/services/supplier.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { Supplier } from '../../../../core/model/Supplier';
 
 @Component({

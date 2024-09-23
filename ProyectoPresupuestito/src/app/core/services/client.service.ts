@@ -1,16 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { Client } from '../model/Client';
 import { ClientHistory } from '../model/ClientHistory';
-import { BudgetService } from './budget.service';
-import { Budget } from '../model/Budget';
-import {BehaviorSubject, catchError, delay, Observable, of, tap} from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL, ENDPOINTS } from '../endpoints';
-import { ClientStateService } from '../states/client-state.service';
-import { ErrorStateService } from './utils/error-state.service';
-import { ModalService } from './utils/modal.service';
+import { ClientControllerService } from '../controllers/client-controller.service';
+import { ErrorControllerService } from '../utils/error-controller.service';
+import { ModalService } from '../utils/modal.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
-import { NotificationService } from './utils/notification.service';
+import { NotificationService } from '../utils/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,13 +16,13 @@ import { NotificationService } from './utils/notification.service';
 export class ClientService {
   //Util
   private http = inject(HttpClient);
-  private state = inject(ClientStateService);
+  private Controller = inject(ClientControllerService);
   private modal = inject(ModalService);
-  private error = inject(ErrorStateService);
+  private error = inject(ErrorControllerService);
   private notification =inject(NotificationService);
 
-  getState() : ClientStateService{
-    return this.state;
+  getController() : ClientControllerService{
+    return this.Controller;
   }
 
   /**

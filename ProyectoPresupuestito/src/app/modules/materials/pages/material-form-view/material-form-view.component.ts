@@ -16,10 +16,10 @@ import { MaterialService } from '../../../../core/services/material.service';
 export class MaterialFormViewComponent {
 private materialService = inject(MaterialService);
 ngOnInit(): void {
-  this.materialService.getState().setEditMode(false)
-  this.materialService.getState().setCategory(this.materialService.getEmptyCategory())
-  this.materialService.getState().setSubcategory(this.materialService.getEmptySubCategory())
-  this.materialService.getState().setMaterial(this.materialService.getEmptyMaterial())
+  this.materialService.getController().setEditMode(false)
+  this.materialService.getController().setCategory(this.materialService.getEmptyCategory())
+  this.materialService.getController().setSubcategory(this.materialService.getEmptySubCategory())
+  this.materialService.getController().setMaterial(this.materialService.getEmptyMaterial())
   
 }
 }

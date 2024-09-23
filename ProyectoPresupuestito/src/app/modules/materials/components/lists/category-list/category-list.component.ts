@@ -4,7 +4,7 @@ import { Category } from '../../../../../core/model/Category';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { MaterialService } from '../../../../../core/services/material.service';
-import { ModalService } from '../../../../../core/services/utils/modal.service';
+import { ModalService } from '../../../../../core/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 
@@ -56,13 +56,13 @@ export class CategoryListComponent {
    }
  
    seleccionar($Event : Category){
-     this.materialService.getState().setCategory($Event);
+     this.materialService.getController().setCategory($Event);
    } 
  
    editar($Event : Category){
      
-     this.materialService.getState().setEditMode(true);
-     this.materialService.getState().setCategory($Event);
+     this.materialService.getController().setEditMode(true);
+     this.materialService.getController().setCategory($Event);
      this.modalService.openModal<CategoryFormComponent,Category>(CategoryFormComponent);
    }
  

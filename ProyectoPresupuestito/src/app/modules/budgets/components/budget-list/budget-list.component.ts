@@ -10,7 +10,7 @@ import { ClientService } from '../../../../core/services/client.service';
 import { isParameter } from 'typescript';
 import { BudgetCardComponent } from "../budget-card/budget-card.component";
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BudgetSearchComponent } from "../budget-search/budget-search.component";
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';

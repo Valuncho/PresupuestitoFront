@@ -3,10 +3,10 @@ import { Material } from '../../../../../core/model/Material';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Item } from '../../../../../core/model/Item';
 import { InvoiceItem } from '../../../../../core/model/invoiceItem';
-import { MaterialStateService } from '../../../../../core/states/material-state.service';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { MaterialListComponent } from '../../lists/material-list/material-list.component';
-import { ModalService } from '../../../../../core/services/utils/modal.service';
+import { ModalService } from '../../../../../core/utils/modal.service';
+
 
 @Component({
   selector: 'app-material-manager',

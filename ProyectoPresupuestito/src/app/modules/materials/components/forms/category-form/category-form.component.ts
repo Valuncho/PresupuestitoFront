@@ -16,7 +16,7 @@ export class CategoryFormComponent {
   
   //Properties
   newCategory : Category = this.materialService.getEmptyCategory();
-  isEdit : boolean = this.materialService.getState().getEditMode();
+  isEdit : boolean = this.materialService.getController().getEditMode();
   CategoryForm : FormGroup = new FormGroup({
     idCategory : new FormControl(),
     name : new FormControl('', Validators.required)
@@ -26,7 +26,7 @@ export class CategoryFormComponent {
   ngAfterViewInit(): void {
     
     if(this.isEdit){
-      this.materialService.getState().getCategory().subscribe(res =>{
+      this.materialService.getController().getCategory().subscribe(res =>{
         this.newCategory = res!;
       })
       this.CategoryForm.setValue(this.newCategory)
@@ -43,7 +43,7 @@ export class CategoryFormComponent {
       this.materialService.postCategory(this.newCategory);
     }else{
       this.materialService.putCategory(this.newCategory);
-      this.materialService.getState().setEditMode(false);
+      this.materialService.getController().setEditMode(false);
     }
   }
 

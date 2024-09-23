@@ -3,7 +3,7 @@ import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMateri
 import { SubCategoryCardComponent } from '../../cards/sub-category-card/sub-category-card.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialService } from '../../../../../core/services/material.service';
-import { ModalService } from '../../../../../core/services/utils/modal.service';
+import { ModalService } from '../../../../../core/utils/modal.service';
 import { SubcategoryFormComponent } from '../../forms/subcategory-form/subcategory-form.component';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
@@ -99,8 +99,8 @@ export class SubcategoryListComponent {
 
 
   editar($Event : SubCategoryMaterial){
-    this.materialService.getState().setEditMode(true);
-    this.materialService.getState().setSubcategory($Event);
+    this.materialService.getController().setEditMode(true);
+    this.materialService.getController().setSubcategory($Event);
     this.modalService.openModal<SubcategoryFormComponent,SubCategoryMaterial>(SubcategoryFormComponent);
   }
 

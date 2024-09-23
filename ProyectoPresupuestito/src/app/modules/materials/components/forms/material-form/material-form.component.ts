@@ -3,11 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Person } from '../../../../../core/model/Person';
 import { SupplierListComponent } from '../../../../supplier/components/supplier-list/supplier-list.component';
 import { Supplier } from '../../../../../core/model/Supplier';
-import { ModalService } from '../../../../../core/services/utils/modal.service';
+import { ModalService } from '../../../../../core/utils/modal.service';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { Material } from '../../../../../core/model/Material';
-import { NotificationService } from '../../../../../core/services/utils/notification.service';
+import { NotificationService } from '../../../../../core/utils/notification.service';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class MaterialFormComponent {
   //Properties
   
   newMaterial :  Material = this.materialService.getEmptyMaterial();
-  isEdit : boolean = this.materialService.getState().getEditMode();
+  isEdit : boolean = this.materialService.getController().getEditMode();
   
   //Properties
 
@@ -117,7 +117,7 @@ export class MaterialFormComponent {
     })
 
     if(this.isEdit){
-      this.materialService.getState().getMaterial().subscribe(res =>{
+      this.materialService.getController().getMaterial().subscribe(res =>{
         this.newMaterial = res!;
       })
      this.MaterialForm.patchValue(this.newMaterial)
@@ -144,7 +144,7 @@ export class MaterialFormComponent {
           next: () => this.notificationService.showNotification("¡Material editado con éxito!")  
         }
       );;
-      this.materialService.getState().setEditMode(false);
+      this.materialService.getController().setEditMode(false);
     }
   }
 }

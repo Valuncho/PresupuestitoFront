@@ -9,9 +9,9 @@ import { BudgetListComponent } from "../budget-list/budget-list.component";
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
 import { ClientSearchComponent } from "../../../clients/components/client-search/client-search.component";
-import { ModalService } from '../../../../core/services/utils/modal.service';
+import { ModalService } from '../../../../core/utils/modal.service';
 import { ClientListComponent } from '../../../clients/components/client-list/client-list.component';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 
 import {MatDatepickerIntl, MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';

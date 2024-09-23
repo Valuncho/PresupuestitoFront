@@ -2,8 +2,8 @@ import { Component, inject, Input, signal, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from '../../../../core/services/client.service';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { Client } from '../../../../core/model/Client';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { ClientSearchComponent } from "../client-search/client-search.component";
@@ -11,8 +11,8 @@ import { ClientCardComponent } from '../client-card/client-card.component';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
-import { ErrorStateService } from '../../../../core/services/utils/error-state.service';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+
 
 
 @Component({
@@ -28,9 +28,7 @@ export class ClientListComponent {
   //Utils
   private router = inject(Router);
   private dialog = inject(MatDialog);
-  private notificationService = inject(NotificationService);
   private modalService = inject(ModalService);
-  private errorState = inject(ErrorStateService);
   private clientService = inject(ClientService);
   //Properties
   options : boolean = false;

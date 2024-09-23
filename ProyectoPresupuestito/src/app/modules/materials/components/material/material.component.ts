@@ -16,7 +16,7 @@ export class MaterialComponent {
 ngAfterViewInit(): void {
   
   
-  this.materialService.getState().getMaterial().subscribe(
+  this.materialService.getController().getMaterial().subscribe(
       {
         next : res =>{this.material = res;},
         error: err => console.error('An error occurred :', err),  

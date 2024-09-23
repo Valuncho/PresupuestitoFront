@@ -16,7 +16,7 @@ export class SubcategoryFormComponent {
   private materialService = inject(MaterialService);
   //Properties
   newSubCategory : SubCategoryMaterial = this.materialService.getEmptySubCategory();
-  isEdit : boolean = this.materialService.getState().getEditMode();
+  isEdit : boolean = this.materialService.getController().getEditMode();
   categories : Category[]=[
     {
       idCategory: 1,
@@ -49,7 +49,7 @@ export class SubcategoryFormComponent {
     })
 
     if(this.isEdit){
-      this.materialService.getState().getSubcategory().subscribe(res =>{
+      this.materialService.getController().getSubcategory().subscribe(res =>{
         this.newSubCategory = res!;
       })
       this.SubCategoryForm.patchValue({
@@ -71,7 +71,7 @@ export class SubcategoryFormComponent {
       this.materialService.postSubCategory(this.newSubCategory);
     }else{
       this.materialService.putSubCategory(this.newSubCategory);
-      this.materialService.getState().setEditMode(false);
+      this.materialService.getController().setEditMode(false);
     }
   }
 

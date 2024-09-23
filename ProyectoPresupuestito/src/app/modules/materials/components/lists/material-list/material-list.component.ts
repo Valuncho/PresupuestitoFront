@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialSearchComponent } from "../../material-search/material-search.component";
 import { MaterialFormComponent } from '../../forms/material-form/material-form.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalService } from '../../../../../core/services/utils/modal.service';
+import { ModalService } from '../../../../../core/utils/modal.service';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { MaterialManagerComponent } from "../../forms/material-manager/material-manager.component";
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
@@ -247,7 +247,7 @@ export class MaterialListComponent {
   /*
   traer():Item {
     let material : Material | undefined;
-    this.materialService.getState().getMaterial().subscribe(res =>
+    this.materialService.getController().getMaterial().subscribe(res =>
       material = res
     );
     return material!;
@@ -255,11 +255,11 @@ export class MaterialListComponent {
 */
   //Card
   seleccionar($Event : Material){
-    this.materialService.getState().setMaterial($Event);
+    this.materialService.getController().setMaterial($Event);
   } 
   editar($Event : Material){
-    this.materialService.getState().setEditMode(true);
-    this.materialService.getState().setMaterial($Event);
+    this.materialService.getController().setEditMode(true);
+    this.materialService.getController().setMaterial($Event);
     this.modalService.openModal<MaterialFormComponent,Material>(MaterialFormComponent);
   }
   eliminar($Event : Material){

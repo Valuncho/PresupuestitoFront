@@ -5,8 +5,8 @@ import { Material } from '../model/Material';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_URL,ENDPOINTS } from '../endpoints';
-import { MaterialStateService } from '../states/material-state.service';
-import { NotificationService } from './utils/notification.service';
+import { MaterialControllerService } from '../controllers/material-controller.service';
+import { NotificationService } from '../utils/notification.service';
 import { Item } from '../model/Item';
 import { InvoiceItem } from '../model/invoiceItem';
 @Injectable({
@@ -15,11 +15,11 @@ import { InvoiceItem } from '../model/invoiceItem';
 export class MaterialService {
   //Utils
   private http = inject(HttpClient);
-  private state = inject(MaterialStateService);
+  private controller = inject(MaterialControllerService);
   private notification = inject(NotificationService);
 
-  getState(){
-    return this.state;
+  getController(){
+    return this.controller;
   }
 
   //Metodos back
