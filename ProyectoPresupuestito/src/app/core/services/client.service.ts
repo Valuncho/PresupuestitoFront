@@ -9,7 +9,12 @@ import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { NotificationService } from '../utils/notification.service';
-
+/**
+ * @class ClienteService
+ * 
+ * Servicio de la entidad cliente para comunicarse con el backend, gestionando errores y aciertos.
+ * 
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -19,14 +24,14 @@ export class ClientService {
   private Controller = inject(ClientControllerService);
   private modal = inject(ModalService);
   private error = inject(ErrorControllerService);
-  private notification =inject(NotificationService);
+  private notification = inject(NotificationService);
 
-  getController() : ClientControllerService{
-    return this.Controller;
-  }
+
+  
 
   /**
    * Retorna todos los clientes disponibles guardados.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de clientes como un observable.
    */
   getClients() : Observable<Client[]> {
@@ -41,6 +46,7 @@ export class ClientService {
 
   /**
    * Retorna al cliente solicitado por id.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param idClient id del cliente solicitado.
    * @returns Un cliente como un observable.
    */
@@ -57,8 +63,10 @@ export class ClientService {
 
   /**
    * Método para crear un cliente nuevo.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param client cliente a cargar en la base de datos
-   * @returns 
+   * @returns un observable de tipo objeto
    */
   postClient(client: Client){
     const url = API_URL+ENDPOINTS.clients.post;
@@ -76,8 +84,10 @@ export class ClientService {
 
   /**
    * Método para actualizar información de un cliente existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param client cliente actualizado.
-   * @returns 
+   * @returns un observable de tipo objeto
    */
   putClient(client: Client) {
     const url = API_URL+ENDPOINTS.clients.update;
@@ -95,8 +105,10 @@ export class ClientService {
 
   /**
    * Método para marcar como borrado a un cliente existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param idClient id del cliente a eliminar.
-   * @returns 
+   * @returns un observable de tipo objeto
    */
   deleteClient(idClient: number) {
     const url = API_URL+ENDPOINTS.clients.delete;
@@ -115,6 +127,7 @@ export class ClientService {
 
 /**
  * Del backend pido la ficha del cliente.
+ * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
  * @returns devuelve la ficha del cliente con su presupuesto y el cliente.
  */
 getClientHistoryById(idClient : number) : Observable<ClientHistory> {
@@ -154,6 +167,10 @@ getClientHistoryById(idClient : number) : Observable<ClientHistory> {
       oClient : this.getEmptyClient(),
       budgets : []
     }
+  }
+
+  getController() : ClientControllerService{
+    return this.Controller;
   }
 
  
