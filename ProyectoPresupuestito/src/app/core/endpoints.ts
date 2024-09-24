@@ -63,4 +63,21 @@ export const ENDPOINTS = {
     update: '/Category/:id',
     delete: '/Category/:id',
   },
+  //Suppliers
+  suppliers: {
+    getAll: '/Supplier',
+    getById: '/Supplier/:id',
+    getByInvoiceId: '/Supplier/:idBudget',
+    post: '/Supplier',
+    update: '/Supplier/:id',
+    delete: '/Supplier/:id',
+  },
+  // Client Histories
+  supplierHistories: {
+    getAll: '/SupplierHistory',
+    getById: '/SupplierHistory/:id',    
+    post: '/SupplierHistory',
+    update: '/SupplierHistory/:id',
+    delete: '/SupplierHistory/:id',
+  },
 };
