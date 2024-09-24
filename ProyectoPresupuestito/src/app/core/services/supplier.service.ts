@@ -18,6 +18,7 @@ export class SupplierService {
   private suppliersHistory : SupplierHistory [] = [
     {
       idSupplierHistory: 1,
+      invoices : [],
       oSupplier: {
         idSupplier: 1001,
         note: "hola",
@@ -35,6 +36,7 @@ export class SupplierService {
     },
     {
       idSupplierHistory: 2,
+      invoices : [],
       oSupplier: {
         idSupplier: 1002,
         note: "felix",
