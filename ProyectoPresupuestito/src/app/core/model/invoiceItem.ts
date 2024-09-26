@@ -2,7 +2,7 @@ import { Material } from "./Material";
 
 export interface InvoiceItem
 {
-    idClient : number;
+    idInvoiceItem : number;
     oMaterial : Material;
     quantity : number;
     price : number;

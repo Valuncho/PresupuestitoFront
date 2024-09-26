@@ -3,6 +3,9 @@
     <div class="Card-Detailes">        
         <p>{{fixedCost?.description| titlecase }}</p>
         <p>{{fixedCost?.amount}}</p>
+        <p>{{fixedCost?.workingDays}}</p>
+        <p>{{fixedCost?.hoursWorked}}</p>
+        <p>{{fixedCost?.date}}</p>
     </div>
     <div class="Card-Options"> 
         <app-button-card [icon]="botones[0].icon" (click)="view()"></app-button-card>

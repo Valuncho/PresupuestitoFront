@@ -1,11 +1,17 @@
 <section>
     <article>
         <app-employee [employee] = "currentEmployee"/>
+        <button class="Boton1"(click)="goToSalaryForm()">Crear presupuesto nuevo</button>
+        <button class="Boton1"(click)="openPaymentForm()">Cargar pago nuevo</button>
         <div class="Details">
             <h3 class="Details-title">Pagos del empleado</h3>
-           <!-- <app-payments-table [pagos]="payments" />-->
+            <!-- <app-payments-table [pagos]="payments" />-->
         </div>
         
-    </article>    
+    </article>
+    <article>
+        <app-employee-list></app-employee-list>
+        
+    </article>
     
 </section>

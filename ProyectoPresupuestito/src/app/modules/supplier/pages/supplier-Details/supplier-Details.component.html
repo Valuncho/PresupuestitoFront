@@ -1,9 +1,14 @@
 <section>
     <article>
-        <app-supplier [supplier] = "currentSupplier"/>       
+        <app-supplier [supplier] = "currentSupplier.oSupplier"/>       
         <div class="Details">
             <h3 class="Details-title">Pagos del supplier</h3>
             <!--<app-payments-table [pagos]="payments" />-->
         </div>        
+    </article>
+    <article>
+        <app-invoice-list
+            [invoices]="currentSupplier.invoices"
+        />
     </article>
 </section>

@@ -13,6 +13,22 @@ import { Cost } from '../model/Cost';
     //Properties
     private http = inject(HttpClient);
 
+    private costSeleccionado : Cost = this.getEmptyFixedCost();
+    private _costSubject = new BehaviorSubject<Cost[]>([]);
+
+    private _selectedCostSubject = new BehaviorSubject<Cost>(this.costSeleccionado);
+
+    private fixedCosts : Cost[] = [
+        {
+            idCost: 1001,
+            description: "John",
+            amount: 1,
+            workingDays: 1,
+            hoursWorked: 1,
+            date: new Date(0),
+        }
+    ]
+
     //METODOS HTTP ----------------------------------------------------------------------------------------------
     
         /**
@@ -77,5 +93,9 @@ import { Cost } from '../model/Cost';
             this.putFixedCost(fixedCost);
         }
 
-        
+        handleDeleteFixedCost(costId : number){
+            this.fixedCosts = this.fixedCosts.filter((cost)=> cost.idCost !== costId);
+            this._costSubject.next(this.fixedCosts);
+            //this.deleteFixedCost(costId);
+        }
 }

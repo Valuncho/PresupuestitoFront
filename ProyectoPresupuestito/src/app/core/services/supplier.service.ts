@@ -45,14 +45,6 @@ export class SupplierService {
     }
   ]
   private suppliersHistory : SupplierHistory [] = [
-    {
-      idSupplierHistory: 1,
-      oSupplier: this.suppliers[0]
-    },
-    {
-      idSupplierHistory: 2,
-      oSupplier: this.suppliers[1]
-    }
 
   ]
 

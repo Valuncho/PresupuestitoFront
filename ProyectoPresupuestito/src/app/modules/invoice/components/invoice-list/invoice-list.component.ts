@@ -1,98 +1,105 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { InvoiceCardComponent } from '../invoice-card/invoice-card.component';
-import { Invoice } from '../../../../core/model/Invoice';
-import { InvoiceFormComponent } from '../invoice-form/invoice-form.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, inject, Input, signal, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
-import { ModalService } from '../../../../core/services/utils/modal.service';
+import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
+import { InvoiceSearchComponent } from '../invoice-search/invoice-search.component';
+import { InvoiceCardComponent } from '../invoice-card/invoice-card.component';
+import { ModalService } from '../../../../core/services/utils/modal.service';
+import { InvoiceService } from '../../../../core/services/invoice.service';
+import { Invoice } from '../../../../core/model/Invoice';
+import { invoiceFormComponent } from '../invoice-form/invoice-form.component';
+
+
 
 @Component({
     selector: 'app-invoice-list',
     standalone: true,
-    imports: [
-        CommonModule,InvoiceCardComponent,NgxPaginationModule
-    ],
+    imports: [InvoiceSearchComponent,InvoiceCardComponent,NgxPaginationModule,CommonModule],
     templateUrl: './invoice-list.component.html',
     styleUrl: './invoice-list.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class InvoiceListComponent { 
 
-        //Utils
-        private router = inject(Router);
-        private dialog = inject(MatDialog);
-        private notificationService = inject(NotificationService);
-        private modalService = inject(ModalService);
-        private invoiceService = inject(invoiceService);
-         //Properties
-        invoices : Invoice[] = [];
-        searchedInvoices : Invoice[] = [];
-        invoice? : Invoice;
-         //BudgetForm
-        options = false;
-         //Pagination
-        page = 1
-        pageSize = 5
+    })
 
-        ngOnInit(): void {
+    export class InvoiceListComponent {
+    //Utils
+    private router = inject(Router);
+    private dialog = inject(MatDialog);
+    private modalService = inject(ModalService);
+    private invoiceService = inject(InvoiceService);
+    //Properties
+    options : boolean = false;
+    //Invoices : Invoice[] = [];
 
-        this.invoiceService.getAllInvoices().subscribe({
-        next : (invoices)=>{
-            this.invoices = invoices;
-            this.searchedInvoices = invoices;
-            }
+    @Input() invoices! : Invoice[];
+    searchedInvoices : Invoice[] = [];
+    
+    //Pagination
+    page = 1
+    pageSize = 5
+
+
+    ngOnInit(): void {
+        
+        this.invoiceService.getInvoices().subscribe({  
+        //next: x => this.invoices = x,  
+        })
+
+    }
+
+    //BudgetForm
+    addInvoiceHandler(){
+        this.modalService.openModal<invoiceFormComponent,Invoice>(invoiceFormComponent);
+    }
+
+    //Search
+    handleSearch($Event : Invoice[]){
+        this.page = 1
+        /*
+        this.invoiceService.getInvoicesBySearch("filto").subscribe({
+        next : (Invoices) =>{
+            this.searchedInvoices = Invoices;
+        }
+        })*/
+    }
+
+    //Card
+
+    handleViewInvoice($Event : Invoice){    
+        this.router.navigate(['/Invoice/detail/',$Event.idInvoice]);
+    }
+
+    handleEditInvoice($Event : Invoice){
+        this.router.navigate(['/Invoice/edit/',$Event.idInvoice]);
+    }
+
+    handleDeleteInvoice($Event : Invoice){
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: {
+            mensaje: `¿Estás seguro de que deseas eliminar al Invoice ${$Event.idInvoice}?`
+        }
         });
-        }
-         //Search
-        handleSearch($Event : Invoice[]){
-            this.page = 1
-            this.invoiceService.getInvoicesBySearch("filto").subscribe({
-            next : (invoices) =>{
-                this.searchedInvoices = invoices;
-            }
-            })
-        }
 
-         //Card
-        handleAction($Event : any){
-            this.invoiceService.setSelectedinvoice($Event)
-        }
-    
-        handleViewInvoice($Event : any){
-            this.invoiceService.setSelectedInvoice($Event)
-            this.router.navigate(['/invoice/detail/',$Event]);
-        }
-
-        handleEditInvoice($Event : any){
-            this.invoiceService.setSelectedInvoice($Event)
-            this.router.navigate(['/invoice/edit/',$Event]);
-        }
-    
-        handleDeleteInvoice($Event : any){
-            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-            data: {
-                mensaje: `¿Estás seguro de que deseas eliminar la boleta con ID ${$Event}?`
-            }
-            });
-
-            dialogRef.afterClosed().subscribe(result => {
+        /*
+        dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                const invoice = this.invoiceService.getInvoiceById($Event)!;
+                const invoice = this.invoiceService.getInvoiceById($Event.idInvoice)!;
+                this.invoiceService.deleteInvoice($Event.idInvoice).subscribe(
+                    {
+                    next: () => this.router.navigate(['/invoice'])
+                    }
+                );
                 
-                this.invoiceService.handleDeleteInvoice($Event)
-                this.notificationService.showNotification("boleta eliminada con éxito");
-                this.router.navigate(['/invoice']);
-            }
+                }
             });
-    
-        }
-    
-         //Pagination
-        pageChange(page: number) {
-            this.page = page;
-        }
+        */
+    } 
+
+    //Pagination
+    /*pageChange(page: number) {
+        this.page = page;
+    }*/
+
 }

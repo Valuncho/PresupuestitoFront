@@ -10,14 +10,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ModalService } from '../../../../core/services/utils/modal.service';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
     selector: 'app-cost-list',
     standalone: true,
     imports: [
-    CommonModule, CostSearchComponent,
-    CostCardComponent
-],
+    CommonModule, CostSearchComponent,NgxPaginationModule,CostCardComponent],
     templateUrl: './cost-list.component.html',
     styleUrl: './cost-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,7 +29,7 @@ export class CostListComponent {
     private modalService = inject(ModalService);
     private costService = inject(CostService);
     //Properties
-    fixedCost : Cost[] = [];
+    fixedCosts : Cost[] = [];
     searchedFixedCost : Cost[] = [];
     cost? : Cost;
     //BudgetForm
@@ -56,8 +55,9 @@ export class CostListComponent {
         this.modalService.openModal<CostFormComponent,Cost>(CostFormComponent);
     }
 
-    /*
+    
     //Search
+    /*
     handleSearch($Event : Cost[]){
         this.page = 1
         this.costService.getFixedCostsBySearch("filto").subscribe({
@@ -65,24 +65,25 @@ export class CostListComponent {
             this.searchedFixedCost = fixedCost;
         }
         })
-    }
+    }*/
     
     
 
     
     //Card
-    handleAction($Event : any){
-        this.costService.setSelectedClient($Event)
-        this.router.navigate(['/budget/new/',$Event]);
+
+    handleAction($Event : Cost){
+
+        this.router.navigate(['/cost/new/',$Event.idCost]);
     }
 
     handleViewCost($Event : any){
-        this.costService.setSelectedFixedCost($Event)
+        //this.costService.setSelectedFixedCost($Event)
         this.router.navigate(['/cost/detail/',$Event]);
     }
-
+    
     handleEditCost($Event : any){
-        this.costService.setSelectedFixedCost($Event)
+        //this.costService.setSelectedFixedCost($Event)
         this.router.navigate(['/cost/edit/',$Event]);
     }
     
@@ -95,9 +96,9 @@ export class CostListComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const client = this.costService.getCostById($Event)!;
+            const client = this.costService.getFixedCostById($Event)!;
             
-            this.costService.handleDeleteCost($Event)
+            this.costService.handleDeleteFixedCost($Event)
             this.notificationService.showNotification("Costo eliminado con éxito");
             this.router.navigate(['/costo']);
         }
@@ -108,5 +109,5 @@ export class CostListComponent {
     //Pagination
     pageChange(page: number) {
         this.page = page;
-    }*/
+    }
 }

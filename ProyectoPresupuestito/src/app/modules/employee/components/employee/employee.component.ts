@@ -6,7 +6,7 @@ import { Employee } from '../../../../core/model/Employee';
     selector: 'app-employee',
     standalone: true,
     imports: [CommonModule],
-    template: './employee.component.html',
+    templateUrl: './employee.component.html',
     styleUrl: './employee.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

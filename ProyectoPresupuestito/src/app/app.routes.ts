@@ -16,7 +16,7 @@ import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Deta
 import { EmployeeViewComponent } from './modules/employee/pages/employee-View/employee-View.component';
 import { EmployeeDetailsComponent } from './modules/employee/pages/employee-Details/employee-Details.component';
 import { EmployeeFormComponent } from './modules/employee/components/employee-form/employee-form.component';
-import { InvoiceDetailsViewComponent } from './modules/invoice/pages/invoice-details-view/invoice-details-view.component';
+
 import { InvoiceMakerComponent } from './modules/invoice/pages/invoice-maker/invoice-maker.component';
 import { CostViewComponent } from './modules/cost/pages/cost-view/cost-view.component';
 
@@ -37,21 +37,22 @@ export const routes: Routes = [
     {path: 'work/detail/:workId', component: WorkDetailsComponent},
     {path: 'work/new/:budgetId', component: WorkAreaComponent},
     {path: 'work/edit/:budgetId', component: WorkAreaComponent},
-    
+        
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},
 
     //falta el edit
     {path: 'supplier', component: SupplierViewComponent},
-    {path: 'supplier/Details', component: SupplierDetailsComponent},
+    {path: 'supplier/detail/:supplierId', component: SupplierDetailsComponent},
+    {path: 'supplier/edit', component: SupplierViewComponent},
 
     {path: 'employee', component: EmployeeViewComponent},
     {path: 'employee/detail/:employeeId', component: EmployeeDetailsComponent},
     {path: 'employee/edit', component: EmployeeFormComponent},
 
-    {path: 'invoice/details/invoiceId', component: InvoiceDetailsViewComponent},
-    {path: 'invoice/new/supplierId', component: InvoiceMakerComponent},
-    {path: 'invoice/edit/invoiceId', component: InvoiceMakerComponent},
+    
+    {path: 'invoice/new/:supplierId', component: InvoiceMakerComponent},
+    {path: 'invoice/edit/:invoiceId', component: InvoiceMakerComponent},
     
     
     {path: 'cost', component: CostViewComponent},

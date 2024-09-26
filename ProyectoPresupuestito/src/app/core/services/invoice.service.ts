@@ -1,5 +1,4 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Supplier } from '../model/Supplier';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { API_URL, ENDPOINTS } from '../endpoints';
@@ -64,4 +63,13 @@ export class InvoiceService {
       return this.http.put(url, invoice);
     }
 
+    getEmptyInvoice(): Invoice{
+      return {
+        idInvoice:0,
+        date: new Date(0),
+        isPaid: false,
+        oItems:[],
+        oPayment:[]
+      }
+    }
 }

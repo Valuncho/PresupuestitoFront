@@ -1,18 +1,18 @@
-<form [formGroup]="InvoiceForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
     <fieldset>
   
-      @if (InvoiceForm.invalid && InvoiceForm.dirty) {
+      @if (invoiceForm.invalid && invoiceForm.dirty) {
         <div class="invalid">
           
-          @if (InvoiceForm.get('fecha')?.invalid) {
+          @if (invoiceForm.get('fecha')?.invalid) {
             <p>la fecha es obligatoria.</p>
           }
           
-          @if (InvoiceForm.get('pago')?.invalid) {
+          @if (invoiceForm.get('pago')?.invalid) {
             <p>el pago es obligatorio.</p>
           }
   
-          @if (InvoiceForm.get('pagado')?.invalid) {
+          @if (invoiceForm.get('pagado')?.invalid) {
             <p>la confirmacion de pago es obligatoria.</p>
           }
       

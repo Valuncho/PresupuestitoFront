@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Cost } from '../../../../core/model/Cost';
 
 @Component({
     selector: 'app-cost',
@@ -9,4 +10,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     styleUrl: './cost.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CostComponent { }
+export class CostComponent { 
+    @Input() cost! : Cost;
+}

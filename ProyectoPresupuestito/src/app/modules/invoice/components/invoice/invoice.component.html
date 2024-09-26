@@ -1,6 +1,6 @@
 <div class="Details">
     <h3 class="Details-title">Detalle de la factura</h3>
-    <p>fecha:{{invoice.date | date:'dd/MM/yyyy'}}</p>
-    <p>pago:{{invoice.oPayment | currency}}</p>
-    <p>esta pagado:{{invoice.isPaid}}</p>
+    <p>fecha:{{invoice!.date | date:'dd/MM/yyyy'}}</p>
+    <!--<p>pago:{{invoice.oPayment}}</p> pausado por ahora--> 
+    <p>esta pagado:{{invoice!.isPaid}}</p>
 </div>

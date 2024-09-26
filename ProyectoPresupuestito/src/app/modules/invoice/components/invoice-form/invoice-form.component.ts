@@ -1,48 +1,49 @@
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { ClientService } from '../../../../core/services/client.service';
 import { Invoice } from '../../../../core/model/Invoice';
 import { InvoiceService } from '../../../../core/services/invoice.service';
+
 
 @Component({
     selector: 'app-invoice-form',
     standalone: true,
     imports: [CommonModule,ReactiveFormsModule],
     templateUrl: './invoice-form.component.html',
-    styleUrl: './invoice-form.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class InvoiceFormComponent {
-
+    styleUrl: './invoice-form.component.css'
+    })
+    export class invoiceFormComponent {
+    //Utils
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private notificationService = inject(NotificationService);
-    private InvoiceService = inject(InvoiceService);
+    private invoiceService = inject(InvoiceService);
     //Properties
-    currentInvoice : Invoice = this.InvoiceService.getInvoices();
-    idInvoice? : number;
+    currentInvoice : Invoice = this.invoiceService.getEmptyInvoice();
+    invoiceId? : number;
     isEdit : boolean = false;
-
     //Form
-    InvoiceForm : FormGroup = new FormGroup({
-        fecha: new FormControl('',[ Validators.required]),
-        pago: new FormControl('', Validators.required),
-        estaPagado : new FormControl('', Validators.required),
+    invoiceForm : FormGroup = new FormGroup({
+        Date: new FormControl('',[ Validators.required]),
+        payment: new FormControl('', Validators.required),
+        paid : new FormControl('', Validators.required),
     });
-
-    ngOnInit(): void {
+    
+    ngAfterViewInit(): void {
         this.setUp();
         this.onEditHandler();
+        
     }
 
     get canSubmit(){
         let  flag : boolean = false;
         if(
-        this.InvoiceForm.get('fecha')?.valid &&
-        this.InvoiceForm.get('pago')?.valid &&
-        this.InvoiceForm.get('estaPagado')?.valid
+        this.invoiceForm.get('date')?.valid &&
+        this.invoiceForm.get('payment')?.valid &&
+        this.invoiceForm.get('paid')?.valid
         ){
         flag = true;
         }
@@ -50,9 +51,9 @@ export class InvoiceFormComponent {
     }
 
     setUp(){
-        this.InvoiceForm.reset();
+        this.invoiceForm.reset();
         this.isEdit = false;
-        this.currentInvoice = this.InvoiceService.getInvoices();
+        /*this.currentInvoice = this.invoiceForm.getEmptyInvoice();*/
     }
 
     resetForm($Event : Event){
@@ -67,8 +68,11 @@ export class InvoiceFormComponent {
         let url = "/invoice/edit/" + this.invoiceId;
         if(this.router.url == url){
             this.isEdit = true;
-            this.currentInvoice = this.InvoiceService.getInvoiceById(this.invoiceId)!;
-            this.InvoiceForm.patchValue(this.currentInvoice);
+            this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
+            {
+            next: (res:Invoice) => {this.currentInvoice = res!},
+            }
+        )
         }else{
             this.isEdit = false;
         }
@@ -77,15 +81,21 @@ export class InvoiceFormComponent {
     }
 
     onSubmit(){
-        this.currentInvoice = this.InvoiceForm.value;
+        
+        this.currentInvoice = this.invoiceForm.value;
+        console.log(this.currentInvoice)
+        
+        /*
         if(this.isEdit){
-        this.InvoiceService.handleUpdateInvoice(this.currentInvoice);
-        this.notificationService.showNotification("boleta editada con éxito!");
+        this.invoiceForm.putInvoice(this.currentInvoice).subscribe();
         }else{
-        this.InvoiceService.handlePostInvoice(this.currentInvoice);
-        this.notificationService.showNotification("boleta guardada con éxito!");
-        }
+        this.invoiceForm.postInvoice(this.currentInvoice).subscribe();
+        }*/
+
         this.setUp();
     }
 
+
+
 }
+

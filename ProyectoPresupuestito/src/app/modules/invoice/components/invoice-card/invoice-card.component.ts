@@ -31,6 +31,10 @@ export class InvoiceCardComponent {
             {icon: 'Check'}
         ];
     }
+
+    constructor() {
+    }
+    
     Action(){
         this.action.emit(this.Invoice)
     }
