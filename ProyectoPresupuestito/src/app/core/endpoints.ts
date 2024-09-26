@@ -80,4 +80,48 @@ export const ENDPOINTS = {
     update: '/SupplierHistory/:id',
     delete: '/SupplierHistory/:id',
   },
+  // Invoices
+  invoices: {
+    getAll: '/Invoices',
+    getById: '/Invoices/:id',
+    getByInvoiceId: '/Invoices/:idBudget',
+    post: '/Invoices',
+    update: '/Invoices/:id',
+    delete: '/Invoices/:id',
+  },
+  //Employees
+  employees: {
+    getAll: '/Employee',
+    getById: '/Employee/:id',
+    getByInvoiceId: '/Employee/:idBudget',
+    post: '/Employee',
+    update: '/Employee/:id',
+    delete: '/Employee/:id',
+  },
+  // Employee History
+  employeeHistories: {
+    getAll: '/EmployeeHistory',
+    getById: '/EmployeeHistory/:id',    
+    post: '/EmployeeHistory',
+    update: '/EmployeeHistory/:id',
+    delete: '/EmployeeHistory/:id',
+  },
+  // Salary
+  salaries: {
+    getAll: '/Salary',
+    getById: '/Salary/:id',
+    getByInvoiceId: '/Salary/:idBudget',
+    post: '/Salary',
+    update: '/Salary/:id',
+    delete: '/Salary/:id',
+  },
+    // FixedCost
+    fixedCost: {
+      getAll: '/FixedCost',
+      getById: '/FixedCost/:id',
+      getByInvoiceId: '/FixedCost/:idBudget',
+      post: '/FixedCost',
+      update: '/FixedCost/:id',
+      delete: '/FixedCost/:id',
+    },
 };
