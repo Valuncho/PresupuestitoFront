@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../../core/utils/notification.service';
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
+import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 
 
 @Component({
@@ -18,10 +19,10 @@ export class ClientFormComponent {
   //Utils
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private notificationService = inject(NotificationService);
   private clientService = inject(ClientService);
+  private clientController = inject(ClientControllerService);
   //Properties
-  currentClient : Client = this.clientService.getEmptyClient();
+  currentClient : Client = this.clientController.getEmptyClient();
   clientId? : number;
   isEdit : boolean = false;
   //Form
@@ -57,7 +58,7 @@ export class ClientFormComponent {
   setUp(){
     this.clientForm.reset();
     this.isEdit = false;
-    this.currentClient = this.clientService.getEmptyClient();
+    this.currentClient = this.clientController.getEmptyClient();
   }
 
   resetForm($Event : Event){

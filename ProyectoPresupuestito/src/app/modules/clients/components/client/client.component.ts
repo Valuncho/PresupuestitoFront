@@ -1,7 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Client } from '../../../../core/model/Client';
 import { CommonModule } from '@angular/common';
-
+/**
+ * @class ClientComponent
+ * 
+ * Componente para renderizar la información de un cliente.
+ * 
+ */
 @Component({
   selector: 'app-client',
   standalone: true,
@@ -10,9 +15,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './client.component.css'
 })
 export class ClientComponent {
-  //Utils
-  
-
-
+  /**
+   * @property Cliente a renderizar su información
+  */
   @Input() client! : Client;
 }

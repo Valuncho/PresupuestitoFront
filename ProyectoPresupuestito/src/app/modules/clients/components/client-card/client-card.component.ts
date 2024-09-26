@@ -4,7 +4,16 @@ import { Person } from '../../../../core/model/Person';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { Client } from '../../../../core/model/Client';
 
-
+/**
+ * @class ClientCardComponent
+ * 
+ * Tarjeta de la entidad cliente, con información básica, y botones para:
+ * -Crear un presupuesto nuevo,
+ * -Seleccionarlo o ver más detalles,
+ * -Editarlo y
+ * -Eliminarlo
+ *
+ */
 @Component({
   selector: 'app-client-card',
   standalone: true,
@@ -13,14 +22,15 @@ import { Client } from '../../../../core/model/Client';
   styleUrl: './client-card.component.css'
 })
 export class ClientCardComponent {
+
   @Input() Client: Client | undefined;
+
   @Output() isView = new EventEmitter<Client>();
   @Output() action = new EventEmitter<Client>();
   @Output() isSelected = new EventEmitter<Client>();
   @Output() isEdit = new EventEmitter<Client>();
   @Output() isDeleted = new EventEmitter<Client>();
   botones: Array<{ icon: string }> =[];
-  //{ url: '/client/editar/'+this.IdClient+'', icon: 'edit' },
 
   ngOnInit(){
     this.botones = [
@@ -33,14 +43,10 @@ export class ClientCardComponent {
     ];
     
   }
-  constructor() {
-   
-  }
-  
+ 
   newBudget(){
     this.action.emit(this.Client)
   }
-
   select(){
     this.isSelected.emit(this.Client);
   }

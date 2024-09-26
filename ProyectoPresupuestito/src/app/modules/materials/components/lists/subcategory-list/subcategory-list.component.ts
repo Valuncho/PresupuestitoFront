@@ -113,7 +113,7 @@ export class SubcategoryListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.materialService.deleteSubCategory($Event);
+        this.materialService.deleteSubCategory($Event.idCategoryMaterial);
         //this.notification.showNotification("Rubro eliminado con éxito");
       }
     });

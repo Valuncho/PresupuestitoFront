@@ -14,7 +14,12 @@ import { CommonModule } from '@angular/common';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 
-
+/**
+ * @class ClientListComponent
+ * 
+ * Listado de la entidad cliente, con buscador y paginación.
+ *
+ */
 @Component({
   selector: 'app-client-list',
   standalone: true,

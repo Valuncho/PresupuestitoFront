@@ -4,6 +4,13 @@ import { CommonModule } from '@angular/common';
 import { Client } from '../../../../core/model/Client';
 import { ClientService } from '../../../../core/services/client.service';
 
+
+/**
+ * @class ClientSearchComponent
+ * 
+ * Buscador de la entidad cliente, sin funcionar por el momento.
+ *
+ */
 @Component({
   selector: 'app-client-search',
   standalone: true,

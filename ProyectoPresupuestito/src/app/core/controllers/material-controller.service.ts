@@ -5,7 +5,16 @@ import { SubCategoryMaterial } from '../model/SubCategoryMaterial';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Item } from '../model/Item';
 import { InvoiceItem } from '../model/invoiceItem';
-
+/**
+ * 
+ * @class MaterialControllerService
+ * 
+ * Clase controller de la entidad material, categoria y subcategoria, item e invoceitem para:
+ * -Ser pasamanos de información,
+ * -Obtener objetos vacios,
+ * -Manejar el editado en el formulario.
+ * 
+ */
 @Injectable({
   providedIn: 'root'
 })

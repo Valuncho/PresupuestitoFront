@@ -271,7 +271,7 @@ export class MaterialListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.materialService.deleteMaterial($Event);
+        this.materialService.deleteMaterial($Event.idMaterial);
         //this.notification.showNotification("Rubro eliminado con éxito");
       }
     });

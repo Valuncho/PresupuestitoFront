@@ -21,7 +21,6 @@ import { NotificationService } from '../utils/notification.service';
 export class ClientService {
   //Util
   private http = inject(HttpClient);
-  private Controller = inject(ClientControllerService);
   private modal = inject(ModalService);
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
@@ -140,38 +139,9 @@ getClientHistoryById(idClient : number) : Observable<ClientHistory> {
   })
   );   
 }
+ 
 
-
-
-  //Metodos propios del front
-  getEmptyClient(): Client {
-    return  {
-      idClient: 0,
-      oPerson: {
-        idPerson: 0,
-        name: '',
-        lastName: '',
-        direction: '',
-        phoneNumber: '',
-        mail: '',
-        dni: '',
-        cuit: '',
-      },
-    };
-
-  }
-
-  getEmptyHistory() : ClientHistory{
-    return {
-      idClientHistory: 0,
-      oClient : this.getEmptyClient(),
-      budgets : []
-    }
-  }
-
-  getController() : ClientControllerService{
-    return this.Controller;
-  }
+  
 
  
 }

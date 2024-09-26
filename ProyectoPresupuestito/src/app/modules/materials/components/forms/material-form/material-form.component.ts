@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Person } from '../../../../../core/model/Person';
-import { SupplierListComponent } from '../../../../supplier/components/supplier-list/supplier-list.component';
+
 import { Supplier } from '../../../../../core/model/Supplier';
 import { ModalService } from '../../../../../core/utils/modal.service';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
@@ -125,7 +125,7 @@ export class MaterialFormComponent {
   }
 
   openSupplierForm(){
-    this.modalService.openModal<SupplierListComponent,Supplier>(SupplierListComponent);
+    //this.modalService.openModal<SupplierListComponent,Supplier>(SupplierListComponent);
   }
   resetForm($Event : Event){
     this.MaterialForm.reset();

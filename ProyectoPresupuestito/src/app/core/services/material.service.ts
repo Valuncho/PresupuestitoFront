@@ -322,6 +322,7 @@ export class MaterialService {
       
     }
   }
+
   getEmptySubCategory() : SubCategoryMaterial{
     return {
       idCategoryMaterial: 0,
@@ -329,6 +330,7 @@ export class MaterialService {
       category: this.getEmptyCategory()
     }
   }
+  
   getEmptyCategory() : Category{
     return{
       idCategory: 0,
