@@ -3,13 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { SupplierService } from '../../../../core/services/supplier.service';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
-import { SupplierCardComponent } from '../../supplier-card/supplierCard.component';
+
+import { SupplierCardComponent } from '../supplier-card/supplierCard.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SupplierSearchComponent } from '../supplier-search/supplier-search.component';
 import { Supplier } from '../../../../core/model/Supplier';
 import { SupplierFormComponent } from '../supplier-form/supplier-form.component';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 
 @Component({
     selector: 'app-supplier-list',
@@ -35,7 +36,7 @@ export class SupplierListComponent {
     page = 1
     pageSize = 5
 
-
+/*
     ngOnInit(): void {
         this.supplierService.supplierss.subscribe({
         next : (suppliers)=>{
@@ -46,18 +47,18 @@ export class SupplierListComponent {
         this.supplierService.selectedSupplier.subscribe(supplier =>{
         this.supplier = supplier;
         })
-    }
+    }*/
 
     //BudgetForm
-    addClientHandler(){
+    addSupplierHandler(){
         this.modalService.openModal<SupplierFormComponent,Supplier>(SupplierFormComponent);
     }
     
     getAllSuppliers() : Supplier[]{
         let allSuppliers : Supplier[] = [];
-        this.supplierService.supplierss.subscribe(supplier=>{
-        allSuppliers = supplier;
-        }) 
+        //this.supplierService.supplierss.subscribe(supplier=>{
+        //allSuppliers = supplier;
+        //}) 
 
         return allSuppliers
     }
@@ -71,17 +72,17 @@ export class SupplierListComponent {
 
     //Card
     handleAction($Event : any){
-        this.supplierService.setSelectedSupplier($Event)
+        //this.supplierService.setSelectedSupplier($Event)
         //this.router.navigate(['/budget/new/',$Event]);
     }
 
     handleViewSupplier($Event : any){
-        this.supplierService.setSelectedSupplier($Event)
+        //this.supplierService.setSelectedSupplier($Event)
         this.router.navigate(['/supplier/detail']);
     }
     
     handleEditSupplier($Event : any){
-        this.supplierService.setSelectedSupplier($Event)
+        //this.supplierService.setSelectedSupplier($Event)
         this.router.navigate(['/supplier/edit/',$Event]);
     }
 
@@ -94,7 +95,7 @@ export class SupplierListComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            this.supplierService.handleDeleteSupplier($Event)
+            //this.supplierService.handleDeleteSupplier($Event)
             this.notificationService.showNotification("proveedor eliminado con éxito");
             this.router.navigate(['/supplier']); 
         }

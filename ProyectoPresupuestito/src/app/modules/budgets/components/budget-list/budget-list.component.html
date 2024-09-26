@@ -1,7 +1,7 @@
 <div class="List">
     <h3 class="List-title">Listado de presupuestos</h3>
     <app-budget-search/>
-    @for (budget of budgetsToDisplay | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget) {
+    @for (budget of budgets | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget) {
       <app-budget-card
       [Budget]="budget"
       [idBudget]="budget.idBudget"
@@ -11,6 +11,8 @@
         (isEdit)="handleEdit($event)"
         (isDeleted)="handleDelete($event)"
       />
+    }@empty {
+      <app-text-card [message]="'No hay presupuestos que mostrar.'"/>
     }
     <pagination-controls
       previousLabel="Anterior"

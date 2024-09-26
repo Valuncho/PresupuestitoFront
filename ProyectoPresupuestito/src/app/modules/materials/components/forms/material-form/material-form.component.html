@@ -12,16 +12,22 @@
         @if (!isEdit) {
           <label for="supplier">Proveedor:</label>
           <input type="text" id="supplier" (click)="openSupplierForm()" placeholder="Seleccionar proveedor" readonly formControlName="supplier">
-          <!--<input type="hidden" [value]="this.currentSupplier.idPerson" name="idSupplier" formControlName="idSupplier"/>-->
+          <input type="hidden" [value]="" name="idSupplier" formControlName="idSupplier"/>
         }
         <label for="name">Nombre:</label>
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" formControlName="name">
         <label for="description">Descripción:</label>
-        <textarea name="description" id="description"></textarea>
+        <textarea name="description" id="description" formControlName="description"></textarea>
         <label for="brand">Marca:</label>
-        <input type="text" name="brand" id="brand">
+        <input type="text" name="brand" id="brand" formControlName="brand">
         <label for="color">Color:</label>
-        <input type="text" name="color" id="color">
+        <input type="text" name="color" id="color" formControlName="color">
+        <label for="subCategory">Sub rubro</label>
+        <select name="subCategory" id="subCategory" formControlName="subCategory">
+          @for (item of subCategories; track $index) {
+            <option value="{{item.idCategoryMaterial}}"  >{{item.name}}</option>
+          }
+        </select>
          
       </fieldset>
       <fieldset class="Botones">

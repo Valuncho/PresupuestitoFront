@@ -9,8 +9,9 @@ import { SupplierFormComponent } from '../../components/supplier-form/supplier-f
     imports: [
         CommonModule,SupplierListComponent,SupplierFormComponent
     ],
+    templateUrl: './supplier-View.component.html',
     styleUrl: './supplier-View.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './supplier-View.component.html',
 })
-export class SupplierViewComponent { }
+export class SupplierViewComponent { 
+}

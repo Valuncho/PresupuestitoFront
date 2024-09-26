@@ -1,20 +1,21 @@
 <div class="List">
   <h3 class="List-title">Listado de materiales</h3>
   <app-material-search
-    [material]="getAllMaterials()"
+    [material]="materials"
     (results)="handleSearch($event)"
     (sortedResults)="handleSearch($event)"
   />
   <div>
-    @for (material of materialsToDisplay | paginate:{ itemsPerPage: items,
+    @for (material of materials | paginate:{ itemsPerPage: items,
     currentPage: page }; track material.idMaterial; let idx = $index) {
     <app-material-card
       [Material]="material"
-      [idMaterial]="material.idMaterial"
       (isClick)="seleccionar($event)"
       (isEdit)="editar($event)"
       (isDeleted)="eliminar($event)"
     />
+    }@empty {
+      <app-text-card [message]="'No hay materiales que mostrar.'"/>
     }
   </div>
 
@@ -23,4 +24,5 @@
     nextLabel="Siguiente"
     (pageChange)="pageChange($event)"
   />
+  
 </div>

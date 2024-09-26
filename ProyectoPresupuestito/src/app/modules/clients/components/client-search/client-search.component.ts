@@ -4,6 +4,13 @@ import { CommonModule } from '@angular/common';
 import { Client } from '../../../../core/model/Client';
 import { ClientService } from '../../../../core/services/client.service';
 
+
+/**
+ * @class ClientSearchComponent
+ * 
+ * Buscador de la entidad cliente, sin funcionar por el momento.
+ *
+ */
 @Component({
   selector: 'app-client-search',
   standalone: true,
@@ -11,9 +18,7 @@ import { ClientService } from '../../../../core/services/client.service';
   templateUrl: './client-search.component.html',
   styleUrl: './client-search.component.css',
 })
-export class ClientSearchComponent {
-  private clientService = inject(ClientService);
-  
+export class ClientSearchComponent {  
   @Output() clientSelected = new EventEmitter<number>();
   @Output() results = new EventEmitter<Client[]>();
   @Output() sortedResults = new EventEmitter<Client[]>();
@@ -21,15 +26,15 @@ export class ClientSearchComponent {
   busqueda = new FormControl('');
   idClient = new FormControl(0);
   filteredClients: Client[] = [];
-
+/*
   ngOnInit() {
-    this.clientService.getAllClients().subscribe({
+    this.clientService.getClients().subscribe({
       next : (clients) =>{
         this.filteredClients = clients;
       }
     })
   }
-
+*/
   sort() {
     let sorted: Client[] = [];
     /*switch (this.filtro.value) {

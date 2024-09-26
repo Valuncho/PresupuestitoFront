@@ -28,33 +28,26 @@ export class WorkComponent {
   ngOnInit(): void {
 
 
-
+/*
     this.workService.getSelectedWork().subscribe(work=>{
       this.currentWork = work;
-      this.setBudget();
+      
 
       if(this.router.url == "/work" && this.currentWork.idWork != 0){
         this.options = true;
       }
     })
-
+*/
 
   }
 
-  setBudget(){
-    let budget = this.budgetService.getBudgetByWork(this.currentWork);
-    this.budgetService.setSelectedBudget(budget.idBudget);
-  }
 
 
   goToWorkArea(){
-    this.setBudget()
     this.router.navigate(["/work/edit"]);
   }
 
   goToBudgetDetail(){
-    this.setBudget()
-    console.log("qhe")
     this.router.navigate(["/budget/detail"]);
   }
 

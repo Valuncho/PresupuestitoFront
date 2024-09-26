@@ -2,9 +2,10 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
+import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 
 
 @Component({
@@ -18,10 +19,10 @@ export class ClientFormComponent {
   //Utils
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private notificationService = inject(NotificationService);
   private clientService = inject(ClientService);
+  private clientController = inject(ClientControllerService);
   //Properties
-  currentClient : Client = this.clientService.getEmptyClient();
+  currentClient : Client = this.clientController.getEmptyClient();
   clientId? : number;
   isEdit : boolean = false;
   //Form
@@ -34,10 +35,11 @@ export class ClientFormComponent {
     dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
     cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
   });
-
-  ngOnInit(): void {
+  
+  ngAfterViewInit(): void {
     this.setUp();
     this.onEditHandler();
+    
   }
 
   get canSubmit(){
@@ -56,7 +58,7 @@ export class ClientFormComponent {
   setUp(){
     this.clientForm.reset();
     this.isEdit = false;
-    this.currentClient = this.clientService.getEmptyClient();
+    this.currentClient = this.clientController.getEmptyClient();
   }
 
   resetForm($Event : Event){
@@ -71,7 +73,11 @@ export class ClientFormComponent {
       let url = "/client/edit/" + this.clientId;
       if(this.router.url == url){
         this.isEdit = true;
-        this.currentClient = this.clientService.getClientById(this.clientId)!;
+        this.clientService.getClientById(this.clientId).subscribe(
+        {
+          next: (res:Client) => {this.currentClient = res!},
+        }
+      )
         this.clientForm.patchValue(this.currentClient.oPerson);
       }else{
         this.isEdit = false;
@@ -81,14 +87,16 @@ export class ClientFormComponent {
   }
 
   onSubmit(){
+    
     this.currentClient.oPerson = this.clientForm.value;
+    console.log(this.currentClient)
+    
     if(this.isEdit){
-      this.clientService.handleUpdateClient(this.currentClient);
-      this.notificationService.showNotification("Cliente editado con éxito!");
+      this.clientService.putClient(this.currentClient).subscribe();
     }else{
-      this.clientService.handlePostClient(this.currentClient);
-      this.notificationService.showNotification("Cliente guardado con éxito!");
+      this.clientService.postClient(this.currentClient).subscribe();
     }
+
     this.setUp();
   }
 

@@ -6,8 +6,8 @@ import { Budget } from '../../../../core/model/Budget';
 import { Client } from '../../../../core/model/Client';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { ClientService } from '../../../../core/services/client.service';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { WorkService } from '../../../../core/services/work.service';
 
 

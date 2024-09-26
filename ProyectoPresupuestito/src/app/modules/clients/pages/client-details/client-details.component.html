@@ -2,10 +2,10 @@
 <section>
     <article>
         <app-client
-        [client] = "currentClient"
+        [client] = "currentClient.oClient"
         />
         <button class="Boton1"(click)="goToBudgetForm()">Crear presupuesto nuevo</button>
-        
+        <button class="Boton1"(click)="openPaymentForm()">Cargar pago nuevo</button>
         <div class="Details">
             <h3 class="Details-title">Pagos del cliente</h3>
             <app-payments-table [pagos]="payments" />
@@ -13,7 +13,9 @@
         
     </article>
     <article>
-        <app-budget-list/>
+        <app-budget-list 
+        [budgets] = "currentClient.budgets"
+        />
     </article>
     
     

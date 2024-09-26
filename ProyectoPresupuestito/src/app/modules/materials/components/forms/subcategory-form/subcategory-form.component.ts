@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Category } from '../../../../../core/model/Category';
+import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
+import { MaterialService } from '../../../../../core/services/material.service';
 
 @Component({
   selector: 'app-subcategory-form',
@@ -9,17 +12,67 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './subcategory-form.component.css'
 })
 export class SubcategoryFormComponent {
+  //Utils
+  private materialService = inject(MaterialService);
+  //Properties
+  newSubCategory : SubCategoryMaterial = this.materialService.getEmptySubCategory();
+  isEdit : boolean = this.materialService.getController().getEditMode();
+  categories : Category[]=[
+    {
+      idCategory: 1,
+      name: 'Ferretería',
+    },
+    {
+      idCategory: 2,
+      name: 'Maderas'
+    },
+    {
+      idCategory: 3,
+      name: 'Adhesivos'
+    },
+    {
+      idCategory: 4,
+      name: 'Pinturería'
+    }
+  ]
 
-  isEdit : boolean = false;
   SubCategoryForm : FormGroup = new FormGroup({
-
+    name : new FormControl('', Validators.required),
+    category : new FormControl('', Validators.required)
   })
 
-  resetForm($Event : Event){
+  ngOnInit(): void {
+    this.materialService.getCategories().subscribe({
+      next: res => this.categories = res,  
+        error: err => console.error('An error occurred :', err),  
+        complete: () => console.log('There are no more action happen.')  
+    })
 
+    if(this.isEdit){
+      this.materialService.getController().getSubcategory().subscribe(res =>{
+        this.newSubCategory = res!;
+      })
+      this.SubCategoryForm.patchValue({
+        name: this.newSubCategory.name,
+        category : this.newSubCategory.category
+      });
+      
+    }
   }
-  onSubmit(){
 
+
+  resetForm($Event : Event){
+    this.SubCategoryForm.reset();
+  }
+
+  onSubmit(){
+    this.newSubCategory.name = this.SubCategoryForm.value["name"]
+    if(this.isEdit){
+      this.materialService.postSubCategory(this.newSubCategory);
+    }else{
+      this.materialService.putSubCategory(this.newSubCategory);
+      this.materialService.getController().setEditMode(false);
+    }
   }
 
 }

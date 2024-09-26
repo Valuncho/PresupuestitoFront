@@ -3,15 +3,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Employee } from '../model/Employee';
 import { EmployeeHistory } from '../model/EmployeeHistory';
+import { API_URL,ENDPOINTS } from '../endpoints';
+import { HttpClient } from '@angular/common/http';
+import { Supplier } from '../model/Supplier';
+import { Salary } from '../model/Salary';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
   //Properties
+  private http = inject(HttpClient);
+  
   private employees : Employee[] = [
     {
       idEmployee: 1001,
+      salary: 100,
       oPerson: {
           idPerson: 1,
           name: "John",
@@ -25,6 +32,7 @@ export class EmployeeService {
     },
     {
         idEmployee: 1002,
+        salary: 200,
         oPerson: {
             idPerson: 2,
             name: "Jane",
@@ -37,61 +45,79 @@ export class EmployeeService {
         }
     }
   ]
-  private employeesHistory : EmployeeHistory [] = [
-    {
-      idEmployeeHistory: 1,
-      oSalary:[],
-      oEmployee: this.employees[0]
-    },
-    {
-      idEmployeeHistory: 2,
-      oSalary:[],
-      oEmployee: this.employees[1]
+ 
+  //METODOS HTTP ----------------------------------------------------------------------------------------------
+  
+    /**
+     * retorna todos los empleados guardados
+     * @returns un array de empleados como un observable
+     */
+    
+    getEmployees(): Observable<Employee[]>{
+      return this.http.get<Employee[]>(API_URL+ENDPOINTS.employees.getAll);
     }
 
-  ]
-  private employeeSeleccionado : Employee = this.getEmptyEmployee();
+    getSalaries(): Observable<Salary[]>{
+      return this.http.get<Salary[]>(API_URL+ENDPOINTS.salaries.getAll);
+    }
 
-  private _employeesSubject = new BehaviorSubject<Employee[]>([]);
-  private _selectedEmployeeSubject = new BehaviorSubject<Employee>(this.employeeSeleccionado);
-
-  constructor() {
-    this._employeesSubject.next(this.employees);
-  }
- 
-  //Metodos que se conectarian con el back
-  getEmployees(){
     
+
+  /**
+   * retorna al empleado solicitado por id 
+   * @param IdEmployee 
+   * @returns un empleado como un observable  
+   */
+    
+    getEmployeeById(IdEmployee : Number) : Observable<Employee> {
+        const url = API_URL+ENDPOINTS.employees.getById.replace(':id', IdEmployee.toString());
+        return this.http.get<Employee>(url);
+    }
+
+    getSalariesByemployeeId(IdEmployee : Number) : Observable<Salary> {
+      const url = API_URL+ENDPOINTS.employees.getById.replace(':id', IdEmployee.toString());
+      return this.http.get<Salary>(url);
   }
-  getEmployeeById(employeeId: number): Employee | undefined {
-    return this.employees.find(employee => employee.idEmployee === employeeId);
+
+    /**
+     * Envia un objeto empleado
+     * @param employee 
+     * @returns Un Observable que emite un array de empleados
+     */
+    
+    postEmployee(employee : Employee){
+        const url = API_URL+ENDPOINTS.employees.post;
+        return this.http.post(url,employee);
+    }
+
+    postSalary(salaries : Salary){
+      const url = API_URL+ENDPOINTS.salaries.post;
+      return this.http.post(url,salaries);
   }
+
+
+    putSalary(salaries: Salary) {
+      const url = API_URL+ENDPOINTS.salaries.update;
+      return this.http.put(url,salaries);
+    }
+
+    /**
+     * suspende a un empleado
+     * @param employee 
+     * @returns un observable que emite el empleado actualizado
+     */
+    
+    deleteSalary(salaries: Salary){
+      const url = API_URL + ENDPOINTS.salaries.update;
+      return this.http.put(url, salaries);
+    }
+    
+
   
-  postEmployee(employee : Employee) : number{
-    //peticion post al back
-    let id = Math.floor(Math.random() * 91) + 10;
-    console.log('Peticion post exitosa');
-    console.log('Nuevo id' + id);
-    return id;
-  }
-
-  putEmployee(employee : Employee){
-    //peticion post al back
-    console.log('Peticion put exitosa');
-    console.log(employee);
-  }
-
-  deleteEmployee(employeeId : number){
-    console.log('Peticion delete exitosa');
-    console.log('Cliente eliminado con id' + employeeId);
-  }
-
-
-  //Metodos propios del front
   getEmptyEmployee() : Employee{
-    
-    const emptyEmployee: Employee = {
+    return  {
       idEmployee: 0,
+      salary : 0,
       oPerson: {
         idPerson: 0,
         name: '',
@@ -100,62 +126,8 @@ export class EmployeeService {
         phoneNumber: '',
         mail: '',
         dni: '',
-        cuit: ''
-      }
-    };
-    return emptyEmployee;
+        cuit: '',
+      },
+    }; 
   }
-  
-  get employeess(){
-    return this._employeesSubject.asObservable();
-  }
-  
-  getEmployeeHistory(employeeId : number) : EmployeeHistory{
-    return this.employeesHistory.find(history => history.oEmployee.idEmployee === employeeId)!;
-  }
-
-  get selectedEmployee(){
-    return this._selectedEmployeeSubject.asObservable();
-  }
-
-  setSelectedEmployee(employeeId: number){
-    this.employeeSeleccionado = this.getEmployeeById(employeeId)!;
-    this._selectedEmployeeSubject.next(this.employeeSeleccionado);
-    
-  }
-  resetSelectedEmployee(){
-    this.employeeSeleccionado = this.getEmptyEmployee();
-    this._selectedEmployeeSubject.next(this.employeeSeleccionado); 
-  }
-  //Metodos que se conectan con los componentes
-  handleGetEmployee(){
-  }
-
-  addNewEmployee(employee : Employee){
-    this.employees.push(employee);
-    this._employeesSubject.next(this.employees);
-  }
-
-  handlePostEmployee(employee : Employee){
-    const id = this.postEmployee(employee);
-    employee.idEmployee = id;
-    this.addNewEmployee(employee);
-    const emptyHistory : EmployeeHistory = {
-      idEmployeeHistory: id,
-      oSalary:[],
-      oEmployee: employee,
-    }
-    this.employeesHistory.push(emptyHistory);
-  }
-
-  handleUpdateEmployee(employee : Employee){
-    this.putEmployee(employee);
-  }
-
-  handleDeleteEmployee(employeeId : number){
-    this.employees = this.employees.filter((employee)=> employee.idEmployee !== employeeId);
-    this._employeesSubject.next(this.employees);
-    this.deleteEmployee(employeeId);
-  }
-
 }
