@@ -14,7 +14,12 @@ import { NotificationService } from '../../../../core/utils/notification.service
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BudgetSearchComponent } from "../budget-search/budget-search.component";
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
-
+/**
+ * @class BudgetListComponent
+ * 
+ * Componente listado de presupuestos.
+ *
+ */
 @Component({
   selector: 'app-budget-list',
   standalone: true,
@@ -26,10 +31,9 @@ export class BudgetListComponent {
   //Utils
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private notificationService = inject(NotificationService);
+  private dialog = inject(MatDialog);  
   private budgetService = inject(BudgetService);
-  private clientService = inject(ClientService);
+
   //Properties
   @Input() budgets : Budget[] = [];
   

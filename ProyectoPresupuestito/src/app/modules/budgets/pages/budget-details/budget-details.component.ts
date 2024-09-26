@@ -12,7 +12,12 @@ import { BudgetComponent } from "../../components/budget/budget.component";
 import { ClientComponent } from "../../../clients/components/client/client.component";
 import { Client } from '../../../../core/model/Client';
 import { WorkListComponent } from "../../../works/components/work-list/work-list.component";
-
+/**
+ * @class BudgetDetailsComponent
+ * 
+ * Buscador de la entidad cliente, sin funcionar por el momento.
+ *
+ */
 @Component({
   selector: 'app-budget-details',
   standalone: true,
@@ -25,7 +30,7 @@ export class BudgetDetailsComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private budgetService = inject(BudgetService);
-  private workService = inject(WorkService);
+  
   //Properties
   currentBudget : Budget = {
     

@@ -11,6 +11,12 @@ import { BudgetListComponent } from '../../../budgets/components/budget-list/bud
 import { ClientComponent } from '../../components/client/client.component';
 import { ClientHistory } from '../../../../core/model/ClientHistory';
 
+/**
+ * @class ClientDetailsComponent
+ * 
+ * Componente a renderizar que contiene informacion relacionada con los clientes.
+ *
+ */
 @Component({
   selector: 'app-client-details',
   standalone: true,
@@ -83,8 +89,13 @@ export class ClientDetailsComponent {
         next: res => this.currentClient = res,    
     })
   }
+
+  //Botones
   goToBudgetForm(){
     this.router.navigate(["/budget/new/", this.id])
+  }
+  openPaymentForm(){
+
   }
   
 }

@@ -6,6 +6,12 @@ import { ActivatedRoute } from '@angular/router';
 import { BudgetListComponent } from "../../components/budget-list/budget-list.component";
 import { BudgetFormComponent } from "../../components/budget-form/budget-form.component";
 
+/**
+ * @class BudgetViewComponent
+ * 
+ * Vista del presupuesto, contiene el formulario y el listado del mismo.
+ *
+ */
 @Component({
   selector: 'app-budget-view',
   standalone: true,
@@ -14,8 +20,6 @@ import { BudgetFormComponent } from "../../components/budget-form/budget-form.co
   styleUrl: './budget-view.component.css'
 })
 export class BudgetViewComponent {
-
-  private budgetService = inject(BudgetService);
 
   selectedBudget? : Budget;
   isEdit : boolean = false;

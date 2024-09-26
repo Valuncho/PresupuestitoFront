@@ -18,9 +18,7 @@ import { ClientService } from '../../../../core/services/client.service';
   templateUrl: './client-search.component.html',
   styleUrl: './client-search.component.css',
 })
-export class ClientSearchComponent {
-  private clientService = inject(ClientService);
-  
+export class ClientSearchComponent {  
   @Output() clientSelected = new EventEmitter<number>();
   @Output() results = new EventEmitter<Client[]>();
   @Output() sortedResults = new EventEmitter<Client[]>();
