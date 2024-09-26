@@ -1,16 +1,17 @@
 import { Component, inject, Input, signal, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { InvoiceSearchComponent } from '../invoice-search/invoice-search.component';
 import { InvoiceCardComponent } from '../invoice-card/invoice-card.component';
-import { ModalService } from '../../../../core/services/utils/modal.service';
+
 import { InvoiceService } from '../../../../core/services/invoice.service';
 import { Invoice } from '../../../../core/model/Invoice';
 import { invoiceFormComponent } from '../invoice-form/invoice-form.component';
+import { ModalService } from '../../../../core/utils/modal.service';
 
 
 

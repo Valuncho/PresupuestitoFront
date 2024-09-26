@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { API_URL, ENDPOINTS } from '../endpoints';
 import { HttpClient } from '@angular/common/http';
-import { Cost } from '../model/Cost';
+import { FixedCost } from '../model/FixedCost';
 
 
 @Injectable({
@@ -13,14 +13,14 @@ import { Cost } from '../model/Cost';
     //Properties
     private http = inject(HttpClient);
 
-    private costSeleccionado : Cost = this.getEmptyFixedCost();
-    private _costSubject = new BehaviorSubject<Cost[]>([]);
+    private costSeleccionado : FixedCost = this.getEmptyFixedCost();
+    private _costSubject = new BehaviorSubject<FixedCost[]>([]);
 
-    private _selectedCostSubject = new BehaviorSubject<Cost>(this.costSeleccionado);
+    private _selectedCostSubject = new BehaviorSubject<FixedCost>(this.costSeleccionado);
 
-    private fixedCosts : Cost[] = [
+    private fixedCosts : FixedCost[] = [
         {
-            idCost: 1001,
+            idFixedCost: 1001,
             description: "John",
             amount: 1,
             workingDays: 1,
@@ -36,8 +36,8 @@ import { Cost } from '../model/Cost';
          * @returns un array de fixedCost como un observable
          */
         
-        getFixedCosts(): Observable<Cost[]>{
-            return this.http.get<Cost[]>(API_URL+ENDPOINTS.fixedCost.getAll);
+        getFixedCosts(): Observable<FixedCost[]>{
+            return this.http.get<FixedCost[]>(API_URL+ENDPOINTS.fixedCost.getAll);
         }
 
     /**
@@ -48,7 +48,7 @@ import { Cost } from '../model/Cost';
         
         getFixedCostById(idFixedCost : Number){
             const url = API_URL+ENDPOINTS.fixedCost.getById.replace(':id', idFixedCost.toString());
-            return this.http.get<Cost>(url);
+            return this.http.get<FixedCost>(url);
         }
 
         /**
@@ -57,12 +57,12 @@ import { Cost } from '../model/Cost';
          * @returns Un Observable que emite un array de fixedCost
          */
         
-        postFixedCost(fixedCost : Cost){
+        postFixedCost(fixedCost : FixedCost){
             const url = API_URL+ENDPOINTS.fixedCost.post;
             return this.http.post(url,fixedCost);
         }
 
-        putFixedCost(fixedCost: Cost) {
+        putFixedCost(fixedCost: FixedCost) {
             const url = API_URL+ENDPOINTS.fixedCost.update;
             return this.http.put(url,fixedCost);
         }
@@ -73,14 +73,14 @@ import { Cost } from '../model/Cost';
          * @returns un observable que emite el fixedCost actualizado
          */
         
-        deleteFixedCost(fixedCost: Cost){
+        deleteFixedCost(fixedCost: FixedCost){
         const url = API_URL + ENDPOINTS.fixedCost.update;
         return this.http.put(url, fixedCost);
         }
 
-        getEmptyFixedCost(): Cost{
+        getEmptyFixedCost(): FixedCost{
             return {
-                idCost: 0,
+                idFixedCost: 0,
                 description : "",
                 amount : 0,
                 workingDays : 0,
@@ -89,13 +89,5 @@ import { Cost } from '../model/Cost';
             }
         }
 
-        handleUpdateFixedCost(fixedCost: Cost) {
-            this.putFixedCost(fixedCost);
-        }
 
-        handleDeleteFixedCost(costId : number){
-            this.fixedCosts = this.fixedCosts.filter((cost)=> cost.idCost !== costId);
-            this._costSubject.next(this.fixedCosts);
-            //this.deleteFixedCost(costId);
-        }
 }

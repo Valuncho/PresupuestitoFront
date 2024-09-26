@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Cost } from '../../../../core/model/Cost';
+
 import { CostService } from '../../../../core/services/Cost.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { FixedCost } from '../../../../core/model/FixedCost';
+
 
 @Component({
     selector: 'app-cost-form',
@@ -18,10 +19,10 @@ export class CostFormComponent {
     //Utils
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
-    private notificationService = inject(NotificationService);
+    
     private costService = inject(CostService);
     //Properties
-    currentCost : Cost = this.costService.getEmptyFixedCost();
+    currentCost : FixedCost = this.costService.getEmptyFixedCost();
     costId? : number;
     isEdit : boolean = false;
     //Form
@@ -82,11 +83,11 @@ export class CostFormComponent {
     onSubmit(){
         this.currentCost = this.costForm.value;
         if(this.isEdit){
-        this.costService.handleUpdateFixedCost(this.currentCost);
-        this.notificationService.showNotification("costo editado con éxito!");
+        //this.costService.handleUpdateFixedCost(this.currentCost);
+        
         }else{
-        this.costService.handleUpdateFixedCost(this.currentCost);
-        this.notificationService.showNotification("costo guardado con éxito!");
+        //this.costService.handleUpdateFixedCost(this.currentCost);
+        
         }
         this.setUp();
     }

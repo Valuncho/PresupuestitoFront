@@ -3,13 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { SupplierService } from '../../../../core/services/supplier.service';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+
 import { SupplierCardComponent } from '../supplier-card/supplierCard.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SupplierSearchComponent } from '../supplier-search/supplier-search.component';
 import { Supplier } from '../../../../core/model/Supplier';
 import { SupplierFormComponent } from '../supplier-form/supplier-form.component';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 
 @Component({
     selector: 'app-supplier-list',

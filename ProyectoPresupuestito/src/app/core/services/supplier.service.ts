@@ -56,7 +56,7 @@ export class SupplierService {
      */
     
     getSuppliers(): Observable<Supplier[]>{
-      return this.http.get<Supplier[]>(API_URL+ENDPOINTS.supplier.getAll);
+      return this.http.get<Supplier[]>(API_URL+ENDPOINTS.suppliers.getAll);
     }
 
   /**
@@ -66,7 +66,7 @@ export class SupplierService {
    */
     
     getSupplierById(idSupplier : Number){
-        const url = API_URL+ENDPOINTS.supplier.getById.replace(':id', idSupplier.toString());
+        const url = API_URL+ENDPOINTS.suppliers.getById.replace(':id', idSupplier.toString());
         return this.http.get<Supplier>(url);
     }
 
@@ -77,12 +77,12 @@ export class SupplierService {
      */
     
     postSupplier(supplier : Supplier){
-        const url = API_URL+ENDPOINTS.supplier.post;
+        const url = API_URL+ENDPOINTS.suppliers.post;
         return this.http.post(url,supplier);
     }
 
     putSupplier(supplier: Supplier) {
-      const url = API_URL+ENDPOINTS.supplier.update;
+      const url = API_URL+ENDPOINTS.suppliers.update;
       return this.http.put(url,supplier);
     }
 
@@ -93,7 +93,7 @@ export class SupplierService {
      */
     
     deleteSupplier(supplier: Supplier){
-      const url = API_URL + ENDPOINTS.supplier.update;
+      const url = API_URL + ENDPOINTS.suppliers.update;
       return this.http.put(url, supplier);
     }
 

@@ -2,8 +2,8 @@
 <div class="Searcher">
     <div class="Interior">
         <span class="material-symbols-sharp">search</span>
-        <input type="text" (keyup)="search()" [formControl]="busqueda">
-        <select [formControl]="filtro" (change)="sort()">
+        <input type="text"  [formControl]="busqueda">
+        <select [formControl]="filtro" >
             <option [selected]="true">Ordenar</option>
             <option value="alfabeticamente">Ordenar alfabeticamente</option>
             <!--<option value="alfabeticamente">Ordenar trabajos activos</option>-->

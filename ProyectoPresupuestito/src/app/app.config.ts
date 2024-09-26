@@ -7,7 +7,7 @@ import { provideStore } from '@ngrx/store';
 
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects, EffectsModule } from '@ngrx/effects';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 
 
 export const appConfig: ApplicationConfig = {
@@ -16,7 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideAnimationsAsync(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
-    
 
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]

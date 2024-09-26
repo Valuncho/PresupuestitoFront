@@ -6,15 +6,16 @@
   />
 
   
-    @for (client of this.searchedClients | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
-      <app-card 
-      [Person]="client.oPerson"
-      [IdClient]="client.idClient"
+    @for (client of clients | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
+      <app-client-card 
+      [Client]="client"
       (action)="handleAction($event)"
       (isView)="handleViewClient($event)"
       (isEdit)="handleEditClient($event)"
       (isDeleted)="handleDeleteClient($event)"
       />
+    }@empty {
+      <app-text-card [message]="'No hay clientes que mostrar'"/>
     }
   
   
@@ -23,6 +24,7 @@
     nextLabel="Siguiente"
     (pageChange)="pageChange($event)"
   />
+  
   @if(options){
   <button class="Boton1" (click)="addClientHandler()">Agregar cliente</button>
   }

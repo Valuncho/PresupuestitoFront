@@ -3,7 +3,7 @@ import { Work } from "./Work";
 
 export interface Budget
 {
-    idBudget : number;
+   idBudget : number;
     works : Work[];
     createdDate: Date;
     deadLine: Date;

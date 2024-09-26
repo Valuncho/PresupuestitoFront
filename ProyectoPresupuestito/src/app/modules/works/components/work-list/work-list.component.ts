@@ -1,10 +1,10 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { WorkCardComponent } from '../work-card/work-card.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Budget } from '../../../../core/model/Budget';
 import { BudgetService } from '../../../../core/services/budget.service';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { WorkService } from '../../../../core/services/work.service';
 import { Work } from '../../../../core/model/Work';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -12,11 +12,12 @@ import { WorkFormComponent } from '../work-form/work-form.component';
 import { WorkSearchComponent } from "../work-search/work-search.component";
 import { CommonModule } from '@angular/common';
 import { toUpper } from 'lodash';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 @Component({
   selector: 'app-work-list',
   standalone: true,
-  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent,CommonModule],
+  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent,CommonModule, TextCardComponent],
   templateUrl: './work-list.component.html',
   styleUrl: './work-list.component.css',
 })
@@ -45,15 +46,18 @@ export class WorkListComponent {
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let budgetDetailUrl = "/budget/detail/" + this.budgetId;
     let budgetworkArealUrl = "/work/edit/" + this.budgetId;
-
+    
+    
     if(budgetworkArealUrl == this.router.url){
       this.options = true;
     }
     
 
-    const w = this.workService.getWorks().subscribe((works) => {
+    this.workService.getWorks().subscribe(
       
-      if(this.router.url ==budgetDetailUrl){
+      (works) => {
+      
+      if(this.router.url == budgetDetailUrl){
         this.worksToDisplay = this.currentBudget.works;
       }else(
         this.works = works
@@ -61,20 +65,7 @@ export class WorkListComponent {
       
     });
 
-   
-      
-    /*this.budgetService.getSelectedBudget().subscribe((budget) => {
-      this.currentBudget = budget;
-      if (
-        this.currentBudget.idBudget != 0 &&
-        (this.router.url == '/work/new' || this.router.url == '/work/edit')
-      ) {
-        this.worksToDisplay = this.currentBudget.works;
-        this.options = true;
-      } else {
-        this.worksToDisplay = this.works;
-      }
-    });*/
+  
   }
 
   ngOnDestroy(): void {
@@ -85,7 +76,7 @@ export class WorkListComponent {
 
   seleccionar($Event: number) {
     let w = this.workService.getWorkById($Event)!;
-    this.workService.setSelectedWork(w);
+    
   }
   editar($Event: number) {}
   eliminar($Event: number) {}

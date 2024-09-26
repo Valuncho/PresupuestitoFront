@@ -11,14 +11,14 @@ import { WorkViewComponent } from './modules/works/pages/work-view/work-view.com
 import { WorkDetailsComponent } from './modules/works/pages/work-details/work-details.component';
 import { MaterialViewComponent } from './modules/materials/pages/material-view/material-view.component';
 import { MaterialFormViewComponent } from './modules/materials/pages/material-form-view/material-form-view.component';
-import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
-import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
-import { EmployeeViewComponent } from './modules/employee/pages/employee-View/employee-View.component';
-import { EmployeeDetailsComponent } from './modules/employee/pages/employee-Details/employee-Details.component';
-import { EmployeeFormComponent } from './modules/employee/components/employee-form/employee-form.component';
-
-import { InvoiceMakerComponent } from './modules/invoice/pages/invoice-maker/invoice-maker.component';
 import { CostViewComponent } from './modules/cost/pages/cost-view/cost-view.component';
+import { EmployeeFormComponent } from './modules/employee/components/employee-form/employee-form.component';
+import { EmployeeDetailsComponent } from './modules/employee/pages/employee-Details/employee-Details.component';
+import { EmployeeViewComponent } from './modules/employee/pages/employee-View/employee-View.component';
+import { InvoiceMakerComponent } from './modules/invoice/pages/invoice-maker/invoice-maker.component';
+import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
+import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
+
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -37,11 +37,10 @@ export const routes: Routes = [
     {path: 'work/detail/:workId', component: WorkDetailsComponent},
     {path: 'work/new/:budgetId', component: WorkAreaComponent},
     {path: 'work/edit/:budgetId', component: WorkAreaComponent},
-        
+    
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},
-
-    //falta el edit
+   
     {path: 'supplier', component: SupplierViewComponent},
     {path: 'supplier/detail/:supplierId', component: SupplierDetailsComponent},
     {path: 'supplier/edit', component: SupplierViewComponent},

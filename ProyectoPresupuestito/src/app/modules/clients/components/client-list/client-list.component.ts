@@ -1,61 +1,87 @@
-import { Component, inject, signal, SimpleChange } from '@angular/core';
+import { Component, inject, Input, signal, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from '../../../../core/services/client.service';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { Client } from '../../../../core/model/Client';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { ClientSearchComponent } from "../client-search/client-search.component";
-import { CardComponent } from '../../../../components/card/card.component';
+import { ClientCardComponent } from '../client-card/client-card.component';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
-
 import { CommonModule } from '@angular/common';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 
+/**
+ * @class ClientListComponent
+ * 
+ * Listado de la entidad cliente, con buscador y paginación.
+ *
+ */
 @Component({
   selector: 'app-client-list',
   standalone: true,
-  imports: [ClientSearchComponent, CardComponent, NgxPaginationModule, CommonModule],
-  
+  imports: [ClientSearchComponent, ClientCardComponent, NgxPaginationModule, CommonModule, TextCardComponent],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.css',
-  
+
 })
 
 export class ClientListComponent {
   //Utils
   private router = inject(Router);
   private dialog = inject(MatDialog);
-  private notificationService = inject(NotificationService);
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
   //Properties
-  clients : Client[] = [];
+  options : boolean = false;
+  //clients : Client[] = [];
+  
+  clients: Client[] = [
+    {
+      idClient: 1001,
+      oPerson: {
+        idPerson: 1,
+        name: 'John',
+        lastName: 'Doe',
+        direction: '123 Main St',
+        phoneNumber: '1234567890',
+        mail: 'johndoe@example.com',
+        dni: '123456789',
+        cuit: '30-12345678-9',
+      },
+    },
+    {
+      idClient: 1002,
+      oPerson: {
+        idPerson: 2,
+        name: 'Jane',
+        lastName: 'Smith',
+        direction: '456 Elm St',
+        phoneNumber: '9876543210',
+        mail: 'janesmith@example.com',
+        dni: '987654321',
+        cuit: '30-98765432-1',
+      },
+    },
+  ];
+
+
   searchedClients : Client[] = [];
-  client? : Client;
-  //BudgetForm
-  options = false;
+  
+  
   //Pagination
   page = 1
   pageSize = 5
 
 
   ngOnInit(): void {
-
-    if(this.router.url == '/budget' || this.router.url == '/budget/new/'){
-      console.log(this.router.url)
-      this.options = true;
-    }
-
-    this.clientService.getAllClients().subscribe({
-      next : (clientes)=>{
-          this.clients = clientes;
-          this.searchedClients = clientes;
-       }
-    });
+     
+    this.clientService.getClients().subscribe({  
+      next: x => this.clients = x,  
+    })
 
   }
 
@@ -67,47 +93,48 @@ export class ClientListComponent {
   //Search
   handleSearch($Event : Client[]){
     this.page = 1
+    /*
     this.clientService.getClientsBySearch("filto").subscribe({
       next : (clients) =>{
         this.searchedClients = clients;
       }
-    })
+    })*/
   }
 
   //Card
-  handleAction($Event : any){
-    this.clientService.setSelectedClient($Event)
-    this.router.navigate(['/budget/new/',$Event]);
+  handleAction($Event : Client){
+
+    this.router.navigate(['/budget/new/',$Event.idClient]);
   }
 
-  handleViewClient($Event : any){
-    this.clientService.setSelectedClient($Event)
-    this.router.navigate(['/client/detail/',$Event]);
+  handleViewClient($Event : Client){    
+    this.router.navigate(['/client/detail/',$Event.idClient]);
   }
 
-  handleEditClient($Event : any){
-    this.clientService.setSelectedClient($Event)
-    this.router.navigate(['/client/edit/',$Event]);
+  handleEditClient($Event : Client){
+    this.router.navigate(['/client/edit/',$Event.idClient]);
   }
 
-  handleDeleteClient($Event : any){
+  handleDeleteClient($Event : Client){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar al cliente con ID ${$Event}?`
+        mensaje: `¿Estás seguro de que deseas eliminar al cliente ${$Event.oPerson.name}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const client = this.clientService.getClientById($Event)!;
+        const client = this.clientService.getClientById($Event.idClient)!;
+        this.clientService.deleteClient($Event.idClient).subscribe(
+          {
+            next: () => this.router.navigate(['/client'])
+          }
+        );
         
-        this.clientService.handleDeleteClient($Event)
-        this.notificationService.showNotification("Cliente eliminado con éxito");
-        this.router.navigate(['/client']);
       }
     });
 
-  }
+  } 
 
   //Pagination
   pageChange(page: number) {

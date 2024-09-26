@@ -3,14 +3,13 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CostSearchComponent } from '../cost-search/cost-search.component';
 import { CostCardComponent } from "../cost-card/cost-card.component";
 import { CostService } from '../../../../core/services/Cost.service';
-import { Cost } from '../../../../core/model/Cost';
-import { CostFormComponent } from '../cost-form/cost-form.component';
+
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FixedCost } from '../../../../core/model/FixedCost';
 
 @Component({
     selector: 'app-cost-list',
@@ -25,13 +24,11 @@ export class CostListComponent {
     //Utils
     private router = inject(Router);
     private dialog = inject(MatDialog);
-    private notificationService = inject(NotificationService);
-    private modalService = inject(ModalService);
+    
     private costService = inject(CostService);
     //Properties
-    fixedCosts : Cost[] = [];
-    searchedFixedCost : Cost[] = [];
-    cost? : Cost;
+    fixedCosts : FixedCost[] = [];
+    
     //BudgetForm
     options = false;
     //Pagination
@@ -41,18 +38,12 @@ export class CostListComponent {
 
     ngOnInit(): void {
 
-        this.costService.getFixedCosts().subscribe({
-        next : (fixedCost)=>{
-            //this.cost = fixedCost;
-            this.searchedFixedCost = fixedCost;
-        }
-        });
 
     }
 
     //BudgetForm
     addFixedCostHandler(){
-        this.modalService.openModal<CostFormComponent,Cost>(CostFormComponent);
+       // this.modalService.openModal<CostFormComponent,Cost>(CostFormComponent);
     }
 
     
@@ -72,22 +63,22 @@ export class CostListComponent {
     
     //Card
 
-    handleAction($Event : Cost){
+    handleAction($Event : FixedCost){
 
-        this.router.navigate(['/cost/new/',$Event.idCost]);
+        this.router.navigate(['/cost/new/',$Event.idFixedCost]);
     }
 
-    handleViewCost($Event : any){
+    handleViewCost($Event : FixedCost){
         //this.costService.setSelectedFixedCost($Event)
         this.router.navigate(['/cost/detail/',$Event]);
     }
     
-    handleEditCost($Event : any){
+    handleEditCost($Event : FixedCost){
         //this.costService.setSelectedFixedCost($Event)
         this.router.navigate(['/cost/edit/',$Event]);
     }
     
-    handleDeleteCost($Event : any){
+    handleDeleteCost($Event : FixedCost){
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
             mensaje: `¿Estás seguro de que deseas eliminar el costo con ID ${$Event}?`
@@ -96,10 +87,10 @@ export class CostListComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const client = this.costService.getFixedCostById($Event)!;
+            const client = this.costService.getFixedCostById($Event.idFixedCost)!;
             
-            this.costService.handleDeleteFixedCost($Event)
-            this.notificationService.showNotification("Costo eliminado con éxito");
+            //this.costService.handleDeleteFixedCost($Event.idFixedCost)
+            //this.notificationService.showNotification("Costo eliminado con éxito");
             this.router.navigate(['/costo']);
         }
         });

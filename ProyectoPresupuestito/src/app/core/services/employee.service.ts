@@ -18,6 +18,7 @@ export class EmployeeService {
   private employees : Employee[] = [
     {
       idEmployee: 1001,
+      salary: 100,
       oPerson: {
           idPerson: 1,
           name: "John",
@@ -31,6 +32,7 @@ export class EmployeeService {
     },
     {
         idEmployee: 1002,
+        salary: 200,
         oPerson: {
             idPerson: 2,
             name: "Jane",
@@ -43,20 +45,7 @@ export class EmployeeService {
         }
     }
   ]
-  private employeesHistory : EmployeeHistory [] = [
-    {
-      idEmployeeHistory: 1,
-      oSalary:[],
-      oEmployee: this.employees[0]
-    },
-    {
-      idEmployeeHistory: 2,
-      oSalary:[],
-      oEmployee: this.employees[1]
-    }
-
-  ]
-
+ 
   //METODOS HTTP ----------------------------------------------------------------------------------------------
   
     /**
@@ -65,7 +54,7 @@ export class EmployeeService {
      */
     
     getEmployees(): Observable<Employee[]>{
-      return this.http.get<Employee[]>(API_URL+ENDPOINTS.employee.getAll);
+      return this.http.get<Employee[]>(API_URL+ENDPOINTS.employees.getAll);
     }
 
     getSalaries(): Observable<Salary[]>{
@@ -81,12 +70,12 @@ export class EmployeeService {
    */
     
     getEmployeeById(IdEmployee : Number) : Observable<Employee> {
-        const url = API_URL+ENDPOINTS.employee.getById.replace(':id', IdEmployee.toString());
+        const url = API_URL+ENDPOINTS.employees.getById.replace(':id', IdEmployee.toString());
         return this.http.get<Employee>(url);
     }
 
     getSalariesByemployeeId(IdEmployee : Number) : Observable<Salary> {
-      const url = API_URL+ENDPOINTS.employee.getById.replace(':id', IdEmployee.toString());
+      const url = API_URL+ENDPOINTS.employees.getById.replace(':id', IdEmployee.toString());
       return this.http.get<Salary>(url);
   }
 
@@ -97,7 +86,7 @@ export class EmployeeService {
      */
     
     postEmployee(employee : Employee){
-        const url = API_URL+ENDPOINTS.employee.post;
+        const url = API_URL+ENDPOINTS.employees.post;
         return this.http.post(url,employee);
     }
 
@@ -124,32 +113,11 @@ export class EmployeeService {
     }
     
 
-  /*
-  handlePostEmployee(employee : Employee){
-    const id = this.postEmployee(employee);
-    employee.idEmployee = id;
-    this.addNewEmployee(employee);
-    const emptyHistory : EmployeeHistory = {
-      idEmployeeHistory: id,
-      oSalary:[],
-      oEmployee: employee,
-    }
-    this.employeesHistory.push(emptyHistory);
-  }
-
-  handleUpdateEmployee(employee : Employee){
-    this.putEmployee(employee);
-  }
-
-  handleDeleteEmployee(employeeId : number){
-    this.employees = this.employees.filter((employee)=> employee.idEmployee !== employeeId);
-    this._employeesSubject.next(this.employees);
-    this.deleteEmployee(employeeId);
-  }*/
   
   getEmptyEmployee() : Employee{
     return  {
       idEmployee: 0,
+      salary : 0,
       oPerson: {
         idPerson: 0,
         name: '',

@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { BudgetService } from '../../../../core/services/budget.service';
 
 @Component({
-  selector: 'app-work-view',
-  standalone: true,
-  imports: [WorkListComponent, WorkComponent,WorkFormComponent],
-  templateUrl: './work-view.component.html',
-  styleUrl: './work-view.component.css'
+  selector: 'app-work-view',
+  standalone: true,
+  imports: [WorkListComponent, WorkComponent,WorkFormComponent],
+  templateUrl: './work-view.component.html',
+  styleUrl: './work-view.component.css'
 })
 
 export class WorkViewComponent {

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeService } from '../../../../core/services/employee.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+
 import { Employee } from '../../../../core/model/Employee';
 
 @Component({
@@ -17,7 +17,7 @@ import { Employee } from '../../../../core/model/Employee';
 export class EmployeeFormComponent { 
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
-    private notificationService = inject(NotificationService);
+    
     private EmployeeService = inject(EmployeeService);
     //Properties
     currentEmployee : Employee = this.EmployeeService.getEmptyEmployee();
@@ -84,10 +84,10 @@ export class EmployeeFormComponent {
         this.currentEmployee.oPerson = this.employeeForm.value;
         if(this.isEdit){
         //this.EmployeeService.handleUpdateEmployee(this.currentEmployee);
-        this.notificationService.showNotification("empleado editado con éxito!");
+      //  this.notificationService.showNotification("empleado editado con éxito!");
         }else{
         //this.EmployeeService.handlePostEmployee(this.currentEmployee);
-        this.notificationService.showNotification("empleado guardado con éxito!");
+       // this.notificationService.showNotification("empleado guardado con éxito!");
         }
         this.setUp();
     }

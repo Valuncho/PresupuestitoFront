@@ -22,7 +22,7 @@ export class InvoiceService {
      */
     
     getInvoices(): Observable<Invoice[]>{
-      return this.http.get<Invoice[]>(API_URL+ENDPOINTS.invoice.getAll);
+      return this.http.get<Invoice[]>(API_URL+ENDPOINTS.invoices.getAll);
     }
 
   /**
@@ -32,7 +32,7 @@ export class InvoiceService {
    */
     
     getInvoiceById(idInvoice : Number){
-        const url = API_URL+ENDPOINTS.invoice.getById.replace(':id', idInvoice.toString());
+        const url = API_URL+ENDPOINTS.invoices.getById.replace(':id', idInvoice.toString());
         return this.http.get<Invoice>(url);
     }
 
@@ -43,12 +43,12 @@ export class InvoiceService {
      */
     
     postInvoice(invoice : Invoice){
-        const url = API_URL+ENDPOINTS.invoice.post;
+        const url = API_URL+ENDPOINTS.invoices.post;
         return this.http.post(url,invoice);
     }
 
     putInvoice(invoice: Invoice) {
-      const url = API_URL+ENDPOINTS.invoice.update;
+      const url = API_URL+ENDPOINTS.invoices.update;
       return this.http.put(url,invoice);
     }
 
@@ -59,7 +59,7 @@ export class InvoiceService {
      */
     
     deleteInvoice(invoice: Invoice){
-      const url = API_URL + ENDPOINTS.invoice.update;
+      const url = API_URL + ENDPOINTS.invoices.update;
       return this.http.put(url, invoice);
     }
 

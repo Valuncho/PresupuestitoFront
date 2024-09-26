@@ -4,4 +4,5 @@ export interface Employee
 {
     idEmployee : number;
     oPerson : Person;
+    salary : number;
 }

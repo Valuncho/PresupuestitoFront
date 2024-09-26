@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
-import { ClientService } from '../../../../core/services/client.service';
+
+
 import { Invoice } from '../../../../core/model/Invoice';
 import { InvoiceService } from '../../../../core/services/invoice.service';
 
@@ -19,7 +19,7 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
     //Utils
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
-    private notificationService = inject(NotificationService);
+    
     private invoiceService = inject(InvoiceService);
     //Properties
     currentInvoice : Invoice = this.invoiceService.getEmptyInvoice();

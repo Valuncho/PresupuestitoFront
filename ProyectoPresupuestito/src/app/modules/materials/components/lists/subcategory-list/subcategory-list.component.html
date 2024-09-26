@@ -1,3 +1,14 @@
 <div class="List">
     <h3 class="List-title">Listado de sub-rubros</h3>
+    <div>
+        @for (category of subCategories ; track category; let idx = $index) {
+        <app-sub-category-card
+          [Subcategory]="category"          
+          (isEdit)="editar($event)"
+          (isDeleted)="eliminar($event)"
+        />
+        }@empty {
+          <app-text-card [message]="'No hay sub-rubros que mostrar.'"/>
+        }
+      </div>
 </div>

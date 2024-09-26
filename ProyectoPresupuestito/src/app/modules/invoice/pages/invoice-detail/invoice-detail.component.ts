@@ -2,8 +2,9 @@ import { Component, inject, Input, signal } from '@angular/core';
 import { InvoiceListComponent } from '../../components/invoice-list/invoice-list.component';
 import { InvoiceComponent } from '../../components/invoice/invoice.component';
 import { Invoice } from '../../../../core/model/Invoice';
-import { InvoiceService } from '../../../../core/services/invoice.service';
+
 import { Router, ActivatedRoute } from '@angular/router';
+import { InvoiceService } from '../../../../core/services/invoice.service';
 
 @Component({
   selector: 'app-invoice-detail',

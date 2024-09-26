@@ -3,6 +3,13 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Client } from '../../../../core/model/Client';
 import { Budget } from '../../../../core/model/Budget';
 import * as lodash from 'lodash';
+
+/**
+ * @class BudgetSearchComponent
+ * 
+ * Componente de busqueda de los presupuestos.
+ *
+ */
 @Component({
   selector: 'app-budget-search',
   standalone: true,

@@ -7,8 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { Employee } from '../../../../core/model/Employee';
-import { ModalService } from '../../../../core/services/utils/modal.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+
 import { EmployeeFormComponent } from '../employee-form/employee-form.component';
 
 @Component({
@@ -24,8 +23,7 @@ export class EmployeeListComponent {
         //Utils
     private router = inject(Router);
     private dialog = inject(MatDialog);
-    private notificationService = inject(NotificationService);
-    private modalService = inject(ModalService);
+    
     private employeeService = inject(EmployeeService);
     //Properties
     employees : Employee[] = [];
@@ -52,7 +50,7 @@ export class EmployeeListComponent {
 */
     //BudgetForm
     addEmployeeHandler(){
-        this.modalService.openModal<EmployeeFormComponent,Employee>(EmployeeFormComponent);
+       // this.modalService.openModal<EmployeeFormComponent,Employee>(EmployeeFormComponent);
     }
 
     //Search
@@ -93,7 +91,7 @@ export class EmployeeListComponent {
             const employee = this.employeeService.getEmployeeById($Event)!;
             
            // this.employeeService.handleDeleteEmployee($Event)
-            this.notificationService.showNotification("empleado eliminado con éxito");
+            
             this.router.navigate(['/empleado']);
         }
         });

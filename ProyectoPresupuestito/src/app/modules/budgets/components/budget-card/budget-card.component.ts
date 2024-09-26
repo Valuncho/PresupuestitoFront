@@ -29,7 +29,7 @@ export class BudgetCardComponent {
     
   }
   constructor() {
-
+   
   }
   select(){
     this.isSelect.emit(this.idBudget);
