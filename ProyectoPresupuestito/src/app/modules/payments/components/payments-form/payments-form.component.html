@@ -23,7 +23,14 @@
         </div>
       }     
       
-      <legend class="List-title">Cargar cliente</legend>
+      <legend class="List-title">  
+        @if (isEdit) {
+        Actualizar pago
+        }@else {
+          Cargar pago nuevo
+        }
+      </legend>
+
       <label for="fecha">Fecha:</label>
       <input type="text" name="fecha" id="fecha" placeholder="fecha..." formControlName="fecha">
       <label for="monto">Monto:</label>
