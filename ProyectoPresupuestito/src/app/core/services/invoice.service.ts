@@ -1,10 +1,20 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { API_URL, ENDPOINTS } from '../endpoints';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Invoice } from '../model/Invoice';
+import { ModalService } from './utils/modal.service';
+import { ErrorControllerService } from '../utils/error-controller.service';
+import { NotificationService } from '../utils/notification.service';
+import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 
+/**
+ * @class invoiceService
+ * 
+ * Servicio de la entidad invoice para comunicarse con el backend, gestionando errores y aciertos.
+ * 
+ */
 
 @Injectable({
   providedIn: 'root'
@@ -12,64 +22,103 @@ import { Invoice } from '../model/Invoice';
 export class InvoiceService {
   //Properties
   private http = inject(HttpClient);
-  
+  private modal = inject(ModalService);
+  private error = inject(ErrorControllerService);
+  private notification = inject(NotificationService);
 
   //METODOS HTTP ----------------------------------------------------------------------------------------------
   
     /**
-     * retorna todos los Invoice guardados
-     * @returns un array de Invoice como un observable
-     */
-    
-    getInvoices(): Observable<Invoice[]>{
-      return this.http.get<Invoice[]>(API_URL+ENDPOINTS.invoices.getAll);
-    }
+   * Retorna todos los boletas disponibles guardados.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @returns Un array de boletas como un observable.
+   */
+  getInvoices() : Observable<Invoice[]> {
+    return this.http.get<Invoice[]>(API_URL+ENDPOINTS.invoices.getAll).pipe(      
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    }));   
+  }
 
   /**
-   * retorna al Invoice solicitado por id 
-   * @param idInvoice 
-   * @returns un Invoice como un observable  
+   * Retorna una boleta solicitada por id.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idInvoice id de la boleta solicitado.
+   * @returns Una boleta como un observable.
    */
-    
-    getInvoiceById(idInvoice : Number){
-        const url = API_URL+ENDPOINTS.invoices.getById.replace(':id', idInvoice.toString());
-        return this.http.get<Invoice>(url);
-    }
+  getInvoiceById(idInvoice : number) : Observable<Invoice> {
+    const url = API_URL+ENDPOINTS.invoices.getById.replace(':id', idInvoice.toString());
+    return this.http.get<Invoice>(url).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
 
     /**
-     * Envia un objeto Invoice
-     * @param Invoice 
-     * @returns Un Observable que emite un array de Invoice
-     */
-    
-    postInvoice(invoice : Invoice){
-        const url = API_URL+ENDPOINTS.invoices.post;
-        return this.http.post(url,invoice);
-    }
+   * Método para crear una boleta nueva.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param invoice invoice a cargar en la base de datos
+   * @returns un observable de tipo objeto
+   */
+  postInvoice(invoice: Invoice){
+    const url = API_URL+ENDPOINTS.invoices.post;
+    return this.http.post(url,invoice).pipe(
+      tap(() => {
+        this.notification.showNotification("¡boleta guardada con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
 
-    putInvoice(invoice: Invoice) {
-      const url = API_URL+ENDPOINTS.invoices.update;
-      return this.http.put(url,invoice);
-    }
+  /**
+   * Método para actualizar información de una boleta existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param invoice invoice actualizado.
+   * @returns un observable de tipo objeto
+   */
+  putInvoice(invoice: Invoice) {
+    const url = API_URL+ENDPOINTS.invoices.update;
+    return this.http.put(url,invoice).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Boleta editada con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
 
     /**
-     * suspende a un Invoice
-     * @param Invoice 
-     * @returns un observable que emite el Invoice actualizado
-     */
-    
-    deleteInvoice(invoice: Invoice){
-      const url = API_URL + ENDPOINTS.invoices.update;
-      return this.http.put(url, invoice);
-    }
-
-    getEmptyInvoice(): Invoice{
-      return {
-        idInvoice:0,
-        date: new Date(0),
-        isPaid: false,
-        oItems:[],
-        oPayment:[]
-      }
-    }
+   * Método para marcar como borrada a una boleta existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idInvoice id de la boleta a eliminar.
+   * @returns un observable de tipo objeto
+   */
+  deleteInvoice(idInvoice: number) {
+    const url = API_URL+ENDPOINTS.invoices.delete;
+    return this.http.put(url,idInvoice).pipe(
+      tap(() => {
+        this.notification.showNotification("¡boleta eliminada con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
 }
