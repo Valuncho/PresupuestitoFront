@@ -10,6 +10,8 @@ import { Payment } from '../../../../core/model/Payment';
 import { BudgetListComponent } from '../../../budgets/components/budget-list/budget-list.component';
 import { ClientComponent } from '../../components/client/client.component';
 import { ClientHistory } from '../../../../core/model/ClientHistory';
+import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
+import { ModalService } from '../../../../core/utils/modal.service';
 
 /**
  * @class ClientDetailsComponent
@@ -28,6 +30,7 @@ export class ClientDetailsComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private clientService = inject(ClientService);
+  private modalService = inject(ModalService);
   id : number  = 0;
   
   currentClient : ClientHistory = 
@@ -95,7 +98,8 @@ export class ClientDetailsComponent {
     this.router.navigate(["/budget/new/", this.id])
   }
   openPaymentForm(){
-
+    this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
   }
+  
   
 }

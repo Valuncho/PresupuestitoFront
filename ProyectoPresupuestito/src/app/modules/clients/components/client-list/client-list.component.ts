@@ -12,6 +12,7 @@ import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 
 
 /**
@@ -35,6 +36,7 @@ export class ClientListComponent {
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
+  private clientController = inject(ClientControllerService);
   //Properties
   options : boolean = false;
   //clients : Client[] = [];
@@ -103,7 +105,7 @@ export class ClientListComponent {
 
   //Card
   handleAction($Event : Client){
-
+    this.clientController.setClient($Event);
     this.router.navigate(['/budget/new/',$Event.idClient]);
   }
 
@@ -112,6 +114,8 @@ export class ClientListComponent {
   }
 
   handleEditClient($Event : Client){
+    this.clientController.setEditMode(true);
+    this.clientController.setClient($Event);
     this.router.navigate(['/client/edit/',$Event.idClient]);
   }
 

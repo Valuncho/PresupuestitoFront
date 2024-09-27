@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, ActivatedRoute } from '@angular/router';
 import { Payment } from '../../../../core/model/Payment';
 import { PaymentService } from '../../../../core/services/payment.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+
 
 @Component({
     selector: 'app-payments-form',
@@ -18,7 +18,6 @@ export class PaymentsFormComponent {
 
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
-    private notificationService = inject(NotificationService);
     private paymentService = inject(PaymentService);
     //Properties
     currentPayment : Payment = this.paymentService.getEmptyPayment();
@@ -66,7 +65,7 @@ export class PaymentsFormComponent {
         let url = "/payment/edit/" + this.paymentId;
         if(this.router.url == url){
             this.isEdit = true;
-            this.currentPayment = this.paymentService.getPaymentById(this.paymentId)!;
+            //this.currentPayment = this.paymentService.getPaymentById(this.paymentId)!;
             this.paymentForm.patchValue(this.currentPayment);
         }else{
             this.isEdit = false;
@@ -78,11 +77,9 @@ export class PaymentsFormComponent {
     onSubmit(){
         this.currentPayment = this.paymentForm.value;
         if(this.isEdit){
-        this.paymentService.handleUpdatePayment(this.currentPayment);
-        this.notificationService.showNotification("pago editado con éxito!");
+        //this.paymentService.handleUpdatePayment(this.currentPayment);
         }else{
-        this.paymentService.handlePostPayment(this.currentPayment);
-        this.notificationService.showNotification("pago guardado con éxito!");
+        //this.paymentService.handlePostPayment(this.currentPayment);
         }
         this.setUp();
     }

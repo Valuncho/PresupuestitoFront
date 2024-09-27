@@ -5,19 +5,19 @@
         <div class="invalid">
           
           @if (paymentForm.get('fecha')?.invalid) {
-            <p>fecha es obligatoria.</p>
+            <p>La fecha es obligatoria.</p>
           }
           
           @if (paymentForm.get('monto')?.invalid) {
-            <p>el monto es obligatorio.</p>
+            <p>El monto es obligatorio.</p>
           }
   
           @if (paymentForm.get('metodoPago')?.invalid) {
-            <p>El metodo de pago es obligatorio.</p>
+            <p>El método de pago es obligatorio.</p>
           }
   
           @if(paymentForm.get('Descripcion')?.invalid ){
-            <p>la descripcion es obligatoria.</p>
+            <p>La descripcion es obligatoria.</p>
           }
       
         </div>
