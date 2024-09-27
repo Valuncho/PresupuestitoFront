@@ -12,6 +12,7 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { MaterialManagerComponent } from "../../forms/material-manager/material-manager.component";
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
 @Component({
   selector: 'app-material-list',
@@ -25,7 +26,7 @@ export class MaterialListComponent {
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private materialService = inject(MaterialService);
-
+  private materialController = inject(MaterialControllerService);
 
   private router = inject(Router);
   private activedRoute = inject(ActivatedRoute);
@@ -227,8 +228,7 @@ export class MaterialListComponent {
     this.materialService.getMaterials().subscribe(
       {  
         next: x => this.materials = x,  
-        error: err => console.error('An error occurred :', err),  
-        complete: () => console.log('There are no more action happen.')  
+        
       }
     )
      
@@ -255,11 +255,11 @@ export class MaterialListComponent {
 */
   //Card
   seleccionar($Event : Material){
-    this.materialService.getController().setMaterial($Event);
+    this.materialController.setMaterial($Event);
   } 
   editar($Event : Material){
-    this.materialService.getController().setEditMode(true);
-    this.materialService.getController().setMaterial($Event);
+    this.materialController.setEditMode(true);
+    this.materialController.setMaterial($Event);
     this.modalService.openModal<MaterialFormComponent,Material>(MaterialFormComponent);
   }
   eliminar($Event : Material){

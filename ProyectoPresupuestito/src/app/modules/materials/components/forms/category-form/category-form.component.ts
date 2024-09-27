@@ -2,6 +2,7 @@ import { Component, inject, Input, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { Category } from '../../../../../core/model/Category';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
 @Component({
   selector: 'app-category-form',
@@ -13,10 +14,11 @@ import { Category } from '../../../../../core/model/Category';
 export class CategoryFormComponent {
   //Utils
   private materialService = inject(MaterialService);
+  private materialController = inject(MaterialControllerService);
   
   //Properties
-  newCategory : Category = this.materialService.getEmptyCategory();
-  isEdit : boolean = this.materialService.getController().getEditMode();
+  newCategory : Category = this.materialController.getEmptyCategory();
+  isEdit : boolean = this.materialController.getEditMode();
   CategoryForm : FormGroup = new FormGroup({
     idCategory : new FormControl(),
     name : new FormControl('', Validators.required)
@@ -26,7 +28,7 @@ export class CategoryFormComponent {
   ngAfterViewInit(): void {
     
     if(this.isEdit){
-      this.materialService.getController().getCategory().subscribe(res =>{
+      this.materialController.getCategory().subscribe(res =>{
         this.newCategory = res!;
       })
       this.CategoryForm.setValue(this.newCategory)
@@ -43,7 +45,7 @@ export class CategoryFormComponent {
       this.materialService.postCategory(this.newCategory);
     }else{
       this.materialService.putCategory(this.newCategory);
-      this.materialService.getController().setEditMode(false);
+      this.materialController.setEditMode(false);
     }
   }
 

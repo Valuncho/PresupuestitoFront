@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Material } from '../../../../core/model/Material';
 import { MaterialService } from '../../../../core/services/material.service';
+import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
 @Component({
   selector: 'app-material',
   standalone: true,
@@ -10,17 +11,15 @@ import { MaterialService } from '../../../../core/services/material.service';
 })
 export class MaterialComponent {
   //Util
-  private materialService = inject(MaterialService);
-  material : Material | undefined = this.materialService.getEmptyMaterial();
+  private materialController = inject(MaterialControllerService);
+  material : Material | undefined = this.materialController.getEmptyMaterial();
   
 ngAfterViewInit(): void {
   
   
-  this.materialService.getController().getMaterial().subscribe(
+  this.materialController.getMaterial().subscribe(
       {
         next : res =>{this.material = res;},
-        error: err => console.error('An error occurred :', err),  
-        complete: () => console.log('There are no more action happen.')  
       }
         
   

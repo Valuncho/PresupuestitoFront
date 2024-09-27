@@ -6,6 +6,8 @@ import { InvoiceItem } from '../../../../../core/model/invoiceItem';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { MaterialListComponent } from '../../lists/material-list/material-list.component';
 import { ModalService } from '../../../../../core/utils/modal.service';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { InvoiceCardComponent } from '../../../../invoice/components/invoice-card/invoice-card.component';
 
 
 @Component({
@@ -17,12 +19,13 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 })
 export class MaterialManagerComponent {
   //Utils
-  private materialService = inject(MaterialService);
+  private materialController = inject(MaterialControllerService);
   private modalService = inject(ModalService);
 
-  @Input() itemToHandle : Item | InvoiceItem = this.materialService.getEmptyItem();
+  @Input() itemToHandle : Item | InvoiceItem = this.materialController.getEmptyItem();
   @Output() item = new EventEmitter<Item | InvoiceItem>();
-  currentItem : Item | InvoiceItem | undefined =  this.itemToHandle;
+  currentItem : Item  =  this.materialController.getEmptyItem();
+  currentInvoiceItem : InvoiceItem  =  this.materialController.getEmptyInvoiceItem();
 
   itemForm : FormGroup = new FormGroup({
     id : new FormControl(),
@@ -31,7 +34,9 @@ export class MaterialManagerComponent {
   });
 
   ngAfterViewInit(): void {
-     
+     this.materialController.getMaterial().subscribe(res =>{
+      this.itemForm.value.material = res!;
+     })
   }
 
   openMaterialList(){
@@ -40,6 +45,8 @@ export class MaterialManagerComponent {
 
 
   sent(){
-    this.item.emit(this.currentItem);
+
+    this.materialController.setItem(this.currentItem);
+    //this.item.emit(this.currentItem);
   }
 }

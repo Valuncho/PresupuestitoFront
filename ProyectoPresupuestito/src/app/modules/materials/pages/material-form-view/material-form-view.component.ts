@@ -4,7 +4,8 @@ import { SubcategoryFormComponent } from "../../components/forms/subcategory-for
 import { CategoryFormComponent } from "../../components/forms/category-form/category-form.component";
 import { MaterialFormComponent } from "../../components/forms/material-form/material-form.component";
 import { SubcategoryListComponent } from "../../components/lists/subcategory-list/subcategory-list.component";
-import { MaterialService } from '../../../../core/services/material.service';
+
+import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
 
 @Component({
   selector: 'app-material-form-view',
@@ -14,12 +15,13 @@ import { MaterialService } from '../../../../core/services/material.service';
   styleUrl: './material-form-view.component.css'
 })
 export class MaterialFormViewComponent {
-private materialService = inject(MaterialService);
+private MaterialController = inject(MaterialControllerService);
+
 ngOnInit(): void {
-  this.materialService.getController().setEditMode(false)
-  this.materialService.getController().setCategory(this.materialService.getEmptyCategory())
-  this.materialService.getController().setSubcategory(this.materialService.getEmptySubCategory())
-  this.materialService.getController().setMaterial(this.materialService.getEmptyMaterial())
+  this.MaterialController.setEditMode(false)
+  this.MaterialController.setCategory(this.MaterialController.getEmptyCategory())
+  this.MaterialController.setSubcategory(this.MaterialController.getEmptySubCategory())
+  this.MaterialController.setMaterial(this.MaterialController.getEmptyMaterial())
   
 }
 }
