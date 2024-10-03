@@ -48,7 +48,6 @@ article {
 }
 /*Listados*/
 .List {
-    /*align-self: flex-start;*/
     background-color: var(--gris);
     padding: 1em;
     border-radius: 10px 10px;
@@ -57,7 +56,6 @@ article {
     overflow: hidden;
     overflow-y: visible;
     height: 75vh;
-
     max-width: 50vw;
     min-width: 20vw;
 }
@@ -316,4 +314,18 @@ form .invalid p::before{
     border-radius: 5px;
     height: 2em;
     width: 10em;
+}
+
+
+
+
+@media only screen and (max-width: 900px) {
+    main section{
+        flex-direction: column;
+        align-items: center;
+    }
+    .List {
+        min-width: 50vh;
+        max-width: 40vw;
+    }
 }

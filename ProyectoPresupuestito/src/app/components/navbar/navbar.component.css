@@ -35,3 +35,13 @@ li:hover{
     background-color: var(--gris);
 }
   
+@media only screen and (max-width: 600px) {
+    nav ul{
+        flex-direction: column;
+        align-items: center;
+        justify-content: stretch;
+    }
+    nav ul li{
+        width: 80%;
+    }
+}
