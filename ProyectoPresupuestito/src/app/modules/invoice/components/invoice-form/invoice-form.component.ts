@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-
+import { InvoiceControllerService } from '../../../../core/controllers/invoice-controller.service';
 import { Invoice } from '../../../../core/model/Invoice';
 import { InvoiceService } from '../../../../core/services/invoice.service';
 
@@ -19,10 +18,10 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
     //Utils
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
-    
+    private invoiceControllerService = inject(InvoiceControllerService)
     private invoiceService = inject(InvoiceService);
     //Properties
-    currentInvoice : Invoice = this.invoiceService.getEmptyInvoice();
+    currentInvoice : Invoice = this.invoiceControllerService.getEmptyInvoice();
     invoiceId? : number;
     isEdit : boolean = false;
     //Form

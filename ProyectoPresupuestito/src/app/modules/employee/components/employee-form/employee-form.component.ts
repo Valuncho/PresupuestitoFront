@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeService } from '../../../../core/services/employee.service';
 
 import { Employee } from '../../../../core/model/Employee';
+import { EmployeeControllerService } from '../../../../core/controllers/employee-controller.service';
 
 @Component({
     selector: 'app-employee-form',
@@ -17,10 +18,10 @@ import { Employee } from '../../../../core/model/Employee';
 export class EmployeeFormComponent { 
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
-    
+    private EmployeeControllerService = inject(EmployeeControllerService)
     private EmployeeService = inject(EmployeeService);
     //Properties
-    currentEmployee : Employee = this.EmployeeService.getEmptyEmployee();
+    currentEmployee : Employee = this.EmployeeControllerService.getEmptyEmployee();
     employeeId? : number;
     isEdit : boolean = false;
     //Form
@@ -56,7 +57,7 @@ export class EmployeeFormComponent {
     setUp(){
         this.employeeForm.reset();
         this.isEdit = false;
-        this.currentEmployee = this.EmployeeService.getEmptyEmployee();
+        this.currentEmployee = this.EmployeeControllerService.getEmptyEmployee();
     }
 
     resetForm($Event : Event){

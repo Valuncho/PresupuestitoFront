@@ -1,10 +1,4 @@
 <div class="List">
-    <h3 class="List-title">Listado de proveedores</h3>
-    <app-supplier-search 
-    [suppliers]="getAllSuppliers()"
-    (results)="handleSearch($event)"
-    (sortedResults)="handleSearch($event)"
-    />
     <div class="CardContainer">
       @for (supplier of suppliers() | paginate: { itemsPerPage: pageSize, currentPage: page } ; track supplier) {
         <app-supplier-card 
