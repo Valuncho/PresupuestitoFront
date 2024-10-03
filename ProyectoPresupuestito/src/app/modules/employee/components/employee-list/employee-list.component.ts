@@ -9,11 +9,12 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 import { Employee } from '../../../../core/model/Employee';
 
 import { EmployeeFormComponent } from '../employee-form/employee-form.component';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 @Component({
     selector: 'app-employee-list',
     standalone: true,
-    imports: [CommonModule,EmployeeCardComponent,NgxPaginationModule],
+    imports: [CommonModule,EmployeeCardComponent,NgxPaginationModule,TextCardComponent],
     templateUrl:'./employee-list.component.html',
     styleUrl: './employee-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

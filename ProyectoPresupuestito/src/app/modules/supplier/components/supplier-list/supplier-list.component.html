@@ -8,6 +8,8 @@
         (isEdit)="handleEditSupplier($event)" 
         (isDeleted)="handleDeleteSupplier($event)" 
         />
+      }@empty {
+        <app-text-card [message]="'No hay clientes que mostrar'"/>
       }
     </div>
     <pagination-controls 

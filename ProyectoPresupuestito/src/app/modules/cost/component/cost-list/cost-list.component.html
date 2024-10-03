@@ -8,6 +8,8 @@
         (isEdit)="handleEditCost($event)"
         (isDeleted)="handleDeleteCost($event)"
         />
+      }@empty {
+        <app-text-card [message]="'No hay costos que mostrar'"/>
       }
     
     
