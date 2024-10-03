@@ -25,9 +25,6 @@ export class ClientService {
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
 
-
-  
-
   /**
    * Retorna todos los clientes disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
