@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Employee } from '../model/Employee';
 import { Salary } from '../model/Salary';
+import { EmployeeHistory } from '../model/EmployeeHistory';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 /**
@@ -17,7 +19,16 @@ import { Salary } from '../model/Salary';
   providedIn: 'root'
 })
 export class EmployeeControllerService {
-  
+  //Selected entities
+  private employeeHistory: BehaviorSubject<EmployeeHistory | undefined> = new BehaviorSubject<EmployeeHistory | undefined>(undefined);
+
+  public getEmployeeHistory() : Observable<EmployeeHistory | undefined>{
+    return this.employeeHistory.asObservable();
+  }
+
+  public setEmployeeHistory(employeeHistory: EmployeeHistory) {
+    this.employeeHistory.next(employeeHistory);
+  }
   //Edit
   private editMode : boolean = false;
 
@@ -60,5 +71,6 @@ export class EmployeeControllerService {
         description: "",
       }
     }; 
+
 }
 }

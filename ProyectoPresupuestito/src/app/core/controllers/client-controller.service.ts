@@ -17,48 +17,48 @@ import { Client } from '../model/Client';
 })
 export class ClientControllerService {
  //Selected entities
- private clientHistory: BehaviorSubject<ClientHistory | undefined> = new BehaviorSubject<ClientHistory | undefined>(undefined);
- 
- public getClientHistory() : Observable<ClientHistory | undefined>{
-   return this.clientHistory.asObservable();
- }
+  private clientHistory: BehaviorSubject<ClientHistory | undefined> = new BehaviorSubject<ClientHistory | undefined>(undefined);
+  
+  public getClientHistory() : Observable<ClientHistory | undefined>{
+    return this.clientHistory.asObservable();
+  }
 
- public setClientHistory(clientHistory: ClientHistory) {
-   this.clientHistory.next(clientHistory);
- }
+  public setClientHistory(clientHistory: ClientHistory) {
+    this.clientHistory.next(clientHistory);
+  }
 
- setClient(client : Client){
-  let currentHistory = this.clientHistory.getValue();
-  currentHistory!.oClient = client;
-  this.setClientHistory(currentHistory!);
- }
- 
- //Edit
- private editMode : boolean = false;
+  setClient(client : Client){
+    let currentHistory = this.clientHistory.getValue();
+    currentHistory!.oClient = client;
+    this.setClientHistory(currentHistory!);
+  }
+  
+  //Edit
+  private editMode : boolean = false;
 
- setEditMode(option : boolean){
- this.editMode = option;
- }
- getEditMode() : boolean{
- return this.editMode;
- }
+  setEditMode(option : boolean){
+  this.editMode = option;
+  }
+  getEditMode() : boolean{
+  return this.editMode;
+  }
 
- //GetEmptyObjects
+  //GetEmptyObjects
 
- getEmptyClient(): Client {
-  return  {
-    idClient: 0,
-    oPerson: {
-      idPerson: 0,
-      name: '',
-      lastName: '',
-      direction: '',
-      phoneNumber: '',
-      mail: '',
-      dni: '',
-      cuit: '',
-    },
-  };
+  getEmptyClient(): Client {
+    return  {
+      idClient: 0,
+      oPerson: {
+        idPerson: 0,
+        name: '',
+        lastName: '',
+        direction: '',
+        phoneNumber: '',
+        mail: '',
+        dni: '',
+        cuit: '',
+      },
+    };
 
 }
 

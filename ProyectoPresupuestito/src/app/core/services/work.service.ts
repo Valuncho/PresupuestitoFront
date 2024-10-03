@@ -19,7 +19,7 @@ export class WorkService {
   
   private estados : string[] = ['Presupuestado','Pendiente de aprobación','Aprobado','En proceso','Entregado','Cancelado'];
   
-   /**
+  /**
    * Retorna todos los trabajos disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de trabajos como un observable.
