@@ -1,10 +1,16 @@
-<nav>
+<nav >
     <ul>
-        <li routerLink="/home" routerLinkActive="active">Menú</li>
-        <li routerLink="/budget" routerLinkActive="active">Presupuestos</li>
-        <li routerLink="/work" routerLinkActive="active">Trabajos</li>
-        <li routerLink="/client" routerLinkActive="active">Clientes</li>
-        <li routerLink="/material" routerLinkActive="active">Materiales</li>
+        @if(hide){
+            <li routerLink="/home" routerLinkActive="active">Menú</li>
+            <li routerLink="/budget" routerLinkActive="active">Presupuestos</li>
+            <li routerLink="/work" routerLinkActive="active">Trabajos</li>
+            <li routerLink="/client" routerLinkActive="active">Clientes</li>
+            <li routerLink="/material" routerLinkActive="active">Materiales</li>
+            <li class="oculto" (click)="toggleMenu()">Cerrar menú...</li>
+        }@else{
+            <li (click)="toggleMenu()">Abrir menú...</li>
+        }
+        
     </ul>
 </nav>
 

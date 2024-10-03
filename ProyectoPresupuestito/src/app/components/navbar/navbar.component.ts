@@ -9,5 +9,13 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-
+  hide : boolean = true;
+  toggleMenu(){
+    if(this.hide){
+      this.hide = false;
+    }else{
+      this.hide = true;
+    }
+    
+  }
 }
