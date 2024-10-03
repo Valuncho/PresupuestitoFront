@@ -1,0 +1,33 @@
+<form [formGroup]="salaryForm" (ngSubmit)="onSubmit()">
+    <fieldset>
+        @if (salaryForm.invalid && salaryForm.dirty) {
+            <div class="invalid">
+        
+            @if (salaryForm.get('fecha')?.invalid) {
+                <p>fecha es obligatoria.</p>
+            }
+            
+            @if (salaryForm.get('monto')?.invalid) {
+                <p>el monto es obligatorio.</p>
+            }
+        </div>
+        }     
+        
+        <legend class="List-title">Cargar salario</legend>
+        <label for="fecha">Fecha:</label>
+        <input type="text" name="fecha" id="fecha" placeholder="fecha..." formControlName="fecha">
+        <label for="monto">Monto:</label>
+        <input type="text" name="monto" id="monto" placeholder="monto..." formControlName="monto">
+        </fieldset>
+        <fieldset class="Botones">
+        <button type="reset" (click)="resetForm($event)">Limpiar</button>
+        
+        <button type="submit" [disabled]="!canSubmit" [class.disactive]="!canSubmit">
+            @if (isEdit) {
+            Actualizar
+            }@else {
+            Guardar
+            }
+        </button>
+        </fieldset>
+</form>
