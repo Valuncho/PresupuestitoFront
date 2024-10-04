@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, ActivatedRoute } from '@angular/router';
 import { Payment } from '../../../../core/model/Payment';
 import { PaymentService } from '../../../../core/services/payment.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { PaymentControllerService } from '../../../../core/controllers/payment-controller.service';
 
 @Component({
@@ -80,10 +80,10 @@ export class PaymentsFormComponent {
         this.currentPayment = this.paymentForm.value;
         if(this.isEdit){
         //this.paymentService.handleUpdatePayment(this.currentPayment);
-        this.notificationService.showNotification("pago editado con éxito!");
+        //this.notificationService.showNotification("pago editado con éxito!");
         }else{
         //this.paymentService.handlePostPayment(this.currentPayment);
-        this.notificationService.showNotification("pago guardado con éxito!");
+       // this.notificationService.showNotification("pago guardado con éxito!");
         }
         this.setUp();
     }

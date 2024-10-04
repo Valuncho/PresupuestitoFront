@@ -18,6 +18,7 @@ import { EmployeeViewComponent } from './modules/employee/pages/employee-View/em
 import { InvoiceMakerComponent } from './modules/invoice/pages/invoice-maker/invoice-maker.component';
 import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
 import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
+import { InvoiceDetailComponent } from './modules/invoice/pages/invoice-detail/invoice-detail.component';
 
 
 export const routes: Routes = [
@@ -49,13 +50,12 @@ export const routes: Routes = [
     {path: 'employee/detail/:employeeId', component: EmployeeDetailsComponent},
     {path: 'employee/edit', component: EmployeeFormComponent},
 
-    
+    {path: 'invoice/:invoicdId', component: InvoiceDetailComponent},
     {path: 'invoice/new/:supplierId', component: InvoiceMakerComponent},
     {path: 'invoice/edit/:invoiceId', component: InvoiceMakerComponent},
     
-    
     {path: 'cost', component: CostViewComponent},
-    
+    {path: 'cost/edit/:costId', component: CostViewComponent},
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},
 
