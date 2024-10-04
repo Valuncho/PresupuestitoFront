@@ -327,5 +327,8 @@ form .invalid p::before{
     .List {
         min-width: 50vh;
         max-width: 40vw;
+        
     }
+    
+
 }
