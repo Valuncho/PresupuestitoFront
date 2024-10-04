@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FixedCost } from '../../../../core/model/FixedCost';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 @Component({
     selector: 'app-cost-list',
     standalone: true,
     imports: [
-    CommonModule, CostSearchComponent,NgxPaginationModule,CostCardComponent],
+    CommonModule, CostSearchComponent,NgxPaginationModule,CostCardComponent,TextCardComponent],
     templateUrl: './cost-list.component.html',
     styleUrl: './cost-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

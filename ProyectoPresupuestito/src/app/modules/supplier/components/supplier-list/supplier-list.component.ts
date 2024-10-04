@@ -11,11 +11,12 @@ import { Supplier } from '../../../../core/model/Supplier';
 import { SupplierFormComponent } from '../supplier-form/supplier-form.component';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { NotificationService } from '../../../../core/utils/notification.service';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 @Component({
     selector: 'app-supplier-list',
     standalone: true,
-    imports: [SupplierSearchComponent,SupplierCardComponent,NgxPaginationModule],
+    imports: [SupplierSearchComponent,SupplierCardComponent,NgxPaginationModule,TextCardComponent],
     templateUrl: './supplier-list.component.html',
     styleUrl: './supplier-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

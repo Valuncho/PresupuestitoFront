@@ -12,13 +12,14 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
 import { Invoice } from '../../../../core/model/Invoice';
 import { invoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { ModalService } from '../../../../core/utils/modal.service';
+import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 
 
 
 @Component({
     selector: 'app-invoice-list',
     standalone: true,
-    imports: [InvoiceSearchComponent,InvoiceCardComponent,NgxPaginationModule,CommonModule],
+    imports: [InvoiceSearchComponent,InvoiceCardComponent,NgxPaginationModule,CommonModule,TextCardComponent],
     templateUrl: './invoice-list.component.html',
     styleUrl: './invoice-list.component.css',
 

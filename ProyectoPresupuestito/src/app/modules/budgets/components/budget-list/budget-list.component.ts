@@ -7,7 +7,6 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../../../core/services/client.service';
-import { isParameter } from 'typescript';
 import { BudgetCardComponent } from "../budget-card/budget-card.component";
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { NotificationService } from '../../../../core/utils/notification.service';

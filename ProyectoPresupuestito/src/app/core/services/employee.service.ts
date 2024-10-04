@@ -1,12 +1,16 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Employee } from '../model/Employee';
 import { EmployeeHistory } from '../model/EmployeeHistory';
 import { API_URL,ENDPOINTS } from '../endpoints';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Supplier } from '../model/Supplier';
 import { Salary } from '../model/Salary';
+import { ModalService } from '../utils/modal.service';
+import { ErrorControllerService } from '../utils/error-controller.service';
+import { NotificationService } from '../utils/notification.service';
+import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +18,9 @@ import { Salary } from '../model/Salary';
 export class EmployeeService {
   //Properties
   private http = inject(HttpClient);
+  private modal = inject(ModalService);
+  private error = inject(ErrorControllerService);
+  private notification = inject(NotificationService);
   
   private employees : Employee[] = [
     {
@@ -45,89 +52,196 @@ export class EmployeeService {
         }
     }
   ]
- 
   //METODOS HTTP ----------------------------------------------------------------------------------------------
   
     /**
-     * retorna todos los empleados guardados
-     * @returns un array de empleados como un observable
+     * Retorna todos los empleados disponibles guardados.
+     * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+     * @returns Un array de empleados como un observable.
      */
-    
-    getEmployees(): Observable<Employee[]>{
-      return this.http.get<Employee[]>(API_URL+ENDPOINTS.employees.getAll);
+    getEmployees() : Observable<Employee[]> {
+      return this.http.get<Employee[]>(API_URL+ENDPOINTS.employees.getAll).pipe(      
+        catchError((error: any, caught: Observable<any>): Observable<any> => {
+          this.error.setError(error);
+          this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+          return of();
+      })); 
     }
 
-    getSalaries(): Observable<Salary[]>{
-      return this.http.get<Salary[]>(API_URL+ENDPOINTS.salaries.getAll);
-    }
+    /**
+   * Retorna todos los salarios disponibles guardados.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @returns Un array de salarios como un observable.
+   */
+  getSalaries() : Observable<Salary[]> {
+    return this.http.get<Salary[]>(API_URL+ENDPOINTS.salaries.getAll).pipe(      
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })); 
+  }
 
     
 
   /**
-   * retorna al empleado solicitado por id 
-   * @param IdEmployee 
-   * @returns un empleado como un observable  
+   * Retorna al empleado solicitado por id.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idEmployee id del empleado solicitado.
+   * @returns Un empleado como un observable.
    */
-    
-    getEmployeeById(IdEmployee : Number) : Observable<Employee> {
-        const url = API_URL+ENDPOINTS.employees.getById.replace(':id', IdEmployee.toString());
-        return this.http.get<Employee>(url);
-    }
-
-    getSalariesByemployeeId(IdEmployee : Number) : Observable<Salary> {
-      const url = API_URL+ENDPOINTS.employees.getById.replace(':id', IdEmployee.toString());
-      return this.http.get<Salary>(url);
+  getEmployeeById(idEmployee : number) : Observable<Employee> {
+    const url = API_URL+ENDPOINTS.employees.getById.replace(':id', idEmployee.toString());
+    return this.http.get<Employee>(url).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
   }
 
     /**
-     * Envia un objeto empleado
-     * @param employee 
-     * @returns Un Observable que emite un array de empleados
-     */
-    
-    postEmployee(employee : Employee){
-        const url = API_URL+ENDPOINTS.employees.post;
-        return this.http.post(url,employee);
-    }
-
-    postSalary(salaries : Salary){
-      const url = API_URL+ENDPOINTS.salaries.post;
-      return this.http.post(url,salaries);
+   * Retorna el salario solicitado por id.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idEmployee id del salario solicitado.
+   * @returns Un salario como un observable.
+   */
+  getSalaryById(idEmployee : number) : Observable<Salary> {
+    const url = API_URL+ENDPOINTS.salaries.getById.replace(':id', idEmployee.toString());
+    return this.http.get<Salary>(url).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
   }
 
-
-    putSalary(salaries: Salary) {
-      const url = API_URL+ENDPOINTS.salaries.update;
-      return this.http.put(url,salaries);
-    }
+  /**
+   * Método para crear un empleado nuevo.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param employee empleado a cargar en la base de datos
+   * @returns un observable de tipo objeto
+   */
+  postEmployee(employee: Employee){
+    const url = API_URL+ENDPOINTS.employees.post;
+    return this.http.post(url,employee).pipe(
+      tap(() => {
+        this.notification.showNotification("¡empleado guardado con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
 
     /**
-     * suspende a un empleado
-     * @param employee 
-     * @returns un observable que emite el empleado actualizado
-     */
-    
-    deleteSalary(salaries: Salary){
-      const url = API_URL + ENDPOINTS.salaries.update;
-      return this.http.put(url, salaries);
-    }
-    
-
-  
-  getEmptyEmployee() : Employee{
-    return  {
-      idEmployee: 0,
-      salary : 0,
-      oPerson: {
-        idPerson: 0,
-        name: '',
-        lastName: '',
-        direction: '',
-        phoneNumber: '',
-        mail: '',
-        dni: '',
-        cuit: '',
-      },
-    }; 
+   * Método para crear un salario nuevo.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param Salary salario a cargar en la base de datos
+   * @returns un observable de tipo objeto
+   */
+  postSalary(salaries: Salary){
+    const url = API_URL+ENDPOINTS.salaries.post;
+    return this.http.post(url,salaries).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Salario guardado con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
   }
+
+  /**
+   * Método para actualizar información de un empleado existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param employee empleado actualizado.
+   * @returns un observable de tipo objeto
+   */
+  putEmployee(employee: Employee) {
+    const url = API_URL+ENDPOINTS.employees.update;
+    return this.http.put(url,employee).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Empleado editado con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
+
+  /**
+   * Método para actualizar información de un salario existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param salary salario actualizado.
+   * @returns un observable de tipo objeto
+   */
+  putSalary(salaries: Salary) {
+    const url = API_URL+ENDPOINTS.salaries.update;
+    return this.http.put(url,salaries).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Salario editado con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
+
+  /**
+   * Método para marcar como borrado a un empleado existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idEmployee id del empleado a eliminar.
+   * @returns un observable de tipo objeto
+   */
+  deleteEmployee(idEmployee: number) {
+    const url = API_URL+ENDPOINTS.employees.delete;
+    return this.http.put(url,idEmployee).pipe(
+      tap(() => {
+        this.notification.showNotification("¡empleado eliminado con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
+
+  /**
+   * Método para marcar como borrado a un salario existente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idEmployee id del salario a eliminar.
+   * @returns un observable de tipo objeto
+   */
+  deleteSalary(idEmployee: number) {
+    const url = API_URL+ENDPOINTS.salaries.delete;
+    return this.http.put(url,idEmployee).pipe(
+      tap(() => {
+        this.notification.showNotification("¡salario eliminado con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
+    
 }

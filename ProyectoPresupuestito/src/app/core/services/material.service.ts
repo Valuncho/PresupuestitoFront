@@ -40,7 +40,7 @@ export class MaterialService {
     })
     );  
   }
- /**
+  /**
    * Retorna al material solicitado por id.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param idMaterial id del material solicitado.
@@ -76,7 +76,7 @@ export class MaterialService {
     })
     );    
   }
- /**
+  /**
    * Método para actualizar información de un material existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
@@ -148,7 +148,7 @@ export class MaterialService {
     })
     );    
   }
-     /**
+  /**
    * Método para crear un sub-rubro nuevo.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
@@ -168,7 +168,7 @@ export class MaterialService {
     })
     );    
   }
-     /**
+  /**
    * Método para actualizar información de un sub-rubro existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
@@ -208,7 +208,6 @@ export class MaterialService {
     })
     );    
   }
-     
   /**
    * Retorna todos los rubros disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
@@ -240,7 +239,7 @@ export class MaterialService {
     );    
   }
   
-   /**
+  /**
    * Método para crear un rubro nuevo.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
@@ -260,7 +259,7 @@ export class MaterialService {
     })
     );    
   }
-   /**
+  /**
    * Método para actualizar información de un rubro existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.

@@ -1,10 +1,5 @@
 <div class="List">
-    <h3 class="List-title">Listado de proveedores</h3>
-    <app-supplier-search 
-    [suppliers]="getAllSuppliers()"
-    (results)="handleSearch($event)"
-    (sortedResults)="handleSearch($event)"
-    />
+  <h3 class="List-title">Listado de proveedores</h3>
     <div class="CardContainer">
       @for (supplier of suppliers() | paginate: { itemsPerPage: pageSize, currentPage: page } ; track supplier) {
         <app-supplier-card 
@@ -14,6 +9,8 @@
         (isEdit)="handleEditSupplier($event)" 
         (isDeleted)="handleDeleteSupplier($event)" 
         />
+      }@empty {
+        <app-text-card [message]="'No hay proveedores que mostrar.'"/>
       }
     </div>
     <pagination-controls 
