@@ -30,7 +30,53 @@ export class WorkComponent {
   options = false;
 
   ngOnInit(): void {
-
+    this.currentWork = { idWork: 1,
+      order: 1001,
+      materials: [
+        {
+          idItem:1,
+          material: {
+            idMaterial: 10,
+            name: 'Abedul',
+            description: 'Madera blanda de color claro',
+            color: 'Amarillo claro',
+            brand: 'Forestal', // Marca ficticia
+            measure: '2x4', // Ejemplo de medida
+            unitOfMeasure: 'Metro lineal',
+            subCategory:  {
+            idCategoryMaterial: 7,
+            name: 'Madera maciza',
+            category: {
+            idCategory: 2,
+            name: 'Maderas'
+          }}},
+          quantity: 2
+        },
+        {
+          idItem:2,
+          material:  {
+            idMaterial: 6,
+            name: 'Tornillo autorroscante Phillips',
+            description: 'Para unir metal a madera',
+            color: 'Plateado',
+            brand: 'Tekno',
+            measure: '1/2" x 12',
+            unitOfMeasure: 'Caja de 100',
+            subCategory:  {
+            idCategoryMaterial: 1,
+            name: 'Tornillos',
+            category:  {
+            idCategory: 1,
+            name: 'Ferretería',
+          }}},
+          quantity: 7
+        },
+      ],
+      estimatedHoursWorked: 8,
+      deadline: new Date('2024-12-31'),
+      costPrice: 300,
+      status: 'Pendiente de aprobación',
+      notes: 'Build a wooden table',}
 
 /*
     this.workService.getSelectedWork().subscribe(work=>{

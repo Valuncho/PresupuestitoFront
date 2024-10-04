@@ -10,8 +10,6 @@ import { RouterLink } from '@angular/router';
 })
 export class ButtonCardComponent {
 
-  @Input() label?: string;
-  @Input() url?: string;
   @Input() icon?: string;
 
 }

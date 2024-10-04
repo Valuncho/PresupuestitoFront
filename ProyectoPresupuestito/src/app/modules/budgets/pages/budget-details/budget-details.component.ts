@@ -85,8 +85,7 @@ export class BudgetDetailsComponent {
           deadline: new Date('2024-12-31'),
           costPrice: 300,
           status: 'Pendiente de aprobación',
-          notes: 'Build a wooden table',
-          images: ['image1.jpg', 'image2.png']
+          notes: 'Build a wooden table'
         },
         {
           idWork: 2,
@@ -98,8 +97,7 @@ export class BudgetDetailsComponent {
           deadline: new Date('2025-01-15'),
           costPrice: 250,
           status: 'En proceso',
-          notes: 'Paint the walls',
-          images: ['image3.jpg']
+          notes: 'Paint the walls'
       }
       ], // Replace with actual work data if needed
       createdDate: new Date('2023-08-20'),

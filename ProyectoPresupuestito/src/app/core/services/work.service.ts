@@ -130,8 +130,7 @@ export class WorkService {
       deadline: new Date(),
       costPrice: 0,
       status: 'Presupuestado',
-      notes: '',
-      images: []
+      notes: ''
     }
     return work;
   }
