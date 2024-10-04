@@ -104,7 +104,6 @@ form {
     overflow: hidden;
     overflow-y: auto;
     height: 76vh;
-    /*margin: 0 auto;*/
 }
 
 fieldset {
@@ -330,5 +329,20 @@ form .invalid p::before{
         
     }
     
+
+}
+
+@media only screen and (max-width: 400px) {
+
+    .Card{
+        flex-direction: column;
+    }
+    .List, form{
+        
+        max-width: none;
+        min-width: 260px;
+        border-radius: 10px;
+    }
+  
 
 }

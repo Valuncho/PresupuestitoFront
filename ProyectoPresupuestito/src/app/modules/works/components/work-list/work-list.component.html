@@ -1,7 +1,6 @@
 <div class="List">
         <h3 class="List-title">Listado de trabajos</h3>
-    <app-work-search/>
-
+  
 
         @for (work of works | paginate: { itemsPerPage: worksToPage, currentPage: workPage }; track work.idWork; let idx = $index) {
 
