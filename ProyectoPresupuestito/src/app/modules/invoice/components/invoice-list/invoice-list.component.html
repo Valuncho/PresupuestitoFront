@@ -14,6 +14,8 @@
         (isEdit)="handleEditInvoice($event)"
         (isDeleted)="handleDeleteInvoice($event)"
         />
+      }@empty {
+        <app-text-card [message]="'No hay boletas que mostrar'"/>
       }
     
     

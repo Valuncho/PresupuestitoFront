@@ -124,4 +124,13 @@ export const ENDPOINTS = {
       update: '/FixedCost/:id',
       delete: '/FixedCost/:id',
     },
+
+    payments: {
+      getAll: '/payments',
+      getById: '/payments/:id',
+      getByInvoiceId: '/payments/:id',
+      post: '/payments',
+      update: '/payments/:id',
+      delete: '/payments/:id',
+    },
 };

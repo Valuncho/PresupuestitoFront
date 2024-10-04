@@ -1,0 +1,21 @@
+<div class="List">
+    <h3 class="List-title">Listado de salarios</h3>
+        @for (salary of salaries | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
+            <app-salary-card 
+            [Salary]="salary"
+            (action)="handleAction($event)"
+            (isView)="handleViewSalary($event)"
+            (isEdit)="handleEditSalary($event)"
+            (isDeleted)="handleDeleteSalary($event)"
+            />
+        }@empty {
+            <app-text-card [message]="'No hay salarios que mostrar.'"/>
+        }
+        
+        
+        <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChange)="pageChange($event)"
+        />
+</div>

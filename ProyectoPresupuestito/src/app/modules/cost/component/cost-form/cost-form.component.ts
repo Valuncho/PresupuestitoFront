@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-
 import { CostService } from '../../../../core/services/Cost.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FixedCost } from '../../../../core/model/FixedCost';
+import { CostControllerService } from '../../../../core/controllers/cost-controller.service';
 
 
 @Component({
@@ -19,10 +19,10 @@ export class CostFormComponent {
     //Utils
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
-    
+    private costControllerService = inject(CostControllerService);
     private costService = inject(CostService);
     //Properties
-    currentCost : FixedCost = this.costService.getEmptyFixedCost();
+    currentCost : FixedCost = this.costControllerService.getEmptyFixedCost();
     costId? : number;
     isEdit : boolean = false;
     //Form
@@ -56,7 +56,7 @@ export class CostFormComponent {
     setUp(){
         this.costForm.reset();
         this.isEdit = false;
-        this.currentCost = this.costService.getEmptyFixedCost();
+        this.currentCost = this.costControllerService.getEmptyFixedCost();
     }
 
     resetForm($Event : Event){
