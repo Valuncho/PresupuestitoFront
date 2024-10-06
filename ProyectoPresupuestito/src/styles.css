@@ -173,31 +173,30 @@ form .invalid p::before{
     display: flex;
     flex-direction: column;
     align-items: center;
+    
+    max-width: 40vw;
     padding: 1em;
     margin: 10px;
     border-radius: 10px;
     background-color: var(--gris);
 }
+.Componente div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
 
-.Componente .Interior, .Componente .Material{
+.Componente .Interior{
+    align-items: flex-start;
     background-color: var(--arce);
     padding: 1em;
     border-radius: 10px;
     width: auto;
 }
 
-.Componente .Material{
-    padding: 2px;
-    margin: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-}
-.Materials{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+
+.ItemTable{
     max-height: 50vh;
     overflow-y: scroll;
 }
@@ -351,7 +350,7 @@ form .invalid p::before{
 
 @media only screen and (max-width: 480px) {
 
-    .Card, .Componente .Material{
+    .Card, .Componente{
         padding: 5px;
         flex-direction: column;
     }

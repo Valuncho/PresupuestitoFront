@@ -30,14 +30,12 @@ export const routes: Routes = [
     {path: 'client/edit/:clientId', component: ClientViewComponent},
     
     {path: 'budget', component: BudgetViewComponent},
-    {path: 'budget/new/:clientId', component: BudgetViewComponent},
     {path: 'budget/detail/:budgetId', component: BudgetDetailsComponent},
+    {path: 'budget/new/:clientId', component: BudgetViewComponent},
     {path: 'budget/edit/:budgetId', component: BudgetViewComponent},
 
     {path: 'work', component: WorkViewComponent},
-    {path: 'work/detail/:workId', component: WorkDetailsComponent},
-    {path: 'work/new/:budgetId', component: WorkAreaComponent},
-    {path: 'work/edit/:budgetId', component: WorkAreaComponent},
+    {path: 'workArea/:budgetId', component: WorkAreaComponent},
     
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},

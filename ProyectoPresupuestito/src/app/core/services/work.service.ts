@@ -121,18 +121,6 @@ export class WorkService {
     return this.estados;
   }
 
-  getEmptyWork() : Work{
-    const work : Work = {
-      idWork: 0,
-      order: 0,
-      materials: [],
-      estimatedHoursWorked: 8,
-      deadline: new Date(),
-      costPrice: 0,
-      status: 'Presupuestado',
-      notes: ''
-    }
-    return work;
-  }
+
 
 }
