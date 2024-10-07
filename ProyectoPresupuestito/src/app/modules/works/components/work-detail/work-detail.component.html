@@ -17,6 +17,7 @@
     <table class="ItemTable">
       <thead>
         <tr>
+          <th>Index</th>
           <th>Material</th>
           <th>Cantidad</th>
           @if(!options){
@@ -28,10 +29,11 @@
       <tbody>
         @for (item of currentWork!.materials; track $index) {
         <tr>
+          <td>{{ item.idItem }}</td>
           <td>{{ item.material.name }}</td>
           <td>{{ item.quantity }}</td>
           @if(!options){
-          <td><app-button-card icon="edit" /></td>
+          <td><app-button-card icon="edit" (click)="modifyItem(item)" /></td>
           }
         </tr>
         }

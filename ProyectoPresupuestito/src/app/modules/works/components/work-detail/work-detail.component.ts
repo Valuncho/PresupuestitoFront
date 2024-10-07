@@ -26,13 +26,10 @@ export class WorkComponent {
 
   ngOnInit(): void {
   
-
       if(this.router.url == "/work" ){
         this.options = true;
 
       }
-
-      
 
       this.workController.getWork().subscribe(res =>
         this.currentWork = res
@@ -45,11 +42,23 @@ export class WorkComponent {
   }
 
   goToWorkArea(){
-    this.router.navigate(["/work/edit"]);
+    this.router.navigate(["/workArea/"]);
   }
 
   goToBudgetDetail(){
     this.router.navigate(["/budget/detail"]);
   }
 
+  modifyItem(item : Item){
+    this.materialController.setEditMode(true);
+    this.materialController.setItem(item);
+  }
+
+  changeItem(){
+    this.materialController.getItem().subscribe(res =>{
+      console.log("item recibido")
+      console.log(res!)
+      
+    })
+  }
 }

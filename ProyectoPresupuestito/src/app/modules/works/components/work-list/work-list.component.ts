@@ -40,13 +40,82 @@ export class WorkListComponent {
   ngOnInit(): void {
     
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
-    let budgetDetailUrl = "/budget/detail/" + this.budgetId;
-    let budgetworkArealUrl = "/workArea/" + this.budgetId;
+    let budgetworkArealUrl = "/workarea/" + this.budgetId;
     let worksView = "/work";
     
     if(budgetworkArealUrl == this.router.url){
+      
       this.options = true;
+      this.works = 
+        [
+          {   
+            idWork: 1,
+            order: 1001,
+            materials: [
+              {
+                idItem:1,
+                material: {
+                  idMaterial:11,
+                  name: 'MDF Melamínico',
+                  description: 'Panel aglomerado recubierto con melamina',
+                  color: 'Blanco',
+                  brand: 'Masisa', // Marca ficticia
+                  measure: '18mm x 1200mm x 2400mm',
+                  unitOfMeasure: 'Placa',
+                  subCategory:  {
+                  idCategoryMaterial: 8,
+                  name: 'Madera contrachapada',
+                  category: {
+                  idCategory: 2,
+                  name: 'Maderas'
+                }
+                }},
+                quantity: 2
+              },
+              {
+                idItem:2,
+                material: {
+                  idMaterial: 9,
+                  name: 'Nogal',
+                  description: 'Madera blanda de color claro',
+                  color: 'Amarillo claro',
+                  brand: 'Forestal', // Marca ficticia
+                  measure: '2x4', // Ejemplo de medida
+                  unitOfMeasure: 'Metro lineal',
+                  subCategory:  {
+                  idCategoryMaterial: 7,
+                  name: 'Madera maciza',
+                  category: {
+                  idCategory: 2,
+                  name: 'Maderas'
+                }
+                }},
+                quantity: 7
+              },
+            ],
+            estimatedHoursWorked: 8,
+            deadline: new Date('2024-12-31'),
+            costPrice: 300,
+            status: 'Pendiente de aprobación',
+            notes: 'Build a wooden table'
+          },
+          {
+            idWork: 2,
+            order: 1002,
+            materials: [
+      
+            ],
+            estimatedHoursWorked: 5,
+            deadline: new Date('2025-01-15'),
+            costPrice: 250,
+            status: 'En proceso',
+            notes: 'Paint the walls'
+        }
+        ]
+      
+      
     }else if(worksView == this.router.url){
+      
       this.workService.getWorks().subscribe(res =>{
         this.works = res;
     
