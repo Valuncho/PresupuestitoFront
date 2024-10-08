@@ -39,6 +39,14 @@ export const ENDPOINTS = {
     update: '/Work/:id',
     delete: '/Work/:id',
   },
+  //Items
+    items: {
+    getAll: '/Item',
+    getById: '/Item/:id',
+    post: '/Item/:idWork',
+    update: '/Item/:id',
+    delete: '/Item/:id',
+    },
   //Materials
   materials: {
     getAll: '/Material',

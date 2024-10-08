@@ -33,7 +33,8 @@
           <td>{{ item.material.name }}</td>
           <td>{{ item.quantity }}</td>
           @if(!options){
-          <td><app-button-card icon="edit" (click)="modifyItem(item)" /></td>
+          <td><app-button-card icon="edit" (click)="updateItem(item)" /></td>
+          <td><app-button-card icon="delete" (click)="deleteItem(item)" /></td>
           }
         </tr>
         }
@@ -44,5 +45,7 @@
   @if (options) {
   <button class="Boton1" (click)="goToBudgetDetail()">Ir al presupuesto</button>
   <button class="Boton1" (click)="goToWorkArea()">Ir al area de trabajo</button>
+  }@else {
+    <button class="Boton1" (click)="openMaterialManager()">Agregar material</button>
   }
 </div>
