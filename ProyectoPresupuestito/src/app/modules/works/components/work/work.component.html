@@ -1,1 +1,10 @@
-<p>work works!</p>
+<div class="Details">
+    <h3 class="Details-title">Detalle del trabajo</h3>
+    <p>Orden: {{ work!.order }}</p>
+    <p>Notas : {{ work!.notes }}</p>
+    <p>Horas estimadas: {{ work!.estimatedHoursWorked }}</p>
+    <p>Fecha limite: {{ work!.deadline | date : "dd/MM/yyyy" }}</p>
+    <p>Costo: {{ work!.costPrice | currency }}</p>
+    <p>Estado : {{ work!.status }}</p>
+  </div>
+  

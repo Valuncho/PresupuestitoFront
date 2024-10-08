@@ -35,7 +35,6 @@ export const routes: Routes = [
     {path: 'budget/edit/:budgetId', component: BudgetViewComponent},
 
     {path: 'work', component: WorkViewComponent},
-    {path: 'workarea/:budgetId', component: WorkAreaComponent},
     
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},

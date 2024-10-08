@@ -44,8 +44,10 @@
 
   @if (options) {
   <button class="Boton1" (click)="goToBudgetDetail()">Ir al presupuesto</button>
-  <button class="Boton1" (click)="goToWorkArea()">Ir al area de trabajo</button>
   }@else {
-    <button class="Boton1" (click)="openMaterialManager()">Agregar material</button>
+    @if(enabled){
+      <button class="Boton1" (click)="openMaterialManager()">Agregar material</button>
+    }
+    
   }
 </div>

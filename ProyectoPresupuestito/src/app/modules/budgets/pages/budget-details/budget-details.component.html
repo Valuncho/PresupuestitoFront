@@ -2,17 +2,11 @@
     <section class="Arriba">
         <article>
             <app-budget [budget]="currentBudget"/>
+            <button class="Boton1" (click)="calculatePrice()">Calcular precio presupuesto</button>
             <app-client [client]="budgetClient"/>
-            <button class="Boton1" (click)="calculatePrice()">Calcular precio actualizado</button>
-            <button class="Boton1" (click)="goToWorkArea()">Ir al area de trabajo</button>
+            <app-work [work]="currentWork!"/>
+            <button class="Boton1" (click)="calculatePrice()">Calcular precio trabajo</button>
         </article>
-        <article>
-            <app-work-list
-                [works]="currentBudget.works"
-                />
-        </article>
-        <article>
-           <app-work-detail/>
-           <button class="Boton1" (click)="calculatePrice()">Calcular precio actualizado</button>
-        </article>
+        <app-work-list [works]="currentBudget.works"/>
+        <app-work-detail/>
     </section>

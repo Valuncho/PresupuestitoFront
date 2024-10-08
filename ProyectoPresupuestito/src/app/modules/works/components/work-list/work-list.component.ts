@@ -40,10 +40,10 @@ export class WorkListComponent {
   ngOnInit(): void {
     
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
-    let budgetworkArealUrl = "/workarea/" + this.budgetId;
-    let worksView = "/work";
+    let budgetDetailUrl = "/budget/detail/" + this.budgetId;
+    let worksViewUrl = "/work";
     
-    if(budgetworkArealUrl == this.router.url){
+    if(budgetDetailUrl == this.router.url){
       
       this.options = true;
       this.works = 
@@ -114,7 +114,7 @@ export class WorkListComponent {
         ]
       
       
-    }else if(worksView == this.router.url){
+    }else if(worksViewUrl == this.router.url){
       
       this.workService.getWorks().subscribe(res =>{
         this.works = res;

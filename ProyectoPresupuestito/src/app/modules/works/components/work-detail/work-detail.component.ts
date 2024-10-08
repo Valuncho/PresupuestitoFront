@@ -20,7 +20,7 @@ import { ItemService } from '../../../../core/services/item.service';
   templateUrl: './work-detail.component.html',
   styleUrl: './work-detail.component.css'
 })
-export class WorkComponent {
+export class WorkDetailComponent {
   //Utils
   private router = inject(Router);
   private dialog = inject(MatDialog);
@@ -31,8 +31,8 @@ export class WorkComponent {
   
   currentWork! : Work;
   item : Item = this.materialController.getEmptyItem();
-  options = false;
-
+  options : boolean = false;
+  enabled : boolean = false;
   ngOnInit(): void {
   
       if(this.router.url == "/work" ){
@@ -40,8 +40,14 @@ export class WorkComponent {
 
       }
 
-      this.workController.getWork().subscribe(res =>
-        this.currentWork = res
+      this.workController.getWork().subscribe(res =>{
+        this.currentWork = res;
+        if(res.idWork != 0 ){
+          this.enabled =  true;
+        } else{
+          this.enabled = false;
+        }
+      }
       )
 
   }
