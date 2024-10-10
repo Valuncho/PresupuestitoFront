@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Person } from '../../../../../core/model/Person';
-
 import { Supplier } from '../../../../../core/model/Supplier';
 import { ModalService } from '../../../../../core/utils/modal.service';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { Material } from '../../../../../core/model/Material';
-import { NotificationService } from '../../../../../core/utils/notification.service';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { SupplierListComponent } from '../../../../supplier/components/supplier-list/supplier-list.component';
 
 
 @Component({
@@ -20,12 +20,13 @@ import { NotificationService } from '../../../../../core/utils/notification.serv
 export class MaterialFormComponent {
   //Utils
   private materialService = inject(MaterialService);
-  private notificationService = inject(NotificationService);
+  private materialController = inject(MaterialControllerService);
   private modalService = inject(ModalService);
+  
   //Properties
   
-  newMaterial :  Material = this.materialService.getEmptyMaterial();
-  isEdit : boolean = this.materialService.getController().getEditMode();
+  newMaterial :  Material = this.materialController.getEmptyMaterial();
+  isEdit : boolean = this.materialController.getEditMode();
   
   //Properties
 
@@ -117,7 +118,7 @@ export class MaterialFormComponent {
     })
 
     if(this.isEdit){
-      this.materialService.getController().getMaterial().subscribe(res =>{
+      this.materialController.getMaterial().subscribe(res =>{
         this.newMaterial = res!;
       })
      this.MaterialForm.patchValue(this.newMaterial)
@@ -125,7 +126,7 @@ export class MaterialFormComponent {
   }
 
   openSupplierForm(){
-    //this.modalService.openModal<SupplierListComponent,Supplier>(SupplierListComponent);
+    this.modalService.openModal<SupplierListComponent,Supplier>(SupplierListComponent);
   }
   resetForm($Event : Event){
     this.MaterialForm.reset();
@@ -133,18 +134,10 @@ export class MaterialFormComponent {
   onSubmit(){
     
     if(this.isEdit){
-      this.materialService.postMaterial(this.newMaterial).subscribe(
-        {
-          next: () => this.notificationService.showNotification("¡Material cargado con éxito!")  
-        }
-      );
+      this.materialService.postMaterial(this.newMaterial).subscribe();
     }else{
-      this.materialService.putMaterial(this.newMaterial).subscribe(
-        {
-          next: () => this.notificationService.showNotification("¡Material editado con éxito!")  
-        }
-      );;
-      this.materialService.getController().setEditMode(false);
+      this.materialService.putMaterial(this.newMaterial).subscribe();
+      this.materialController.setEditMode(false);
     }
   }
 }
