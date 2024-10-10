@@ -1,8 +1,10 @@
 <section>
     <article>
-        <app-supplier [supplier] = "currentSupplier.oSupplier"/>       
+        <app-supplier [supplier] = "currentSupplier.oSupplier"/>   
+        <button class="Boton1"(click)="goToSalaryForm()">Crear proveedor nuevo</button>
+        <button class="Boton1"(click)="openPaymentForm()">Cargar proveedor nuevo</button>    
         <div class="Details">
-            <h3 class="Details-title">Pagos del supplier</h3>
+            <h3 class="Details-title">Pagos del proveedor</h3>
             <!--<app-payments-table [pagos]="payments" />-->
         </div>        
     </article>

@@ -4,7 +4,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { API_URL, ENDPOINTS } from '../endpoints';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Invoice } from '../model/Invoice';
-import { ModalService } from './utils/modal.service';
+import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';

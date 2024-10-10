@@ -9,6 +9,12 @@ import { InvoiceListComponent } from '../../../invoice/components/invoice-list/i
 import { SupplierHistory } from '../../../../core/model/SupplierHistory';
 import { InvoiceDetailComponent } from '../../../invoice/pages/invoice-detail/invoice-detail.component';
 import { Invoice } from '../../../../core/model/Invoice';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { SalaryFormComponent } from '../../../salary/components/salary-form/salary-form.component';
+import { Salary } from '../../../../core/model/Salary';
+import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
+import { Payment } from '../../../../core/model/Payment';
+
 
 @Component({
     selector: 'app-supplier-details',
@@ -22,6 +28,7 @@ export class SupplierDetailsComponent {
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private supplierService = inject(SupplierService);
+    private modalService = inject(ModalService);
     id : number  = 0;
     currentSupplier! : SupplierHistory;
     @Input() invoice! : Invoice;
@@ -36,4 +43,12 @@ export class SupplierDetailsComponent {
         })
         
     }*/
+
+    openSalaryForm(){
+        //this.router.navigate(["/supplier/new/", this.id])
+        this.modalService.openModal<InvoiceListComponent,Invoice>(InvoiceListComponent);
+    }
+    openPaymentForm(){
+        this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
+    }
 }

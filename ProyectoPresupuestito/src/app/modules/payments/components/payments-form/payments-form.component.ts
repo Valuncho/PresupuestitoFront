@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, ActivatedRoute } from '@angular/router';
 import { Payment } from '../../../../core/model/Payment';
 import { PaymentService } from '../../../../core/services/payment.service';
-import { NotificationService } from '../../../../core/services/utils/notification.service';
+import { NotificationService } from '../../../../core/utils/notification.service';
 import { PaymentControllerService } from '../../../../core/controllers/payment-controller.service';
 
 @Component({
