@@ -6,6 +6,7 @@ import { WorkService } from '../../../../core/services/work.service';
 import { Router } from '@angular/router';
 import {BudgetService} from "../../../../core/services/budget.service";
 import { MaterialManagerComponent } from "../../../materials/components/forms/material-manager/material-manager.component";
+import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
 
 @Component({
   selector: 'app-work-area',
@@ -17,9 +18,8 @@ import { MaterialManagerComponent } from "../../../materials/components/forms/ma
 export class WorkAreaComponent {
   //Util
   private workService = inject(WorkService);
-  private budgetService = inject(BudgetService);
-  private router = inject(Router);
-  private currentWork = this.workService.getEmptyWork();
+  private materialController = inject(MaterialControllerService);
+
   ngOnInit(): void {
     /*
     this.workService.getSelectedWork().subscribe(work =>{
@@ -30,6 +30,8 @@ export class WorkAreaComponent {
     }*/
   }
 
-
+  handlerItem(){
+    //this.materialController.setItem()
+  }
 
 }

@@ -7,6 +7,7 @@ import { MaterialService } from '../../../../../core/services/material.service';
 import { ModalService } from '../../../../../core/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
 @Component({
   selector: 'app-category-list',
@@ -20,6 +21,7 @@ export class CategoryListComponent {
    private dialog = inject(MatDialog);
    private modalService = inject(ModalService);
    private materialService = inject(MaterialService);
+   private materialController = inject(MaterialControllerService);
    
  
  
@@ -48,21 +50,20 @@ export class CategoryListComponent {
      this.materialService.getCategories().subscribe(
        {  
          next: x => this.categories = x,  
-         error: err => console.error('An error occurred :', err),  
-         complete: () => console.log('There are no more action happen.')  
+         
        }
      )
      
    }
  
    seleccionar($Event : Category){
-     this.materialService.getController().setCategory($Event);
+     this.materialController.setCategory($Event);
    } 
  
    editar($Event : Category){
      
-     this.materialService.getController().setEditMode(true);
-     this.materialService.getController().setCategory($Event);
+     this.materialController.setEditMode(true);
+     this.materialController.setCategory($Event);
      this.modalService.openModal<CategoryFormComponent,Category>(CategoryFormComponent);
    }
  

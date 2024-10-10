@@ -79,5 +79,51 @@ export class MaterialControllerService {
     this.InvoiceItem.next(invoiceItem);
   }
 
+  //Metodos para objetos vacios
+  getEmptyMaterial() : Material{
+    return {
+        idMaterial: 0,
+        name: '',
+        description: '',
+        color: '',
+        brand: '',
+        measure: '',
+        unitOfMeasure: '',
+        subCategory : this.getEmptySubCategory()
+      
+    }
+  }
+
+  getEmptySubCategory() : SubCategoryMaterial{
+    return {
+      idCategoryMaterial: 0,
+      name: '',
+      category: this.getEmptyCategory()
+    }
+  }
+  
+  getEmptyCategory() : Category{
+    return{
+      idCategory: 0,
+      name: ''
+    }
+  }
+
+  getEmptyItem() : Item {
+    return {
+      idItem: 0,
+      material:this.getEmptyMaterial(),
+      quantity: 0
+    }
+  }
+  getEmptyInvoiceItem() : InvoiceItem {
+    return {
+      idInvoiceItem: 0,
+      material:this.getEmptyMaterial(),
+      quantity: 0,
+      price:0
+    }
+  }
+
   
 }

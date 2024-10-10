@@ -5,25 +5,32 @@
         <div class="invalid">
           
           @if (paymentForm.get('fecha')?.invalid) {
-            <p>fecha es obligatoria.</p>
+            <p>La fecha es obligatoria.</p>
           }
           
           @if (paymentForm.get('monto')?.invalid) {
-            <p>el monto es obligatorio.</p>
+            <p>El monto es obligatorio.</p>
           }
   
           @if (paymentForm.get('metodoPago')?.invalid) {
-            <p>El metodo de pago es obligatorio.</p>
+            <p>El método de pago es obligatorio.</p>
           }
   
           @if(paymentForm.get('Descripcion')?.invalid ){
-            <p>la descripcion es obligatoria.</p>
+            <p>La descripcion es obligatoria.</p>
           }
       
         </div>
       }     
       
-      <legend class="List-title">Cargar pago</legend>
+      <legend class="List-title">  
+        @if (isEdit) {
+        Actualizar pago
+        }@else {
+          Cargar pago nuevo
+        }
+      </legend>
+
       <label for="fecha">Fecha:</label>
       <input type="text" name="fecha" id="fecha" placeholder="fecha..." formControlName="fecha">
       <label for="monto">Monto:</label>

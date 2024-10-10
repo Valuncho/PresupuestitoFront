@@ -2,13 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { Category } from '../model/Category';
 import { SubCategoryMaterial } from '../model/SubCategoryMaterial';
 import { Material } from '../model/Material';
-import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL,ENDPOINTS } from '../endpoints';
-import { MaterialControllerService } from '../controllers/material-controller.service';
 import { NotificationService } from '../utils/notification.service';
-import { Item } from '../model/Item';
-import { InvoiceItem } from '../model/invoiceItem';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
@@ -24,14 +21,10 @@ import { ModalService } from '../utils/modal.service';
 export class MaterialService {
   //Utils
   private http = inject(HttpClient);
-  private controller = inject(MaterialControllerService);
   private notification = inject(NotificationService);
   private error = inject(ErrorControllerService);
   private modal = inject(ModalService);
   
-  getController(){
-    return this.controller;
-  }
 
   /**
    * Retorna todos los materiales disponibles guardados.
@@ -45,7 +38,7 @@ export class MaterialService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );       
+    );  
   }
   /**
    * Retorna al material solicitado por id.
@@ -307,52 +300,7 @@ export class MaterialService {
     );    
   }
 
-  //Metodos para objetos vacios
-  getEmptyMaterial() : Material{
-    return {
-        idMaterial: 0,
-        name: '',
-        description: '',
-        color: '',
-        brand: '',
-        measure: '',
-        unitOfMeasure: '',
-        subCategory : this.getEmptySubCategory()
-      
-    }
-  }
-
-  getEmptySubCategory() : SubCategoryMaterial{
-    return {
-      idCategoryMaterial: 0,
-      name: '',
-      category: this.getEmptyCategory()
-    }
-  }
   
-  getEmptyCategory() : Category{
-    return{
-      idCategory: 0,
-      name: ''
-    }
-  }
-
-  getEmptyItem() : Item {
-    return {
-      idItem: 0,
-      material:this.getEmptyMaterial(),
-      quantity: 0
-    }
-  }
-  getEmptyInvoiceItem() : InvoiceItem {
-    return {
-      idInvoiceItem: 0,
-      material:this.getEmptyMaterial(),
-      quantity: 0,
-      price:0
-    }
-  }
-
 }
   
 

@@ -34,4 +34,20 @@ li:hover{
     color: var(--cerezo);
     background-color: var(--gris);
 }
-  
+ 
+.oculto{
+    display: none;
+}
+@media only screen and (max-width: 600px) {
+    nav ul{
+        flex-direction: column;
+        align-items: center;
+        justify-content: stretch;
+    }
+    nav ul li{
+        width: 80%;
+    }
+    .oculto{
+        display: block;
+    }
+}

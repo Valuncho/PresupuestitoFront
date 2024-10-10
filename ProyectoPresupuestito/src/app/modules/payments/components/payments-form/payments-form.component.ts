@@ -80,10 +80,10 @@ export class PaymentsFormComponent {
         this.currentPayment = this.paymentForm.value;
         if(this.isEdit){
         //this.paymentService.handleUpdatePayment(this.currentPayment);
-        this.notificationService.showNotification("pago editado con éxito!");
+        //this.notificationService.showNotification("pago editado con éxito!");
         }else{
         //this.paymentService.handlePostPayment(this.currentPayment);
-        this.notificationService.showNotification("pago guardado con éxito!");
+       // this.notificationService.showNotification("pago guardado con éxito!");
         }
         this.setUp();
     }

@@ -7,6 +7,7 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 import { SubcategoryFormComponent } from '../../forms/subcategory-form/subcategory-form.component';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
 @Component({
   selector: 'app-subcategory-list',
@@ -19,8 +20,8 @@ export class SubcategoryListComponent {
   //Utils
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
+  private materialController = inject(MaterialControllerService);
   private materialService = inject(MaterialService);
-
   //subcategories : SubCategoryMaterial[] = []
 
   subCategories : SubCategoryMaterial[] = [
@@ -99,8 +100,8 @@ export class SubcategoryListComponent {
 
 
   editar($Event : SubCategoryMaterial){
-    this.materialService.getController().setEditMode(true);
-    this.materialService.getController().setSubcategory($Event);
+    this.materialController.setEditMode(true);
+    this.materialController.setSubcategory($Event);
     this.modalService.openModal<SubcategoryFormComponent,SubCategoryMaterial>(SubcategoryFormComponent);
   }
 
@@ -113,8 +114,7 @@ export class SubcategoryListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.materialService.deleteSubCategory($Event.idCategoryMaterial);
-        //this.notification.showNotification("Rubro eliminado con éxito");
+        this.materialService.deleteSubCategory($Event.idCategoryMaterial).subscribe();
       }
     });
 

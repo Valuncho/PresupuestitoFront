@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Category } from '../../../../../core/model/Category';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { MaterialService } from '../../../../../core/services/material.service';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
 @Component({
   selector: 'app-subcategory-form',
@@ -14,9 +15,10 @@ import { MaterialService } from '../../../../../core/services/material.service';
 export class SubcategoryFormComponent {
   //Utils
   private materialService = inject(MaterialService);
+  private materialController = inject(MaterialControllerService);
   //Properties
-  newSubCategory : SubCategoryMaterial = this.materialService.getEmptySubCategory();
-  isEdit : boolean = this.materialService.getController().getEditMode();
+  newSubCategory : SubCategoryMaterial = this.materialController.getEmptySubCategory();
+  isEdit : boolean = this.materialController.getEditMode();
   categories : Category[]=[
     {
       idCategory: 1,
@@ -44,12 +46,11 @@ export class SubcategoryFormComponent {
   ngOnInit(): void {
     this.materialService.getCategories().subscribe({
       next: res => this.categories = res,  
-        error: err => console.error('An error occurred :', err),  
-        complete: () => console.log('There are no more action happen.')  
+      
     })
 
     if(this.isEdit){
-      this.materialService.getController().getSubcategory().subscribe(res =>{
+      this.materialController.getSubcategory().subscribe(res =>{
         this.newSubCategory = res!;
       })
       this.SubCategoryForm.patchValue({
@@ -71,7 +72,7 @@ export class SubcategoryFormComponent {
       this.materialService.postSubCategory(this.newSubCategory);
     }else{
       this.materialService.putSubCategory(this.newSubCategory);
-      this.materialService.getController().setEditMode(false);
+      this.materialController.setEditMode(false);
     }
   }
 
