@@ -4,10 +4,7 @@
     @for (budget of budgets | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget) {
       <app-budget-card
       [Budget]="budget"
-      [idBudget]="budget.idBudget"
-      (isSelect)="handleSelectBudget($event)"
-        (action)="handleAction($event)"
-        (isView)="handleView($event)"
+        (isSelect)="handleView($event)"
         (isEdit)="handleEdit($event)"
         (isDeleted)="handleDelete($event)"
       />
