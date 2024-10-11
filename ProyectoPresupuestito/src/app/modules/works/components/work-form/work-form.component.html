@@ -1,15 +1,34 @@
 
     <form [formGroup]="WorkForm" (ngSubmit)="onSubmit()" >
       <fieldset>
+        @if(WorkForm.invalid && WorkForm.dirty){
+          <div class="invalid">
+           
+            @if (WorkForm.get('order')?.invalid){
+              <p>Debe seleccionar una fecha de confección.</p>
+            }
+            @if (WorkForm.get('hours')?.invalid){
+              <p>Debe indicar las horas estimadas de trabajo.</p>
+            }
+            @if (WorkForm.get('deadLine')?.invalid){
+              <p>Debe seleccionar una fecha de finalización.</p>
+            }
+            @if (WorkForm.get('notes')?.invalid){
+              <p>Debe redactar una breve descripción del trabajo.</p>
+            }
+            @if (WorkForm.get('estado')?.invalid){
+              <p>Debe seleccionar un estado.</p>
+            }
+          </div>
+        }
         <legend class="List-title"> {{ isEdit ? 'Actualizar un trabajo' : 'Crear un trabajo' }}</legend>
         <label for="order">Orden:</label>
-        <input type="number" name="order" id="order" formControlName="Orden">
+        <input type="number" name="order" id="order" formControlName="order">
         <label for="hours">Horas estimadas:</label>
-        <input type="number" name="hours" id="hours" placeholder="Horas estimadas de trabajo" formControlName="hours"> 
+        <input type="number" name="hours" id="hours" formControlName="hours"> 
         <label for="deadLine">Fecha limite:</label>
-        <input type="date" name="deadLine" id="deadLine" formControlName="deadLine">
-        <label for="cost">Costo final:</label>
-        <input type="number" name="cost" id="cost" placeholder="Costo total" formControlName="cost"> 
+        <input type="date" name="deadLine" id="deadLine" formControlName="deadLine" >
+        
         <label for="notes">Notas:</label>
         <textarea name="notes" id="notes" formControlName="notes"></textarea>
         <label for="cost">Estado:</label>
