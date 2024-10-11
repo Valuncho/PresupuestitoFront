@@ -94,7 +94,7 @@ export class BudgetService {
    * @returns un observable de tipo objeto
    */
   putBudget(budget: Budget) {
-    const url = API_URL+ENDPOINTS.budgets.update;
+    const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.idBudget.toString());
     return this.http.put(url,budget).pipe(
       tap(() => {
         this.notification.showNotification("¡Presupuesto actualizado con éxito!"); 
@@ -115,7 +115,7 @@ export class BudgetService {
    * @returns un observable de tipo objeto
    */
   deleteBudget(idBudget: number) {
-    const url = API_URL+ENDPOINTS.budgets.delete;
+    const url = API_URL+ENDPOINTS.budgets.delete.replace(':id', idBudget.toString());
     return this.http.put(url,idBudget).pipe(
       tap(() => {
         this.notification.showNotification("¡Presupuesto eliminado con éxito!"); 

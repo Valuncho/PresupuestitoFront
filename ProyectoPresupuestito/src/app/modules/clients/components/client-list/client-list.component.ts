@@ -114,9 +114,10 @@ export class ClientListComponent {
   }
 
   handleEditClient($Event : Client){
-    this.clientController.setEditMode(true);
-    this.clientController.setClient($Event);
     this.router.navigate(['/client/edit/',$Event.idClient]);
+    this.clientController.setEditMode(true);
+   
+    
   }
 
   handleDeleteClient($Event : Client){

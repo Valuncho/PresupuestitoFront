@@ -1,9 +1,9 @@
 
     <section class="Arriba">
         <article>
+            <app-client [client]="budgetClient"/>
             <app-budget [budget]="currentBudget"/>
             <button class="Boton1" (click)="calculatePrice()">Calcular precio presupuesto</button>
-            <app-client [client]="budgetClient"/>
             <app-work [work]="currentWork!"/>
             <button class="Boton1" (click)="calculatePrice()">Calcular precio trabajo</button>
         </article>
