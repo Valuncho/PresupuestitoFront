@@ -77,7 +77,6 @@ export class CategoryListComponent {
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
          this.materialService.deleteCategory($Event.idCategory);
-         //this.notification.showNotification("Rubro eliminado con éxito");
        }
      });
  

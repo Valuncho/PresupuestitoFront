@@ -37,7 +37,6 @@ export class BudgetFormComponent {
   //Utils
   private readonly _adapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
   private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
-  
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private modalService = inject(ModalService);

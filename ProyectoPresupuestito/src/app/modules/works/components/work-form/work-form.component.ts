@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { WorkService } from '../../../../core/services/work.service';
-import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,29 +18,35 @@ import { Work } from '../../../../core/model/Work';
   styleUrl: './work-form.component.css'
 })
 export class WorkFormComponent {
-
   //Utils
   private workController = inject(WorkControllerService);
   private workService = inject(WorkService);
-
+  
   //Properties
   currentWork : Work = this.workController.getEmptyWork();
   estados = this.workService.getEstados();
-  isEdit : boolean = false;
-
+  isEdit : boolean = this.workController.getEditMode();
   //Form
   WorkForm : FormGroup = new FormGroup({
-    deadLine : new FormControl('', Validators.required),
+    deadLine : new FormControl(new Date(), Validators.required),
     notes : new FormControl('', Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
     hours : new FormControl(1, Validators.required),
     order : new FormControl(1, Validators.required),
   });
 
-  ngOnInit(): void {
-
+  ngAfterViewInit(): void {
+    if(this.isEdit){
+      this.workController.getWork().subscribe(res =>{
+        this.currentWork = res!;
+      })
+      
+      //formatDate(this.currentWork.deadline, 'dd/MM/yyyy', 'es-ES')
+      this.WorkForm.patchValue({deadLine : this.currentWork.deadline, notes : this.currentWork.notes, order : this.currentWork.order, estado: this.currentWork.status, hours: this.currentWork.estimatedHoursWorked})
+      
+    }
+    
   }
-
   setUp(){
     this.WorkForm.reset();
     this.isEdit = false;

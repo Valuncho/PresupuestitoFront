@@ -3,12 +3,11 @@
   
 
         @for (work of works | paginate: { itemsPerPage: worksToPage, currentPage: workPage }; track work.idWork; let idx = $index) {
-
             <app-work-card
             [Work]="work" 
-            (isClick)="seleccionar($event)"
-            (isEdit)="editar($event)" 
-            (isDeleted)="eliminar($event)" 
+            (isClick)="handleView($event)"
+            (isEdit)="handleEdit($event)" 
+            (isDeleted)="handleDelete($event)" 
             />
         }@empty {
             <app-text-card [message]="'No hay trabajos que mostrar.'"/>

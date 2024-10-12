@@ -83,7 +83,7 @@ export class WorkService {
    * @returns un observable de tipo objeto
    */
   putWork(work: Work) {
-    const url = API_URL+ENDPOINTS.works.update;
+    const url = API_URL+ENDPOINTS.works.update.replace(':id', work.idWork.toString());
     return this.http.put(url,work).pipe(
       tap(() => {
         this.notification.showNotification("¡Trabajo editado con éxito!"); 
@@ -104,7 +104,7 @@ export class WorkService {
    * @returns un observable de tipo objeto
    */
    deleteWork(idWork: number) {
-    const url = API_URL+ENDPOINTS.works.delete;
+    const url = API_URL+ENDPOINTS.works.delete.replace(':id', idWork.toString());
     return this.http.put(url,idWork).pipe(
       tap(() => {
         this.notification.showNotification("¡Trabajo eliminado con éxito!"); 
