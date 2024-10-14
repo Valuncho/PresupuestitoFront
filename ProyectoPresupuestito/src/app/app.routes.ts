@@ -15,7 +15,6 @@ import { CostViewComponent } from './modules/cost/pages/cost-view/cost-view.comp
 import { EmployeeFormComponent } from './modules/employee/components/employee-form/employee-form.component';
 import { EmployeeDetailsComponent } from './modules/employee/pages/employee-Details/employee-Details.component';
 import { EmployeeViewComponent } from './modules/employee/pages/employee-View/employee-View.component';
-import { InvoiceMakerComponent } from './modules/invoice/pages/invoice-maker/invoice-maker.component';
 import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
 import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
 
@@ -40,7 +39,7 @@ export const routes: Routes = [
     
     {path: 'material', component: MaterialViewComponent},
     {path: 'material/add', component: MaterialFormViewComponent},
-   
+
     {path: 'supplier', component: SupplierViewComponent},
     {path: 'supplier/detail/:supplierId', component: SupplierDetailsComponent},
     {path: 'supplier/edit', component: SupplierViewComponent},
@@ -48,11 +47,6 @@ export const routes: Routes = [
     {path: 'employee', component: EmployeeViewComponent},
     {path: 'employee/detail/:employeeId', component: EmployeeDetailsComponent},
     {path: 'employee/edit', component: EmployeeFormComponent},
-
-    
-    {path: 'invoice/new/:supplierId', component: InvoiceMakerComponent},
-    {path: 'invoice/edit/:invoiceId', component: InvoiceMakerComponent},
-    
     
     {path: 'cost', component: CostViewComponent},
     
