@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { SalaryCardComponent } from '../salary-card/salary-card.component';
 import { EmployeeService } from '../../../../core/services/employee.service';
 import { ModalService } from '../../../../core/utils/modal.service';
@@ -34,10 +34,9 @@ export class SalaryListComponent {
     private dialog = inject(MatDialog);
     private modalService = inject(ModalService);
     private employeeService = inject(EmployeeService);
-    salaries : Salary[] = [];
     //Properties
     options : boolean = false;
-    
+    @Input() salaries! : Salary[];
     //Pagination
     page = 1
     pageSize = 5

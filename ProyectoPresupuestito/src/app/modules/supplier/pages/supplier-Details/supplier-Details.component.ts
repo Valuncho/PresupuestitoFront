@@ -23,7 +23,24 @@ export class SupplierDetailsComponent {
     private activatedRoute = inject(ActivatedRoute);
     private supplierService = inject(SupplierService);
     id : number  = 0;
-    currentSupplier! : SupplierHistory;
+    currentSupplier : SupplierHistory = {
+        idSupplierHistory: 1,
+        oSupplier: {
+            idSupplier: 1001,
+            oPerson: {
+                idPerson: 1,
+                name: 'John',
+                lastName: 'Doe',
+                direction: '123 Main St',
+                phoneNumber: '1234567890',
+                mail: 'johndoe@example.com',
+                dni: '123456789',
+                cuit: '30-12345678-9',
+            },
+            note: 'nota vacia'
+        },
+        invoices: []
+    }
     @Input() invoice! : Invoice;
     
     /*

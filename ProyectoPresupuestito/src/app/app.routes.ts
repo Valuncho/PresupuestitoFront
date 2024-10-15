@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
-
 import { ClientDetailsComponent } from './modules/clients/pages/client-details/client-details.component';
 import { BudgetDetailsComponent } from './modules/budgets/pages/budget-details/budget-details.component';
 import { WorkAreaComponent } from './modules/works/pages/work-area/work-area.component';
@@ -17,6 +16,9 @@ import { EmployeeDetailsComponent } from './modules/employee/pages/employee-Deta
 import { EmployeeViewComponent } from './modules/employee/pages/employee-View/employee-View.component';
 import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
 import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
+import { InvoiceDetailComponent } from './modules/invoice/pages/invoice-detail/invoice-detail.component';
+import { invoiceFormComponent } from './modules/invoice/components/invoice-form/invoice-form.component';
+
 
 
 export const routes: Routes = [
@@ -49,6 +51,9 @@ export const routes: Routes = [
     {path: 'employee/edit', component: EmployeeFormComponent},
     
     {path: 'cost', component: CostViewComponent},
+
+    {path: 'invoice/detail/:invoiceId', component: InvoiceDetailComponent},
+    {path: 'invoice/edit/:invoiceId', component: invoiceFormComponent},
     
     
     {path: '', redirectTo: 'home' , pathMatch: 'full'},
