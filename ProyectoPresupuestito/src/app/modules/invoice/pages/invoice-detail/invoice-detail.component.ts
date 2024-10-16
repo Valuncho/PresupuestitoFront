@@ -8,11 +8,12 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
 import { SupplierDetailsComponent } from '../../../supplier/pages/supplier-Details/supplier-Details.component';
 import { SupplierComponent } from '../../../supplier/components/supplier/supplier.component';
 import { SupplierHistory } from '../../../../core/model/SupplierHistory';
+import { InvoiceItemListComponent } from "../../components/invoice-item-list/invoice-item-list.component";
 
 @Component({
   selector: 'app-invoice-detail',
   standalone: true,
-  imports: [InvoiceListComponent,InvoiceComponent,SupplierDetailsComponent,SupplierComponent],
+  imports: [InvoiceComponent, SupplierDetailsComponent, SupplierComponent, InvoiceItemListComponent],
   templateUrl: './invoice-detail.component.html',
   styleUrl: './invoice-detail.component.css'
 })
