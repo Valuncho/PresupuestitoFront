@@ -5,5 +5,5 @@ export interface EmployeeHistory
 {
     idEmployeeHistory : number;
     oEmployee : Employee;
-    oSalary : Salary[];
+    Salaries : Salary[];
 }

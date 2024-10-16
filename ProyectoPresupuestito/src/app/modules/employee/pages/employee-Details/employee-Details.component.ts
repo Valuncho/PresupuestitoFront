@@ -46,7 +46,7 @@ export class EmployeeDetailsComponent {
             idEmployee: 0,
             salary: 0
         },
-        oSalary: []
+        Salaries: []
     }
     employee = signal<Employee | undefined>(undefined);
     salaries : Salary[] | undefined = [];
