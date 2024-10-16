@@ -28,7 +28,16 @@ export class CostListComponent {
     
     private costService = inject(CostService);
     //Properties
-    fixedCosts : FixedCost[] = [];
+    fixedCosts : FixedCost[] = [
+        {
+            idFixedCost: 0,
+            description: '',
+            amount: 0,
+            workingDays: 0,
+            hoursWorked: 0,
+            date: new Date(0)
+        }
+    ];
     
     //BudgetForm
     options = false;

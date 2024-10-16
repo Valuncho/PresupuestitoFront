@@ -46,12 +46,14 @@ export class EmployeeDetailsComponent {
             idEmployee: 0,
             salary: 0
         },
-        Salaries: [{
+        salaries: [
+            {
             idSalary: 0,
             amount: 0,
             billDate: 0,
             payments: []
-        }]
+        }
+        ]
     }
     employee = signal<Employee | undefined>(undefined);
     salaries : Salary[] | undefined = [];
