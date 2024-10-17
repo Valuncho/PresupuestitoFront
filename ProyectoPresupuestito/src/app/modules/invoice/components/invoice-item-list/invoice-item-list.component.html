@@ -2,9 +2,9 @@
     <h3 class="List-title">Listado de items</h3>
     
     <div class="Interior">
-        @for (item of invoice.oItems; track $index) {
+        @for (item of invoice.materials; track $index) {
         <p>{{ item.material.name }} * {{ item.quantity }}</p>
         }@empty {
-            <app-text-card [message]="'No hay items que mostrar'"/>}
+            <app-text-card [message]="'No hay items que mostrar.'"/>}
     </div>
 </div>

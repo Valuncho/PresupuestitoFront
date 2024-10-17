@@ -26,9 +26,9 @@ export class InvoiceDetailComponent {
     currentInvoice : Invoice = {
       idInvoice: 0,
       date: new Date(0),
-      oPayment: [],
+      payments: [],
       isPaid: false,
-      oItems: []
+      materials: []
     }
     invoice = signal<Invoice | undefined>(undefined);
     

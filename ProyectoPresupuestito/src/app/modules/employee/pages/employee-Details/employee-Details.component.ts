@@ -49,7 +49,7 @@ export class EmployeeDetailsComponent {
         salaries: [
             {
             idSalary: 0,
-            amount: 0,
+            amount: 400,
             billDate: 0,
             payments: []
         }

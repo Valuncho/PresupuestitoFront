@@ -5,12 +5,11 @@
         <button class="Boton1"(click)="openPaymentForm()">Cargar pago nuevo</button>    
         <div class="Details">
             <h3 class="Details-title">Pagos del proveedor</h3>
-            <h3 class="Details-title">Pagos del proveedor</h3>
             <!--<app-payments-table [pagos]="payments" />-->
         </div>  
         
     </article>
-    <article>
-        
-    </article>
+   <app-invoice-list
+   [invoices]="currentSupplier.invoices"
+   />
 </section>
