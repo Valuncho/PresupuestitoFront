@@ -116,7 +116,7 @@ export class BudgetService {
    */
   deleteBudget(idBudget: number) {
     const url = API_URL+ENDPOINTS.budgets.delete.replace(':id', idBudget.toString());
-    return this.http.put(url,idBudget).pipe(
+    return this.http.patch(url,idBudget).pipe(
       tap(() => {
         this.notification.showNotification("¡Presupuesto eliminado con éxito!"); 
       }),

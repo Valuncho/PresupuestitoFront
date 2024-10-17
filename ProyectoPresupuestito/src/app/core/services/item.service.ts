@@ -106,7 +106,7 @@ export class ItemService {
    */
   deleteItem(idItem: number) {
     const url = API_URL+ENDPOINTS.items.delete.replace(':id', idItem.toString());
-    return this.http.put(url,idItem).pipe(
+    return this.http.patch(url,idItem).pipe(
       tap(() => {
         this.notification.showNotification("¡Item eliminado con éxito!"); 
       }),

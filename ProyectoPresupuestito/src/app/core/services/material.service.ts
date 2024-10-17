@@ -107,7 +107,7 @@ export class MaterialService {
    */
   deleteMaterial(idMaterial: number){
     const url = API_URL+ENDPOINTS.materials.delete;
-    return this.http.put(url,idMaterial).pipe(
+    return this.http.patch(url,idMaterial).pipe(
       tap(() => {
         this.notification.showNotification("¡Material eliminado con éxito!"); 
       }),
@@ -198,7 +198,7 @@ export class MaterialService {
    */
   deleteSubCategory(idSubCategory: number){
     const url = API_URL+ENDPOINTS.subCategories.delete;
-    return this.http.put(url,idSubCategory).pipe(
+    return this.http.patch(url,idSubCategory).pipe(
       tap(() => {
         this.notification.showNotification("¡Sub-rubro eliminado con éxito!"); 
       }),
@@ -307,7 +307,7 @@ export class MaterialService {
    */
   deleteCategory(idCategory : number){
     const url = API_URL+ENDPOINTS.categories.delete;
-    this.http.put(url,idCategory).pipe(
+    this.http.patch(url,idCategory).pipe(
       tap(() => {
         this.notification.showNotification("¡Rubro eliminado con éxito!"); 
       }),

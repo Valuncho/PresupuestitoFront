@@ -111,7 +111,7 @@ export class ClientService {
    */
   deleteClient(idClient: number) {
     const url = API_URL+ENDPOINTS.clients.delete.replace(':id', idClient.toString());
-    return this.http.put(url,idClient).pipe(
+    return this.http.patch(url,idClient).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente eliminado con éxito!"); 
       }),
