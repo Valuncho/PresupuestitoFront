@@ -64,12 +64,12 @@ export class EmployeeControllerService {
       idSalary: 0,
       amount: 0,
       billDate: 0,
-      oPayment:{
+      payments:[{
         idPayment:0,
         date: new Date(0),
         amount: 0,
         description: "",
-      }
+      }]
     }; 
 
 }

@@ -87,9 +87,7 @@ button {
     border: none;
 }
 
-.Arriba {
-    align-items: flex-start;
-}
+
 
 /*Forms*/
 
@@ -335,14 +333,19 @@ form .invalid p::before{
 
 
 @media only screen and (max-width: 950px) {
-    main section{
+    main section, article{
         flex-direction: column;
         align-items: center;
     }
+
+    
     .List, .Componente, form {
         min-width: 50vh;
         max-width: 40vw;
         
+    }
+    .Details{
+        min-width: 300px;
     }
     
 
@@ -360,6 +363,14 @@ form .invalid p::before{
         min-width: 260px;
         border-radius: 10px;
     }
-  
+    
 
 }
+
+@media (orientation: landscape) {
+  
+    .List, form, .Componente {
+        min-width: 360px;
+        border-radius: 10px;
+    }
+  }

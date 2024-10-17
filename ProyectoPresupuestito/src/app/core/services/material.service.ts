@@ -9,6 +9,7 @@ import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
+
 /**
  * @class MaterialService
  * 
@@ -222,6 +223,23 @@ export class MaterialService {
     })
     );    
   }
+
+  /**
+   * METODO PARA PROBAR CON EL BACKEND,
+   * SE PUEDE ELIMINAR MAS ADELANTE
+   * @returns 
+
+  getC() : Observable<dto[]>{
+    return this.http.get<dto[]>(API_URL+ENDPOINTS.categories.getAll).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );    
+  }
+   */
+
 /**
    * Retorna al rubro solicitado por id.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
@@ -248,6 +266,7 @@ export class MaterialService {
    */
   postCategory(newCategory : Category){
     const url = API_URL+ENDPOINTS.categories.post;
+    console.log(url)
     return this.http.post(url,newCategory).pipe(
       tap(() => {
         this.notification.showNotification("¡Rubro creado con éxito!"); 

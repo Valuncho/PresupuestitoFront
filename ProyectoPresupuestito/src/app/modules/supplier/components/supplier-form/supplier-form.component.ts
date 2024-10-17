@@ -5,6 +5,8 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { Router, ActivatedRoute } from '@angular/router';
 import { SupplierService } from '../../../../core/services/supplier.service';
 import { NotificationService } from '../../../../core/utils/notification.service';
+import { Supplier } from '../../../../core/model/Supplier';
+import { SupplierControllerService } from '../../../../core/controllers/supplier-controller.service';
 
 
 @Component({
@@ -20,8 +22,9 @@ export class SupplierFormComponent {
     private activatedRoute = inject(ActivatedRoute);
     private notificationService = inject(NotificationService);
     private supplierService = inject(SupplierService);
+    private supplierController = inject(SupplierControllerService);
     //Properties
-    //currentSupplier : Supplier = this.supplierService.getEmptySupplier();
+    currentSupplier : Supplier = this.supplierController.getEmptySupplier();
     supplierId? : number;
     isEdit : boolean = false;
     //Form
@@ -80,14 +83,14 @@ export class SupplierFormComponent {
     }
 
     onSubmit(){
-        //this.currentSupplier.oPerson = this.supplierForm.value;
+        this.currentSupplier.oPerson = this.supplierForm.value;
 
         if(this.isEdit){
-        //this.supplierService.handleUpdateSupplier(this.currentSupplier);
-        this.notificationService.showNotification("supplier editado con éxito!");
+            this.supplierService.putSupplier(this.currentSupplier).subscribe();
         }else{
-        //this.supplierService.handlePostSupplier(this.currentSupplier);
-        this.notificationService.showNotification("supplier guardado con éxito!");
+        
+        this.supplierService.postSupplier(this.currentSupplier).subscribe();
+        
         }
         this.setUp();
     }

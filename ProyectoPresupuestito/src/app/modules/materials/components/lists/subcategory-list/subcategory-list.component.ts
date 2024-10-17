@@ -94,7 +94,9 @@ export class SubcategoryListComponent {
 
 
   ngOnInit(): void {
-    
+    this.materialService.getSubCategories().subscribe(res=>{
+      this.subCategories = res;
+    })
     
   }
 

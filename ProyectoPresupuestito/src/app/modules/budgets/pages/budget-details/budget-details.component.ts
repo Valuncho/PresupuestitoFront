@@ -102,7 +102,7 @@ export class BudgetDetailsComponent {
           status: 'En proceso',
           notes: 'Paint the walls'
       }
-      ], // Replace with actual work data if needed
+      ], 
       createdDate: new Date('2023-08-20'),
       deadLine: new Date('2023-12-22'),
       description: 'Kitchen renovation',
@@ -110,7 +110,7 @@ export class BudgetDetailsComponent {
       Status: 'Cancelado',
       payments: [
         
-      ], // Or provide payment data if needed
+      ],
     
   }; 
   budgetId? : number;
@@ -139,9 +139,9 @@ export class BudgetDetailsComponent {
         next : res => this.currentBudget  = res,
       }
      )
-    this.workController.getWork().subscribe(res =>{
-      this.currentWork = res
-    })
+    // this.workController.getWork().subscribe(res =>{
+    //   this.currentWork = res
+    // })
   }
 
   goToWorkArea(){

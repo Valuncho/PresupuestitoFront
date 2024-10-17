@@ -9,6 +9,7 @@ import { CategoryFormComponent } from '../../forms/category-form/category-form.c
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
+
 @Component({
   selector: 'app-category-list',
   standalone: true,
@@ -24,8 +25,8 @@ export class CategoryListComponent {
    private materialController = inject(MaterialControllerService);
    
  
- 
-   //categories : Category[] = []
+ //SE PUEDE BORRAR PORQUE SE USO PARA PROBAR CON EL BACK
+   //categories : dto[] = []
    categories : Category[]=[
      {
        idCategory: 1,

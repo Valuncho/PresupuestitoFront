@@ -105,7 +105,7 @@ export class WorkService {
    */
    deleteWork(idWork: number) {
     const url = API_URL+ENDPOINTS.works.delete.replace(':id', idWork.toString());
-    return this.http.put(url,idWork).pipe(
+    return this.http.patch(url,idWork).pipe(
       tap(() => {
         this.notification.showNotification("¡Trabajo eliminado con éxito!"); 
       }),

@@ -4,6 +4,7 @@ import { MaterialService } from '../../../../../core/services/material.service';
 import { Category } from '../../../../../core/model/Category';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
+
 @Component({
   selector: 'app-category-form',
   standalone: true,
@@ -42,9 +43,16 @@ export class CategoryFormComponent {
   onSubmit(){
     this.newCategory.name = this.CategoryForm.value["name"]
     if(!this.isEdit){
-      this.materialService.postCategory(this.newCategory);
+      this.materialService.postCategory(this.newCategory).subscribe();
+
+      //CODIGO QUE SE USO PARA PROBAR CON EL BACK SE PUEDE BORRAR MAS ADELANTE
+      // let c : dto = {
+      //   CategoryName : this.CategoryForm.value["name"],
+      //   CategoryModel: "hola"
+      // }
+      //this.materialService.postCategory(c).subscribe();
     }else{
-      this.materialService.putCategory(this.newCategory);
+      this.materialService.putCategory(this.newCategory).subscribe();
       this.materialController.setEditMode(false);
     }
   }

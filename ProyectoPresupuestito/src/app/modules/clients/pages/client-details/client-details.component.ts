@@ -52,31 +52,23 @@ export class ClientDetailsComponent {
     budgets: [
       {
         idBudget: 1,
-        works: [
-          
-        ], // Replace with actual work data if needed
+        works: [], 
         createdDate: new Date('2023-08-20'),
         deadLine: new Date('2023-12-22'),
         description: 'Kitchen renovation',
         cost: 5000,
         Status: 'Cancelado',
-        payments: [
-          
-        ], // Or provide payment data if needed
+        payments: [], 
       },
       {
         idBudget: 2,
-        works: [
-          
-        ],
+        works: [],
         createdDate: new Date('2024-01-15'),
         deadLine: new Date('2024-02-15'),
         description: 'Bathroom remodeling',
         cost: 3000,
         Status: 'Aprobado',
-        payments: [
-          // Payment data if applicable
-        ],
+        payments: [],
       }
     ]
 
