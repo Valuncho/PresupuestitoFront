@@ -213,7 +213,7 @@ export class EmployeeService {
     const url = API_URL+ENDPOINTS.employees.delete;
     return this.http.patch(url,idEmployee).pipe(
       tap(() => {
-        this.notification.showNotification("¡empleado eliminado con éxito!"); 
+        this.notification.showNotification("¡Empleado eliminado con éxito!"); 
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);

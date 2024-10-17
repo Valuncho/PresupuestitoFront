@@ -27,8 +27,6 @@ export class SalaryCardComponent {
 
     @Input() Salary: Salary | undefined;
 
-    @Output() isView = new EventEmitter<Salary>();
-    @Output() action = new EventEmitter<Salary>();
     @Output() isSelected = new EventEmitter<Salary>();
     @Output() isEdit = new EventEmitter<Salary>();
     @Output() isDeleted = new EventEmitter<Salary>();
@@ -48,9 +46,6 @@ export class SalaryCardComponent {
     
     select(){
         this.isSelected.emit(this.Salary);
-    }
-    view(){
-        this.isView.emit(this.Salary);
     }
     edit(){
         this.isEdit.emit(this.Salary);

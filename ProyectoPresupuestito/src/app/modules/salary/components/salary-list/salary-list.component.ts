@@ -10,6 +10,7 @@ import { Salary } from '../../../../core/model/Salary';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { SalaryControllerService } from '../../../../core/controllers/salary-controller.service';
 
 /**
  * @class salaryListComponent
@@ -34,12 +35,14 @@ export class SalaryListComponent {
     private dialog = inject(MatDialog);
     private modalService = inject(ModalService);
     private employeeService = inject(EmployeeService);
+    private salaryController = inject(SalaryControllerService);
     //Properties
     options : boolean = false;
     @Input() salaries! : Salary[];
     //Pagination
     page = 1
     pageSize = 5
+    
 
 
     ngOnInit(): void {
@@ -50,35 +53,25 @@ export class SalaryListComponent {
 
     }
 
-    //BudgetForm
-    addClientHandler(){
-        this.modalService.openModal<SalaryFormComponent,Salary>(SalaryFormComponent);
-    }
-
     //Card
-    handleAction($Event : Salary){
-
-        this.router.navigate(['/salary/new/',$Event.idSalary]);
-    }
-
-    handleViewSalary($Event : Salary){    
-        this.router.navigate(['/salary/detail/',$Event.idSalary]);
-    }
 
     handleEditSalary($Event : Salary){
-        this.router.navigate(['/client/edit/',$Event.idSalary]);
+        
+        this.salaryController.setEditMode(true);
+        this.salaryController.setSalary($Event);
+        this.modalService.openModal<SalaryFormComponent,Salary>(SalaryFormComponent);    
     }
 
     handleDeleteSalary($Event : Salary){
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
-            mensaje: `¿Estás seguro de que deseas eliminar el salario ${$Event.idSalary}?`
+            mensaje: `¿Estás seguro de que deseas eliminar el salario:$ ${$Event.amount}?`
         }
         });
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const salary = this.employeeService.getSalaryById($Event.idSalary)!;
+            const salaries = this.employeeService.getSalaryById($Event.idSalary)!;
             this.employeeService.deleteSalary($Event.idSalary).subscribe(
             {
                 next: () => this.router.navigate(['/salary'])
@@ -88,7 +81,7 @@ export class SalaryListComponent {
         }
         });
 
-    } 
+    }  
 
     //Pagination
     pageChange(page: number) {
