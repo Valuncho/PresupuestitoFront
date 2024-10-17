@@ -1,12 +1,6 @@
 <div class="List">
     <h3 class="List-title">Listado de boletas</h3>
     
-    <app-invoice-search
-      (results)="handleSearch($event)"
-      (sortedResults)="handleSearch($event)"
-    />
-  
-    
       @for (invoice of invoices | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
         <app-invoice-card
         [Invoice]="invoice"
@@ -15,7 +9,7 @@
         (isDeleted)="handleDeleteInvoice($event)"
         />
       }@empty {
-        <app-text-card [message]="'No hay boletas que mostrar'"/>
+        <app-text-card [message]="'No hay boletas que mostrar.'"/>
       }
     
     
