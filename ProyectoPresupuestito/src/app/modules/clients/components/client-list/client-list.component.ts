@@ -79,7 +79,6 @@ export class ClientListComponent {
 
 
   ngOnInit(): void {
-     
     this.clientService.getClients().subscribe({  
       next: x => this.clients = x,  
     })

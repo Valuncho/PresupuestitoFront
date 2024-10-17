@@ -11,6 +11,7 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 import { SalaryControllerService } from '../../../../core/controllers/salary-controller.service';
+import { SalaryService } from '../../../../core/services/salary.service';
 
 /**
  * @class salaryListComponent
@@ -22,7 +23,7 @@ import { SalaryControllerService } from '../../../../core/controllers/salary-con
     selector: 'app-salary-list',
     standalone: true,
     imports: [
-        CommonModule,SalaryCardComponent,SalaryFormComponent,NgxPaginationModule,TextCardComponent
+        CommonModule,SalaryCardComponent,SalaryFormComponent,NgxPaginationModule,TextCardComponent,
     ],
     templateUrl: './salary-list.component.html',
     styleUrl: './salary-list.component.css',
@@ -34,8 +35,8 @@ export class SalaryListComponent {
     private router = inject(Router);
     private dialog = inject(MatDialog);
     private modalService = inject(ModalService);
-    private employeeService = inject(EmployeeService);
     private salaryController = inject(SalaryControllerService);
+    private salaryService = inject(SalaryService)
     //Properties
     options : boolean = false;
     @Input() salaries! : Salary[];
@@ -47,7 +48,7 @@ export class SalaryListComponent {
 
     ngOnInit(): void {
         
-        this.employeeService.getSalaries().subscribe({  
+        this.salaryService.getSalaries().subscribe({  
         next: x => this.salaries = x,  
         })
 
@@ -71,8 +72,8 @@ export class SalaryListComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const salaries = this.employeeService.getSalaryById($Event.idSalary)!;
-            this.employeeService.deleteSalary($Event.idSalary).subscribe(
+            const salaries = this.salaryService.getSalaryById($Event.idSalary)!;
+            this.salaryService.deleteSalary($Event.idSalary).subscribe(
             {
                 next: () => this.router.navigate(['/salary'])
             }
