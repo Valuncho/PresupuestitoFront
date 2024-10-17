@@ -1,5 +1,5 @@
 <div class="List">
-    <h3 class="List-title">Listado de boletas</h3>
+    <h3 class="List-title">Listado de facturas</h3>
     
       @for (invoice of invoices | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
         <app-invoice-card
@@ -9,7 +9,7 @@
         (isDeleted)="handleDeleteInvoice($event)"
         />
       }@empty {
-        <app-text-card [message]="'No hay boletas que mostrar.'"/>
+        <app-text-card [message]="'No hay facturas que mostrar'"/>
       }
     
     
