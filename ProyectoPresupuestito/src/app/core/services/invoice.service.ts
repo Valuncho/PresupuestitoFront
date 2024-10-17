@@ -111,7 +111,7 @@ export class InvoiceService {
    */
   deleteInvoice(idInvoice: number) {
     const url = API_URL+ENDPOINTS.invoices.delete;
-    return this.http.put(url,idInvoice).pipe(
+    return this.http.patch(url,idInvoice).pipe(
       tap(() => {
         this.notification.showNotification("¡boleta eliminada con éxito!"); 
       }),

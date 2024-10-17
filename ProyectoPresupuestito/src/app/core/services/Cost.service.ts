@@ -121,7 +121,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
    */
     deleteFixedCost(idFixedCost: number) {
         const url = API_URL+ENDPOINTS.fixedCost.delete;
-        return this.http.put(url,idFixedCost).pipe(
+        return this.http.patch(url,idFixedCost).pipe(
         tap(() => {
             this.notification.showNotification("¡Costo eliminado con éxito!"); 
         }),

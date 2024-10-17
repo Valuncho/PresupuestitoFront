@@ -211,7 +211,7 @@ export class EmployeeService {
    */
   deleteEmployee(idEmployee: number) {
     const url = API_URL+ENDPOINTS.employees.delete;
-    return this.http.put(url,idEmployee).pipe(
+    return this.http.patch(url,idEmployee).pipe(
       tap(() => {
         this.notification.showNotification("¡empleado eliminado con éxito!"); 
       }),
@@ -232,7 +232,7 @@ export class EmployeeService {
    */
   deleteSalary(idEmployee: number) {
     const url = API_URL+ENDPOINTS.salaries.delete;
-    return this.http.put(url,idEmployee).pipe(
+    return this.http.patch(url,idEmployee).pipe(
       tap(() => {
         this.notification.showNotification("¡salario eliminado con éxito!"); 
       }),

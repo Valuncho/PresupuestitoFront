@@ -139,7 +139,7 @@ export class SupplierService {
    */
   deleteSupplier(idSupplier: number) {
     const url = API_URL+ENDPOINTS.suppliers.delete;
-    return this.http.put(url,idSupplier).pipe(
+    return this.http.patch(url,idSupplier).pipe(
       tap(() => {
         this.notification.showNotification("¡Proveedor eliminado con éxito!"); 
       }),
