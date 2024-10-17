@@ -14,6 +14,7 @@ import { SalaryFormComponent } from '../../../salary/components/salary-form/sala
 import { Salary } from '../../../../core/model/Salary';
 import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
 import { Payment } from '../../../../core/model/Payment';
+import { invoiceFormComponent } from '../../../invoice/components/invoice-form/invoice-form.component';
 
 
 @Component({
@@ -62,9 +63,8 @@ export class SupplierDetailsComponent {
         
     }*/
 
-    openSalaryForm(){
-        //this.router.navigate(["/supplier/new/", this.id])
-        this.modalService.openModal<InvoiceListComponent,Invoice>(InvoiceListComponent);
+    openInvoiceForm(){
+        this.modalService.openModal<invoiceFormComponent,Invoice>(invoiceFormComponent);
     }
     openPaymentForm(){
         this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
