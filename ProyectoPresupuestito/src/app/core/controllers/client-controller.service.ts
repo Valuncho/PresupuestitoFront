@@ -49,14 +49,14 @@ export class ClientControllerService {
 
  getEmptyClient(): Client {
   return  {
-    idClient: 0,
-    oPerson: {
-      idPerson: 0,
+    clientId: 0,
+    personId: {
+      personId: 0,
       name: '',
       lastName: '',
-      direction: '',
+      address: '',
       phoneNumber: '',
-      mail: '',
+      email: '',
       dni: '',
       cuit: '',
     },

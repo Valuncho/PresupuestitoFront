@@ -42,27 +42,27 @@ export class ClientListComponent {
   
   clients: Client[] = [
     {
-      idClient: 1001,
-      oPerson: {
-        idPerson: 1,
+      clientId: 1001,
+      personId: {
+        personId: 1,
         name: 'John',
         lastName: 'Doe',
-        direction: '123 Main St',
+        address: '123 Main St',
         phoneNumber: '1234567890',
-        mail: 'johndoe@example.com',
+        email: 'johndoe@example.com',
         dni: '123456789',
         cuit: '30-12345678-9',
       },
     },
     {
-      idClient: 1002,
-      oPerson: {
-        idPerson: 2,
+      clientId: 1002,
+      personId: {
+        personId: 2,
         name: 'Jane',
         lastName: 'Smith',
-        direction: '456 Elm St',
+        address: '456 Elm St',
         phoneNumber: '9876543210',
-        mail: 'janesmith@example.com',
+        email: 'janesmith@example.com',
         dni: '987654321',
         cuit: '30-98765432-1',
       },
@@ -106,28 +106,28 @@ export class ClientListComponent {
 
   //Card
   handleAction($Event : Client){
-    this.router.navigate(['/budget/new/',$Event.idClient]);
+    this.router.navigate(['/budget/new/',$Event.clientId]);
   }
 
   handleViewClient($Event : Client){    
-    this.router.navigate(['/client/detail/',$Event.idClient]);
+    this.router.navigate(['/client/detail/',$Event.clientId]);
   }
 
   handleEditClient($Event : Client){
-    this.router.navigate(['/client/edit/',$Event.idClient]);    
+    this.router.navigate(['/client/edit/',$Event.clientId]);    
   }
 
   handleDeleteClient($Event : Client){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar al cliente ${$Event.oPerson.name}?`
+        mensaje: `¿Estás seguro de que deseas eliminar al cliente ${$Event.personId.name}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const client = this.clientService.getClientById($Event.idClient)!;
-        this.clientService.deleteClient($Event.idClient).subscribe(
+        const client = this.clientService.getClientById($Event.clientId)!;
+        this.clientService.deleteClient($Event.clientId).subscribe(
           {
             next: () => this.router.navigate(['/client'])
           }

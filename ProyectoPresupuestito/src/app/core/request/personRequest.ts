@@ -1,6 +1,5 @@
-export interface Person
+export interface PersonRequest
 {
-    personId: number;
     name: string;
     lastName: string;
     address: string;

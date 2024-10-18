@@ -26,12 +26,12 @@ export class SupplierService {
       idSupplier: 1001,
       note: "hola",
       oPerson: {
-          idPerson: 1,
+          personId: 1,
           name: "John",
           lastName: "Doe",
-          direction: "123 Main St",
+          address: "123 Main St",
           phoneNumber: "1234567890",
-          mail: "johndoe@example.com",
+          email: "johndoe@example.com",
           dni: "123456789",
           cuit: "30-12345678-9"
       }
@@ -40,12 +40,12 @@ export class SupplierService {
         idSupplier: 1002,
         note: "hola",
         oPerson: {
-            idPerson: 2,
+            personId: 2,
             name: "Jane",
             lastName: "Smith",
-            direction: "456 Elm St",
+            address: "456 Elm St",
             phoneNumber: "9876543210",
-            mail: "janesmith@example.com",
+            email: "janesmith@example.com",
             dni: "987654321",
             cuit: "30-98765432-1"
         }

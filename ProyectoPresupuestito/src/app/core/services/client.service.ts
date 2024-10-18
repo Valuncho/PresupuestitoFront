@@ -9,6 +9,8 @@ import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { NotificationService } from '../utils/notification.service';
+import { Person } from '../model/Person';
+import { PersonRequest } from '../request/personRequest';
 /**
  * @class ClienteService
  * 
@@ -67,8 +69,9 @@ export class ClientService {
    * @param client cliente a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postClient(client: Client){
+  postClient(client: PersonRequest){
     const url = API_URL+ENDPOINTS.clients.post;
+    
     return this.http.post(url,client).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente guardado con éxito!"); 
@@ -89,7 +92,7 @@ export class ClientService {
    * @returns un observable de tipo objeto
    */
   putClient(client: Client) {
-    const url = API_URL+ENDPOINTS.clients.update.replace(':id', client.idClient.toString());
+    const url = API_URL+ENDPOINTS.clients.update.replace(':id', client.clientId.toString());
     return this.http.put(url,client).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente editado con éxito!"); 

@@ -44,12 +44,12 @@ export class SupplierControllerService {
     return  {
       idSupplier: 0,
       oPerson: {
-        idPerson: 0,
+        personId: 0,
         name: '',
         lastName: '',
-        direction: '',
+        address: '',
         phoneNumber: '',
-        mail: '',
+        email: '',
         dni: '',
         cuit: '',
       },
