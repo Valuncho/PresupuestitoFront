@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../../../../core/model/Category';
-import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SubCategoryMaterialRequest } from '../../../../../core/request/subCategoryMaterialRequest';
