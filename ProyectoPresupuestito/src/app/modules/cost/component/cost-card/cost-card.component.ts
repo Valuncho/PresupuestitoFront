@@ -14,8 +14,6 @@ import { FixedCost } from '../../../../core/model/FixedCost';
 })
 export class CostCardComponent { 
     @Input() fixedCost: FixedCost | undefined;
-    @Output() isView = new EventEmitter<FixedCost>();
-    @Output() action = new EventEmitter<FixedCost>();
     @Output() isSelected = new EventEmitter<FixedCost>();
     @Output() isEdit = new EventEmitter<FixedCost>();
     @Output() isDeleted = new EventEmitter<FixedCost>();
@@ -39,9 +37,6 @@ export class CostCardComponent {
 
     select(){
         this.isSelected.emit(this.fixedCost);
-    }
-    view(){
-        this.isView.emit(this.fixedCost);
     }
     edit(){
         this.isEdit.emit(this.fixedCost);

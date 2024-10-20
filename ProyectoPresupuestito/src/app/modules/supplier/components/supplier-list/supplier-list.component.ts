@@ -5,18 +5,18 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 import { SupplierService } from '../../../../core/services/supplier.service';
 
 import { SupplierCardComponent } from '../supplier-card/supplierCard.component';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { SupplierSearchComponent } from '../supplier-search/supplier-search.component';
 import { Supplier } from '../../../../core/model/Supplier';
 import { SupplierFormComponent } from '../supplier-form/supplier-form.component';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { NotificationService } from '../../../../core/utils/notification.service';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
     selector: 'app-supplier-list',
     standalone: true,
-    imports: [SupplierSearchComponent,SupplierCardComponent,NgxPaginationModule,TextCardComponent],
+    imports: [SupplierSearchComponent,SupplierCardComponent,TextCardComponent,NgxPaginationModule],
     templateUrl: './supplier-list.component.html',
     styleUrl: './supplier-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,8 +28,50 @@ export class SupplierListComponent {
     private modalService = inject(ModalService);
     private supplierService = inject(SupplierService);
     //Properties
-    suppliers = signal<Supplier[]>([]);
-    searchedSuppliers : Supplier[] = [];
+    suppliers : Supplier[] = [
+        {
+            idSupplier: 1002,
+            oPerson: {
+                idPerson: 1,
+                name: 'John',
+                lastName: 'doja',
+                direction: '123 Main St',
+                phoneNumber: '1234567890',
+                mail: 'johndoe@example.com',
+                dni: '123456789',
+                cuit: '30-12345678-9',
+            },
+            note: 'nota vacia'
+        },
+        {
+            idSupplier: 1003,
+            oPerson: {
+                idPerson: 1,
+                name: 'arthas',
+                lastName: 'menthil',
+                direction: '123 Main St',
+                phoneNumber: '1234567890',
+                mail: 'johndoe@example.com',
+                dni: '123456789',
+                cuit: '30-12345678-9',
+            },
+            note: 'nota vacia'
+        },
+        {
+            idSupplier: 1004,
+            oPerson: {
+                idPerson: 1,
+                name: 'Te',
+                lastName: 'Te',
+                direction: '123 Main St',
+                phoneNumber: '1234567890',
+                mail: 'johndoe@example.com',
+                dni: '123456789',
+                cuit: '30-12345678-9',
+            },
+            note: 'nota vacia'
+        }
+    ];
     supplier? : Supplier;
     //BudgetForm
     options = false;
@@ -38,77 +80,41 @@ export class SupplierListComponent {
     pageSize = 5
 
     ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
-        
-    }
-
-/*
-    ngOnInit(): void {
-        this.supplierService.supplierss.subscribe({
-        next : (suppliers)=>{
-            this.suppliers.set(suppliers);
-        }
-        })
-
-        this.supplierService.selectedSupplier.subscribe(supplier =>{
-        this.supplier = supplier;
-        })
-    }*/
-
-    //BudgetForm
-    addSupplierHandler(){
-        this.modalService.openModal<SupplierFormComponent,Supplier>(SupplierFormComponent);
-    }
-    
-    getAllSuppliers() : Supplier[]{
-        let allSuppliers : Supplier[] = [];
-        //this.supplierService.supplierss.subscribe(supplier=>{
-        //allSuppliers = supplier;
-        //}) 
-
-        return allSuppliers
-    }
-
-    
-    //Search
-    handleSearch($Event : Supplier[]){
-        this.page = 1
-        this.suppliers.set($Event);
+        this.supplierService.getSuppliers().subscribe(res=>
+            this.suppliers=res
+        )
     }
 
     //Card
-    handleAction($Event : any){
-        //this.supplierService.setSelectedSupplier($Event)
-        //this.router.navigate(['/budget/new/',$Event]);
+
+    handleViewSupplier($Event : Supplier){    
+        this.router.navigate(['/supplier/detail/',$Event.idSupplier]);
     }
 
-    handleViewSupplier($Event : any){
-        //this.supplierService.setSelectedSupplier($Event)
-        this.router.navigate(['/supplier/detail']);
-    }
-    
-    handleEditSupplier($Event : any){
-        //this.supplierService.setSelectedSupplier($Event)
-        this.router.navigate(['/supplier/edit/',$Event]);
+    handleEditSupplier($Event : Supplier){
+        this.router.navigate(['/supplier/edit/',$Event.idSupplier]);    
     }
 
-    handleDeleteSupplier($Event : any){
+    handleDeleteSupplier($Event : Supplier){
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
-            mensaje: `¿Estás seguro de que deseas eliminar al proveedor con ID ${$Event}?`
+            mensaje: `¿Estás seguro de que deseas eliminar al proveedor ${$Event.oPerson.name}?`
         }
         });
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            //this.supplierService.handleDeleteSupplier($Event)
-            this.notificationService.showNotification("proveedor eliminado con éxito");
-            this.router.navigate(['/supplier']); 
+            const Supplier = this.supplierService.getSupplierById($Event.idSupplier)!;
+            this.supplierService.deleteSupplier($Event.idSupplier).subscribe(
+            {
+                next: () => this.router.navigate(['/supplier'])
+            }
+            );
+            
         }
         });
-        
-    }
+
+    } 
 
     //Pagination
     pageChange(page: number) {

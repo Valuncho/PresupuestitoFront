@@ -3,11 +3,10 @@ import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { API_URL, ENDPOINTS } from '../endpoints';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { FixedCost } from '../model/FixedCost';
 import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
-import { Cost } from '../model/Cost';
+import { FixedCost } from '../model/FixedCost';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 
 
@@ -44,8 +43,8 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
      * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
      * @returns Un array de costos como un observable.
      */
-    getFixedCosts() : Observable<Cost[]> {
-        return this.http.get<Cost[]>(API_URL+ENDPOINTS.fixedCost.getAll).pipe(      
+    getFixedCosts() : Observable<FixedCost[]> {
+        return this.http.get<FixedCost[]>(API_URL+ENDPOINTS.fixedCost.getAll).pipe(      
         catchError((error: any, caught: Observable<any>): Observable<any> => {
             this.error.setError(error);
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -59,9 +58,9 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
    * @param idFixedCost id del costo solicitado.
    * @returns Un costo como un observable.
    */
-    getFixedCostById(idFixedCost : number) : Observable<Cost> {
+    getFixedCostById(idFixedCost : number) : Observable<FixedCost> {
         const url = API_URL+ENDPOINTS.clients.getById.replace(':id', idFixedCost.toString());
-        return this.http.get<Cost>(url).pipe(
+        return this.http.get<FixedCost>(url).pipe(
         catchError((error: any, caught: Observable<any>): Observable<any> => {
             this.error.setError(error);
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -77,7 +76,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
      * @param Cost costo a cargar en la base de datos
      * @returns un observable de tipo objeto
      */
-    postFixedCost(fixedCost: Cost){
+    postFixedCost(fixedCost: FixedCost){
         const url = API_URL+ENDPOINTS.fixedCost.post;
         return this.http.post(url,fixedCost).pipe(
         tap(() => {
@@ -98,7 +97,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
      * @param Cost costo actualizado.
      * @returns un observable de tipo objeto
      */
-    putFixedCost(FixedCost: Cost) {
+    putFixedCost(FixedCost: FixedCost) {
         const url = API_URL+ENDPOINTS.fixedCost.update;
         return this.http.put(url,FixedCost).pipe(
         tap(() => {

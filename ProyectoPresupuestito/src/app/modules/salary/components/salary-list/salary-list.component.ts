@@ -10,6 +10,8 @@ import { Salary } from '../../../../core/model/Salary';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { SalaryControllerService } from '../../../../core/controllers/salary-controller.service';
+import { SalaryService } from '../../../../core/services/salary.service';
 
 /**
  * @class salaryListComponent
@@ -21,7 +23,7 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
     selector: 'app-salary-list',
     standalone: true,
     imports: [
-        CommonModule,SalaryCardComponent,SalaryFormComponent,NgxPaginationModule,TextCardComponent
+        CommonModule,SalaryCardComponent,SalaryFormComponent,NgxPaginationModule,TextCardComponent,
     ],
     templateUrl: './salary-list.component.html',
     styleUrl: './salary-list.component.css',
@@ -33,53 +35,45 @@ export class SalaryListComponent {
     private router = inject(Router);
     private dialog = inject(MatDialog);
     private modalService = inject(ModalService);
-    private employeeService = inject(EmployeeService);
+    private salaryController = inject(SalaryControllerService);
+    private salaryService = inject(SalaryService)
     //Properties
     options : boolean = false;
     @Input() salaries! : Salary[];
     //Pagination
     page = 1
     pageSize = 5
+    
 
 
     ngOnInit(): void {
         
-        this.employeeService.getSalaries().subscribe({  
+        this.salaryService.getSalaries().subscribe({  
         next: x => this.salaries = x,  
         })
 
     }
 
-    //BudgetForm
-    addClientHandler(){
-        this.modalService.openModal<SalaryFormComponent,Salary>(SalaryFormComponent);
-    }
-
     //Card
-    handleAction($Event : Salary){
-
-        this.router.navigate(['/salary/new/',$Event.idSalary]);
-    }
-
-    handleViewSalary($Event : Salary){    
-        this.router.navigate(['/salary/detail/',$Event.idSalary]);
-    }
 
     handleEditSalary($Event : Salary){
-        this.router.navigate(['/client/edit/',$Event.idSalary]);
+        
+        this.salaryController.setEditMode(true);
+        this.salaryController.setSalary($Event);
+        this.modalService.openModal<SalaryFormComponent,Salary>(SalaryFormComponent);    
     }
 
     handleDeleteSalary($Event : Salary){
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
-            mensaje: `¿Estás seguro de que deseas eliminar el salario ${$Event.idSalary}?`
+            mensaje: `¿Estás seguro de que deseas eliminar el salario:$ ${$Event.amount}?`
         }
         });
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const salary = this.employeeService.getSalaryById($Event.idSalary)!;
-            this.employeeService.deleteSalary($Event.idSalary).subscribe(
+            const salaries = this.salaryService.getSalaryById($Event.idSalary)!;
+            this.salaryService.deleteSalary($Event.idSalary).subscribe(
             {
                 next: () => this.router.navigate(['/salary'])
             }
@@ -88,7 +82,7 @@ export class SalaryListComponent {
         }
         });
 
-    } 
+    }  
 
     //Pagination
     pageChange(page: number) {
