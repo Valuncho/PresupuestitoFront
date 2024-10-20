@@ -1,4 +1,4 @@
 export interface SubCategoryMaterialRequest{
-    SubCategoryName : string,
-    CategoryId : number
+    subCategoryName : string,
+    categoryId : number
 }

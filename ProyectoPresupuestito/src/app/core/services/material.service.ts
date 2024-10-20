@@ -9,6 +9,7 @@ import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
+import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialRequest';
 
 /**
  * @class MaterialService
@@ -156,7 +157,7 @@ export class MaterialService {
    * @param subCategory sub-rubro a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postSubCategory(subCategory: SubCategoryMaterial){
+  postSubCategory(subCategory: SubCategoryMaterialRequest){
     const url = API_URL+ENDPOINTS.subCategories.post;
     return this.http.post(url,subCategory).pipe(
       tap(() => {
@@ -176,7 +177,7 @@ export class MaterialService {
    * @param subCategory sub-rubro actualizado.
    * @returns un observable de tipo objeto
    */
-  putSubCategory(subCategory: SubCategoryMaterial){
+  putSubCategory(subCategory: SubCategoryMaterialRequest){
     const url = API_URL+ENDPOINTS.subCategories.update;
     return this.http.put(url,subCategory).pipe(
       tap(() => {
@@ -306,8 +307,8 @@ export class MaterialService {
    * @returns un observable de tipo objeto
    */
   deleteCategory(idCategory : number){
-    const url = API_URL+ENDPOINTS.categories.delete;
-    this.http.patch(url,idCategory).pipe(
+    const url = API_URL+ENDPOINTS.categories.delete.replace(':id', idCategory.toString());
+    return this.http.patch(url,idCategory).pipe(
       tap(() => {
         this.notification.showNotification("¡Rubro eliminado con éxito!"); 
       }),

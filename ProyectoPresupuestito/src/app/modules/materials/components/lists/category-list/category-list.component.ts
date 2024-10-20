@@ -23,28 +23,8 @@ export class CategoryListComponent {
    private modalService = inject(ModalService);
    private materialService = inject(MaterialService);
    private materialController = inject(MaterialControllerService);
-   
- 
- //SE PUEDE BORRAR PORQUE SE USO PARA PROBAR CON EL BACK
-   //categories : dto[] = []
-   categories : Category[]=[
-     {
-       idCategory: 1,
-       name: 'Ferretería',
-     },
-     {
-       idCategory: 2,
-       name: 'Maderas'
-     },
-     {
-       idCategory: 3,
-       name: 'Adhesivos'
-     },
-     {
-       idCategory: 4,
-       name: 'Pinturería'
-     }
-   ]
+     
+   categories : Category[]=[]
  
  
    ngOnInit(): void {
@@ -71,13 +51,13 @@ export class CategoryListComponent {
    eliminar($Event : Category){
      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
        data: {
-         mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.name}?`
+         mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.categoryName}?`
        }
      });
  
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
-         this.materialService.deleteCategory($Event.idCategory);
+         this.materialService.deleteCategory($Event.categoryId).subscribe();
        }
      });
  

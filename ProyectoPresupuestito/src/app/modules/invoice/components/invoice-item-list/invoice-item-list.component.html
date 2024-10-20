@@ -3,7 +3,7 @@
     
     <div class="Interior">
         @for (item of invoice.materials; track $index) {
-        <p>{{ item.material.name }} * {{ item.quantity }}</p>
+        <p>{{ item.material.materialName }} * {{ item.quantity }}</p>
         }@empty {
             <app-text-card [message]="'No hay items que mostrar.'"/>}
     </div>

@@ -41,16 +41,10 @@ export class CategoryFormComponent {
   }
   
   onSubmit(){
-    this.newCategory.name = this.CategoryForm.value["name"]
+    this.newCategory.categoryName = this.CategoryForm.value["name"]
+    this.newCategory.categoryModel = "";
     if(!this.isEdit){
       this.materialService.postCategory(this.newCategory).subscribe();
-
-      //CODIGO QUE SE USO PARA PROBAR CON EL BACK SE PUEDE BORRAR MAS ADELANTE
-      // let c : dto = {
-      //   CategoryName : this.CategoryForm.value["name"],
-      //   CategoryModel: "hola"
-      // }
-      //this.materialService.postCategory(c).subscribe();
     }else{
       this.materialService.putCategory(this.newCategory).subscribe();
       this.materialController.setEditMode(false);

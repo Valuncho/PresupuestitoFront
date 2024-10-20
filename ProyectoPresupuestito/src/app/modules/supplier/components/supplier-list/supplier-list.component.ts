@@ -1,15 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { SupplierService } from '../../../../core/services/supplier.service';
-
 import { SupplierCardComponent } from '../supplier-card/supplierCard.component';
 import { SupplierSearchComponent } from '../supplier-search/supplier-search.component';
 import { Supplier } from '../../../../core/model/Supplier';
-import { SupplierFormComponent } from '../supplier-form/supplier-form.component';
-import { ModalService } from '../../../../core/utils/modal.service';
-import { NotificationService } from '../../../../core/utils/notification.service';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -24,57 +20,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 export class SupplierListComponent { 
     private router = inject(Router);
     private dialog = inject(MatDialog);
-    private notificationService = inject(NotificationService);
-    private modalService = inject(ModalService);
     private supplierService = inject(SupplierService);
     //Properties
-    suppliers : Supplier[] = [
-        {
-            idSupplier: 1002,
-            oPerson: {
-                idPerson: 1,
-                name: 'John',
-                lastName: 'doja',
-                direction: '123 Main St',
-                phoneNumber: '1234567890',
-                mail: 'johndoe@example.com',
-                dni: '123456789',
-                cuit: '30-12345678-9',
-            },
-            note: 'nota vacia'
-        },
-        {
-            idSupplier: 1003,
-            oPerson: {
-                idPerson: 1,
-                name: 'arthas',
-                lastName: 'menthil',
-                direction: '123 Main St',
-                phoneNumber: '1234567890',
-                mail: 'johndoe@example.com',
-                dni: '123456789',
-                cuit: '30-12345678-9',
-            },
-            note: 'nota vacia'
-        },
-        {
-            idSupplier: 1004,
-            oPerson: {
-                idPerson: 1,
-                name: 'Te',
-                lastName: 'Te',
-                direction: '123 Main St',
-                phoneNumber: '1234567890',
-                mail: 'johndoe@example.com',
-                dni: '123456789',
-                cuit: '30-12345678-9',
-            },
-            note: 'nota vacia'
-        }
-    ];
-    supplier? : Supplier;
-    //BudgetForm
-    options = false;
+    suppliers : Supplier[] = [];
+    
     //Pagination
     page = 1
     pageSize = 5
@@ -86,7 +35,6 @@ export class SupplierListComponent {
     }
 
     //Card
-
     handleViewSupplier($Event : Supplier){    
         this.router.navigate(['/supplier/detail/',$Event.idSupplier]);
     }
@@ -104,7 +52,6 @@ export class SupplierListComponent {
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const Supplier = this.supplierService.getSupplierById($Event.idSupplier)!;
             this.supplierService.deleteSupplier($Event.idSupplier).subscribe(
             {
                 next: () => this.router.navigate(['/supplier'])
