@@ -13,6 +13,7 @@ import { Invoice } from '../../../../core/model/Invoice';
 import { invoiceFormComponent } from '../invoice-form/invoice-form.component';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { InvoiceControllerService } from '../../../../core/controllers/invoice-controller.service';
 
 
 
@@ -31,12 +32,87 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
     private dialog = inject(MatDialog);
     private modalService = inject(ModalService);
     private invoiceService = inject(InvoiceService);
+    private invoiceController = inject(InvoiceControllerService);
     //Properties
     options : boolean = false;
-    //Invoices : Invoice[] = [];
 
     @Input() invoices! : Invoice[];
-    searchedInvoices : Invoice[] = [];
+    Invoices : Invoice[] = [
+        {
+            idInvoice: 1,
+            date: new Date(0),
+            payments: [
+                {
+                idPayment: 0,
+                date: new Date(0),
+                amount: 0,
+                description: ''
+                }
+            ],
+            isPaid: false,
+            materials: [
+                {
+                    idInvoiceItem: 0,
+                    material: {
+                        idMaterial: 0,
+                        name: '',
+                        description: '',
+                        color: '',
+                        brand: '',
+                        measure: '',
+                        unitOfMeasure: '',
+                        subCategory: {
+                            idCategoryMaterial: 0,
+                            name: '',
+                            category: {
+                                idCategory: 0,
+                                name: ''
+                            }
+                        }
+                    },
+                    quantity: 0,
+                    price: 0
+                }
+            ]
+        },
+        {
+            idInvoice: 2,
+            date: new Date(0),
+            payments: [
+                {
+                idPayment: 0,
+                date: new Date(0),
+                amount: 0,
+                description: ''
+                }
+            ],
+            isPaid: false,
+            materials: [
+                {
+                    idInvoiceItem: 0,
+                    material: {
+                        idMaterial: 0,
+                        name: '',
+                        description: '',
+                        color: '',
+                        brand: '',
+                        measure: '',
+                        unitOfMeasure: '',
+                        subCategory: {
+                            idCategoryMaterial: 0,
+                            name: '',
+                            category: {
+                                idCategory: 0,
+                                name: ''
+                            }
+                        }
+                    },
+                    quantity: 0,
+                    price: 0
+                }
+            ]
+        }
+    ];
     
     //Pagination
     page = 1
@@ -46,62 +122,45 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
     ngOnInit(): void {
         
         this.invoiceService.getInvoices().subscribe({  
-        //next: x => this.invoices = x,  
+        next: x => this.invoices = x,  
         })
 
-    }
-
-    //BudgetForm
-    addInvoiceHandler(){
-        this.modalService.openModal<invoiceFormComponent,Invoice>(invoiceFormComponent);
-    }
-
-    //Search
-    handleSearch($Event : Invoice[]){
-        this.page = 1
-        /*
-        this.invoiceService.getInvoicesBySearch("filto").subscribe({
-        next : (Invoices) =>{
-            this.searchedInvoices = Invoices;
-        }
-        })*/
     }
 
     //Card
 
     handleViewInvoice($Event : Invoice){    
-        this.router.navigate(['/Invoice/detail/',$Event.idInvoice]);
+        this.router.navigate(['/invoice/detail/',$Event.idInvoice]);
     }
 
     handleEditInvoice($Event : Invoice){
-        this.router.navigate(['/Invoice/edit/',$Event.idInvoice]);
+        this.router.navigate(['/invoice/edit/',$Event.idInvoice]);    
     }
 
     handleDeleteInvoice($Event : Invoice){
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
-            mensaje: `¿Estás seguro de que deseas eliminar al Invoice ${$Event.idInvoice}?`
+            mensaje: `¿Estás seguro de que deseas eliminar la factura? ${$Event.idInvoice}?`
         }
         });
 
-        /*
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                const invoice = this.invoiceService.getInvoiceById($Event.idInvoice)!;
-                this.invoiceService.deleteInvoice($Event.idInvoice).subscribe(
-                    {
-                    next: () => this.router.navigate(['/invoice'])
-                    }
-                );
-                
-                }
-            });
-        */
+        if (result) {
+            const Supplier = this.invoiceService.getInvoiceById($Event.idInvoice)!;
+            this.invoiceService.deleteInvoice($Event.idInvoice).subscribe(
+            {
+                next: () => this.router.navigate(['/invoice'])
+            }
+            );
+            
+        }
+        });
+
     } 
 
     //Pagination
-    /*pageChange(page: number) {
+    pageChange(page: number) {
         this.page = page;
-    }*/
+    }
 
 }
