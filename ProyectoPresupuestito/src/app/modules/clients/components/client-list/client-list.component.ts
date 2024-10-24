@@ -38,36 +38,8 @@ export class ClientListComponent {
 
   //Properties
   options : boolean = false;
-  //clients : Client[] = [];
+  clients : Client[] = [];
   
-  clients: Client[] = [
-    {
-      clientId: 1001,
-      personId: {
-        personId: 1,
-        name: 'John',
-        lastName: 'Doe',
-        address: '123 Main St',
-        phoneNumber: '1234567890',
-        email: 'johndoe@example.com',
-        dni: '123456789',
-        cuit: '30-12345678-9',
-      },
-    },
-    {
-      clientId: 1002,
-      personId: {
-        personId: 2,
-        name: 'Jane',
-        lastName: 'Smith',
-        address: '456 Elm St',
-        phoneNumber: '9876543210',
-        email: 'janesmith@example.com',
-        dni: '987654321',
-        cuit: '30-98765432-1',
-      },
-    },
-  ];
 
 
   searchedClients : Client[] = [];

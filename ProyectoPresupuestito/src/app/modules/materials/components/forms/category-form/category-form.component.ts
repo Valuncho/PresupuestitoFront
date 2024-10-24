@@ -1,10 +1,7 @@
-import { Component, EventEmitter, inject, Injector, Input, input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MaterialService } from '../../../../../core/services/material.service';
 import { Category } from '../../../../../core/model/Category';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
-import { Router } from '@angular/router';
-import { interval } from 'rxjs';
 import { UtilsService } from '../../../../../core/utils/utils.service';
 import { CategoryService } from '../../../../../core/services/category.service';
 

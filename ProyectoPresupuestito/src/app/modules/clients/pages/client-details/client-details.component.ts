@@ -35,10 +35,10 @@ export class ClientDetailsComponent {
   private modalService = inject(ModalService);
   id : number  = 0;
   
-  currentClient : ClientHistory = this.clientController.getClientHistoryById();
+  currentClient : ClientHistory = this.clientController.getEmptyHistory();
   //   {
-  //     idClientHistory: 1,
-  //     oClient: {
+  //     clientHistoryId: 1,
+  //     clientId: {
   //     clientId: 1001,
   //     personId: {
   //       personId: 1,
@@ -51,7 +51,7 @@ export class ClientDetailsComponent {
   //       cuit: '30-12345678-9',
   //     }
   //   },
-  //   budgets: [
+  //   budgetsId: [
   //     {
   //       idBudget: 1,
   //       works: [], 
@@ -82,9 +82,9 @@ export class ClientDetailsComponent {
   ngOnInit(): void {
     this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
 
-    this.clientService.getClientHistoryById(this.id).subscribe({
-        next: res => this.currentClient = res,    
-    })
+    // this.clientService.getClientHistoryById(this.id).subscribe({
+    //     next: res => this.currentClient = res,    
+    // })
   }
 
   //Botones
@@ -92,7 +92,7 @@ export class ClientDetailsComponent {
     this.router.navigate(["/budget/new/", this.id])
   }
   openPaymentForm(){
-    this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
+    //this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
   }
   
   
