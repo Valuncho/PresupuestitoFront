@@ -9,6 +9,7 @@ import { ClientControllerService } from '../../../../core/controllers/client-con
 import { Person } from '../../../../core/model/Person';
 import { PersonRequest } from '../../../../core/request/personRequest';
 import { UtilsService } from '../../../../core/utils/utils.service';
+import { ClientRequest } from '../../../../core/request/clientRequest';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class ClientFormComponent {
   private utils = inject(UtilsService);
   //Properties
   currentClient : Client = this.clientController.getEmptyClient();
-  clientDto : PersonRequest =this.currentClient.personId;
+  clientDto : ClientRequest =this.currentClient.personId;
    
   clientId? : number;
   isEdit : boolean = false;
@@ -133,6 +134,9 @@ export class ClientFormComponent {
     this.clientDto.email = this.clientForm.get("mail")?.value
     this.clientDto.dni = this.clientForm.get("dni")?.value
     this.clientDto.cuit = this.clientForm.get("cuit")?.value
+    if(this.isEdit){
+      this.clientDto.clientId = this.clientId;
+    }
   }
 
 

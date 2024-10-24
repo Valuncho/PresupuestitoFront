@@ -112,7 +112,7 @@ export class ClientService {
    * @returns un observable de tipo objeto
    */
   putClient(client: ClientRequest) {
-    const url = API_URL+ENDPOINTS.clients.update;//arreglar con rama melina
+    const url = API_URL+ENDPOINTS.clients.update.replace(':id', client.clientId!.toString());
     return this.http.put(url,client).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente editado con éxito!"); 

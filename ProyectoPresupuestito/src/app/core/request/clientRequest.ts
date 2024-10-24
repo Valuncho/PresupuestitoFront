@@ -1,5 +1,6 @@
 export interface ClientRequest
 {
+    clientId? : number;
     name: string;
     lastName: string;
     address: string;
