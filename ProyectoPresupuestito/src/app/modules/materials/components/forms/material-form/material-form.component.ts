@@ -9,6 +9,7 @@ import { Material } from '../../../../../core/model/Material';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SupplierListComponent } from '../../../../supplier/components/supplier-list/supplier-list.component';
 import { SubcategoryService } from '../../../../../core/services/subcategory.service';
+import { UtilsService } from '../../../../../core/utils/utils.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class MaterialFormComponent {
   private subCategoryService = inject(SubcategoryService);
   private materialController = inject(MaterialControllerService);
   private modalService = inject(ModalService);
-  
+  private utils = inject(UtilsService);
   //Properties
   
   newMaterial :  Material = this.materialController.getEmptyMaterial();
@@ -70,9 +71,17 @@ export class MaterialFormComponent {
   onSubmit(){
     
     if(this.isEdit){
-      this.materialService.postMaterial(this.newMaterial).subscribe();
+      this.materialService.postMaterial(this.newMaterial).subscribe(   {
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
-      this.materialService.putMaterial(this.newMaterial).subscribe();
+      this.materialService.putMaterial(this.newMaterial).subscribe(   {
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
       this.materialController.setEditMode(false);
     }
   }

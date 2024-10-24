@@ -9,6 +9,7 @@ import { CategoryFormComponent } from '../../forms/category-form/category-form.c
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { CategoryService } from '../../../../../core/services/category.service';
+import { UtilsService } from '../../../../../core/utils/utils.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class CategoryListComponent {
    private modalService = inject(ModalService);
    private categoryService = inject(CategoryService);
    private materialController = inject(MaterialControllerService);
-     
+   private utils = inject(UtilsService);
    categories : Category[]=[]
  
  
@@ -58,7 +59,13 @@ export class CategoryListComponent {
  
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
-         this.categoryService.deleteCategory($Event.categoryId).subscribe();
+         this.categoryService.deleteCategory($Event.categoryId).subscribe(
+          {
+            next: ()=>{
+              this.utils.reaload()
+            }
+          }
+         );
        }
      });
  
