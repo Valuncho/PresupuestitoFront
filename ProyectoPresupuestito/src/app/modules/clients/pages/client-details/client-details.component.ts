@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Inject, inject, Injector, signal } from '@angular/core';
 import { NavbarComponent } from '../../../../components/navbar/navbar.component';
 import { Client } from '../../../../core/model/Client';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { ClientComponent } from '../../components/client/client.component';
 import { ClientHistory } from '../../../../core/model/ClientHistory';
 import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
 import { ModalService } from '../../../../core/utils/modal.service';
+import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 
 /**
  * @class ClientDetailsComponent
@@ -30,49 +31,50 @@ export class ClientDetailsComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private clientService = inject(ClientService);
+  private clientController = Inject(ClientControllerService)
   private modalService = inject(ModalService);
   id : number  = 0;
   
-  currentClient : ClientHistory = 
-    {
-      idClientHistory: 1,
-      oClient: {
-      clientId: 1001,
-      personId: {
-        personId: 1,
-        name: 'John',
-        lastName: 'Doe',
-        address: '123 Main St',
-        phoneNumber: '1234567890',
-        email: 'johndoe@example.com',
-        dni: '123456789',
-        cuit: '30-12345678-9',
-      }
-    },
-    budgets: [
-      {
-        idBudget: 1,
-        works: [], 
-        createdDate: new Date('2023-08-20'),
-        deadLine: new Date('2023-12-22'),
-        description: 'Kitchen renovation',
-        cost: 5000,
-        Status: 'Cancelado',
-        payments: [], 
-      },
-      {
-        idBudget: 2,
-        works: [],
-        createdDate: new Date('2024-01-15'),
-        deadLine: new Date('2024-02-15'),
-        description: 'Bathroom remodeling',
-        cost: 3000,
-        Status: 'Aprobado',
-        payments: [],
-      }
-    ]
+  currentClient : ClientHistory = this.clientController.getClientHistoryById();
+  //   {
+  //     idClientHistory: 1,
+  //     oClient: {
+  //     clientId: 1001,
+  //     personId: {
+  //       personId: 1,
+  //       name: 'John',
+  //       lastName: 'Doe',
+  //       address: '123 Main St',
+  //       phoneNumber: '1234567890',
+  //       email: 'johndoe@example.com',
+  //       dni: '123456789',
+  //       cuit: '30-12345678-9',
+  //     }
+  //   },
+  //   budgets: [
+  //     {
+  //       idBudget: 1,
+  //       works: [], 
+  //       createdDate: new Date('2023-08-20'),
+  //       deadLine: new Date('2023-12-22'),
+  //       description: 'Kitchen renovation',
+  //       cost: 5000,
+  //       Status: 'Cancelado',
+  //       payments: [], 
+  //     },
+  //     {
+  //       idBudget: 2,
+  //       works: [],
+  //       createdDate: new Date('2024-01-15'),
+  //       deadLine: new Date('2024-02-15'),
+  //       description: 'Bathroom remodeling',
+  //       cost: 3000,
+  //       Status: 'Aprobado',
+  //       payments: [],
+  //     }
+  //   ]
 
-  };
+  // };
   
   budgets : Budget[] | undefined = [];
   payments: Payment[] | undefined = [];

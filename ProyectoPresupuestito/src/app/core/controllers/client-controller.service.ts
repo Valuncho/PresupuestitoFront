@@ -29,7 +29,7 @@ export class ClientControllerService {
 
  setClient(client : Client){
   let currentHistory = this.clientHistory.getValue();
-  currentHistory!.oClient = client;
+  currentHistory!.clientId = client;
   this.setClientHistory(currentHistory!);
  }
  
@@ -66,9 +66,9 @@ export class ClientControllerService {
 
 getEmptyHistory() : ClientHistory{
   return {
-    idClientHistory: 0,
-    oClient : this.getEmptyClient(),
-    budgets : []
+    clientHistoryId: 0,
+    clientId : this.getEmptyClient(),
+    budgetsId : []
   }
 }
 

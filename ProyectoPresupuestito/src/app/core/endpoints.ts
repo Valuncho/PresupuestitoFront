@@ -1,5 +1,7 @@
 // URL base de la API
 export const API_URL = 'http://localhost:5130/api';
+// export const API_URL = 'https://localhost:7114/api';
+
 
 // Endpoints para diferentes recursos
 export const ENDPOINTS = {

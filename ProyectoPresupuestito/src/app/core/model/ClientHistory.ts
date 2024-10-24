@@ -3,7 +3,7 @@ import { Client } from "./Client";
 
 export interface ClientHistory
 {
-    idClientHistory: number;
-    oClient: Client;
-    budgets: Budget[];
+    clientHistoryId: number;
+    clientId: Client;
+    budgetsId: Budget[];
 }

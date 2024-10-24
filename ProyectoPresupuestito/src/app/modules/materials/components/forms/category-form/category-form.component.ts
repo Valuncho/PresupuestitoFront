@@ -1,8 +1,11 @@
-import { Component, inject, Input, input } from '@angular/core';
+import { Component, EventEmitter, inject, Injector, Input, input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { Category } from '../../../../../core/model/Category';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { Router } from '@angular/router';
+import { interval } from 'rxjs';
+import { UtilsService } from '../../../../../core/utils/utils.service';
 
 
 @Component({
@@ -16,7 +19,7 @@ export class CategoryFormComponent {
   //Utils
   private materialService = inject(MaterialService);
   private materialController = inject(MaterialControllerService);
-  
+  private utils = inject(UtilsService);
   //Properties
   newCategory : Category = this.materialController.getEmptyCategory();
   isEdit : boolean = this.materialController.getEditMode();
@@ -27,7 +30,7 @@ export class CategoryFormComponent {
 
 
   ngAfterViewInit(): void {
-    
+    console.log("refrescar")
     if(this.isEdit){
       this.materialController.getCategory().subscribe(res =>{
         this.newCategory = res!;
@@ -40,11 +43,17 @@ export class CategoryFormComponent {
     this.CategoryForm.reset();
   }
   
+
+
   onSubmit(){
     this.newCategory.categoryName = this.CategoryForm.value["name"]
     this.newCategory.categoryModel = "";
     if(!this.isEdit){
-      this.materialService.postCategory(this.newCategory).subscribe();
+      this.materialService.postCategory(this.newCategory).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
       this.materialService.putCategory(this.newCategory).subscribe();
       this.materialController.setEditMode(false);
