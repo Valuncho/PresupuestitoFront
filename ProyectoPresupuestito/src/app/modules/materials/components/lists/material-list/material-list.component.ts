@@ -11,6 +11,7 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { UtilsService } from '../../../../../core/utils/utils.service';
 
 @Component({
   selector: 'app-material-list',
@@ -25,7 +26,7 @@ export class MaterialListComponent {
   private modalService = inject(ModalService);
   private materialService = inject(MaterialService);
   private materialController = inject(MaterialControllerService);
-
+  private utils = inject(UtilsService);
   //Properties
   materials : Material[] = []
 
@@ -59,7 +60,11 @@ export class MaterialListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.materialService.deleteMaterial($Event.materialId).subscribe();
+        this.materialService.deleteMaterial($Event.materialId).subscribe(   {
+          next: ()=>{
+            this.utils.reaload()
+          }
+        });
         
       }
     });

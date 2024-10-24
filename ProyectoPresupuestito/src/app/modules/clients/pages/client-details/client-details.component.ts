@@ -80,7 +80,7 @@ export class ClientDetailsComponent {
   payments: Payment[] | undefined = [];
   
   ngOnInit(): void {
-    this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
+    //this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
 
     // this.clientService.getClientHistoryById(this.id).subscribe({
     //     next: res => this.currentClient = res,    

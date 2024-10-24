@@ -2,12 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService } from '../../../../core/utils/notification.service';
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
-import { Person } from '../../../../core/model/Person';
-import { PersonRequest } from '../../../../core/request/personRequest';
 import { UtilsService } from '../../../../core/utils/utils.service';
 import { ClientRequest } from '../../../../core/request/clientRequest';
 

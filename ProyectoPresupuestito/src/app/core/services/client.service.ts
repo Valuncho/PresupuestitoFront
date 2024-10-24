@@ -52,9 +52,9 @@ export class ClientService {
    * @param idClient id del cliente solicitado.
    * @returns Un cliente como un observable.
    */
-  getClientById(idClient : number) : Observable<Client> {
+  getClientById(idClient : number) : Observable<any> {
     const url = API_URL+ENDPOINTS.clients.getById.replace(':id', idClient.toString());
-    return this.http.get<Client>(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);

@@ -72,7 +72,11 @@ export class BudgetFormComponent {
       if(this.router.url == url)
       {
         this.clientService.getClientById(this.currentClient.clientId).subscribe(res =>{
-          this.currentClient = res!
+          console.log(res.value.personId)
+          
+         
+          
+          this.onClientSelected(res);
         })
       } 
     });
@@ -122,9 +126,10 @@ export class BudgetFormComponent {
     this.modalService.openModal<ClientListComponent,Client>(ClientListComponent);
   }
 
-  onClientSelected(clientId: number) {
-    console.log('Cliente seleccionado:', clientId);
-    this.BudgetForm.patchValue({clientId:clientId})
+  onClientSelected(res : any) {
+    this.BudgetForm.patchValue({clientId: this.currentClient.clientId})
+    let name = res.value.personId.name+ " " +res.value.personId.lastName      
+    this.BudgetForm.patchValue({client : name})
   }
 
 
