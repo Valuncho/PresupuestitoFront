@@ -1,75 +1,72 @@
-import { inject, Injectable } from '@angular/core';
-import { Category } from '../model/Category';
-import { SubCategoryMaterial } from '../model/SubCategoryMaterial';
-import { Material } from '../model/Material';
-import { catchError, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { API_URL,ENDPOINTS } from '../endpoints';
-import { NotificationService } from '../utils/notification.service';
+import { inject, Injectable } from '@angular/core';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
+import { API_URL, ENDPOINTS } from '../endpoints';
+import { SubCategoryMaterial } from '../model/SubCategoryMaterial';
+import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialRequest';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
-import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialRequest';
-
+import { NotificationService } from '../utils/notification.service';
 /**
- * @class MaterialService
+ * @class SubcategoryService
  * 
- * Servicio de la entidad material para comunicarse con el backend, gestionando errores y aciertos.
+ * Servicio de la entidad subcategoria, para comunicarse con el backend, gestionando errores y aciertos.
  * 
  */
 @Injectable({
   providedIn: 'root'
 })
-export class MaterialService {
-  //Utils
-  private http = inject(HttpClient);
-  private notification = inject(NotificationService);
-  private error = inject(ErrorControllerService);
-  private modal = inject(ModalService);
-  
+export class SubcategoryService {
+ //Utils
+ private http = inject(HttpClient);
+ private notification = inject(NotificationService);
+ private error = inject(ErrorControllerService);
+ private modal = inject(ModalService);
 
+ 
   /**
-   * Retorna todos los materiales disponibles guardados.
+   * Retorna todos los sub-rubros disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @returns Un array de materiales como un observable.
+   * @returns Un array de sub-rubros como un observable.
    */
-  getMaterials()  : Observable<Material[]> {
-    return this.http.get<Material[]>(API_URL+ENDPOINTS.materials.getAll).pipe(
+  getSubCategories()  : Observable<SubCategoryMaterial[]> {
+    return this.http.get<SubCategoryMaterial[]>(API_URL+ENDPOINTS.subCategories.getAll).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );  
-  }
-  /**
-   * Retorna al material solicitado por id.
-   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @param idMaterial id del material solicitado.
-   * @returns Un material como un observable.
-   */
-  getMaterialById(idMaterial : number) : Observable<Material> {
-    const url = API_URL+ENDPOINTS.materials.getById.replace(':id', idMaterial.toString());
-    return this.http.get<Material>(url).pipe(
-      catchError((error: any, caught: Observable<any>): Observable<any> => {
-        this.error.setError(error);
-        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
-        return of();
-    })
-    );
+    );       
   }
 /**
-   * Método para crear un material nuevo.
+   * Retorna al sub-rubro solicitado por id.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idSubCategory id del sub-rubro solicitado.
+   * @returns Un sub-rubro como un observable.
+   */
+  getSubCategoryById(idSubCategory : number) : Observable<SubCategoryMaterial> {
+    const url = API_URL+ENDPOINTS.subCategories.getById.replace(':id', idSubCategory.toString());
+    return this.http.get<SubCategoryMaterial>(url).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );    
+  }
+  /**
+   * Método para crear un sub-rubro nuevo.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @param material material a cargar en la base de datos
+   * @param subCategory sub-rubro a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postMaterial(material: Material){
-    const url = API_URL+ENDPOINTS.materials.post;
-    return this.http.post(url,material).pipe(
+  postSubCategory(subCategory: SubCategoryMaterialRequest){
+    const url = API_URL+ENDPOINTS.subCategories.post;
+    return this.http.post(url,subCategory).pipe(
       tap(() => {
-        this.notification.showNotification("¡Material creado con éxito!"); 
+        this.notification.showNotification("¡Sub-rubro creado con éxito!"); 
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
@@ -79,17 +76,17 @@ export class MaterialService {
     );    
   }
   /**
-   * Método para actualizar información de un material existente.
+   * Método para actualizar información de un sub-rubro existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @param material material actualizado.
+   * @param subCategory sub-rubro actualizado.
    * @returns un observable de tipo objeto
    */
-  putMaterial(material: Material){
-    const url = API_URL+ENDPOINTS.materials.update;
-    return this.http.put(url,material).pipe(
+  putSubCategory(subCategory: SubCategoryMaterialRequest){
+    const url = API_URL+ENDPOINTS.subCategories.update.replace(':id', subCategory.SubCategoryId!.toString());;
+    return this.http.put(url,subCategory).pipe(
       tap(() => {
-        this.notification.showNotification("¡Material actualizado con éxito!"); 
+        this.notification.showNotification("¡Sub-rubro actualizado con éxito!"); 
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
@@ -98,34 +95,26 @@ export class MaterialService {
     })
     );    
   }
-
-    /**
-   * Método para marcar como borrado a un material existente.
+  /**
+   * Método para marcar como borrado a un sub-rubro existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @param idMaterial id del material a eliminar.
+   * @param idSubCategory id del sub-rubro a eliminar.
    * @returns un observable de tipo objeto
    */
-  deleteMaterial(idMaterial: number){
-    const url = API_URL+ENDPOINTS.materials.delete;
-    return this.http.patch(url,idMaterial).pipe(
+  deleteSubCategory(idSubCategory: number){
+    const url = API_URL+ENDPOINTS.subCategories.delete;
+    return this.http.patch(url,idSubCategory).pipe(
       tap(() => {
-        this.notification.showNotification("¡Material eliminado con éxito!"); 
+        this.notification.showNotification("¡Sub-rubro eliminado con éxito!"); 
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );    
   }
+ 
 
-
-  
 }
-  
-
-
-
-
-  

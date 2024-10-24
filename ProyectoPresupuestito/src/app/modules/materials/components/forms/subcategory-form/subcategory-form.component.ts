@@ -4,6 +4,8 @@ import { Category } from '../../../../../core/model/Category';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SubCategoryMaterialRequest } from '../../../../../core/request/subCategoryMaterialRequest';
+import { SubcategoryService } from '../../../../../core/services/subcategory.service';
+import { CategoryService } from '../../../../../core/services/category.service';
 
 @Component({
   selector: 'app-subcategory-form',
@@ -14,7 +16,8 @@ import { SubCategoryMaterialRequest } from '../../../../../core/request/subCateg
 })
 export class SubcategoryFormComponent {
   //Utils
-  private materialService = inject(MaterialService);
+  private subCategoryService = inject(SubcategoryService);
+  private categoryService = inject(CategoryService);
   private materialController = inject(MaterialControllerService);
   //Properties
   newSubCategory : SubCategoryMaterialRequest = this.materialController.getEmptySubCategoryRequest();
@@ -27,7 +30,7 @@ export class SubcategoryFormComponent {
   })
 
   ngOnInit(): void {
-    this.materialService.getCategories().subscribe({
+    this.categoryService.getCategories().subscribe({
       next: res => this.categories = res,  
       
     })
@@ -54,9 +57,9 @@ export class SubcategoryFormComponent {
     this.newSubCategory.categoryId = this.SubCategoryForm.value["category"]
     console.log(this.newSubCategory)
     if(!this.isEdit){
-      this.materialService.postSubCategory(this.newSubCategory).subscribe();
+      this.subCategoryService.postSubCategory(this.newSubCategory).subscribe();
     }else{
-      this.materialService.putSubCategory(this.newSubCategory).subscribe();
+      this.subCategoryService.putSubCategory(this.newSubCategory).subscribe();
       this.materialController.setEditMode(false);
     }
   }

@@ -8,6 +8,7 @@ import { MaterialService } from '../../../../../core/services/material.service';
 import { Material } from '../../../../../core/model/Material';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SupplierListComponent } from '../../../../supplier/components/supplier-list/supplier-list.component';
+import { SubcategoryService } from '../../../../../core/services/subcategory.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { SupplierListComponent } from '../../../../supplier/components/supplier-
 export class MaterialFormComponent {
   //Utils
   private materialService = inject(MaterialService);
+  private subCategoryService = inject(SubcategoryService);
   private materialController = inject(MaterialControllerService);
   private modalService = inject(ModalService);
   
@@ -47,7 +49,7 @@ export class MaterialFormComponent {
 
   ngOnInit(): void {
 
-    this.materialService.getSubCategories().subscribe({
+    this.subCategoryService.getSubCategories().subscribe({
       next: res => this.subCategories = res,  
     })
 

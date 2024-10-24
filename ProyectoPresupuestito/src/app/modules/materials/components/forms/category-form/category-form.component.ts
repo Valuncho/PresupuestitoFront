@@ -6,6 +6,7 @@ import { MaterialControllerService } from '../../../../../core/controllers/mater
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { UtilsService } from '../../../../../core/utils/utils.service';
+import { CategoryService } from '../../../../../core/services/category.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { UtilsService } from '../../../../../core/utils/utils.service';
 })
 export class CategoryFormComponent {
   //Utils
-  private materialService = inject(MaterialService);
+  private categoryService = inject(CategoryService);
   private materialController = inject(MaterialControllerService);
   private utils = inject(UtilsService);
   //Properties
@@ -30,14 +31,17 @@ export class CategoryFormComponent {
 
 
   ngAfterViewInit(): void {
-    console.log("refrescar")
     if(this.isEdit){
       this.materialController.getCategory().subscribe(res =>{
         this.newCategory = res!;
       })
-      this.CategoryForm.setValue(this.newCategory)
+
+      
+      this.CategoryForm.patchValue({idcategory : this.newCategory.categoryId, name : this.newCategory.categoryName})
     }
   }
+
+  
 
   resetForm($Event : Event){
     this.CategoryForm.reset();
@@ -49,13 +53,13 @@ export class CategoryFormComponent {
     this.newCategory.categoryName = this.CategoryForm.value["name"]
     this.newCategory.categoryModel = "";
     if(!this.isEdit){
-      this.materialService.postCategory(this.newCategory).subscribe({
+      this.categoryService.postCategory(this.newCategory).subscribe({
         next: ()=>{
           this.utils.reaload()
         }
       });
     }else{
-      this.materialService.putCategory(this.newCategory).subscribe();
+      this.categoryService.putCategory(this.newCategory).subscribe();
       this.materialController.setEditMode(false);
     }
   }

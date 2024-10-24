@@ -137,6 +137,7 @@ export class MaterialControllerService {
   
   getEmptyCategoryRequest() : CategoryRequest{
     return{
+      CategoryId:  '',
       CategoryModel: '',
       CategoryName:'',
     }
