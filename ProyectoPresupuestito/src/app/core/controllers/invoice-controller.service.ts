@@ -16,6 +16,15 @@ import { Invoice } from '../model/Invoice';
 })
 export class InvoiceControllerService {
   
+  private invoice: BehaviorSubject<Invoice | undefined> = new BehaviorSubject<Invoice | undefined>(undefined);
+
+  public getInvoice() : Observable<Invoice | undefined>{
+    return this.invoice.asObservable();
+  }
+
+  public setInvoice(invoice: Invoice) {
+    this.invoice.next(invoice);
+  }
   //Edit
   private editMode : boolean = false;
 
