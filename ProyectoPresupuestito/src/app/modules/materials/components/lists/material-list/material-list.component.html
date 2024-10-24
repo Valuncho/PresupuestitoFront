@@ -3,7 +3,7 @@
  
   <div>
     @for (material of materials | paginate:{ itemsPerPage: items,
-    currentPage: page }; track material.idMaterial; let idx = $index) {
+    currentPage: page }; track material.materialId; let idx = $index) {
     <app-material-card
       [Material]="material"
       (isClick)="seleccionar($event)"

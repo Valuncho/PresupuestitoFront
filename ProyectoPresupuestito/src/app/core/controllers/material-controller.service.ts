@@ -5,6 +5,8 @@ import { SubCategoryMaterial } from '../model/SubCategoryMaterial';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Item } from '../model/Item';
 import { InvoiceItem } from '../model/invoiceItem';
+import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialRequest';
+import { CategoryRequest } from '../request/categoryRequest';
 /**
  * 
  * @class MaterialControllerService
@@ -20,7 +22,7 @@ import { InvoiceItem } from '../model/invoiceItem';
 })
 export class MaterialControllerService {
   //Selected entities
-  private material: BehaviorSubject<Material | undefined> = new BehaviorSubject<Material | undefined>(undefined);
+  private material: BehaviorSubject<Material > = new BehaviorSubject<Material>(this.getEmptyMaterial());
   private category: BehaviorSubject<Category | undefined> = new BehaviorSubject<Category | undefined>(undefined);
   private subCategory: BehaviorSubject<SubCategoryMaterial | undefined> = new BehaviorSubject<SubCategoryMaterial | undefined>(undefined);
 
@@ -82,30 +84,31 @@ export class MaterialControllerService {
   //Metodos para objetos vacios
   getEmptyMaterial() : Material{
     return {
-        idMaterial: 0,
-        name: '',
-        description: '',
-        color: '',
-        brand: '',
-        measure: '',
-        unitOfMeasure: '',
-        subCategory : this.getEmptySubCategory()
+        materialId: 0,
+        materialName: '',
+        materialDescription: '',
+        materialColor: '',
+        materialBrand: '',
+        materialMeasure: '',
+        materialUnitMeasure: '',
+        subCategoryMaterialId : this.getEmptySubCategory()
       
     }
   }
 
   getEmptySubCategory() : SubCategoryMaterial{
     return {
-      idCategoryMaterial: 0,
-      name: '',
-      category: this.getEmptyCategory()
+      subCategoryMaterialId: 0,
+      subCategoryName: '',
+      categoryId: this.getEmptyCategory()
     }
   }
   
   getEmptyCategory() : Category{
     return{
-      idCategory: 0,
-      name: ''
+      categoryId: 0,
+      categoryModel: '',
+      categoryName:'',
     }
   }
 
@@ -124,6 +127,22 @@ export class MaterialControllerService {
       price:0
     }
   }
+
+  getEmptySubCategoryRequest() : SubCategoryMaterialRequest{
+    return {
+      subCategoryName: '',
+      categoryId: 0
+    }
+  }
+  
+  getEmptyCategoryRequest() : CategoryRequest{
+    return{
+      CategoryId:  '',
+      CategoryModel: '',
+      CategoryName:'',
+    }
+  }
+
 
   
 }

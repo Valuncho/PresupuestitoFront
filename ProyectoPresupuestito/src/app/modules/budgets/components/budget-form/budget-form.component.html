@@ -25,7 +25,7 @@
       @if (!isEdit) {
         <label for="client">Cliente:</label>
         <input type="text" id="client" (click)="openClientForm()" placeholder="Seleccionar cliente" readonly formControlName="client">
-        <input type="hidden" [value]="this.currentClient.idClient" name="idClient" formControlName="idClient">
+        <input type="hidden" [value]="this.currentClient.clientId" name="idClient" formControlName="idClient">
       }
       <label for="createdDate">Fecha elaboración:</label>
       <div class="dateHandler">

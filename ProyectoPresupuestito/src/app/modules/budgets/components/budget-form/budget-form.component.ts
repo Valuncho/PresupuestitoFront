@@ -56,7 +56,7 @@ export class BudgetFormComponent {
     description : new FormControl('Descripción', Validators.required),
     cost : new FormControl(1000, Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
-    idClient : new FormControl(0, Validators.required),
+    clientId : new FormControl(0, Validators.required),
     client : new FormControl('Seleccionar cliente')
   });
 
@@ -67,11 +67,11 @@ export class BudgetFormComponent {
     this.OnEditHandler()
     
     this.activatedRoute.paramMap.subscribe(params => {
-      this.currentClient.idClient = Number(params.get('clientId'));   
-      let url = "/budget/new/"+ this.currentClient.idClient;
+      this.currentClient.clientId = Number(params.get('clientId'));   
+      let url = "/budget/new/"+ this.currentClient.clientId;
       if(this.router.url == url)
       {
-        this.clientService.getClientById(this.currentClient.idClient).subscribe(res =>{
+        this.clientService.getClientById(this.currentClient.clientId).subscribe(res =>{
           this.currentClient = res!
         })
       } 
@@ -124,7 +124,7 @@ export class BudgetFormComponent {
 
   onClientSelected(clientId: number) {
     console.log('Cliente seleccionado:', clientId);
-    this.BudgetForm.patchValue({idClient:clientId})
+    this.BudgetForm.patchValue({clientId:clientId})
   }
 
 

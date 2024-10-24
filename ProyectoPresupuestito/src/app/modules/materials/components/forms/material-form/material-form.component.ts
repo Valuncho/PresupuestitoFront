@@ -8,6 +8,7 @@ import { MaterialService } from '../../../../../core/services/material.service';
 import { Material } from '../../../../../core/model/Material';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SupplierListComponent } from '../../../../supplier/components/supplier-list/supplier-list.component';
+import { SubcategoryService } from '../../../../../core/services/subcategory.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { SupplierListComponent } from '../../../../supplier/components/supplier-
 export class MaterialFormComponent {
   //Utils
   private materialService = inject(MaterialService);
+  private subCategoryService = inject(SubcategoryService);
   private materialController = inject(MaterialControllerService);
   private modalService = inject(ModalService);
   
@@ -29,74 +31,8 @@ export class MaterialFormComponent {
   isEdit : boolean = this.materialController.getEditMode();
   
   //Properties
+  subCategories : SubCategoryMaterial[] =[]
 
-  subCategories : SubCategoryMaterial[] = [
-    {
-      idCategoryMaterial: 1,
-      name: 'Tornillos',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 2,
-      name: 'Tuercas',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 3,
-      name: 'Bisagras',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 4,
-      name: 'Clavos',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 5,
-      name: 'Manijas',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 6,
-      name: 'Tableros de melamina',
-      category: {
-      idCategory: 2,
-      name: 'Maderas'
-    }
-    },
-    {
-      idCategoryMaterial: 7,
-      name: 'Madera maciza',
-      category: {
-      idCategory: 2,
-      name: 'Maderas'
-    }
-    },
-    {
-      idCategoryMaterial: 8,
-      name: 'Madera contrachapada',
-      category: {
-      idCategory: 2,
-      name: 'Maderas'
-    }
-    },
-
-  ]
 
   currentSupplier! : Person; 
   
@@ -113,7 +49,7 @@ export class MaterialFormComponent {
 
   ngOnInit(): void {
 
-    this.materialService.getSubCategories().subscribe({
+    this.subCategoryService.getSubCategories().subscribe({
       next: res => this.subCategories = res,  
     })
 

@@ -31,37 +31,8 @@ export class EmployeeListComponent {
     private modalService = inject(ModalService);
     private employeeController = inject(EmployeeControllerService)
     //Properties
-    employee? : Employee;
-    employees : Employee[] = [
-        {
-            idEmployee: 1,
-            oPerson: {
-                idPerson: 0,
-                name: 'Uther',
-                lastName: 'Pendragon',
-                direction: '',
-                phoneNumber: '',
-                mail: '',
-                dni: '',
-                cuit: ''
-            },
-            salary: 0
-        },
-        {
-            idEmployee: 2,
-            oPerson: {
-                idPerson: 0,
-                name: 'Malganis',
-                lastName: '',
-                direction: '',
-                phoneNumber: '',
-                mail: '',
-                dni: '',
-                cuit: ''
-            },
-            salary: 0
-        }
-    ];
+    employees : Employee[] =[]
+     
     //Pagination
     page = 1
     pageSize = 5

@@ -27,7 +27,7 @@ export class ClientCardComponent {
 
   @Output() isView = new EventEmitter<Client>();
   @Output() action = new EventEmitter<Client>();
-  @Output() isSelected = new EventEmitter<Client>();
+  
   @Output() isEdit = new EventEmitter<Client>();
   @Output() isDeleted = new EventEmitter<Client>();
   botones: Array<{ icon: string }> =[];
@@ -47,9 +47,7 @@ export class ClientCardComponent {
   newBudget(){
     this.action.emit(this.Client)
   }
-  select(){
-    this.isSelected.emit(this.Client);
-  }
+
   view(){
     this.isView.emit(this.Client);
   }

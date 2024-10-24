@@ -12,14 +12,14 @@ import { MaterialControllerService } from '../../../../core/controllers/material
 export class MaterialComponent {
   //Util
   private materialController = inject(MaterialControllerService);
-  material : Material | undefined = this.materialController.getEmptyMaterial();
+  material : Material = this.materialController.getEmptyMaterial();
   
 ngAfterViewInit(): void {
   
   
   this.materialController.getMaterial().subscribe(
       {
-        next : res =>{this.material = res;},
+        next : res =>{this.material = res!;},
       }
         
   

@@ -1,11 +1,11 @@
 export interface Person
 {
-    idPerson: number;
+    personId: number;
     name: string;
     lastName: string;
-    direction: string;
+    address: string;
     phoneNumber: string;
-    mail: string;
+    email: string;
     dni: string;
     cuit: string;
 }

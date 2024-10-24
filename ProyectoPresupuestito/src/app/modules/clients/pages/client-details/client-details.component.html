@@ -2,7 +2,7 @@
 <section>
     <article>
         <app-client
-        [client] = "currentClient.oClient"
+        [client] = "currentClient.clientId"
         />
         <button class="Boton1"(click)="goToBudgetForm()">Crear presupuesto nuevo</button>
         <button class="Boton1"(click)="openPaymentForm()">Cargar pago nuevo</button>
@@ -14,7 +14,7 @@
     </article>
     <article>
         <app-budget-list 
-        [budgets] = "currentClient.budgets"
+        [budgets] = "currentClient.budgetsId"
         />
     </article>
     
