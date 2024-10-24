@@ -38,7 +38,7 @@ import { InvoiceControllerService } from '../../../../core/controllers/invoice-c
 
     @Input() invoices! : Invoice[];
     Invoices : Invoice[] = [
-        {
+        /*{
             idInvoice: 1,
             date: new Date(0),
             payments: [
@@ -111,7 +111,7 @@ import { InvoiceControllerService } from '../../../../core/controllers/invoice-c
                     price: 0
                 }
             ]
-        }
+        }*/
     ];
     
     //Pagination

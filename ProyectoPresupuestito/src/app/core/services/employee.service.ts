@@ -11,56 +11,19 @@ import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
+import { EmployeeRequest } from '../request/employeeRequest';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-    getSalaries() {
-        throw new Error('Method not implemented.');
-    }
-    getSalaryById(idSalary: number) {
-        throw new Error('Method not implemented.');
-    }
-    deleteSalary(idSalary: number) {
-        throw new Error('Method not implemented.');
-    }
   //Properties
   private http = inject(HttpClient);
   private modal = inject(ModalService);
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
   
-  private employees : Employee[] = [
-    {
-      idEmployee: 1001,
-      salary: 100,
-      oPerson: {
-          personId: 1,
-          name: "John",
-          lastName: "Doe",
-          address: "123 Main St",
-          phoneNumber: "1234567890",
-          email: "johndoe@example.com",
-          dni: "123456789",
-          cuit: "30-12345678-9"
-      }
-    },
-    {
-        idEmployee: 1002,
-        salary: 200,
-        oPerson: {
-            personId: 2,
-            name: "Jane",
-            lastName: "Smith",
-            address: "456 Elm St",
-            phoneNumber: "9876543210",
-            email: "janesmith@example.com",
-            dni: "987654321",
-            cuit: "30-98765432-1"
-        }
-    }
-  ]
+  
   //METODOS HTTP ----------------------------------------------------------------------------------------------
   
     /**
@@ -101,7 +64,7 @@ export class EmployeeService {
    * @param employee empleado a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postEmployee(employee: Employee){
+  postEmployee(employee: EmployeeRequest){
     const url = API_URL+ENDPOINTS.employees.post;
     return this.http.post(url,employee).pipe(
       tap(() => {
@@ -122,7 +85,7 @@ export class EmployeeService {
    * @param employee empleado actualizado.
    * @returns un observable de tipo objeto
    */
-  putEmployee(employee: Employee) {
+  putEmployee(employee: EmployeeRequest) {
     const url = API_URL+ENDPOINTS.employees.update;
     return this.http.put(url,employee).pipe(
       tap(() => {

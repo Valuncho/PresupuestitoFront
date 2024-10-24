@@ -6,6 +6,8 @@ import { EmployeeService } from '../../../../core/services/employee.service';
 
 import { Employee } from '../../../../core/model/Employee';
 import { EmployeeControllerService } from '../../../../core/controllers/employee-controller.service';
+import { UtilsService } from '../../../../core/utils/utils.service';
+import { EmployeeRequest } from '../../../../core/request/employeeRequest';
 
 @Component({
     selector: 'app-employee-form',
@@ -20,8 +22,10 @@ export class EmployeeFormComponent {
     private activatedRoute = inject(ActivatedRoute);
     private EmployeeControllerService = inject(EmployeeControllerService)
     private EmployeeService = inject(EmployeeService);
+    private utils = inject(UtilsService);
     //Properties
     currentEmployee : Employee = this.EmployeeControllerService.getEmptyEmployee();
+    employeeDto : EmployeeRequest =this.currentEmployee.oPerson;
     employeeId? : number;
     isEdit : boolean = false;
     //Form
@@ -37,8 +41,11 @@ export class EmployeeFormComponent {
     });
 
     ngOnInit(): void {
+        this.activatedRoute.paramMap.subscribe(params => {
+            this.employeeId = Number(params.get('employeeId'));   
+            this.onEditHandler()
+        });
         this.setUp();
-        this.onEditHandler();
     }
 
     get canSubmit(){
@@ -67,29 +74,59 @@ export class EmployeeFormComponent {
     }
 
     onEditHandler(){
-        this.employeeId = parseInt(this.activatedRoute.snapshot.params['employeeId']);
-        if(this.employeeId){
-        let url = "/employee/edit/" + this.employeeId;
-        if(this.router.url == url){
-            this.isEdit = true;
-            //this.currentEmployee = this.EmployeeService.getEmployeeById(this.employeeId)!;
-            this.employeeForm.patchValue(this.currentEmployee.oPerson);
-        }else{
-            this.isEdit = false;
+        if(this.router.url == "/client/edit/" + this.employeeId){
+            this.EmployeeService.getEmployeeById(this.employeeId!).subscribe( {
+                next:res =>{
+                this.isEdit = true;
+                this.setEmployeeToEdit(res);
+                }
+            }
+            )
+            }else{
+                this.isEdit = false;
         }
-        }
-        
     }
 
     onSubmit(){
-        this.currentEmployee.oPerson = this.employeeForm.value;
+        this.toPerson();
         if(this.isEdit){
-        //this.EmployeeService.handleUpdateEmployee(this.currentEmployee);
-      //  this.notificationService.showNotification("empleado editado con éxito!");
+        this.EmployeeService.putEmployee(this.employeeDto).subscribe({
+            next: ()=>{
+            this.utils.reaload()
+            }
+        });
         }else{
-        //this.EmployeeService.handlePostEmployee(this.currentEmployee);
-       // this.notificationService.showNotification("empleado guardado con éxito!");
+        this.EmployeeService.postEmployee(this.employeeDto).subscribe({
+            next: ()=>{
+            this.utils.reaload()
+            }
+        });
+        
         }
-        this.setUp();
+    this.setUp();
+    }
+
+    setEmployeeToEdit(res : any){
+        this.employeeForm.patchValue({
+            name : res.value.personId.name,
+            lastName : res.value.personId.lastName,
+            direction : res.value.personId.address,
+            phoneNumber : res.value.personId.phoneNumber,
+            mail : res.value.personId.email,
+            dni : res.value.personId.dni,
+            cuit : res.value.personId.cuit,
+        });
+    }
+    toPerson(){
+        this.employeeDto.name = this.employeeForm.get("name")?.value
+        this.employeeDto.lastName = this.employeeForm.get("lastName")?.value
+        this.employeeDto.address = this.employeeForm.get("direction")?.value
+        this.employeeDto.phoneNumber = this.employeeForm.get("phoneNumber")?.value
+        this.employeeDto.email = this.employeeForm.get("mail")?.value
+        this.employeeDto.dni = this.employeeForm.get("dni")?.value
+        this.employeeDto.cuit = this.employeeForm.get("cuit")?.value
+        if(this.isEdit){
+            this.employeeDto.employeeId = this.employeeId;
+        }
     }
 }
