@@ -38,80 +38,80 @@ import { InvoiceControllerService } from '../../../../core/controllers/invoice-c
 
     @Input() invoices! : Invoice[];
     Invoices : Invoice[] = [
-        // {
-        //     idInvoice: 1,
-        //     date: new Date(0),
-        //     payments: [
-        //         {
-        //         idPayment: 0,
-        //         date: new Date(0),
-        //         amount: 0,
-        //         description: ''
-        //         }
-        //     ],
-        //     isPaid: false,
-        //     materials: [
-        //         {
-        //             idInvoiceItem: 0,
-        //             material: {
-        //                 idMaterial: 0,
-        //                 name: '',
-        //                 description: '',
-        //                 color: '',
-        //                 brand: '',
-        //                 measure: '',
-        //                 unitOfMeasure: '',
-        //                 subCategory: {
-        //                     idCategoryMaterial: 0,
-        //                     name: '',
-        //                     category: {
-        //                         idCategory: 0,
-        //                         name: ''
-        //                     }
-        //                 }
-        //             },
-        //             quantity: 0,
-        //             price: 0
-        //         }
-        //     ]
-        // },
-        // {
-        //     idInvoice: 2,
-        //     date: new Date(0),
-        //     payments: [
-        //         {
-        //         idPayment: 0,
-        //         date: new Date(0),
-        //         amount: 0,
-        //         description: ''
-        //         }
-        //     ],
-        //     isPaid: false,
-        //     materials: [
-        //         {
-        //             idInvoiceItem: 0,
-        //             material: {
-        //                 idMaterial: 0,
-        //                 name: '',
-        //                 description: '',
-        //                 color: '',
-        //                 brand: '',
-        //                 measure: '',
-        //                 unitOfMeasure: '',
-        //                 subCategory: {
-        //                     idCategoryMaterial: 0,
-        //                     name: '',
-        //                     category: {
-        //                         idCategory: 0,
-        //                         name: ''
-        //                     }
-        //                 }
-        //             },
-        //             quantity: 0,
-        //             price: 0
-        //         }
-        //     ]
-        // // }
+        /*{
+            idInvoice: 1,
+            date: new Date(0),
+            payments: [
+                {
+                idPayment: 0,
+                date: new Date(0),
+                amount: 0,
+                description: ''
+                }
+            ],
+            isPaid: false,
+            materials: [
+                {
+                    idInvoiceItem: 0,
+                    material: {
+                        idMaterial: 0,
+                        name: '',
+                        description: '',
+                        color: '',
+                        brand: '',
+                        measure: '',
+                        unitOfMeasure: '',
+                        subCategory: {
+                            idCategoryMaterial: 0,
+                            name: '',
+                            category: {
+                                idCategory: 0,
+                                name: ''
+                            }
+                        }
+                    },
+                    quantity: 0,
+                    price: 0
+                }
+            ]
+        },
+        {
+            idInvoice: 2,
+            date: new Date(0),
+            payments: [
+                {
+                idPayment: 0,
+                date: new Date(0),
+                amount: 0,
+                description: ''
+                }
+            ],
+            isPaid: false,
+            materials: [
+                {
+                    idInvoiceItem: 0,
+                    material: {
+                        idMaterial: 0,
+                        name: '',
+                        description: '',
+                        color: '',
+                        brand: '',
+                        measure: '',
+                        unitOfMeasure: '',
+                        subCategory: {
+                            idCategoryMaterial: 0,
+                            name: '',
+                            category: {
+                                idCategory: 0,
+                                name: ''
+                            }
+                        }
+                    },
+                    quantity: 0,
+                    price: 0
+                }
+            ]
+        }*/
     ];
     
     //Pagination

@@ -26,7 +26,7 @@ export class ClientFormComponent {
   //Properties
   currentClient : Client = this.clientController.getEmptyClient();
   clientDto : ClientRequest =this.currentClient.personId;
-   
+
   clientId? : number;
   isEdit : boolean = false;
 
@@ -51,7 +51,6 @@ export class ClientFormComponent {
     this.setUp();
   }
 
- 
   get canSubmit(){
     let  flag : boolean = false;
     if(

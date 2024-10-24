@@ -9,6 +9,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
 import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
+import { SupplierRequest } from '../request/supplierRequest';
 
 
 @Injectable({
@@ -20,40 +21,7 @@ export class SupplierService {
   private modal = inject(ModalService);
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
-  
-  private suppliers : Supplier[] = [
-    {
-      idSupplier: 1001,
-      note: "hola",
-      oPerson: {
-          personId: 1,
-          name: "John",
-          lastName: "Doe",
-          address: "123 Main St",
-          phoneNumber: "1234567890",
-          email: "johndoe@example.com",
-          dni: "123456789",
-          cuit: "30-12345678-9"
-      }
-    },
-    {
-        idSupplier: 1002,
-        note: "hola",
-        oPerson: {
-            personId: 2,
-            name: "Jane",
-            lastName: "Smith",
-            address: "456 Elm St",
-            phoneNumber: "9876543210",
-            email: "janesmith@example.com",
-            dni: "987654321",
-            cuit: "30-98765432-1"
-        }
-    }
-  ]
-  private suppliersHistory : SupplierHistory [] = [
 
-  ]
 
   //METODOS HTTP ----------------------------------------------------------------------------------------------
   
@@ -95,7 +63,7 @@ export class SupplierService {
    * @param supplier proveedor a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postSupplier(supplier: Supplier){
+  postSupplier(supplier: SupplierRequest){
     const url = API_URL+ENDPOINTS.suppliers.post;
     return this.http.post(url,supplier).pipe(
       tap(() => {
@@ -116,7 +84,7 @@ export class SupplierService {
    * @param supplier proveedor actualizado.
    * @returns un observable de tipo objeto
    */
-  putSupplier(supplier: Supplier) {
+  putSupplier(supplier: SupplierRequest) {
     const url = API_URL+ENDPOINTS.suppliers.update;
     return this.http.put(url,supplier).pipe(
       tap(() => {
