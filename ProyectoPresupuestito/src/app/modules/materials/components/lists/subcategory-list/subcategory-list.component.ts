@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { SubCategoryCardComponent } from '../../cards/sub-category-card/sub-category-card.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MaterialService } from '../../../../../core/services/material.service';
 import { ModalService } from '../../../../../core/utils/modal.service';
 import { SubcategoryFormComponent } from '../../forms/subcategory-form/subcategory-form.component';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { SubcategoryService } from '../../../../../core/services/subcategory.service';
 
 @Component({
   selector: 'app-subcategory-list',
@@ -21,14 +21,13 @@ export class SubcategoryListComponent {
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private materialController = inject(MaterialControllerService);
-  private materialService = inject(MaterialService);
-  //subcategories : SubCategoryMaterial[] = []
+  private subcategoryService = inject(SubcategoryService);
 
   subCategories : SubCategoryMaterial[] = []
 
 
   ngOnInit(): void {
-    this.materialService.getSubCategories().subscribe(res=>{
+    this.subcategoryService.getSubCategories().subscribe(res=>{
       this.subCategories = res;
     })
     
@@ -50,7 +49,7 @@ export class SubcategoryListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.materialService.deleteSubCategory($Event.subCategoryMaterialId).subscribe();
+        this.subcategoryService.deleteSubCategory($Event.subCategoryMaterialId).subscribe();
       }
     });
 

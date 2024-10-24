@@ -83,7 +83,7 @@ export class SubcategoryService {
    * @returns un observable de tipo objeto
    */
   putSubCategory(subCategory: SubCategoryMaterialRequest){
-    const url = API_URL+ENDPOINTS.subCategories.update.replace(':id', subCategory.SubCategoryId!.toString());;
+    const url = API_URL+ENDPOINTS.subCategories.update.replace(':id', subCategory.SubCategoryId!.toString());
     return this.http.put(url,subCategory).pipe(
       tap(() => {
         this.notification.showNotification("¡Sub-rubro actualizado con éxito!"); 
@@ -103,7 +103,7 @@ export class SubcategoryService {
    * @returns un observable de tipo objeto
    */
   deleteSubCategory(idSubCategory: number){
-    const url = API_URL+ENDPOINTS.subCategories.delete;
+    const url = API_URL+ENDPOINTS.subCategories.delete.replace(':id', idSubCategory.toString());
     return this.http.patch(url,idSubCategory).pipe(
       tap(() => {
         this.notification.showNotification("¡Sub-rubro eliminado con éxito!"); 

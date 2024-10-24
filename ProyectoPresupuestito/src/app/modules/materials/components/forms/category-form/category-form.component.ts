@@ -59,7 +59,11 @@ export class CategoryFormComponent {
         }
       });
     }else{
-      this.categoryService.putCategory(this.newCategory).subscribe();
+      this.categoryService.putCategory(this.newCategory).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
       this.materialController.setEditMode(false);
     }
   }

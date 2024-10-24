@@ -8,6 +8,7 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { CategoryService } from '../../../../../core/services/category.service';
 
 
 @Component({
@@ -21,14 +22,14 @@ export class CategoryListComponent {
    //Utils
    private dialog = inject(MatDialog);
    private modalService = inject(ModalService);
-   private materialService = inject(MaterialService);
+   private categoryService = inject(CategoryService);
    private materialController = inject(MaterialControllerService);
      
    categories : Category[]=[]
  
  
    ngOnInit(): void {
-     this.materialService.getCategories().subscribe(
+     this.categoryService.getCategories().subscribe(
        {  
          next: x => this.categories = x,  
          
@@ -57,7 +58,7 @@ export class CategoryListComponent {
  
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
-         this.materialService.deleteCategory($Event.categoryId).subscribe();
+         this.categoryService.deleteCategory($Event.categoryId).subscribe();
        }
      });
  

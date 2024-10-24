@@ -6,6 +6,7 @@ import { MaterialControllerService } from '../../../../../core/controllers/mater
 import { SubCategoryMaterialRequest } from '../../../../../core/request/subCategoryMaterialRequest';
 import { SubcategoryService } from '../../../../../core/services/subcategory.service';
 import { CategoryService } from '../../../../../core/services/category.service';
+import { UtilsService } from '../../../../../core/utils/utils.service';
 
 @Component({
   selector: 'app-subcategory-form',
@@ -19,6 +20,7 @@ export class SubcategoryFormComponent {
   private subCategoryService = inject(SubcategoryService);
   private categoryService = inject(CategoryService);
   private materialController = inject(MaterialControllerService);
+  private utils = inject(UtilsService);
   //Properties
   newSubCategory : SubCategoryMaterialRequest = this.materialController.getEmptySubCategoryRequest();
   isEdit : boolean = this.materialController.getEditMode();
@@ -37,11 +39,13 @@ export class SubcategoryFormComponent {
 
     if(this.isEdit){
       this.materialController.getSubcategory().subscribe(res =>{
-        //this.newSubCategory = res!;
+        this.newSubCategory.subCategoryName = res?.subCategoryName!;
+        this.newSubCategory.categoryId = res?.categoryId.categoryId!;
+        this.newSubCategory.SubCategoryId = res?.subCategoryMaterialId!;
       })
       this.SubCategoryForm.patchValue({
-        // name: this.newSubCategory.subCategoryName,
-        // category : this.newSubCategory.subCategoryMaterialId
+        name: this.newSubCategory.subCategoryName,
+        category : this.newSubCategory.categoryId
       });
       
     }
@@ -57,9 +61,17 @@ export class SubcategoryFormComponent {
     this.newSubCategory.categoryId = this.SubCategoryForm.value["category"]
     console.log(this.newSubCategory)
     if(!this.isEdit){
-      this.subCategoryService.postSubCategory(this.newSubCategory).subscribe();
+      this.subCategoryService.postSubCategory(this.newSubCategory).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
-      this.subCategoryService.putSubCategory(this.newSubCategory).subscribe();
+      this.subCategoryService.putSubCategory(this.newSubCategory).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
       this.materialController.setEditMode(false);
     }
   }
