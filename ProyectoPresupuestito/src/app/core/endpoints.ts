@@ -26,9 +26,8 @@ export const ENDPOINTS = {
   budgets: {
     getAll: '/Budget',
     getById: '/Budget/:id',
-    getPriceById: '/Budget/price/:id',
-    getDeadlineById: '/Budget/deadline/:id',
-    post: '/Budget/:cliendId',
+    
+    post: '/Budget',
     update: '/Budget/:id',
     delete: '/Budget/:id',
   },

@@ -19,6 +19,7 @@ import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/materi
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 import { ClientService } from '../../../../core/services/client.service';
 import { BudgetRequest } from '../../../../core/request/budgetRequest';
+import { UtilsService } from '../../../../core/utils/utils.service';
 
 /**
  * @class BudgetFormComponent
@@ -44,6 +45,7 @@ export class BudgetFormComponent {
   private budgetService = inject(BudgetService);
   private clientService = inject(ClientService);
   private clientController = inject(ClientControllerService);
+  private utils = inject(UtilsService);
   //Properties
   currentBudget : BudgetRequest = this.budgetService.getEmptyBudgetRequest();
   currentClient : Client = this.clientController.getEmptyClient();
@@ -147,15 +149,24 @@ export class BudgetFormComponent {
   onSubmit(){
     this.toBudget(); 
     if(this.isEdit){
-      this.budgetService.putBudget(this.currentBudget).subscribe();
+      this.budgetService.putBudget(this.currentBudget).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
-      this.budgetService.postBudget(this.currentBudget).subscribe();
+      this.budgetService.postBudget(this.currentBudget).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }
     this.setUp();
   }
 
   toBudget(){
-    this.currentBudget.DescriptionBudget = this.BudgetForm.get('description')?.value;
+    this.currentBudget.clientId = this.BudgetForm.get('clientId')?.value;
+    this.currentBudget.descriptionBudget = this.BudgetForm.get('description')?.value;
     this.currentBudget.deadLine = this.BudgetForm.get('deadLine')?.value;
     this.currentBudget.dateCreated = this.BudgetForm.get('createdDate')?.value;
     this.currentBudget.budgetStatus = this.BudgetForm.get('estado')?.value;

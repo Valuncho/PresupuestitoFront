@@ -1,7 +1,7 @@
 export interface BudgetRequest{
-    idBudget? : number;
-    DescriptionBudget : string,
-    ClientId : number;
+    budgetId? : number;
+    descriptionBudget : string,
+    clientId : number;
     budgetStatus : string;
     dateCreated : Date;
     deadLine : Date;

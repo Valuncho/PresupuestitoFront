@@ -95,7 +95,7 @@ export class BudgetService {
    * @returns un observable de tipo objeto
    */
   putBudget(budget: BudgetRequest) {
-    const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.idBudget!.toString());
+    const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.budgetId!.toString());
     return this.http.put(url,budget).pipe(
       tap(() => {
         this.notification.showNotification("¡Presupuesto actualizado con éxito!"); 
@@ -152,11 +152,11 @@ export class BudgetService {
   getEmptyBudgetRequest(): BudgetRequest {
     
     return {
-      ClientId : 0,
+      clientId : 0,
       budgetStatus : "",
       deadLine : new Date(),
       dateCreated:new Date(),
-      DescriptionBudget : ""
+      descriptionBudget : ""
     }
   }
 }
