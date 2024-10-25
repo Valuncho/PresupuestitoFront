@@ -7,6 +7,7 @@ import { Client } from '../../../../core/model/Client';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 import { UtilsService } from '../../../../core/utils/utils.service';
 import { ClientRequest } from '../../../../core/request/clientRequest';
+import { ModalService } from '../../../../core/utils/modal.service';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class ClientFormComponent {
   private clientService = inject(ClientService);
   private clientController = inject(ClientControllerService);
   private utils = inject(UtilsService);
+  private modalService = inject(ModalService);
+
   //Properties
   currentClient : Client = this.clientController.getEmptyClient();
   clientDto : ClientRequest =this.currentClient.personId;
@@ -65,6 +68,7 @@ export class ClientFormComponent {
   }
 
   setUp(){
+    this.closeModal()
     this.clientForm.reset();
     this.isEdit = false;
     this.currentClient = this.clientController.getEmptyClient();
@@ -111,6 +115,12 @@ export class ClientFormComponent {
     this.setUp();
   }
   
+  closeModal(){
+    if(this.router.url == "/budget/new/" + this.clientId){
+      this.modalService.closeModal();
+    }
+  }
+
   setClientToEdit(res : any){
     this.clientForm.patchValue({
       name : res.value.personId.name,

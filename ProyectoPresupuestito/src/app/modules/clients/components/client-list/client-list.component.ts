@@ -11,6 +11,7 @@ import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { UtilsService } from '../../../../core/utils/utils.service';
 
 
 /**
@@ -35,7 +36,7 @@ export class ClientListComponent {
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
-
+  private utils =inject(UtilsService);
   //Properties
   options : boolean = false;
   clients : Client[] = [];
@@ -73,22 +74,28 @@ export class ClientListComponent {
     this.modalService.openModal<ClientFormComponent,Client>(ClientFormComponent);
   }
 
-
+  closeModal(){
+    this.modalService.closeModal();
+  }
 
   //Card
   handleAction($Event : Client){
+    this.closeModal()
     this.router.navigate(['/budget/new/',$Event.clientId]);
   }
 
   handleViewClient($Event : Client){    
+    this.closeModal()
     this.router.navigate(['/client/detail/',$Event.clientId]);
   }
 
   handleEditClient($Event : Client){
+    this.closeModal()
     this.router.navigate(['/client/edit/',$Event.clientId]);    
   }
 
   handleDeleteClient($Event : Client){
+    this.closeModal()
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         mensaje: `¿Estás seguro de que deseas eliminar al cliente ${$Event.personId.name}?`
