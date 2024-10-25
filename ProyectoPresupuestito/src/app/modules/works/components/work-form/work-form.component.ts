@@ -42,7 +42,7 @@ export class WorkFormComponent {
       })
       
       //formatDate(this.currentWork.deadline, 'dd/MM/yyyy', 'es-ES')
-      this.WorkForm.patchValue({deadLine : this.currentWork.deadline, notes : this.currentWork.notes, order : this.currentWork.order, estado: this.currentWork.status, hours: this.currentWork.estimatedHoursWorked})
+      this.WorkForm.patchValue({deadLine : this.currentWork.deadline, notes : this.currentWork.notes, estado: this.currentWork.status, hours: this.currentWork.estimatedHoursWorked})
       
     }
     
@@ -72,7 +72,7 @@ export class WorkFormComponent {
     this.currentWork.estimatedHoursWorked = this.WorkForm.get('hours')?.value;
     this.currentWork.status = this.WorkForm.get('estado')?.value;
     this.currentWork.notes = this.WorkForm.get('notes')?.value;
-    this.currentWork.order = this.WorkForm.get('order')?.value;
+    
   }
 }
 

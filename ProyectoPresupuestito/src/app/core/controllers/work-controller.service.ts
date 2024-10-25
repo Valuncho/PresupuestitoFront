@@ -32,7 +32,6 @@ export class WorkControllerService {
   getEmptyWork(): Work {
     return {
       idWork: 0,
-      order: 0,
       materials: [],
       estimatedHoursWorked: 0,
       deadline: new Date(),

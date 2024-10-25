@@ -43,13 +43,10 @@ export class WorkListComponent {
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let budgetDetailUrl = "/budget/detail/" + this.budgetId;
     let worksViewUrl = "/work";
-    console.log(this.router.url)
     if(budgetDetailUrl == this.router.url){
-      
       this.options = true;
       
     }else if(worksViewUrl == this.router.url){
-      
       this.workService.getWorks().subscribe(res =>{
         this.works = res;
       })

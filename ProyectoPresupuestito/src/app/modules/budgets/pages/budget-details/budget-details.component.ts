@@ -32,8 +32,9 @@ export class BudgetDetailsComponent {
   //Utils
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private budgetService = inject(BudgetService);
   private clientService = inject(ClientService);
+  private budgetService = inject(BudgetService);
+  private workController = inject(WorkControllerService);
   
   
   //Properties
@@ -53,7 +54,7 @@ export class BudgetDetailsComponent {
       }
   };
 
-  currentWork? : Work;
+  currentWork : Work = this.workController.getEmptyWork();
 
   
 
@@ -86,15 +87,6 @@ export class BudgetDetailsComponent {
     
   }
 
-  seleccionar(workId : number){
-    //this.currentWork = this.workService.getWorkById(workId)!;
-    //this.workService.setSelectedWork(this.currentWork);
-  }
-  editWork($Event : number){
-
-  }
-  deleteWork($Event : number){
-
-  }
+  
 }
 
