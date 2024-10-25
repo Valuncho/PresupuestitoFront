@@ -14,6 +14,7 @@ import { Client } from '../../../../core/model/Client';
 import { WorkListComponent } from "../../../works/components/work-list/work-list.component";
 import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
 import { WorkComponent } from '../../../works/components/work/work.component';
+import { ClientService } from '../../../../core/services/client.service';
 /**
  * @class BudgetDetailsComponent
  * 
@@ -32,7 +33,8 @@ export class BudgetDetailsComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private budgetService = inject(BudgetService);
-  private workController = inject(WorkControllerService);
+  private clientService = inject(ClientService);
+  
   
   //Properties
   currentBudget! : Budget;
@@ -59,12 +61,19 @@ export class BudgetDetailsComponent {
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);    
     this.budgetService.getBudgetById(this.budgetId).subscribe(
       {
-        next : res => this.currentBudget  = res,
+        next : (res) => {
+          this.currentBudget = res.value;
+          this.clientService.getClientById(res.value.clientId.clientId).subscribe(
+            {
+              next : (clientRes) =>{
+                this.budgetClient = clientRes.value;
+              }
+            }
+          )
+        }
       }
      )
-    // this.workController.getWork().subscribe(res =>{
-    //   this.currentWork = res
-    // })
+ 
   }
 
   goToWorkArea(){

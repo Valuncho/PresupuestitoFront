@@ -55,9 +55,9 @@ export class BudgetService {
    * @param idBudget id del presupuesto solicitado.
    * @returns Un presupuesto como un observable.
    */
-  getBudgetById(idBudget : number) : Observable<Budget>{
+  getBudgetById(idBudget : number) : Observable<any>{
     const url = API_URL+ENDPOINTS.budgets.getById.replace(':id', idBudget.toString());
-    return this.http.get<Budget>(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
