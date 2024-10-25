@@ -39,8 +39,8 @@ export class BudgetService {
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de presupuestos como un observable.
    */
-  getBudgets() : Observable<Budget[]> {
-    return this.http.get<Budget[]>(API_URL+ENDPOINTS.budgets.getAll).pipe(
+  getBudgets() : Observable<any[]> {
+    return this.http.get<any[]>(API_URL+ENDPOINTS.budgets.getAll).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -136,14 +136,15 @@ export class BudgetService {
 
   getEmptyBudget(): Budget {
     const EmptyBudget: Budget = {
-      idBudget: 0,
+      budgetId: 0,
       works: [],
-      createdDate: new Date(),
+      dateCreated: new Date(),
       deadLine: new Date(),
-      description: '',
+      descriptionBudget: '',
       cost: 0,
-      Status: 'Creado',
+      budgetStatus: 'Creado',
       payments: [],
+    
     };
     return EmptyBudget;
   }

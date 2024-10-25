@@ -68,7 +68,7 @@ export class BudgetDetailsComponent {
   }
 
   goToWorkArea(){
-    this.router.navigate(["/work/edit/",this.currentBudget.idBudget]);
+    this.router.navigate(["/work/edit/",this.currentBudget.budgetId]);
   }
   calculatePrice(){
 

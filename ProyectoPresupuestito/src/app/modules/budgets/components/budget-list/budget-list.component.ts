@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 import { Component, inject, Input, signal } from '@angular/core';
 import { BudgetComponent } from '../budget/budget.component';
 import { BudgetService } from '../../../../core/services/budget.service';
@@ -22,7 +22,7 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
 @Component({
   selector: 'app-budget-list',
   standalone: true,
-  imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule, BudgetSearchComponent, TextCardComponent],
+  imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule, BudgetSearchComponent, TextCardComponent, CommonModule],
   templateUrl: './budget-list.component.html',
   styleUrl: './budget-list.component.css'
 })
@@ -35,34 +35,35 @@ export class BudgetListComponent {
 
   //Properties
   @Input() budgets : Budget[] = [
-    {
-      idBudget: 1,
-      works: [
+    // {
+    //   idBudget: 1,
+    //   works: [
         
-      ], // Replace with actual work data if needed
-      createdDate: new Date('2023-08-20'),
-      deadLine: new Date('2023-12-22'),
-      description: 'Kitchen renovation',
-      cost: 5000,
-      Status: 'Cancelado',
-      payments: [
+    //   ], // Replace with actual work data if needed
+    //   createdDate: new Date('2023-08-20'),
+    //   deadLine: new Date('2023-12-22'),
+    //   description: 'Kitchen renovation',
+    //   cost: 5000,
+    //   Status: 'Cancelado',
+    //   payments: [
         
-      ], // Or provide payment data if needed
-    },
-    {
-      idBudget: 2,
-      works: [
+    //   ], // Or provide payment data if needed
+    // },
+    // {
+    //   idBudget: 2,
+    //   works: [
         
-      ],
-      createdDate: new Date('2024-01-15'),
-      deadLine: new Date('2024-02-15'),
-      description: 'Bathroom remodeling',
-      cost: 3000,
-      Status: 'Aprobado',
-      payments: [
-        // Payment data if applicable
-      ],
-    }]
+    //   ],
+    //   createdDate: new Date('2024-01-15'),
+    //   deadLine: new Date('2024-02-15'),
+    //   description: 'Bathroom remodeling',
+    //   cost: 3000,
+    //   Status: 'Aprobado',
+    //   payments: [
+    //     // Payment data if applicable
+    //   ],
+    // }
+    ]
   
   clientId : number = 0
   options : boolean = false;
@@ -70,7 +71,7 @@ export class BudgetListComponent {
   page : number = 1;
   itemsPerPage : number = 5;
 
-
+  pipe = new DatePipe('en-US');
   ngOnInit(){
     this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
     const clientUrl = "/client/detail/"+this.clientId;
@@ -79,9 +80,16 @@ export class BudgetListComponent {
     }else{
       this.budgetService.getBudgets().subscribe(
         {
-          next: res => {this.budgets = res}
+          
+          next: res => {
+            this.budgets = res;
+
+           
+          }
         }
       )
+
+   
     }
 
 
@@ -90,24 +98,24 @@ export class BudgetListComponent {
  
 
   handleView($Event : any){
-    this.router.navigate(['/budget/detail/', $Event.idBudget]);
+    this.router.navigate(['/budget/detail/', $Event.budgetId]);
   }
 
   handleEdit($Event : Budget){
-    this.router.navigate(['/budget/edit/',$Event.idBudget]);
+    this.router.navigate(['/budget/edit/',$Event.budgetId]);
   }
 
   handleDelete($Event : Budget){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar al presupuesto: ${$Event.description}?`
+        mensaje: `¿Estás seguro de que deseas eliminar al presupuesto: ${$Event.descriptionBudget}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         
-        this.budgetService.deleteBudget($Event.idBudget).subscribe({
+        this.budgetService.deleteBudget($Event.budgetId).subscribe({
           next : () => {
             this.router.navigate(['/budget']);
           }

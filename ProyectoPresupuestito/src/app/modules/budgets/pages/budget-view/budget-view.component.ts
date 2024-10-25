@@ -53,9 +53,9 @@ export class BudgetViewComponent {
       console.log(this.selectedBudget);
       this.BudgetForm.patchValue(this.selectedBudget);
       
-      this.BudgetForm.patchValue({createdDate : this.selectedBudget.createdDate.toISOString().split('T')[0]});
-      this.BudgetForm.patchValue({deadLine : this.selectedBudget.deadLine.toISOString().split('T')[0]});
-      this.BudgetForm.patchValue({estado: this.selectedBudget.Status })
+      //this.BudgetForm.patchValue({createdDate : this.selectedBudget.createdDate.toISOString().split('T')[0]});
+      //this.BudgetForm.patchValue({deadLine : this.selectedBudget.deadLine.toISOString().split('T')[0]});
+      //this.BudgetForm.patchValue({estado: this.selectedBudget.Status })
       
     }
     
