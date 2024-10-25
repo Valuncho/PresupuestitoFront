@@ -7,9 +7,9 @@
         <p>Nota: {{Work?.notes}}</p>
     </div>
     <div class="Card-Options">
-        <app-button-card [icon]="botones[0].icon" (click)="select()"/>
-        <app-button-card [icon]="botones[1].icon" (click)="edit()"/>
-        <app-button-card [icon]="botones[2].icon" (click)="deleteC()"/>
+        <app-button-card [icon]="botones[0].icon" (click)="select()" mat-raised-button matTooltip="Seleccionar trabajo."/>
+        <app-button-card [icon]="botones[1].icon" (click)="edit()" mat-raised-button matTooltip="Editar trabajo."/>
+        <app-button-card [icon]="botones[2].icon" (click)="deleteC()" mat-raised-button matTooltip="Eliminar trabajo."/>
     </div>
 </div>
 
