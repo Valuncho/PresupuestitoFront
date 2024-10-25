@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 import { ClientService } from '../../../../core/services/client.service';
+import { BudgetRequest } from '../../../../core/request/budgetRequest';
 
 /**
  * @class BudgetFormComponent
@@ -44,7 +45,7 @@ export class BudgetFormComponent {
   private clientService = inject(ClientService);
   private clientController = inject(ClientControllerService);
   //Properties
-  currentBudget : Budget = this.budgetService.getEmptyBudget();
+  currentBudget : BudgetRequest = this.budgetService.getEmptyBudgetRequest();
   currentClient : Client = this.clientController.getEmptyClient();
   budgetId : number = 0;
   isEdit : boolean = false;
@@ -95,7 +96,7 @@ export class BudgetFormComponent {
   setUp(){
     this.BudgetForm.reset();
     this.isEdit = false;
-    this.currentBudget = this.budgetService.getEmptyBudget();  
+    this.currentBudget = this.budgetService.getEmptyBudgetRequest();  
   }
 
 
@@ -105,7 +106,7 @@ export class BudgetFormComponent {
     let url = "/budget/edit/" + this.budgetId;
     if(this.router.url == url){
       this.budgetService.getBudgetById(this.budgetId).subscribe(budget =>{
-        this.currentBudget = budget;
+//        this.currentBudget = budget;
       })
       this.onEdit()
     }else{
@@ -136,11 +137,11 @@ export class BudgetFormComponent {
   onEdit(){
     this.isEdit = true;
       this.BudgetForm.patchValue(this.currentBudget);
-      this.BudgetForm.patchValue({cost : this.currentBudget.cost});
-      this.BudgetForm.patchValue({description : this.currentBudget.description});
-      this.BudgetForm.patchValue({createdDate : this.currentBudget.createdDate});
+      
+      this.BudgetForm.patchValue({description : this.currentBudget.budgetStatus});
+      this.BudgetForm.patchValue({createdDate : this.currentBudget.dateCreated});
       this.BudgetForm.patchValue({deadLine : this.currentBudget.deadLine});
-      this.BudgetForm.patchValue({estado: this.currentBudget.Status })
+      this.BudgetForm.patchValue({estado: this.currentBudget.budgetStatus})
       this.BudgetForm.get('client')?.disabled;
   }
   onSubmit(){
@@ -154,11 +155,10 @@ export class BudgetFormComponent {
   }
 
   toBudget(){
-    this.currentBudget.description = this.BudgetForm.get('description')?.value;
+    this.currentBudget.DescriptionBudget = this.BudgetForm.get('description')?.value;
     this.currentBudget.deadLine = this.BudgetForm.get('deadLine')?.value;
-    this.currentBudget.createdDate = this.BudgetForm.get('createdDate')?.value;
-    this.currentBudget.cost = this.BudgetForm.get('cost')?.value;
-    this.currentBudget.Status = this.BudgetForm.get('estado')?.value;
+    this.currentBudget.dateCreated = this.BudgetForm.get('createdDate')?.value;
+    this.currentBudget.budgetStatus = this.BudgetForm.get('estado')?.value;
   }
 }
 

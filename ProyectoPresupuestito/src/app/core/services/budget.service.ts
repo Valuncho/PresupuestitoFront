@@ -7,6 +7,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
 import { NotificationService } from '../utils/notification.service';
+import { BudgetRequest } from '../request/budgetRequest';
 /**
  * @class BudgetService
  * 
@@ -72,7 +73,7 @@ export class BudgetService {
    * @param budget presupuesto a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postBudget(budget: Budget) {
+  postBudget(budget: BudgetRequest) {
     const url = API_URL+ENDPOINTS.budgets.post;
     return this.http.post(url,budget).pipe(
       tap(() => {
@@ -93,8 +94,8 @@ export class BudgetService {
    * @param budget presupuesto actualizado.
    * @returns un observable de tipo objeto
    */
-  putBudget(budget: Budget) {
-    const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.idBudget.toString());
+  putBudget(budget: BudgetRequest) {
+    const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.idBudget!.toString());
     return this.http.put(url,budget).pipe(
       tap(() => {
         this.notification.showNotification("¡Presupuesto actualizado con éxito!"); 
@@ -145,5 +146,16 @@ export class BudgetService {
       payments: [],
     };
     return EmptyBudget;
+  }
+
+  getEmptyBudgetRequest(): BudgetRequest {
+    
+    return {
+      ClientId : 0,
+      budgetStatus : "",
+      deadLine : new Date(),
+      dateCreated:new Date(),
+      DescriptionBudget : ""
+    }
   }
 }
