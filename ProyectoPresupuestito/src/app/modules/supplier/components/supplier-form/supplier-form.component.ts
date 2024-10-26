@@ -28,7 +28,7 @@ export class SupplierFormComponent {
     private utils = inject(UtilsService);
     //Properties
     currentSupplier : Supplier = this.supplierController.getEmptySupplier();
-    supplierDto : SupplierRequest = this.currentSupplier.oPerson;
+    supplierDto : SupplierRequest = this.currentSupplier.personId;
     supplierId? : number;
     isEdit : boolean = false;
     //Form

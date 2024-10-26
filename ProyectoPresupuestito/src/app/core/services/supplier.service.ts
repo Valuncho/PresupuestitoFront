@@ -30,8 +30,8 @@ export class SupplierService {
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de proveedores como un observable.
    */
-  getSuppliers() : Observable<Supplier[]> {
-    return this.http.get<Supplier[]>(API_URL+ENDPOINTS.suppliers.getAll).pipe(      
+  getSuppliers() : Observable<any[]> {
+    return this.http.get<any[]>(API_URL+ENDPOINTS.suppliers.getAll).pipe(      
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -45,9 +45,9 @@ export class SupplierService {
    * @param idSupplier id del proveedor solicitado.
    * @returns Un proveedor como un observable.
    */
-  getSupplierById(idSupplier : number) : Observable<Supplier> {
+  getSupplierById(idSupplier : number) : Observable<any> {
     const url = API_URL+ENDPOINTS.clients.getById.replace(':id', idSupplier.toString());
-    return this.http.get<Supplier>(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);

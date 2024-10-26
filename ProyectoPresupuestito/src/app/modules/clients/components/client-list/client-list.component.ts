@@ -40,10 +40,7 @@ export class ClientListComponent {
   //Properties
   options : boolean = false;
   clients : Client[] = [];
-  
 
-
-  searchedClients : Client[] = [];
   clientId = 0;
   
   //Pagination
