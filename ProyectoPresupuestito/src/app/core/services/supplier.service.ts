@@ -85,7 +85,7 @@ export class SupplierService {
    * @returns un observable de tipo objeto
    */
   putSupplier(supplier: SupplierRequest) {
-    const url = API_URL+ENDPOINTS.suppliers.update;
+    const url = API_URL+ENDPOINTS.suppliers.update.replace(':id', supplier.supplierId!.toString());
     return this.http.put(url,supplier).pipe(
       tap(() => {
         this.notification.showNotification("¡Proveedor editado con éxito!"); 
