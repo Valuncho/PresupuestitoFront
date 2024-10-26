@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { WorkService } from '../../../../core/services/work.service';
 import { Work } from '../../../../core/model/Work';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { WorkFormComponent } from '../work-form/work-form.component';
 import { WorkSearchComponent } from "../work-search/work-search.component";
 import { CommonModule } from '@angular/common';
@@ -16,7 +15,7 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 @Component({
   selector: 'app-work-list',
   standalone: true,
-  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent,CommonModule, TextCardComponent],
+  imports: [WorkCardComponent, WorkSearchComponent,CommonModule, TextCardComponent],
   templateUrl: './work-list.component.html',
   styleUrl: './work-list.component.css',
 })
@@ -34,9 +33,7 @@ export class WorkListComponent {
 
   options: Boolean = false;
   budgetId : number = 0;
-  //Pagination
-  workPage: number = 1;
-  worksToPage: number = 5;
+
 
   ngOnInit(): void {
     
@@ -98,8 +95,5 @@ export class WorkListComponent {
   onSaveWorksHandler() {
     this.router.navigate(['/budget/detail',this.budgetId]);
   }
-  //Pagination
-  pageChange(page: number) {
-    this.workPage = page;
-  }
+
 }

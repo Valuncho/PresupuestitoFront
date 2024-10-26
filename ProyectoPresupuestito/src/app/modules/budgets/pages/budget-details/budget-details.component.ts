@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { WorkDetailComponent } from '../../../works/components/work-detail/work-detail.component';
 import { Work } from '../../../../core/model/Work';
-import { WorkService } from '../../../../core/services/work.service';
 import { WorkCardComponent } from "../../../works/components/work-card/work-card.component";
 import { BudgetComponent } from "../../components/budget/budget.component";
 import { ClientComponent } from "../../../clients/components/client/client.component";
@@ -15,6 +14,7 @@ import { WorkListComponent } from "../../../works/components/work-list/work-list
 import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
 import { WorkComponent } from '../../../works/components/work/work.component';
 import { ClientService } from '../../../../core/services/client.service';
+import { WorkItemListComponent } from "../../../workItems/components/work-item-list/work-item-list.component";
 /**
  * @class BudgetDetailsComponent
  * 
@@ -24,7 +24,7 @@ import { ClientService } from '../../../../core/services/client.service';
 @Component({
   selector: 'app-budget-details',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkListComponent, WorkComponent],
+  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkListComponent, WorkComponent, WorkItemListComponent],
   templateUrl: './budget-details.component.html',
   styleUrl: './budget-details.component.css'
 })

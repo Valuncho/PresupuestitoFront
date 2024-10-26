@@ -1,0 +1,12 @@
+<div class="List">
+    <h3 class="List-title">Listado de items del trabajo</h3>
+    <button class="Boton1" (click)="addItemHandler()">Agregar item</button>
+    <div>
+        @for (category of items ; track category; let idx = $index) {
+        
+        }@empty {
+            <app-text-card [message]="'No hay items que mostrar.'"/>
+        }  
+    </div>
+      
+</div>

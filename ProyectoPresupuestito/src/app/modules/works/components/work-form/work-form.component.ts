@@ -63,7 +63,6 @@ export class WorkFormComponent {
 
   onSubmit(){
     this.toWork()
-    console.log(this.currentWork)
     if(this.isEdit){
       this.workService.putWork(this.currentWork).subscribe({
         next: ()=>{
