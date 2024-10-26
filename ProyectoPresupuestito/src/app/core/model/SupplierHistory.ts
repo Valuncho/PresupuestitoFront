@@ -3,7 +3,7 @@ import { Supplier } from "./Supplier";
 
 export interface SupplierHistory
 {
-    idSupplierHistory : number;
+    supplierHistoryId : number;
     oSupplier : Supplier;
     invoices : Invoice[]
 }

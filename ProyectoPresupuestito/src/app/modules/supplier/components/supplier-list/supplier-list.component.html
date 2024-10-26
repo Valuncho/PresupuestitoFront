@@ -1,9 +1,11 @@
 <div class="List">
   <h3 class="List-title">Listado de proveedores</h3>
     <div class="CardContainer">
+
       @for (supplier of suppliers | paginate: { itemsPerPage: pageSize, currentPage: page } ; track supplier) {
+      
         <app-supplier-card 
-        [supplier]="supplier"
+        [supplier]="suppliers[0]"
         (isView)="handleViewSupplier($event)"
         (isEdit)="handleEditSupplier($event)" 
         (isDeleted)="handleDeleteSupplier($event)" 

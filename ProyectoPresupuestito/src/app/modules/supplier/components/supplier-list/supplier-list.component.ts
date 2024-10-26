@@ -8,11 +8,12 @@ import { SupplierSearchComponent } from '../supplier-search/supplier-search.comp
 import { Supplier } from '../../../../core/model/Supplier';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-supplier-list',
     standalone: true,
-    imports: [SupplierSearchComponent,SupplierCardComponent,TextCardComponent,NgxPaginationModule],
+    imports: [SupplierSearchComponent,SupplierCardComponent,TextCardComponent,NgxPaginationModule, CommonModule],
     templateUrl: './supplier-list.component.html',
     styleUrl: './supplier-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,37 +23,38 @@ export class SupplierListComponent {
     private dialog = inject(MatDialog);
     private supplierService = inject(SupplierService);
     //Properties
-    suppliers : Supplier[] = [];
-    
+    suppliers : any[] = [];
+    sdasd : any
     //Pagination
     page = 1
     pageSize = 5
 
     ngOnInit(): void {
-        this.supplierService.getSuppliers().subscribe(res=>
-            this.suppliers=res
-        )
+        this.supplierService.getSuppliers().subscribe(res =>{
+            this.suppliers = res
+        })
+        
     }
 
     //Card
     handleViewSupplier($Event : Supplier){    
-        this.router.navigate(['/supplier/detail/',$Event.idSupplier]);
+        this.router.navigate(['/supplier/detail/',$Event.supplierId]);
     }
 
     handleEditSupplier($Event : Supplier){
-        this.router.navigate(['/supplier/edit/',$Event.idSupplier]);    
+        this.router.navigate(['/supplier/edit/',$Event.supplierId]);    
     }
 
     handleDeleteSupplier($Event : Supplier){
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
-            mensaje: `¿Estás seguro de que deseas eliminar al proveedor ${$Event.oPerson.name}?`
+            mensaje: `¿Estás seguro de que deseas eliminar al proveedor ${$Event.personId.name}?`
         }
         });
 
         dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            this.supplierService.deleteSupplier($Event.idSupplier).subscribe(
+            this.supplierService.deleteSupplier($Event.supplierId).subscribe(
             {
                 next: () => this.router.navigate(['/supplier'])
             }

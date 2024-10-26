@@ -9,8 +9,6 @@ import { InvoiceControllerService } from './invoice-controller.service';
 })
 export class SupplierControllerService {
 
-  constructor() { }
-
   //Selected entities
   private supplierHistory: BehaviorSubject<SupplierHistory | undefined> = new BehaviorSubject<SupplierHistory | undefined>(undefined);
   
@@ -42,8 +40,8 @@ export class SupplierControllerService {
 
   getEmptySupplier(): Supplier {
     return  {
-      idSupplier: 0,
-      oPerson: {
+      supplierId: 0,
+      personId: {
         personId: 0,
         name: '',
         lastName: '',
@@ -59,7 +57,7 @@ export class SupplierControllerService {
 
 getEmptyHistory() : SupplierHistory{
   return {
-    idSupplierHistory: 0,
+    supplierHistoryId: 0,
     oSupplier : this.getEmptySupplier(),
     invoices : []
   }
