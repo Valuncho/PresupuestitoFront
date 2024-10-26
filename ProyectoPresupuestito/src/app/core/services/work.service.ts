@@ -7,6 +7,7 @@ import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
+import { WorkRequest } from '../request/workRequest';
 /**
  * @class
  * 
@@ -62,7 +63,7 @@ export class WorkService {
    * @param work trabajo a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postWork(work: Work){
+  postWork(work: WorkRequest){
     const url = API_URL+ENDPOINTS.works.post;
     return this.http.post(url,work).pipe(
       tap(() => {
@@ -82,8 +83,8 @@ export class WorkService {
    * @param work trabajo actualizado.
    * @returns un observable de tipo objeto
    */
-  putWork(work: Work) {
-    const url = API_URL+ENDPOINTS.works.update.replace(':id', work.idWork.toString());
+  putWork(work: WorkRequest) {
+    const url = API_URL+ENDPOINTS.works.update.replace(':id', work.workId!.toString());
     return this.http.put(url,work).pipe(
       tap(() => {
         this.notification.showNotification("¡Trabajo editado con éxito!"); 

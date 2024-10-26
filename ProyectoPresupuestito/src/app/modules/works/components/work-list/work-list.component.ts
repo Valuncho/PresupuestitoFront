@@ -63,11 +63,11 @@ export class WorkListComponent {
  
   //Card
   handleView($Event: Work) {
-    this.workController.setWork($Event);
+    //this.workController.setWork($Event);
   }
   handleEdit($Event: Work) {
     this.workController.setEditMode(true);
-    this.workController.setWork($Event);
+    //this.workController.setWork($Event);
     this.modalService.openModal(WorkFormComponent);
   }
   handleDelete($Event: Work) {
@@ -86,6 +86,9 @@ export class WorkListComponent {
 
   //List options
   addWorkHandler() {
+    let work = this.workController.getEmptyWorkRequest();
+    work.budgetId = this.budgetId;
+    this.workController.setWork(work);
     this.modalService.openModal(WorkFormComponent);
   }
 

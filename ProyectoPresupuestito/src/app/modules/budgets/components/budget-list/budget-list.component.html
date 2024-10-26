@@ -1,5 +1,10 @@
 <div class="List">
-   <h3 class="List-title">Listado de presupuestos</h3>
+  @if(options){
+    <h3 class="List-title">Listado de presupuestos</h3>
+  }@else {
+    <h3 class="List-title">Listado total de presupuestos</h3>
+  }
+   
    
     @for (budget of budgets | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget.budgetId; let idx = $index ) {
  

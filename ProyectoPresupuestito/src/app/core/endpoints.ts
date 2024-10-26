@@ -9,7 +9,6 @@ export const ENDPOINTS = {
   clients: {
     getAll: '/Client',
     getById: '/Client/:id',
-    getByBudgetId: '/Client/:idBudget',
     post: '/Client',
     update: '/Client/:id',
     delete: '/Client/:id',
@@ -36,7 +35,7 @@ export const ENDPOINTS = {
   works: {
     getAll: '/Work',
     getById: '/Work/:id',
-    post: '/Work/:budgetId',
+    post: '/Work',
     update: '/Work/:id',
     delete: '/Work/:id',
   },
@@ -44,7 +43,7 @@ export const ENDPOINTS = {
   items: {
     getAll: '/Item',
     getById: '/Item/:id',
-    post: '/Item/:idWork',
+    post: '/Item',
     update: '/Item/:id',
     delete: '/Item/:id',
   },
@@ -76,7 +75,6 @@ export const ENDPOINTS = {
   suppliers: {
     getAll: '/Supplier',
     getById: '/Supplier/:id',
-    getByInvoiceId: '/Supplier/:idInvoice',
     post: '/Supplier',
     update: '/Supplier/:id',
     delete: '/Supplier/:id',
@@ -93,7 +91,7 @@ export const ENDPOINTS = {
   invoices: {
     getAll: '/Invoices',
     getById: '/Invoices/:id',
-    post: '/Invoices/:supplierId',
+    post: '/Invoices',
     update: '/Invoices/:id',
     delete: '/Invoices/:id',
   },
@@ -101,7 +99,7 @@ export const ENDPOINTS = {
   invoiceItem: {
     getAll: '/Item',
     getById: '/Item/:id',
-    post: '/Item/:idInvoice',
+    post: '/Item',
     update: '/Item/:id',
     delete: '/Item/:id',
   },
@@ -143,7 +141,7 @@ export const ENDPOINTS = {
     getById: '/payments/:id',
     postInvoicePayment: '/payments/invoce/:idInvoice',
     postBudgetPayment: '/payments/budget/:idBudget',
-    postSalaryPayment: '/payments/invoce/idSalary',
+    postSalaryPayment: '/payments/invoce/:idSalary',
     update: '/payments/:id',
     delete: '/payments/:id',
   },

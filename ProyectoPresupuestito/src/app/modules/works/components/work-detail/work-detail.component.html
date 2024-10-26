@@ -4,9 +4,9 @@
     <div class="Interior">
       <p>Notas : {{ currentWork!.notes }}</p>
       <p>Horas estimadas: {{ currentWork!.estimatedHoursWorked }}</p>
-      <p>Fecha limite: {{ currentWork!.deadline | date : "dd/MM/yyyy" }}</p>
+      <p>Fecha limite: {{ currentWork!.deadLine | date : "dd/MM/yyyy" }}</p>
       <p>Costo: {{ currentWork!.costPrice | currency }}</p>
-      <p>Estado : {{ currentWork!.status }}</p>
+      <p>Estado : {{ currentWork!.statusSerialized }}</p>
     </div>
   </div>
 
@@ -25,7 +25,7 @@
           
         </tr>
       </thead>
-      <tbody>
+      <!-- <tbody>
         @for (item of currentWork!.materials; track $index) {
         <tr>
           <td>{{ item.idItem }}</td>
@@ -37,7 +37,7 @@
           }
         </tr>
         }
-      </tbody>
+      </tbody> -->
     </table>
   </div>
 

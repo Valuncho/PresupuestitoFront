@@ -1,7 +1,10 @@
 export interface WorkRequest{
-    EstimatedHoursWorked: number;
-    Deadline : Date;
-    CostPrice: number;
-    BudgetId : number;
-    Notes: string;
+    workId? : number;
+    estimatedHoursWorked: number;
+    deadLine : Date;
+    costPrice: number;
+    budgetId : number;
+    statusSerialized: string;
+    notes: string;
+    image: string;
 }

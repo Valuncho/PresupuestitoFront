@@ -12,6 +12,7 @@ import { ItemService } from '../../../../../core/services/item.service';
 import { WorkControllerService } from '../../../../../core/controllers/work-controller.service';
 import { Work } from '../../../../../core/model/Work';
 import { Subscription } from 'rxjs';
+import { WorkRequest } from '../../../../../core/request/workRequest';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class MaterialManagerComponent {
 
   currentItem : Item  =  this.materialController.getEmptyItem();
   currentInvoiceItem : InvoiceItem  =  this.materialController.getEmptyInvoiceItem();
-  currentWork : Work = this.workController.getEmptyWork();
+  currentWork : WorkRequest = this.workController.getEmptyWorkRequest();
   currentMaterial : Material = this.materialController.getEmptyMaterial();
 
   
@@ -98,7 +99,7 @@ ngOnInit(): void {
       this.itemService.putItem(this.currentItem).subscribe();
       this.materialController.setEditMode(false)
     }else{
-      this.itemService.postItem(this.currentItem, this.currentWork.idWork).subscribe();
+      this.itemService.postItem(this.currentItem, this.currentWork.workId!).subscribe();
     }
     
     //this.item.emit(this.currentItem);
