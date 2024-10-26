@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { WorkService } from '../../../../core/services/work.service';
 import { Work } from '../../../../core/model/Work';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { WorkFormComponent } from '../work-form/work-form.component';
 import { WorkSearchComponent } from "../work-search/work-search.component";
 import { CommonModule } from '@angular/common';
@@ -16,7 +15,7 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 @Component({
   selector: 'app-work-list',
   standalone: true,
-  imports: [WorkCardComponent, NgxPaginationModule, WorkSearchComponent,CommonModule, TextCardComponent],
+  imports: [WorkCardComponent, WorkSearchComponent,CommonModule, TextCardComponent],
   templateUrl: './work-list.component.html',
   styleUrl: './work-list.component.css',
 })
@@ -34,43 +33,31 @@ export class WorkListComponent {
 
   options: Boolean = false;
   budgetId : number = 0;
-  //Pagination
-  workPage: number = 1;
-  worksToPage: number = 5;
+
 
   ngOnInit(): void {
     
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let budgetDetailUrl = "/budget/detail/" + this.budgetId;
     let worksViewUrl = "/work";
-    console.log(this.router.url)
     if(budgetDetailUrl == this.router.url){
-      
       this.options = true;
       
     }else if(worksViewUrl == this.router.url){
-      
       this.workService.getWorks().subscribe(res =>{
         this.works = res;
       })
     }
-
-    
-    
-
-
-   
-  
   }
 
  
   //Card
   handleView($Event: Work) {
-    this.workController.setWork($Event);
+    //this.workController.setWork($Event);
   }
   handleEdit($Event: Work) {
     this.workController.setEditMode(true);
-    this.workController.setWork($Event);
+    //this.workController.setWork($Event);
     this.modalService.openModal(WorkFormComponent);
   }
   handleDelete($Event: Work) {
@@ -89,6 +76,9 @@ export class WorkListComponent {
 
   //List options
   addWorkHandler() {
+    let work = this.workController.getEmptyWorkRequest();
+    work.budgetId = this.budgetId;
+    this.workController.setWork(work);
     this.modalService.openModal(WorkFormComponent);
   }
 
@@ -98,8 +88,5 @@ export class WorkListComponent {
   onSaveWorksHandler() {
     this.router.navigate(['/budget/detail',this.budgetId]);
   }
-  //Pagination
-  pageChange(page: number) {
-    this.workPage = page;
-  }
+
 }

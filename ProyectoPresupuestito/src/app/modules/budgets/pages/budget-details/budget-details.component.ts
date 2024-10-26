@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { WorkDetailComponent } from '../../../works/components/work-detail/work-detail.component';
 import { Work } from '../../../../core/model/Work';
-import { WorkService } from '../../../../core/services/work.service';
 import { WorkCardComponent } from "../../../works/components/work-card/work-card.component";
 import { BudgetComponent } from "../../components/budget/budget.component";
 import { ClientComponent } from "../../../clients/components/client/client.component";
@@ -14,6 +13,8 @@ import { Client } from '../../../../core/model/Client';
 import { WorkListComponent } from "../../../works/components/work-list/work-list.component";
 import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
 import { WorkComponent } from '../../../works/components/work/work.component';
+import { ClientService } from '../../../../core/services/client.service';
+import { WorkItemListComponent } from "../../../workItems/components/work-item-list/work-item-list.component";
 /**
  * @class BudgetDetailsComponent
  * 
@@ -23,7 +24,7 @@ import { WorkComponent } from '../../../works/components/work/work.component';
 @Component({
   selector: 'app-budget-details',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkListComponent, WorkComponent],
+  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkListComponent, WorkComponent, WorkItemListComponent],
   templateUrl: './budget-details.component.html',
   styleUrl: './budget-details.component.css'
 })
@@ -31,8 +32,10 @@ export class BudgetDetailsComponent {
   //Utils
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private clientService = inject(ClientService);
   private budgetService = inject(BudgetService);
   private workController = inject(WorkControllerService);
+  
   
   //Properties
   currentBudget! : Budget;
@@ -51,7 +54,7 @@ export class BudgetDetailsComponent {
       }
   };
 
-  currentWork? : Work;
+  currentWork : Work = this.workController.getEmptyWork();
 
   
 
@@ -59,12 +62,19 @@ export class BudgetDetailsComponent {
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);    
     this.budgetService.getBudgetById(this.budgetId).subscribe(
       {
-        next : res => this.currentBudget  = res,
+        next : (res) => {
+          this.currentBudget = res.value;
+          this.clientService.getClientById(res.value.clientId.clientId).subscribe(
+            {
+              next : (clientRes) =>{
+                this.budgetClient = clientRes.value;
+              }
+            }
+          )
+        }
       }
      )
-    // this.workController.getWork().subscribe(res =>{
-    //   this.currentWork = res
-    // })
+ 
   }
 
   goToWorkArea(){
@@ -77,15 +87,6 @@ export class BudgetDetailsComponent {
     
   }
 
-  seleccionar(workId : number){
-    //this.currentWork = this.workService.getWorkById(workId)!;
-    //this.workService.setSelectedWork(this.currentWork);
-  }
-  editWork($Event : number){
-
-  }
-  deleteWork($Event : number){
-
-  }
+  
 }
 

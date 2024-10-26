@@ -12,6 +12,7 @@ import { MaterialManagerComponent } from '../../../materials/components/forms/ma
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { ItemService } from '../../../../core/services/item.service';
+import { WorkRequest } from '../../../../core/request/workRequest';
 
 @Component({
   selector: 'app-work-detail',
@@ -29,7 +30,7 @@ export class WorkDetailComponent {
   private materialController = inject(MaterialControllerService);
   private workController = inject(WorkControllerService);
   
-  currentWork! : Work;
+  currentWork! : WorkRequest;
   item : Item = this.materialController.getEmptyItem();
   options : boolean = false;
   enabled : boolean = false;
@@ -42,7 +43,7 @@ export class WorkDetailComponent {
 
       this.workController.getWork().subscribe(res =>{
         this.currentWork = res;
-        if(res.idWork != 0 ){
+        if(res.workId != 0 ){
           this.enabled =  true;
         } else{
           this.enabled = false;
