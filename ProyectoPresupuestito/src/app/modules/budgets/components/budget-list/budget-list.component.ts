@@ -41,6 +41,8 @@ export class BudgetListComponent {
 
   pipe = new DatePipe('en-US');
   ngOnInit(){
+
+    
     this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
     const clientUrl = "/client/detail/"+this.clientId;
     if(this.router.url == clientUrl){

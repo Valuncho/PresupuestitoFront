@@ -9,7 +9,7 @@
     @for (budget of budgets | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ; track budget.budgetId; let idx = $index ) {
  
       <app-budget-card
-      [Budget]="budgets[idx]"
+      [Budget]="budget"
         (isSelect)="handleView($event)"
         (isEdit)="handleEdit($event)"
         (isDeleted)="handleDelete($event)"

@@ -43,7 +43,7 @@ export class WorkControllerService {
   }
   getEmptyWorkRequest(): WorkRequest {
     return {
-      workId: 0,
+     
       estimatedHoursWorked: 0,
       deadLine: new Date(),
       costPrice: 0,

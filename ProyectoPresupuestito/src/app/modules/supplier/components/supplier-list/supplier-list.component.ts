@@ -23,13 +23,14 @@ export class SupplierListComponent {
     private dialog = inject(MatDialog);
     private supplierService = inject(SupplierService);
     //Properties
-    suppliers : any[] = [];
+    suppliers : any = [];
     sdasd : any
     //Pagination
     page = 1
     pageSize = 5
 
     ngOnInit(): void {
+        this.suppliers = 2 //Sin esta linea de codigo no anda
         this.supplierService.getSuppliers().subscribe(res =>{
             this.suppliers = res
         })
@@ -48,7 +49,7 @@ export class SupplierListComponent {
     handleDeleteSupplier($Event : Supplier){
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
-            mensaje: `¿Estás seguro de que deseas eliminar al proveedor ${$Event.personId.name}?`
+            mensaje: `¿Estás seguro de que deseas eliminar al proveedor: ${$Event.personId.name}?`
         }
         });
 
