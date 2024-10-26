@@ -48,13 +48,6 @@ export class WorkListComponent {
         this.works = res;
       })
     }
-
-    
-    
-
-
-   
-  
   }
 
  

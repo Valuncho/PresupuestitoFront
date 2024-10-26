@@ -10,11 +10,12 @@ import { UtilsService } from '../../../../core/utils/utils.service';
 import { CategoryFormComponent } from '../../../materials/components/forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 import { MaterialManagerComponent } from '../../../materials/components/forms/material-manager/material-manager.component';
+import { WorkItemCardComponent } from '../work-item-card/work-item-card.component';
 
 @Component({
   selector: 'app-work-item-list',
   standalone: true,
-  imports: [TextCardComponent],
+  imports: [TextCardComponent, WorkItemCardComponent],
   templateUrl: './work-item-list.component.html',
   styleUrl: './work-item-list.component.css'
 })
@@ -27,38 +28,28 @@ export class WorkItemListComponent {
  private utils = inject(UtilsService);
  @Input() items : Item[]=[]
 
-
- ngOnInit(): void {
-   
-   
-   
- }
-
  addItemHandler(){
   this.modalService.openModal<MaterialManagerComponent,Item>(MaterialManagerComponent);
 
  }
- seleccionar($Event : Category){
-   this.materialController.setCategory($Event);
- } 
 
- editar($Event : Category){
+ editar($Event : Item){
    
    this.materialController.setEditMode(true);
-   this.materialController.setCategory($Event);
+   //this.materialController.setCategory($Event);
    this.modalService.openModal<CategoryFormComponent,Category>(CategoryFormComponent);
  }
 
- eliminar($Event : Category){
+ eliminar($Event : Item){
    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
      data: {
-       mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.categoryName}?`
+       mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event}?`
      }
    });
 
    dialogRef.afterClosed().subscribe(result => {
      if (result) {
-       this.categoryService.deleteCategory($Event.categoryId).subscribe(
+       this.categoryService.deleteCategory($Event.idItem).subscribe(
         {
           next: ()=>{
             this.utils.reaload()
