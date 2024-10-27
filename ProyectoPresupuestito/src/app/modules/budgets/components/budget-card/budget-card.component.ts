@@ -17,14 +17,7 @@ export class BudgetCardComponent {
   @Output() isEdit = new EventEmitter<Budget>();
   @Output() isDeleted = new EventEmitter<Budget>();
   botones: Array<{ icon: string }> =[];
-  today = new Date();
-  changedDate = '';
-  pipe = new DatePipe('en-US');
-  changeFormat(){
-    //this.Budget.createdDate = this.pipe.transform(this.Budget.createdDate, 'dd/MM/YYYY');
-    //this.changedDate = ChangedFormat!;
-    console.log(this.changedDate);
-  }
+ 
 
   ngOnInit(){
     this.botones = [
@@ -32,13 +25,9 @@ export class BudgetCardComponent {
       {icon: 'edit'},
       {icon: 'delete'}
     ];
-    this.changeFormat()
-
     
   }
-  constructor() {
-   
-  }
+  
   select(){
     this.isSelect.emit(this.Budget);
   }

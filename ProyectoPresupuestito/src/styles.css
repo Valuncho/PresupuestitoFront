@@ -95,8 +95,8 @@ form {
     display: flex;
     flex-direction: column;
     background-color: var(--gris);
-    min-width: 50vh;
-    max-width: 40vw;
+     width:  50vh;
+    margin: auto;
     padding: 1em;
     border-radius: 10px 10px;
     overflow: hidden;

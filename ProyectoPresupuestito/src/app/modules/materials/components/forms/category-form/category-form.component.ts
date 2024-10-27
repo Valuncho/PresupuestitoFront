@@ -42,6 +42,8 @@ export class CategoryFormComponent {
 
   resetForm($Event : Event){
     this.CategoryForm.reset();
+    this.materialController.setEditMode(false);
+    this.isEdit = false;
   }
   
 

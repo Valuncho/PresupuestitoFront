@@ -39,9 +39,6 @@ export class MaterialFormComponent {
   
   //Properties
   subCategories : SubCategoryMaterial[] =[]
-
-
-  currentSupplier! : any; 
   
   MaterialForm : FormGroup = new FormGroup({
     measure : new FormControl('',Validators.required),
@@ -83,6 +80,8 @@ export class MaterialFormComponent {
 
   resetForm($Event : Event){
     this.MaterialForm.reset();
+    this.materialController.setEditMode(false);
+    this.isEdit = false;
   }
 
 

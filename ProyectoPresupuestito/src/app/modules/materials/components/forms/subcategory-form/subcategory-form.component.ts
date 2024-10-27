@@ -54,6 +54,8 @@ export class SubcategoryFormComponent {
 
   resetForm($Event : Event){
     this.SubCategoryForm.reset();
+    this.isEdit = false;
+    this.materialController.setEditMode(false);
   }
 
   onSubmit(){
