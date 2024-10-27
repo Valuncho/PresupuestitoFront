@@ -67,25 +67,16 @@ export class BudgetFormComponent {
   ngOnInit(){
 
     this.setDateFortmat('es');
-    this.OnEditHandler()
     
     this.activatedRoute.paramMap.subscribe(params => {
-      this.currentClient.clientId = Number(params.get('clientId'));   
-      let url = "/budget/new/"+ this.currentClient.clientId;
-      if(this.router.url == url)
-      {
-        this.clientService.getClientById(this.currentClient.clientId).subscribe(res =>{
-          console.log(res.value.personId)
-          
-         
-          
-          this.onClientSelected(res);
-        })
-      } 
+      this.OnEditHandler()
+      this.onClientSelectHandler(params)
+
     });
  
 
   }
+
 /**
  * Formateado de fecha para los input tipo fecha.
  * @param format pais
@@ -101,18 +92,24 @@ export class BudgetFormComponent {
     this.currentBudget = this.budgetService.getEmptyBudgetRequest();  
   }
 
-
+  onClientSelectHandler(params : any){
+    this.currentClient.clientId = Number(params.get('clientId'));   
+    if(this.router.url == "/budget/new/"+ this.currentClient.clientId)
+      {
+        this.clientService.getClientById(this.currentClient.clientId).subscribe(res =>{
+          this.onClientSelected(res);
+        })
+      }
+  }
 
   OnEditHandler(){
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let url = "/budget/edit/" + this.budgetId;
     if(this.router.url == url){
       this.budgetService.getBudgetById(this.budgetId).subscribe(budget =>{
-//        this.currentBudget = budget;
+        this.currentBudget = budget.value;
+        this.onEdit()
       })
-      this.onEdit()
-    }else{
-      this.isEdit = false;
     }
   }
 
@@ -130,20 +127,22 @@ export class BudgetFormComponent {
   }
 
   onClientSelected(res : any) {
-    this.BudgetForm.patchValue({clientId: this.currentClient.clientId})
     let name = res.value.personId.name+ " " +res.value.personId.lastName      
-    this.BudgetForm.patchValue({client : name})
+    this.BudgetForm.patchValue({
+      client : name,
+      clientId: this.currentClient.clientId
+    })
   }
 
 
   onEdit(){
     this.isEdit = true;
-      this.BudgetForm.patchValue(this.currentBudget);
-      
-      this.BudgetForm.patchValue({description : this.currentBudget.budgetStatus});
-      this.BudgetForm.patchValue({createdDate : this.currentBudget.dateCreated});
-      this.BudgetForm.patchValue({deadLine : this.currentBudget.deadLine});
-      this.BudgetForm.patchValue({estado: this.currentBudget.budgetStatus})
+      this.BudgetForm.patchValue({
+        description : this.currentBudget.descriptionBudget,
+        deadLine : this.currentBudget.deadLine,
+        createdDate: this.currentBudget.dateCreated,
+        estado : this.currentBudget.budgetStatus
+      })
       this.BudgetForm.get('client')?.disabled;
   }
   onSubmit(){
