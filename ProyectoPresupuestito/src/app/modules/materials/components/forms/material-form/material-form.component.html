@@ -7,13 +7,24 @@
             @if (MaterialForm.get('name')?.invalid){
               <p>Debe escribir el nombre.</p>
             }
+            @if (MaterialForm.get('description')?.invalid){
+              <p>Debe escribir una Descripción.</p>
+            }
+            @if (MaterialForm.get('brand')?.invalid){
+              <p>Debe escribir una marca.</p>
+            }
+            @if (MaterialForm.get('color')?.invalid){
+              <p>Debe escribir un color.</p>
+            }
+            @if (MaterialForm.get('measure')?.invalid){
+              <p>Debe escribir una medida.</p>
+            }
+            @if (MaterialForm.get('unitMeasure')?.invalid){
+              <p>Debe escribir una unidad de medida.</p>
+            }
           </div>
         }
-        @if (!isEdit) {
-          <label for="supplier">Proveedor:</label>
-          <input type="text" id="supplier" (click)="openSupplierForm()" placeholder="Seleccionar proveedor" readonly formControlName="supplier">
-          <input type="hidden" [value]="" name="idSupplier" formControlName="idSupplier"/>
-        }
+      
         <label for="name">Nombre:</label>
         <input type="text" name="name" id="name" formControlName="name">
         <label for="description">Descripción:</label>
@@ -22,6 +33,10 @@
         <input type="text" name="brand" id="brand" formControlName="brand">
         <label for="color">Color:</label>
         <input type="text" name="color" id="color" formControlName="color">
+        <label for="measure">Medida:</label>
+        <input type="text" name="measure" id="measure" formControlName="measure">
+        <label for="unitMeasure">Unidad de medida:</label>
+        <input type="text" name="unitMeasure" id="unitMeasure" formControlName="unitMeasure">
         <label for="subCategory">Sub rubro</label>
         <select name="subCategory" id="subCategory" formControlName="subCategory">
           @for (item of subCategories; track $index) {

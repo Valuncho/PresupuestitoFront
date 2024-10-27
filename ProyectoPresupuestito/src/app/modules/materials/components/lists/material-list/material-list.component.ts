@@ -54,7 +54,7 @@ export class MaterialListComponent {
   eliminar($Event : Material){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar el material: ${$Event.materialId}?`
+        mensaje: `¿Estás seguro de que deseas eliminar el material: ${$Event.materialName}?`
       }
     });
 

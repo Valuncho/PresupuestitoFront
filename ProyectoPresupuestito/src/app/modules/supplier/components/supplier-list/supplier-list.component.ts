@@ -24,7 +24,7 @@ export class SupplierListComponent {
     private supplierService = inject(SupplierService);
     //Properties
     suppliers : any = [];
-    sdasd : any
+
     //Pagination
     page = 1
     pageSize = 5

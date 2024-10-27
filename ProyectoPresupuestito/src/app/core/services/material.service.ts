@@ -10,6 +10,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
 import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialRequest';
+import { MaterialRequest } from '../request/materialRequest';
 
 /**
  * @class MaterialService
@@ -65,7 +66,7 @@ export class MaterialService {
    * @param material material a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postMaterial(material: Material){
+  postMaterial(material: MaterialRequest){
     const url = API_URL+ENDPOINTS.materials.post;
     return this.http.post(url,material).pipe(
       tap(() => {
@@ -85,8 +86,8 @@ export class MaterialService {
    * @param material material actualizado.
    * @returns un observable de tipo objeto
    */
-  putMaterial(material: Material){
-    const url = API_URL+ENDPOINTS.materials.update;
+  putMaterial(material: MaterialRequest){
+    const url = API_URL+ENDPOINTS.materials.update.replace(':id', material.MaterialId!.toString());
     return this.http.put(url,material).pipe(
       tap(() => {
         this.notification.showNotification("¡Material actualizado con éxito!"); 
@@ -107,7 +108,7 @@ export class MaterialService {
    * @returns un observable de tipo objeto
    */
   deleteMaterial(idMaterial: number){
-    const url = API_URL+ENDPOINTS.materials.delete;
+    const url = API_URL+ENDPOINTS.materials.delete.replace(':id', idMaterial!.toString());;
     return this.http.patch(url,idMaterial).pipe(
       tap(() => {
         this.notification.showNotification("¡Material eliminado con éxito!"); 

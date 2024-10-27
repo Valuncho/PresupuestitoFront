@@ -1,6 +1,6 @@
 export interface MaterialRequest
 {
-    
+    MaterialId? : number;
     MaterialName : string;
     MaterialDescription : string;
     MaterialColor : string;

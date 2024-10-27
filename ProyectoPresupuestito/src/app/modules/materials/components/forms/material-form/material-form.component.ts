@@ -12,6 +12,7 @@ import { SubcategoryService } from '../../../../../core/services/subcategory.ser
 import { UtilsService } from '../../../../../core/utils/utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SupplierService } from '../../../../../core/services/supplier.service';
+import { MaterialRequest } from '../../../../../core/request/materialRequest';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class MaterialFormComponent {
   private activatedRoute = inject(ActivatedRoute);
   //Properties
   
-  newMaterial :  Material = this.materialController.getEmptyMaterial();
+  newMaterial :  MaterialRequest = this.materialController.getEmptyMaterialRequest();
   isEdit : boolean = this.materialController.getEditMode();
   
   //Properties
@@ -43,8 +44,8 @@ export class MaterialFormComponent {
   currentSupplier! : any; 
   
   MaterialForm : FormGroup = new FormGroup({
-    supplier : new FormControl('Seleccionar proveedor'),
-    idSupplier : new FormControl(0,Validators.required),
+    measure : new FormControl('',Validators.required),
+    unitMeasure : new FormControl('',Validators.required),
     subCategory : new FormControl(0,Validators.required),
     name : new FormControl('', Validators.required),
     description : new FormControl('', Validators.required),
@@ -59,42 +60,36 @@ export class MaterialFormComponent {
       next: res => this.subCategories = res,  
     })
 
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.currentSupplier.supplierId = Number(params.get('supplierId'));   
-      let url = "/material/add/"+ this.currentSupplier.supplierId;
-      if(this.router.url == url)
-      {
-        this.supplierService.getSupplierById(this.currentSupplier.supplierId).subscribe(res =>{          
-          this.onSupplierSelected(res);
-        })
-      } 
-    });
+ 
 
     if(this.isEdit){
       this.materialController.getMaterial().subscribe(res =>{
-        this.newMaterial = res!;
+        this.newMaterial.MaterialId = res?.materialId;
+        this.MaterialForm.patchValue({
+          name : res?.materialName,
+          description : res?.materialDescription,
+          brand : res?.materialBrand,
+          color : res?.materialColor,
+          measure : res?.materialMeasure,
+          unitMeasure : res?.materialUnitMeasure,
+          subCategory : res?.subCategoryMaterialId.subCategoryMaterialId
+        })
+                
       })
-     this.MaterialForm.patchValue(this.newMaterial)
+
     }
   }
 
-  openSupplierForm(){
-    this.modalService.openModal<SupplierListComponent,Supplier>(SupplierListComponent);
-  }
+
   resetForm($Event : Event){
     this.MaterialForm.reset();
   }
 
-  onSupplierSelected(res : any) {
-    this.MaterialForm.patchValue({idSupplier: this.currentSupplier.supplierId})
-    let name = res.value.personId.name+ " " +res.value.personId.lastName      
-    this.MaterialForm.patchValue({supplier : name})
-  }
 
 
   onSubmit(){
-    
-    if(this.isEdit){
+    this.toMaterialRequest()
+    if(!this.isEdit){
       this.materialService.postMaterial(this.newMaterial).subscribe(   {
         next: ()=>{
           this.utils.reaload()
@@ -107,6 +102,20 @@ export class MaterialFormComponent {
         }
       });
       this.materialController.setEditMode(false);
+    }
+  }
+
+  toMaterialRequest(){
+  
+    this.newMaterial.MaterialName = this.MaterialForm.value["name"]
+    this.newMaterial.MaterialDescription = this.MaterialForm.value["description"]
+   this.newMaterial.MaterialBrand = this.MaterialForm.value["brand"]
+   this.newMaterial.MaterialColor = this.MaterialForm.value["color"]
+   this.newMaterial.MaterialMeasure = this.MaterialForm.value["measure"]
+   this.newMaterial.MaterialUnitMeasure = this.MaterialForm.value["unitMeasure"]
+   this.newMaterial.SubCategoryMaterialId = Number(this.MaterialForm.value["subCategory"])
+    if(!this.isEdit){
+      this.newMaterial.MaterialId = undefined
     }
   }
 }

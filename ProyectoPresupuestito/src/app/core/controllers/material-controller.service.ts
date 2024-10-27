@@ -7,6 +7,7 @@ import { Item } from '../model/Item';
 import { InvoiceItem } from '../model/invoiceItem';
 import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialRequest';
 import { CategoryRequest } from '../request/categoryRequest';
+import { MaterialRequest } from '../request/materialRequest';
 /**
  * 
  * @class MaterialControllerService
@@ -127,6 +128,20 @@ export class MaterialControllerService {
       price:0
     }
   }
+
+  getEmptyMaterialRequest(): MaterialRequest{
+    return {
+      MaterialId : 0,
+      MaterialName: '',
+      MaterialDescription: '',
+      MaterialColor: '',
+      MaterialBrand : '',
+      MaterialMeasure: '',
+      MaterialUnitMeasure: '',
+      SubCategoryMaterialId : 0,
+    }
+  }
+
 
   getEmptySubCategoryRequest() : SubCategoryMaterialRequest{
     return {
