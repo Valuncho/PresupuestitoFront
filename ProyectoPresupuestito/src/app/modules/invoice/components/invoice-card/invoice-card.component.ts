@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { Invoice } from '../../../../core/model/Invoice';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-invoice-card',
     standalone: true,
-    imports: [CommonModule,ButtonCardComponent],
+    imports: [CommonModule,ButtonCardComponent,MatTooltip],
     templateUrl: './invoice-card.component.html',
     styleUrl: './invoice-card.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

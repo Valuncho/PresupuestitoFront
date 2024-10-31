@@ -8,7 +8,7 @@
         <p>Fecha: {{fixedCost?.date | date}}</p>
     </div>
     <div class="Card-Options"> 
-        <app-button-card [icon]="botones[1].icon" (click)="edit()"></app-button-card>
-        <app-button-card [icon]="botones[2].icon" (click)="deleteC()"></app-button-card>
+        <app-button-card [icon]="botones[1].icon" (click)="edit()" mat-raised-button matTooltip="Editar detalle del costo."></app-button-card>
+        <app-button-card [icon]="botones[2].icon" (click)="deleteC()" mat-raised-button matTooltip="Borrar costo."></app-button-card>
     </div>
 </div>

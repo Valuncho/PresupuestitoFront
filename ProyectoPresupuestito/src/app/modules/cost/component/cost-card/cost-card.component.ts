@@ -3,11 +3,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { FixedCost } from '../../../../core/model/FixedCost';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-cost-card',
     standalone: true,
-    imports: [CommonModule,ButtonCardComponent],
+    imports: [CommonModule,ButtonCardComponent,MatTooltip],
     templateUrl: './cost-card.component.html',
     styleUrl: './cost-card.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
