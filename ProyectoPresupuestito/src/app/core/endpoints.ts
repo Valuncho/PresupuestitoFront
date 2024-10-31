@@ -25,7 +25,6 @@ export const ENDPOINTS = {
   budgets: {
     getAll: '/Budget',
     getById: '/Budget/:id',
-    
     post: '/Budget',
     update: '/Budget/:id',
     delete: '/Budget/:id',
@@ -34,7 +33,7 @@ export const ENDPOINTS = {
   works: {
     getAll: '/Work',
     getById: '/Work/:id',
-    post: '/Work/:budgetId',
+    post: '/Work',
     update: '/Work/:id',
     delete: '/Work/:id',
   },

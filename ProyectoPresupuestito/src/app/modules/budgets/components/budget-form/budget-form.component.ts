@@ -47,7 +47,7 @@ export class BudgetFormComponent {
   private clientController = inject(ClientControllerService);
   private utils = inject(UtilsService);
   //Properties
-  currentBudget : BudgetRequest = this.budgetService.getEmptyBudgetRequest();
+  currentBudget : any = this.budgetService.getEmptyBudgetRequest();
   currentClient : Client = this.clientController.getEmptyClient();
   budgetId : number = 0;
   isEdit : boolean = false;
@@ -108,6 +108,7 @@ export class BudgetFormComponent {
     if(this.router.url == url){
       this.budgetService.getBudgetById(this.budgetId).subscribe(budget =>{
         this.currentBudget = budget.value;
+
         this.onEdit()
       })
     }
@@ -136,13 +137,16 @@ export class BudgetFormComponent {
 
 
   onEdit(){
+
     this.isEdit = true;
       this.BudgetForm.patchValue({
         description : this.currentBudget.descriptionBudget,
         deadLine : this.currentBudget.deadLine,
         createdDate: this.currentBudget.dateCreated,
-        estado : this.currentBudget.budgetStatus
+        estado : this.currentBudget.budgetStatus,
+        clientId : this.currentBudget.clientId.clientId
       })
+      
       this.BudgetForm.get('client')?.disabled;
   }
   onSubmit(){
@@ -164,6 +168,7 @@ export class BudgetFormComponent {
   }
 
   toBudget(){
+    console.log(this.currentBudget)
     this.currentBudget.clientId = this.BudgetForm.get('clientId')?.value;
     this.currentBudget.descriptionBudget = this.BudgetForm.get('description')?.value;
     this.currentBudget.deadLine = this.BudgetForm.get('deadLine')?.value;
