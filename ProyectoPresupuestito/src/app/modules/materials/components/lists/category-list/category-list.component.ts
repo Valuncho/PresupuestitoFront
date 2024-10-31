@@ -8,7 +8,6 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
-import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 
 
 @Component({
