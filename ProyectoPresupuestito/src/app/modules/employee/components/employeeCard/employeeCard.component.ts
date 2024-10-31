@@ -4,11 +4,12 @@ import { Person } from '../../../../core/model/Person';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { Employee } from '../../../../core/model/Employee';
 import { Observable } from 'rxjs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-employee-card',
     standalone: true,
-    imports: [CommonModule,ButtonCardComponent],
+    imports: [CommonModule,ButtonCardComponent,MatTooltipModule],
     templateUrl: './employeeCard.component.html',
     styleUrl: './employeeCard.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

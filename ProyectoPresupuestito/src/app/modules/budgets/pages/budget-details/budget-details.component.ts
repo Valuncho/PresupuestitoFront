@@ -23,7 +23,7 @@ import { WorkComponent } from '../../../works/components/work/work.component';
 @Component({
   selector: 'app-budget-details',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkListComponent, WorkComponent],
+  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkComponent,WorkListComponent],
   templateUrl: './budget-details.component.html',
   styleUrl: './budget-details.component.css'
 })
