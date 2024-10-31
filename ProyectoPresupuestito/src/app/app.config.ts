@@ -7,6 +7,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideHttpClient } from '@angular/common/http';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from './core/loading.interceptor';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideAnimationsAsync(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
-
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
 ]
 };
