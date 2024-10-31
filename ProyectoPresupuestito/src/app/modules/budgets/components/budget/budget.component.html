@@ -1,8 +1,8 @@
 <div class="Details">
   <h3 class="Details-title">Detalle del presupuesto</h3>
-  <p>Descripcion: {{ budget.description }}</p>
-  <p>Fecha confección: {{ budget.createdDate | date : "dd/MM/yyyy" }}</p>
+  <p>Descripcion: {{ budget.descriptionBudget }}</p>
+  <p>Fecha confección: {{ budget.dateCreated | date : "dd/MM/yyyy" }}</p>
   <p>Fecha limite: {{ budget.deadLine | date : "dd/MM/yyyy" }}</p>
-  <p>Estado: {{ budget.Status }}</p>
+  <p>Estado: {{ budget.budgetStatus }}</p>
   <p>Precio final: {{ budget.cost | currency }}</p>
 </div>

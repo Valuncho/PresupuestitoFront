@@ -8,6 +8,8 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { CategoryService } from '../../../../../core/services/category.service';
+import { UtilsService } from '../../../../../core/utils/utils.service';
 
 
 @Component({
@@ -21,34 +23,14 @@ export class CategoryListComponent {
    //Utils
    private dialog = inject(MatDialog);
    private modalService = inject(ModalService);
-   private materialService = inject(MaterialService);
+   private categoryService = inject(CategoryService);
    private materialController = inject(MaterialControllerService);
-   
- 
- //SE PUEDE BORRAR PORQUE SE USO PARA PROBAR CON EL BACK
-   //categories : dto[] = []
-   categories : Category[]=[
-     {
-       idCategory: 1,
-       name: 'Ferretería',
-     },
-     {
-       idCategory: 2,
-       name: 'Maderas'
-     },
-     {
-       idCategory: 3,
-       name: 'Adhesivos'
-     },
-     {
-       idCategory: 4,
-       name: 'Pinturería'
-     }
-   ]
+   private utils = inject(UtilsService);
+   categories : Category[]=[]
  
  
    ngOnInit(): void {
-     this.materialService.getCategories().subscribe(
+     this.categoryService.getCategories().subscribe(
        {  
          next: x => this.categories = x,  
          
@@ -71,13 +53,19 @@ export class CategoryListComponent {
    eliminar($Event : Category){
      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
        data: {
-         mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.name}?`
+         mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.categoryName}?`
        }
      });
  
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
-         this.materialService.deleteCategory($Event.idCategory);
+         this.categoryService.deleteCategory($Event.categoryId).subscribe(
+          {
+            next: ()=>{
+              this.utils.reaload()
+            }
+          }
+         );
        }
      });
  

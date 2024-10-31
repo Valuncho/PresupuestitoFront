@@ -3,8 +3,6 @@
         @for (salary of salaries | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
             <app-salary-card 
             [Salary]="salary"
-            (action)="handleAction($event)"
-            (isView)="handleViewSalary($event)"
             (isEdit)="handleEditSalary($event)"
             (isDeleted)="handleDeleteSalary($event)"
             />

@@ -3,12 +3,12 @@ import { Work } from "./Work";
 
 export interface Budget
 {
-    idBudget : number;
+    budgetId : number;
     works : Work[];
-    createdDate: Date;
-    deadLine: Date;
-    description: string;
+    dateCreated: Date ;
+    deadLine: Date ;
+    descriptionBudget: string;
     cost : number;
-    Status : string;
+    budgetStatus : string;
     payments? : Payment[]; 
 }

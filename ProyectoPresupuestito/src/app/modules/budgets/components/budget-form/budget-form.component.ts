@@ -18,6 +18,8 @@ import { MatInputModule } from '@angular/material/input';
 import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 import { ClientService } from '../../../../core/services/client.service';
+import { BudgetRequest } from '../../../../core/request/budgetRequest';
+import { UtilsService } from '../../../../core/utils/utils.service';
 
 /**
  * @class BudgetFormComponent
@@ -43,8 +45,9 @@ export class BudgetFormComponent {
   private budgetService = inject(BudgetService);
   private clientService = inject(ClientService);
   private clientController = inject(ClientControllerService);
+  private utils = inject(UtilsService);
   //Properties
-  currentBudget : Budget = this.budgetService.getEmptyBudget();
+  currentBudget : BudgetRequest = this.budgetService.getEmptyBudgetRequest();
   currentClient : Client = this.clientController.getEmptyClient();
   budgetId : number = 0;
   isEdit : boolean = false;
@@ -56,7 +59,7 @@ export class BudgetFormComponent {
     description : new FormControl('Descripción', Validators.required),
     cost : new FormControl(1000, Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
-    idClient : new FormControl(0, Validators.required),
+    clientId : new FormControl(0, Validators.required),
     client : new FormControl('Seleccionar cliente')
   });
 
@@ -64,21 +67,16 @@ export class BudgetFormComponent {
   ngOnInit(){
 
     this.setDateFortmat('es');
-    this.OnEditHandler()
     
     this.activatedRoute.paramMap.subscribe(params => {
-      this.currentClient.idClient = Number(params.get('clientId'));   
-      let url = "/budget/new/"+ this.currentClient.idClient;
-      if(this.router.url == url)
-      {
-        this.clientService.getClientById(this.currentClient.idClient).subscribe(res =>{
-          this.currentClient = res!
-        })
-      } 
+      this.OnEditHandler()
+      this.onClientSelectHandler(params)
+
     });
  
 
   }
+
 /**
  * Formateado de fecha para los input tipo fecha.
  * @param format pais
@@ -91,21 +89,27 @@ export class BudgetFormComponent {
   setUp(){
     this.BudgetForm.reset();
     this.isEdit = false;
-    this.currentBudget = this.budgetService.getEmptyBudget();  
+    this.currentBudget = this.budgetService.getEmptyBudgetRequest();  
   }
 
-
+  onClientSelectHandler(params : any){
+    this.currentClient.clientId = Number(params.get('clientId'));   
+    if(this.router.url == "/budget/new/"+ this.currentClient.clientId)
+      {
+        this.clientService.getClientById(this.currentClient.clientId).subscribe(res =>{
+          this.onClientSelected(res);
+        })
+      }
+  }
 
   OnEditHandler(){
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let url = "/budget/edit/" + this.budgetId;
     if(this.router.url == url){
       this.budgetService.getBudgetById(this.budgetId).subscribe(budget =>{
-        this.currentBudget = budget;
+        this.currentBudget = budget.value;
+        this.onEdit()
       })
-      this.onEdit()
-    }else{
-      this.isEdit = false;
     }
   }
 
@@ -122,38 +126,49 @@ export class BudgetFormComponent {
     this.modalService.openModal<ClientListComponent,Client>(ClientListComponent);
   }
 
-  onClientSelected(clientId: number) {
-    console.log('Cliente seleccionado:', clientId);
-    this.BudgetForm.patchValue({idClient:clientId})
+  onClientSelected(res : any) {
+    let name = res.value.personId.name+ " " +res.value.personId.lastName      
+    this.BudgetForm.patchValue({
+      client : name,
+      clientId: this.currentClient.clientId
+    })
   }
 
 
   onEdit(){
     this.isEdit = true;
-      this.BudgetForm.patchValue(this.currentBudget);
-      this.BudgetForm.patchValue({cost : this.currentBudget.cost});
-      this.BudgetForm.patchValue({description : this.currentBudget.description});
-      this.BudgetForm.patchValue({createdDate : this.currentBudget.createdDate});
-      this.BudgetForm.patchValue({deadLine : this.currentBudget.deadLine});
-      this.BudgetForm.patchValue({estado: this.currentBudget.Status })
+      this.BudgetForm.patchValue({
+        description : this.currentBudget.descriptionBudget,
+        deadLine : this.currentBudget.deadLine,
+        createdDate: this.currentBudget.dateCreated,
+        estado : this.currentBudget.budgetStatus
+      })
       this.BudgetForm.get('client')?.disabled;
   }
   onSubmit(){
     this.toBudget(); 
     if(this.isEdit){
-      this.budgetService.putBudget(this.currentBudget).subscribe();
+      this.budgetService.putBudget(this.currentBudget).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
-      this.budgetService.postBudget(this.currentBudget).subscribe();
+      this.budgetService.postBudget(this.currentBudget).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }
     this.setUp();
   }
 
   toBudget(){
-    this.currentBudget.description = this.BudgetForm.get('description')?.value;
+    this.currentBudget.clientId = this.BudgetForm.get('clientId')?.value;
+    this.currentBudget.descriptionBudget = this.BudgetForm.get('description')?.value;
     this.currentBudget.deadLine = this.BudgetForm.get('deadLine')?.value;
-    this.currentBudget.createdDate = this.BudgetForm.get('createdDate')?.value;
-    this.currentBudget.cost = this.BudgetForm.get('cost')?.value;
-    this.currentBudget.Status = this.BudgetForm.get('estado')?.value;
+    this.currentBudget.dateCreated = this.BudgetForm.get('createdDate')?.value;
+    this.currentBudget.budgetStatus = this.BudgetForm.get('estado')?.value;
   }
 }
 

@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService } from '../../../../core/utils/notification.service';
 import { ClientService } from '../../../../core/services/client.service';
 import { Client } from '../../../../core/model/Client';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
+import { UtilsService } from '../../../../core/utils/utils.service';
+import { ClientRequest } from '../../../../core/request/clientRequest';
+import { ModalService } from '../../../../core/utils/modal.service';
 
 
 @Component({
@@ -21,10 +23,16 @@ export class ClientFormComponent {
   private activatedRoute = inject(ActivatedRoute);
   private clientService = inject(ClientService);
   private clientController = inject(ClientControllerService);
+  private utils = inject(UtilsService);
+  private modalService = inject(ModalService);
+
   //Properties
   currentClient : Client = this.clientController.getEmptyClient();
+  clientDto : ClientRequest =this.currentClient.personId;
+
   clientId? : number;
   isEdit : boolean = false;
+
   //Form
   clientForm : FormGroup = new FormGroup({
     name: new FormControl('',[ Validators.required]),
@@ -36,21 +44,7 @@ export class ClientFormComponent {
     cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
   });
   
-
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.clientId = Number(params.get('clientId'));   
-      this.onEditHandler()
-    });
-
-    this.clientController.getEditMode().subscribe(res =>
-      {
-        if(res == true){
-          this.isEdit=res
-          
-        }
-      }
-    )
+  ngAfterViewInit(): void {
     this.setUp();
   }
 
@@ -69,6 +63,7 @@ export class ClientFormComponent {
   }
 
   setUp(){
+    this.closeModal()
     this.clientForm.reset();
     this.isEdit = false;
     this.currentClient = this.clientController.getEmptyClient();
@@ -81,16 +76,13 @@ export class ClientFormComponent {
   }
 
   onEditHandler(){
-    
-    let url = "/client/edit/" + this.clientId;
-      if(this.router.url == url){
+      if(this.router.url == "/client/edit/" + this.clientId){
         this.clientService.getClientById(this.clientId!).subscribe( {
           next:res =>{
-            this.currentClient = res!
-            this.setClientToEdit()
+            this.isEdit = true;
+            this.setClientToEdit(res);
           }
         }
-          
       )
       }else{
         this.isEdit = false;
@@ -98,32 +90,55 @@ export class ClientFormComponent {
     
   }
 
-  setClientToEdit(){
-    this.clientForm.patchValue({
-      name : this.currentClient.oPerson.name,
-      lastName : this.currentClient.oPerson.lastName,
-      direction : this.currentClient.oPerson.direction,
-      phoneNumber : this.currentClient.oPerson.phoneNumber,
-      mail : this.currentClient.oPerson.mail,
-      dni : this.currentClient.oPerson.dni,
-      cuit : this.currentClient.oPerson.cuit,
-    });
-  }
-
+  
   onSubmit(){
-    
-    this.currentClient.oPerson = this.clientForm.value;
-    console.log(this.currentClient)
-    
+    this.toPerson();
     if(this.isEdit){
-      this.clientService.putClient(this.currentClient).subscribe();
+      this.clientService.putClient(this.clientDto).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
-      this.clientService.postClient(this.currentClient).subscribe();
+      this.clientService.postClient(this.clientDto).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
+      
     }
-
     this.setUp();
   }
+  
+  closeModal(){
+    if(this.router.url == "/budget/new/" + this.clientId){
+      this.modalService.closeModal();
+    }
+  }
 
+  setClientToEdit(res : any){
+    this.clientForm.patchValue({
+      name : res.value.personId.name,
+      lastName : res.value.personId.lastName,
+      direction : res.value.personId.address,
+      phoneNumber : res.value.personId.phoneNumber,
+      mail : res.value.personId.email,
+      dni : res.value.personId.dni,
+      cuit : res.value.personId.cuit,
+    });
+  }
+  toPerson(){
+    this.clientDto.name = this.clientForm.get("name")?.value
+    this.clientDto.lastName = this.clientForm.get("lastName")?.value
+    this.clientDto.address = this.clientForm.get("direction")?.value
+    this.clientDto.phoneNumber = this.clientForm.get("phoneNumber")?.value
+    this.clientDto.email = this.clientForm.get("mail")?.value
+    this.clientDto.dni = this.clientForm.get("dni")?.value
+    this.clientDto.cuit = this.clientForm.get("cuit")?.value
+    if(this.isEdit){
+      this.clientDto.clientId = this.clientId;
+    }
+  }
 
 
 }

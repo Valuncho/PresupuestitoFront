@@ -1,9 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../../../../core/model/Category';
-import { SubCategoryMaterial } from '../../../../../core/model/SubCategoryMaterial';
 import { MaterialService } from '../../../../../core/services/material.service';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { SubCategoryMaterialRequest } from '../../../../../core/request/subCategoryMaterialRequest';
+import { SubcategoryService } from '../../../../../core/services/subcategory.service';
+import { CategoryService } from '../../../../../core/services/category.service';
+import { UtilsService } from '../../../../../core/utils/utils.service';
 
 @Component({
   selector: 'app-subcategory-form',
@@ -14,29 +17,14 @@ import { MaterialControllerService } from '../../../../../core/controllers/mater
 })
 export class SubcategoryFormComponent {
   //Utils
-  private materialService = inject(MaterialService);
+  private subCategoryService = inject(SubcategoryService);
+  private categoryService = inject(CategoryService);
   private materialController = inject(MaterialControllerService);
+  private utils = inject(UtilsService);
   //Properties
-  newSubCategory : SubCategoryMaterial = this.materialController.getEmptySubCategory();
+  newSubCategory : SubCategoryMaterialRequest = this.materialController.getEmptySubCategoryRequest();
   isEdit : boolean = this.materialController.getEditMode();
-  categories : Category[]=[
-    {
-      idCategory: 1,
-      name: 'Ferretería',
-    },
-    {
-      idCategory: 2,
-      name: 'Maderas'
-    },
-    {
-      idCategory: 3,
-      name: 'Adhesivos'
-    },
-    {
-      idCategory: 4,
-      name: 'Pinturería'
-    }
-  ]
+  categories : Category[]=[]
 
   SubCategoryForm : FormGroup = new FormGroup({
     name : new FormControl('', Validators.required),
@@ -44,18 +32,20 @@ export class SubcategoryFormComponent {
   })
 
   ngOnInit(): void {
-    this.materialService.getCategories().subscribe({
+    this.categoryService.getCategories().subscribe({
       next: res => this.categories = res,  
       
     })
 
     if(this.isEdit){
       this.materialController.getSubcategory().subscribe(res =>{
-        this.newSubCategory = res!;
+        this.newSubCategory.subCategoryName = res?.subCategoryName!;
+        this.newSubCategory.categoryId = res?.categoryId.categoryId!;
+        this.newSubCategory.SubCategoryId = res?.subCategoryMaterialId!;
       })
       this.SubCategoryForm.patchValue({
-        name: this.newSubCategory.name,
-        category : this.newSubCategory.category
+        name: this.newSubCategory.subCategoryName,
+        category : this.newSubCategory.categoryId
       });
       
     }
@@ -64,14 +54,26 @@ export class SubcategoryFormComponent {
 
   resetForm($Event : Event){
     this.SubCategoryForm.reset();
+    this.isEdit = false;
+    this.materialController.setEditMode(false);
   }
 
   onSubmit(){
-    this.newSubCategory.name = this.SubCategoryForm.value["name"]
-    if(this.isEdit){
-      this.materialService.postSubCategory(this.newSubCategory);
+    this.newSubCategory.subCategoryName = this.SubCategoryForm.value["name"]
+    this.newSubCategory.categoryId = this.SubCategoryForm.value["category"]
+    console.log(this.newSubCategory)
+    if(!this.isEdit){
+      this.subCategoryService.postSubCategory(this.newSubCategory).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
-      this.materialService.putSubCategory(this.newSubCategory);
+      this.subCategoryService.putSubCategory(this.newSubCategory).subscribe({
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
       this.materialController.setEditMode(false);
     }
   }

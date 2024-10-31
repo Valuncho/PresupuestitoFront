@@ -32,24 +32,24 @@ export class InvoiceDetailComponent {
     }
     invoice = signal<Invoice | undefined>(undefined);
     
-    currentSupplier : SupplierHistory = {
-      idSupplierHistory: 1,
-      oSupplier: {
-          idSupplier: 1001,
-          oPerson: {
-              idPerson: 1,
-              name: 'John',
-              lastName: 'Doe',
-              direction: '123 Main St',
-              phoneNumber: '1234567890',
-              mail: 'johndoe@example.com',
-              dni: '123456789',
-              cuit: '30-12345678-9',
-          },
-          note: 'nota vacia'
-      },
-      invoices: []
-    }
+    currentSupplier! : SupplierHistory //= {
+      // idSupplierHistory: 1,
+      // oSupplier: {
+      //     idSupplier: 1001,
+      //     oPerson: {
+      //         personId: 1,
+      //         name: 'John',
+      //         lastName: 'Doe',
+      //         address: '123 Main St',
+      //         phoneNumber: '1234567890',
+      //         email: 'johndoe@example.com',
+      //         dni: '123456789',
+      //         cuit: '30-12345678-9',
+      //     },
+      //     note: 'nota vacia'
+      // },
+      // invoices: []
+    //}
 
     ngOnInit(): void {
         this.id = parseInt(this.activatedRoute.snapshot.params['invoiceId']);

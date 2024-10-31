@@ -1,6 +1,7 @@
 <div class="List">
     <h3 class="List-title">Listado de rubros</h3>
     <div>
+      
         @for (category of categories ; track category; let idx = $index) {
         <app-category-card
           [Category]="category"

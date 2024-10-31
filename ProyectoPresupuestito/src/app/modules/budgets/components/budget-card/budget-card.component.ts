@@ -1,22 +1,23 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Budget } from '../../../../core/model/Budget';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-budget-card',
   standalone: true,
-  imports: [CommonModule, ButtonCardComponent],
+  imports: [CommonModule, ButtonCardComponent,MatTooltipModule],
   templateUrl: './budget-card.component.html',
   styleUrl: './budget-card.component.css'
 })
 export class BudgetCardComponent {
-  @Input() Budget: Budget | undefined;
+  @Input() Budget!: Budget;
   @Output() isSelect = new EventEmitter<Budget>();
   @Output() isEdit = new EventEmitter<Budget>();
   @Output() isDeleted = new EventEmitter<Budget>();
   botones: Array<{ icon: string }> =[];
-
+ 
 
   ngOnInit(){
     this.botones = [
@@ -26,9 +27,7 @@ export class BudgetCardComponent {
     ];
     
   }
-  constructor() {
-   
-  }
+  
   select(){
     this.isSelect.emit(this.Budget);
   }

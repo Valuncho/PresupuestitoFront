@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from '../../../../../core/model/Category';
 import { ButtonCardComponent } from '../../../../../components/button-card/button-card.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 
 @Component({
   selector: 'app-category-card',
   standalone: true,
-  imports: [ButtonCardComponent],
+  imports: [ButtonCardComponent, MatTooltipModule],
   templateUrl: './category-card.component.html',
   styleUrl: './category-card.component.css'
 })

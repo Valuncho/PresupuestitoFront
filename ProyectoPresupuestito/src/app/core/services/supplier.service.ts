@@ -9,6 +9,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
 import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
+import { SupplierRequest } from '../request/supplierRequest';
 
 
 @Injectable({
@@ -20,40 +21,7 @@ export class SupplierService {
   private modal = inject(ModalService);
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
-  
-  private suppliers : Supplier[] = [
-    {
-      idSupplier: 1001,
-      note: "hola",
-      oPerson: {
-          idPerson: 1,
-          name: "John",
-          lastName: "Doe",
-          direction: "123 Main St",
-          phoneNumber: "1234567890",
-          mail: "johndoe@example.com",
-          dni: "123456789",
-          cuit: "30-12345678-9"
-      }
-    },
-    {
-        idSupplier: 1002,
-        note: "hola",
-        oPerson: {
-            idPerson: 2,
-            name: "Jane",
-            lastName: "Smith",
-            direction: "456 Elm St",
-            phoneNumber: "9876543210",
-            mail: "janesmith@example.com",
-            dni: "987654321",
-            cuit: "30-98765432-1"
-        }
-    }
-  ]
-  private suppliersHistory : SupplierHistory [] = [
 
-  ]
 
   //METODOS HTTP ----------------------------------------------------------------------------------------------
   
@@ -62,8 +30,8 @@ export class SupplierService {
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de proveedores como un observable.
    */
-  getSuppliers() : Observable<Supplier[]> {
-    return this.http.get<Supplier[]>(API_URL+ENDPOINTS.suppliers.getAll).pipe(      
+  getSuppliers() : Observable<any[]> {
+    return this.http.get<any[]>(API_URL+ENDPOINTS.suppliers.getAll).pipe(      
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -77,9 +45,9 @@ export class SupplierService {
    * @param idSupplier id del proveedor solicitado.
    * @returns Un proveedor como un observable.
    */
-  getSupplierById(idSupplier : number) : Observable<Supplier> {
+  getSupplierById(idSupplier : number) : Observable<any> {
     const url = API_URL+ENDPOINTS.clients.getById.replace(':id', idSupplier.toString());
-    return this.http.get<Supplier>(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -95,7 +63,7 @@ export class SupplierService {
    * @param supplier proveedor a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postSupplier(supplier: Supplier){
+  postSupplier(supplier: SupplierRequest){
     const url = API_URL+ENDPOINTS.suppliers.post;
     return this.http.post(url,supplier).pipe(
       tap(() => {
@@ -116,8 +84,8 @@ export class SupplierService {
    * @param supplier proveedor actualizado.
    * @returns un observable de tipo objeto
    */
-  putSupplier(supplier: Supplier) {
-    const url = API_URL+ENDPOINTS.suppliers.update;
+  putSupplier(supplier: SupplierRequest) {
+    const url = API_URL+ENDPOINTS.suppliers.update.replace(':id', supplier.supplierId!.toString());
     return this.http.put(url,supplier).pipe(
       tap(() => {
         this.notification.showNotification("¡Proveedor editado con éxito!"); 
@@ -139,7 +107,7 @@ export class SupplierService {
    */
   deleteSupplier(idSupplier: number) {
     const url = API_URL+ENDPOINTS.suppliers.delete;
-    return this.http.put(url,idSupplier).pipe(
+    return this.http.patch(url,idSupplier).pipe(
       tap(() => {
         this.notification.showNotification("¡Proveedor eliminado con éxito!"); 
       }),

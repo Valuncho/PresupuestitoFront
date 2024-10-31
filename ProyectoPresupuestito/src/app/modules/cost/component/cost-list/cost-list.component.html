@@ -3,10 +3,9 @@
     
       @for (cost of fixedCosts | paginate: { itemsPerPage: pageSize, currentPage:page }; track $index) {
         <app-cost-card 
-        (action)="handleAction($event)"
-        (isView)="handleViewCost($event)"
-        (isEdit)="handleEditCost($event)"
-        (isDeleted)="handleDeleteCost($event)"
+        [fixedCost]="cost"
+        (isEdit)="handleEditFixedCost($event)"
+        (isDeleted)="handleDeleteFixedCost($event)"
         />
       }@empty {
         <app-text-card [message]="'No hay costos que mostrar.'"/>

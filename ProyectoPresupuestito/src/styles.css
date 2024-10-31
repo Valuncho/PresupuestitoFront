@@ -95,8 +95,8 @@ form {
     display: flex;
     flex-direction: column;
     background-color: var(--gris);
-    min-width: 50vh;
-    max-width: 40vw;
+     width:  50vh;
+    margin: auto;
     padding: 1em;
     border-radius: 10px 10px;
     overflow: hidden;
@@ -272,6 +272,18 @@ form .invalid p::before{
     width: 100%;
 }
 
+.Botones button:hover,
+.Boton1:hover {
+    box-shadow: 5px 5px 5px var(--nogal);
+}
+
+.Botones button:active,
+.Boton1:active {
+    box-shadow: inset 2px 2px 2px var(--blanquecino);
+}
+
+
+
 /*Searcher*/
 
 .Searcher {
@@ -328,52 +340,6 @@ form .invalid p::before{
     height: 2em;
     width: 10em;
 }
-
-
-
-
-@media only screen and (max-width: 950px) {
-    main section, article{
-        flex-direction: column;
-        align-items: center;
-    }
-
-    
-    .List, .Componente, form {
-        min-width: 50vh;
-        max-width: 40vw;
-        
-    }
-    .Details{
-        min-width: 300px;
-    }
-    
-
-}
-
-@media only screen and (max-width: 480px) {
-
-    .Card, .Componente{
-        padding: 5px;
-        flex-direction: column;
-    }
-    .List, form, .Componente {
-        
-        max-width: none;
-        min-width: 260px;
-        border-radius: 10px;
-    }
-    
-
-}
-
-@media (orientation: landscape) {
-  
-    .List, form, .Componente {
-        min-width: 360px;
-        border-radius: 10px;
-    }
-  }
 
 
 

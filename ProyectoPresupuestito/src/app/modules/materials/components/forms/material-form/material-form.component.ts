@@ -8,6 +8,11 @@ import { MaterialService } from '../../../../../core/services/material.service';
 import { Material } from '../../../../../core/model/Material';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SupplierListComponent } from '../../../../supplier/components/supplier-list/supplier-list.component';
+import { SubcategoryService } from '../../../../../core/services/subcategory.service';
+import { UtilsService } from '../../../../../core/utils/utils.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SupplierService } from '../../../../../core/services/supplier.service';
+import { MaterialRequest } from '../../../../../core/request/materialRequest';
 
 
 @Component({
@@ -20,89 +25,24 @@ import { SupplierListComponent } from '../../../../supplier/components/supplier-
 export class MaterialFormComponent {
   //Utils
   private materialService = inject(MaterialService);
+  private subCategoryService = inject(SubcategoryService);
   private materialController = inject(MaterialControllerService);
+  private supplierService = inject(SupplierService);
   private modalService = inject(ModalService);
-  
+  private utils = inject(UtilsService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   //Properties
   
-  newMaterial :  Material = this.materialController.getEmptyMaterial();
+  newMaterial :  MaterialRequest = this.materialController.getEmptyMaterialRequest();
   isEdit : boolean = this.materialController.getEditMode();
   
   //Properties
-
-  subCategories : SubCategoryMaterial[] = [
-    {
-      idCategoryMaterial: 1,
-      name: 'Tornillos',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 2,
-      name: 'Tuercas',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 3,
-      name: 'Bisagras',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 4,
-      name: 'Clavos',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 5,
-      name: 'Manijas',
-      category:  {
-      idCategory: 1,
-      name: 'Ferretería',
-    }
-    },
-    {
-      idCategoryMaterial: 6,
-      name: 'Tableros de melamina',
-      category: {
-      idCategory: 2,
-      name: 'Maderas'
-    }
-    },
-    {
-      idCategoryMaterial: 7,
-      name: 'Madera maciza',
-      category: {
-      idCategory: 2,
-      name: 'Maderas'
-    }
-    },
-    {
-      idCategoryMaterial: 8,
-      name: 'Madera contrachapada',
-      category: {
-      idCategory: 2,
-      name: 'Maderas'
-    }
-    },
-
-  ]
-
-  currentSupplier! : Person; 
+  subCategories : SubCategoryMaterial[] =[]
   
   MaterialForm : FormGroup = new FormGroup({
-    supplier : new FormControl('',Validators.required),
-    idSupplier : new FormControl(0,Validators.required),
+    measure : new FormControl('',Validators.required),
+    unitMeasure : new FormControl('',Validators.required),
     subCategory : new FormControl(0,Validators.required),
     name : new FormControl('', Validators.required),
     description : new FormControl('', Validators.required),
@@ -113,31 +53,68 @@ export class MaterialFormComponent {
 
   ngOnInit(): void {
 
-    this.materialService.getSubCategories().subscribe({
+    this.subCategoryService.getSubCategories().subscribe({
       next: res => this.subCategories = res,  
     })
 
+ 
+
     if(this.isEdit){
       this.materialController.getMaterial().subscribe(res =>{
-        this.newMaterial = res!;
+        this.newMaterial.MaterialId = res?.materialId;
+        this.MaterialForm.patchValue({
+          name : res?.materialName,
+          description : res?.materialDescription,
+          brand : res?.materialBrand,
+          color : res?.materialColor,
+          measure : res?.materialMeasure,
+          unitMeasure : res?.materialUnitMeasure,
+          subCategory : res?.subCategoryMaterialId.subCategoryMaterialId
+        })
+                
       })
-     this.MaterialForm.patchValue(this.newMaterial)
+
     }
   }
 
-  openSupplierForm(){
-    this.modalService.openModal<SupplierListComponent,Supplier>(SupplierListComponent);
-  }
+
   resetForm($Event : Event){
     this.MaterialForm.reset();
+    this.materialController.setEditMode(false);
+    this.isEdit = false;
   }
+
+
+
   onSubmit(){
-    
-    if(this.isEdit){
-      this.materialService.postMaterial(this.newMaterial).subscribe();
+    this.toMaterialRequest()
+    if(!this.isEdit){
+      this.materialService.postMaterial(this.newMaterial).subscribe(   {
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
     }else{
-      this.materialService.putMaterial(this.newMaterial).subscribe();
+      this.materialService.putMaterial(this.newMaterial).subscribe(   {
+        next: ()=>{
+          this.utils.reaload()
+        }
+      });
       this.materialController.setEditMode(false);
+    }
+  }
+
+  toMaterialRequest(){
+  
+    this.newMaterial.MaterialName = this.MaterialForm.value["name"]
+    this.newMaterial.MaterialDescription = this.MaterialForm.value["description"]
+   this.newMaterial.MaterialBrand = this.MaterialForm.value["brand"]
+   this.newMaterial.MaterialColor = this.MaterialForm.value["color"]
+   this.newMaterial.MaterialMeasure = this.MaterialForm.value["measure"]
+   this.newMaterial.MaterialUnitMeasure = this.MaterialForm.value["unitMeasure"]
+   this.newMaterial.SubCategoryMaterialId = Number(this.MaterialForm.value["subCategory"])
+    if(!this.isEdit){
+      this.newMaterial.MaterialId = undefined
     }
   }
 }

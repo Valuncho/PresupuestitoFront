@@ -7,6 +7,8 @@ import { SupplierService } from '../../../../core/services/supplier.service';
 import { NotificationService } from '../../../../core/utils/notification.service';
 import { Supplier } from '../../../../core/model/Supplier';
 import { SupplierControllerService } from '../../../../core/controllers/supplier-controller.service';
+import { SupplierRequest } from '../../../../core/request/supplierRequest';
+import { UtilsService } from '../../../../core/utils/utils.service';
 
 
 @Component({
@@ -23,8 +25,10 @@ export class SupplierFormComponent {
     private notificationService = inject(NotificationService);
     private supplierService = inject(SupplierService);
     private supplierController = inject(SupplierControllerService);
+    private utils = inject(UtilsService);
     //Properties
     currentSupplier : Supplier = this.supplierController.getEmptySupplier();
+    supplierDto : SupplierRequest = this.currentSupplier.personId;
     supplierId? : number;
     isEdit : boolean = false;
     //Form
@@ -36,12 +40,15 @@ export class SupplierFormComponent {
         mail: new FormControl('', [Validators.email]),
         dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
         cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
-        note: new FormControl('')
+        note: new FormControl('',[Validators.maxLength(220),Validators.minLength(10)])
     });
     
     ngOnInit(): void {
+        this.activatedRoute.paramMap.subscribe(params => {
+            this.supplierId = Number(params.get('supplierId'));   
+            this.onEditHandler()
+        });
         this.setUp();
-        this.onEditHandler();
     }
 
     get canSubmit(){
@@ -70,28 +77,59 @@ export class SupplierFormComponent {
     }
 
     onEditHandler(){
-        this.supplierId = parseInt(this.activatedRoute.snapshot.params['supplierId']);
-        if(this.supplierId){
-            this.isEdit = true;
-            //this.supplierService.selectedSupplier.subscribe(supplier =>{
-            //this.currentSupplier= supplier;
-            //this.supplierForm.patchValue(this.currentSupplier.oPerson);
-        //})
-        }else{
-        this.isEdit = false;
+        if(this.router.url == "/supplier/edit/" + this.supplierId){
+            this.supplierService.getSupplierById(this.supplierId!).subscribe( {
+                next:res =>{
+                this.isEdit = true;
+                this.setSupplierToEdit(res);
+                }
+            }
+            )
+            }else{
+                this.isEdit = false;
         }
     }
 
     onSubmit(){
-        this.currentSupplier.oPerson = this.supplierForm.value;
-
-        if(this.isEdit){
-            this.supplierService.putSupplier(this.currentSupplier).subscribe();
-        }else{
-        
-        this.supplierService.postSupplier(this.currentSupplier).subscribe();
-        
+        this.toPerson();
+    if(this.isEdit){
+        this.supplierService.putSupplier(this.supplierDto).subscribe({
+        next: ()=>{
+            this.utils.reaload()
         }
-        this.setUp();
+        });
+    }else{
+        this.supplierService.postSupplier(this.supplierDto).subscribe({
+        next: ()=>{
+            this.utils.reaload()
+        }
+    });
+    }
+    this.setUp();
+    }
+
+    setSupplierToEdit(res : any){
+        this.supplierForm.patchValue({
+            name : res.value.personId.name,
+            lastName : res.value.personId.lastName,
+            direction : res.value.personId.address,
+            phoneNumber : res.value.personId.phoneNumber,
+            mail : res.value.personId.email,
+            dni : res.value.personId.dni,
+            cuit : res.value.personId.cuit,
+        });
+    }
+    
+    toPerson(){
+        this.supplierDto.name = this.supplierForm.get("name")?.value
+        this.supplierDto.lastName = this.supplierForm.get("lastName")?.value
+        this.supplierDto.address = this.supplierForm.get("direction")?.value
+        this.supplierDto.phoneNumber = this.supplierForm.get("phoneNumber")?.value
+        this.supplierDto.email = this.supplierForm.get("mail")?.value
+        this.supplierDto.dni = this.supplierForm.get("dni")?.value
+        this.supplierDto.cuit = this.supplierForm.get("cuit")?.value
+        if(this.isEdit){
+            this.supplierDto.supplierId = this.supplierId;
+        }
     }
 }

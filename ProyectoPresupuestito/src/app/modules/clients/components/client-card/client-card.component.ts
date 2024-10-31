@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Person } from '../../../../core/model/Person';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { Client } from '../../../../core/model/Client';
-
+import { MatTooltipModule } from '@angular/material/tooltip'; 
 /**
  * @class ClientCardComponent
  * 
@@ -17,7 +17,7 @@ import { Client } from '../../../../core/model/Client';
 @Component({
   selector: 'app-client-card',
   standalone: true,
-  imports: [CommonModule, ButtonCardComponent],
+  imports: [CommonModule, ButtonCardComponent, MatTooltipModule ],
   templateUrl: './client-card.component.html',
   styleUrl: './client-card.component.css'
 })
@@ -27,7 +27,7 @@ export class ClientCardComponent {
 
   @Output() isView = new EventEmitter<Client>();
   @Output() action = new EventEmitter<Client>();
-  @Output() isSelected = new EventEmitter<Client>();
+  
   @Output() isEdit = new EventEmitter<Client>();
   @Output() isDeleted = new EventEmitter<Client>();
   botones: Array<{ icon: string }> =[];
@@ -47,9 +47,7 @@ export class ClientCardComponent {
   newBudget(){
     this.action.emit(this.Client)
   }
-  select(){
-    this.isSelected.emit(this.Client);
-  }
+
   view(){
     this.isView.emit(this.Client);
   }

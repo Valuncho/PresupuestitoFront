@@ -9,6 +9,9 @@ import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { NotificationService } from '../utils/notification.service';
+import { Person } from '../model/Person';
+import { PersonRequest } from '../request/personRequest';
+import { ClientRequest } from '../request/clientRequest';
 /**
  * @class ClienteService
  * 
@@ -49,9 +52,9 @@ export class ClientService {
    * @param idClient id del cliente solicitado.
    * @returns Un cliente como un observable.
    */
-  getClientById(idClient : number) : Observable<Client> {
+  getClientById(idClient : number) : Observable<any> {
     const url = API_URL+ENDPOINTS.clients.getById.replace(':id', idClient.toString());
-    return this.http.get<Client>(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -67,11 +70,31 @@ export class ClientService {
    * @param client cliente a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postClient(client: Client){
+  postClient(client: ClientRequest){
     const url = API_URL+ENDPOINTS.clients.post;
     return this.http.post(url,client).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente guardado con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
+  /**
+   * Método para crear un nuevo historial del cliente.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param idClient id a cargar en la base de datos
+   * @returns un observable de tipo objeto
+   */
+  postClientHistory(idClient : number){
+    const url = API_URL+ENDPOINTS.clientHistories.post;
+    return this.http.post(url,idClient).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Ficha creada!"); 
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
@@ -88,8 +111,8 @@ export class ClientService {
    * @param client cliente actualizado.
    * @returns un observable de tipo objeto
    */
-  putClient(client: Client) {
-    const url = API_URL+ENDPOINTS.clients.update.replace(':id', client.idClient.toString());
+  putClient(client: ClientRequest) {
+    const url = API_URL+ENDPOINTS.clients.update.replace(':id', client.clientId!.toString());
     return this.http.put(url,client).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente editado con éxito!"); 
@@ -111,7 +134,7 @@ export class ClientService {
    */
   deleteClient(idClient: number) {
     const url = API_URL+ENDPOINTS.clients.delete.replace(':id', idClient.toString());
-    return this.http.put(url,idClient).pipe(
+    return this.http.patch(url,idClient).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente eliminado con éxito!"); 
       }),

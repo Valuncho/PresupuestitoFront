@@ -65,13 +65,56 @@ export class PaymentService {
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param payment pago a cargar en la base de datos
+   * @param idBudget presupuesto al que se le asigna el pago a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postPayment(payment: Payment){
+  postBudgetPayment(payment: Payment,idBudget : number){
     const url = API_URL+ENDPOINTS.payments.postBudgetPayment;
     return this.http.post(url,payment).pipe(
       tap(() => {
-        this.notification.showNotification("¡Pago guardado con éxito!"); 
+        this.notification.showNotification("¡Pago guardado al presupuesto con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
+  /**
+   * Método para crear un pago nuevo.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param payment pago a cargar en la base de datos
+   * @param idSalary salario al que se le asigna el pago a cargar en la base de datos
+   * @returns un observable de tipo objeto
+   */
+  postSalaryPayment(payment: Payment,idSalary : number){
+    const url = API_URL+ENDPOINTS.payments.postSalaryPayment;
+    return this.http.post(url,payment).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Pago guardado al salario con éxito!"); 
+      }),
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );   
+  }
+  /**
+   * Método para crear un pago nuevo.
+   * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param payment pago a cargar en la base de datos
+   * @param idInvoice factura a la que se le asigna el pago a cargar en la base de datos
+   * @returns un observable de tipo objeto
+   */
+  postInvoicePayment(payment: Payment,idInvoice : number){
+    const url = API_URL+ENDPOINTS.payments.postInvoicePayment;
+    return this.http.post(url,payment).pipe(
+      tap(() => {
+        this.notification.showNotification("¡Pago guardado a la factura con éxito!"); 
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
@@ -114,7 +157,7 @@ export class PaymentService {
    */
   deletePayment(idPayment: number) {
     const url = API_URL+ENDPOINTS.payments.delete;
-    return this.http.put(url,idPayment).pipe(
+    return this.http.patch(url,idPayment).pipe(
       tap(() => {
         this.notification.showNotification("¡Pago eliminado con éxito!"); 
       }),

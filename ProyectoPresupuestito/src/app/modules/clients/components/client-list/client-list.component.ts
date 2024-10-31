@@ -11,7 +11,7 @@ import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
-import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
+import { UtilsService } from '../../../../core/utils/utils.service';
 
 
 /**
@@ -36,42 +36,11 @@ export class ClientListComponent {
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
-
+  private utils =inject(UtilsService);
   //Properties
   options : boolean = false;
-  //clients : Client[] = [];
-  
-  clients: Client[] = [
-    {
-      idClient: 1001,
-      oPerson: {
-        idPerson: 1,
-        name: 'John',
-        lastName: 'Doe',
-        direction: '123 Main St',
-        phoneNumber: '1234567890',
-        mail: 'johndoe@example.com',
-        dni: '123456789',
-        cuit: '30-12345678-9',
-      },
-    },
-    {
-      idClient: 1002,
-      oPerson: {
-        idPerson: 2,
-        name: 'Jane',
-        lastName: 'Smith',
-        direction: '456 Elm St',
-        phoneNumber: '9876543210',
-        mail: 'janesmith@example.com',
-        dni: '987654321',
-        cuit: '30-98765432-1',
-      },
-    },
-  ];
+  clients : Client[] = [];
 
-
-  searchedClients : Client[] = [];
   clientId = 0;
   
   //Pagination
@@ -80,7 +49,6 @@ export class ClientListComponent {
 
 
   ngOnInit(): void {
-     
     this.clientService.getClients().subscribe({  
       next: x => this.clients = x,  
     })
@@ -103,32 +71,38 @@ export class ClientListComponent {
     this.modalService.openModal<ClientFormComponent,Client>(ClientFormComponent);
   }
 
-
+  closeModal(){
+    this.modalService.closeModal();
+  }
 
   //Card
   handleAction($Event : Client){
-    this.router.navigate(['/budget/new/',$Event.idClient]);
+    this.closeModal()
+    this.router.navigate(['/budget/new/',$Event.clientId]);
   }
 
   handleViewClient($Event : Client){    
-    this.router.navigate(['/client/detail/',$Event.idClient]);
+    this.closeModal()
+    this.router.navigate(['/client/detail/',$Event.clientId]);
   }
 
   handleEditClient($Event : Client){
-    this.router.navigate(['/client/edit/',$Event.idClient]);    
+    this.closeModal()
+    this.router.navigate(['/client/edit/',$Event.clientId]);    
   }
 
   handleDeleteClient($Event : Client){
+    this.closeModal()
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar al cliente ${$Event.oPerson.name}?`
+        mensaje: `¿Estás seguro de que deseas eliminar al cliente ${$Event.personId.name}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const client = this.clientService.getClientById($Event.idClient)!;
-        this.clientService.deleteClient($Event.idClient).subscribe(
+        const client = this.clientService.getClientById($Event.clientId)!;
+        this.clientService.deleteClient($Event.clientId).subscribe(
           {
             next: () => this.router.navigate(['/client'])
           }

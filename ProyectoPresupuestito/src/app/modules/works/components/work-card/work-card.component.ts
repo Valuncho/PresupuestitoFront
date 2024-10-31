@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Work } from '../../../../core/model/Work';
 import { CommonModule } from '@angular/common';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-work-card',
   standalone: true,
-  imports: [CommonModule, ButtonCardComponent],
+  imports: [CommonModule, ButtonCardComponent, MatTooltipModule],
   templateUrl: './work-card.component.html',
   styleUrl: './work-card.component.css'
 })

@@ -12,6 +12,7 @@ import { ItemService } from '../../../../../core/services/item.service';
 import { WorkControllerService } from '../../../../../core/controllers/work-controller.service';
 import { Work } from '../../../../../core/model/Work';
 import { Subscription } from 'rxjs';
+import { WorkRequest } from '../../../../../core/request/workRequest';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class MaterialManagerComponent {
 
   currentItem : Item  =  this.materialController.getEmptyItem();
   currentInvoiceItem : InvoiceItem  =  this.materialController.getEmptyInvoiceItem();
-  currentWork : Work = this.workController.getEmptyWork();
+  currentWork : WorkRequest = this.workController.getEmptyWorkRequest();
   currentMaterial : Material = this.materialController.getEmptyMaterial();
 
   
@@ -58,7 +59,7 @@ ngOnInit(): void {
     
     this.ItemSubscription = this.materialController.getItem().subscribe(res =>{ 
       this.edit = this.materialController.getEditMode()
-      this.itemForm.patchValue({id : res?.idItem, material : res?.material.name,idmaterial : res?.material.idMaterial, quantity : res?.quantity});
+      this.itemForm.patchValue({id : res?.idItem, material : res?.material.materialName,idmaterial : res?.material.materialId, quantity : res?.quantity});
      })
 
      this.MaterialSubscription = this.materialController.getMaterial().subscribe(res =>{
@@ -98,14 +99,14 @@ ngOnInit(): void {
       this.itemService.putItem(this.currentItem).subscribe();
       this.materialController.setEditMode(false)
     }else{
-      this.itemService.postItem(this.currentItem, this.currentWork.idWork).subscribe();
+      this.itemService.postItem(this.currentItem, this.currentWork.workId!).subscribe();
     }
     
     //this.item.emit(this.currentItem);
   }
 
   setNewMaterial(){
-    this.itemForm.patchValue({idmaterial : this.currentMaterial!.idMaterial, material : this.currentMaterial!.name})
+    this.itemForm.patchValue({idmaterial : this.currentMaterial!.materialId, material : this.currentMaterial!.materialName})
   }
 
   itemFormToItem(){

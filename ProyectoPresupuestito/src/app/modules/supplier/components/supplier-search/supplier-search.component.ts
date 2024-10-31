@@ -29,42 +29,10 @@ export class SupplierSearchComponent {
   }
 
   
-  sort(){
-    let sorted : Supplier[] = []
-    switch(this.filtro.value){
-      case 'alfabeticamente':
-        sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['asc']);
-        break;
-      case 'alfabeticamente2':
-        sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['desc']);
-        break;
-      case'dni':
-        sorted = lodash.orderBy(this.suppliers, ['oPerson.dni'], ['asc']);
-        break;
-      default:
-        sorted = lodash.orderBy(this.suppliers, ['oPerson.lastName'], ['asc']);
 
-    }
-    console.log(sorted)    
-    console.log('ordenado')
-    this.filteredSupplierss = sorted;
-    this.sortedResults.emit(this.filteredSupplierss);
-  }
+  
 
-  search() {
-    
-    console.log(this.busqueda.value);
-    this.filteredSupplierss = this.suppliers.filter(supplier =>
-      supplier.oPerson.name.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
-      supplier.oPerson.lastName.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
-      supplier.oPerson.mail?.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
-      supplier.oPerson.phoneNumber?.toString().includes(this.busqueda.value!.toLowerCase()) ||
-      supplier.oPerson.dni?.toString().includes(this.busqueda.value!.toLowerCase())
-    );
-    
-    this.sortedResults.emit(this.filteredSupplierss);
-    
-  }
+  
 }
 
 

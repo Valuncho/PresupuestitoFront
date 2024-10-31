@@ -16,7 +16,6 @@ import { InvoiceDetailComponent } from './modules/invoice/pages/invoice-detail/i
 import { SupplierDetailsComponent } from './modules/supplier/pages/supplier-Details/supplier-Details.component';
 import { SupplierViewComponent } from './modules/supplier/pages/supplier-View/supplier-View.component';
 
-
 export const routes: Routes = [
     //PagesRoutes
     {path: 'home', component: HomeComponent},

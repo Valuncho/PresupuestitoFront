@@ -44,13 +44,7 @@ export class MaterialSearchComponent {
 
   search() {
     
-    console.log(this.busqueda.value);
-    this.filteredmaterial = this.material.filter(material =>
-      material.name.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
-      material.description.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
-      material.brand.toLowerCase().includes(this.busqueda.value!.toLowerCase()) ||
-      material.unitOfMeasure.toLowerCase().includes(this.busqueda.value!.toLowerCase()) 
-    );
+ 
 
     this.sortedResults.emit(this.filteredmaterial);
     

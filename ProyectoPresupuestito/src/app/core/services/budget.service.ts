@@ -7,6 +7,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
 import { NotificationService } from '../utils/notification.service';
+import { BudgetRequest } from '../request/budgetRequest';
 /**
  * @class BudgetService
  * 
@@ -38,8 +39,8 @@ export class BudgetService {
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de presupuestos como un observable.
    */
-  getBudgets() : Observable<Budget[]> {
-    return this.http.get<Budget[]>(API_URL+ENDPOINTS.budgets.getAll).pipe(
+  getBudgets() : Observable<any[]> {
+    return this.http.get<any[]>(API_URL+ENDPOINTS.budgets.getAll).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -54,9 +55,9 @@ export class BudgetService {
    * @param idBudget id del presupuesto solicitado.
    * @returns Un presupuesto como un observable.
    */
-  getBudgetById(idBudget : number) : Observable<Budget>{
+  getBudgetById(idBudget : number) : Observable<any>{
     const url = API_URL+ENDPOINTS.budgets.getById.replace(':id', idBudget.toString());
-    return this.http.get<Budget>(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
@@ -72,7 +73,7 @@ export class BudgetService {
    * @param budget presupuesto a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postBudget(budget: Budget) {
+  postBudget(budget: BudgetRequest) {
     const url = API_URL+ENDPOINTS.budgets.post;
     return this.http.post(url,budget).pipe(
       tap(() => {
@@ -93,8 +94,8 @@ export class BudgetService {
    * @param budget presupuesto actualizado.
    * @returns un observable de tipo objeto
    */
-  putBudget(budget: Budget) {
-    const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.idBudget.toString());
+  putBudget(budget: BudgetRequest) {
+    const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.budgetId!.toString());
     return this.http.put(url,budget).pipe(
       tap(() => {
         this.notification.showNotification("¡Presupuesto actualizado con éxito!"); 
@@ -116,7 +117,7 @@ export class BudgetService {
    */
   deleteBudget(idBudget: number) {
     const url = API_URL+ENDPOINTS.budgets.delete.replace(':id', idBudget.toString());
-    return this.http.put(url,idBudget).pipe(
+    return this.http.patch(url,idBudget).pipe(
       tap(() => {
         this.notification.showNotification("¡Presupuesto eliminado con éxito!"); 
       }),
@@ -135,15 +136,27 @@ export class BudgetService {
 
   getEmptyBudget(): Budget {
     const EmptyBudget: Budget = {
-      idBudget: 0,
+      budgetId: 0,
       works: [],
-      createdDate: new Date(),
+      dateCreated: new Date(),
       deadLine: new Date(),
-      description: '',
+      descriptionBudget: '',
       cost: 0,
-      Status: 'Creado',
+      budgetStatus: 'Creado',
       payments: [],
+    
     };
     return EmptyBudget;
+  }
+
+  getEmptyBudgetRequest(): BudgetRequest {
+    
+    return {
+      clientId : 0,
+      budgetStatus : "",
+      deadLine : new Date(),
+      dateCreated:new Date(),
+      descriptionBudget : ""
+    }
   }
 }

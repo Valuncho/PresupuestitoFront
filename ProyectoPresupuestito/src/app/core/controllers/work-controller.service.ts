@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Work } from '../model/Work';
+import { WorkRequest } from '../request/workRequest';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WorkControllerService {
   //Selected entities
-  private work: BehaviorSubject<Work > = new BehaviorSubject<Work >(this.getEmptyWork());
+  private work: BehaviorSubject<WorkRequest > = new BehaviorSubject<WorkRequest >(this.getEmptyWorkRequest());
 
-  public getWork(): Observable<Work> {
+  public getWork(): Observable<WorkRequest> {
     return this.work.asObservable();
   }
 
-  public setWork(work: Work) {
+  public setWork(work: WorkRequest) {
     this.work.next(work);
   }
 
@@ -32,13 +33,24 @@ export class WorkControllerService {
   getEmptyWork(): Work {
     return {
       idWork: 0,
-      order: 0,
       materials: [],
       estimatedHoursWorked: 0,
       deadline: new Date(),
       costPrice: 0,
       status: '',
       notes: '',
+    };
+  }
+  getEmptyWorkRequest(): WorkRequest {
+    return {
+     
+      estimatedHoursWorked: 0,
+      deadLine: new Date(),
+      costPrice: 0,
+      statusSerialized: '',
+      notes: '',
+      budgetId:0,
+      image:''
     };
   }
 }

@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="Card">
     <div class="Card-Details">        
-        <p>{{Subcategory!.name}}</p>
-        <p>Rubro: {{Subcategory!.category.name}}</p>
+        <p>{{Subcategory!.subCategoryName}}</p>
+        <p>Rubro: {{Subcategory!.categoryId.categoryName}}</p>
     </div>
     <div class="Card-Options">
-        <app-button-card [icon]="botones[1].icon" (click)="edit()"/>
-        <app-button-card [icon]="botones[2].icon" (click)="deleteC()"/>
+        <app-button-card [icon]="botones[1].icon" (click)="edit()" mat-raised-button matTooltip="Editar sub-rubro."/>
+        <app-button-card [icon]="botones[2].icon" (click)="deleteC()" mat-raised-button matTooltip="Eliminar sub-rubro."/>
     </div>
 </div>
 

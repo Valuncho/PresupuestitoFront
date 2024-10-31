@@ -2,7 +2,7 @@ import { Person } from "./Person";
 
 export interface Supplier
 {
-    idSupplier : number;
-    note : string;
-    oPerson : Person;
+    supplierId : number;
+    note? : string;
+    personId : Person;
 }
