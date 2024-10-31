@@ -132,9 +132,24 @@ export class ClientFormComponent {
     this.clientDto.lastName = this.clientForm.get("lastName")?.value
     this.clientDto.address = this.clientForm.get("direction")?.value
     this.clientDto.phoneNumber = this.clientForm.get("phoneNumber")?.value
-    this.clientDto.email = this.clientForm.get("mail")?.value
-    this.clientDto.dni = this.clientForm.get("dni")?.value
-    this.clientDto.cuit = this.clientForm.get("cuit")?.value
+    if(this.clientForm.get("mail")?.value == null){
+      this.clientDto.email = ""
+    }else{
+      this.clientDto.email = this.clientForm.get("mail")?.value
+
+    }
+
+    if(this.clientForm.get("dni")?.value == null){
+      this.clientDto.dni = ""
+    }else{
+      this.clientDto.dni = this.clientForm.get("dni")?.value
+    }
+
+    if(this.clientForm.get("cuit")?.value == null){
+      this.clientDto.cuit = ""
+    }else{
+      this.clientDto.cuit = this.clientForm.get("cuit")?.value
+    }
     if(this.isEdit){
       this.clientDto.clientId = this.clientId;
     }

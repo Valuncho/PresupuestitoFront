@@ -5,7 +5,7 @@ export interface ClientRequest
     lastName: string;
     address: string;
     phoneNumber: string;
-    email: string;
-    dni: string;
-    cuit: string;
+    email?: string;
+    dni?: string;
+    cuit?: string;
 }
