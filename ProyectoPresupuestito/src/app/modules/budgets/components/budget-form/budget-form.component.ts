@@ -55,7 +55,7 @@ export class BudgetFormComponent {
   //Form
   BudgetForm : FormGroup = new FormGroup({
     createdDate : new FormControl('', Validators.required),
-    deadLine : new FormControl('', Validators.required),
+    deadLine : new FormControl(null),
     description : new FormControl('Descripción', Validators.required),
     cost : new FormControl(1000, Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
@@ -168,12 +168,13 @@ export class BudgetFormComponent {
   }
 
   toBudget(){
-    console.log(this.currentBudget)
+    
+    this.currentBudget.deadLine = this.BudgetForm.get('deadLine')?.value;
     this.currentBudget.clientId = this.BudgetForm.get('clientId')?.value;
     this.currentBudget.descriptionBudget = this.BudgetForm.get('description')?.value;
-    this.currentBudget.deadLine = this.BudgetForm.get('deadLine')?.value;
     this.currentBudget.dateCreated = this.BudgetForm.get('createdDate')?.value;
     this.currentBudget.budgetStatus = this.BudgetForm.get('estado')?.value;
+    
   }
 }
 

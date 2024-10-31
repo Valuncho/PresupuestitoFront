@@ -80,9 +80,10 @@ export class WorkFormComponent {
   }
 
   toWork(){
+
     this.currentWork.deadLine = this.WorkForm.get('deadLine')?.value;
     this.currentWork.estimatedHoursWorked = this.WorkForm.get('hours')?.value;
-    this.currentWork.statusSerialized = this.WorkForm.get('estado')?.value;
+    this.currentWork.workStatus = this.WorkForm.get('estado')?.value;
     this.currentWork.notes = this.WorkForm.get('notes')?.value;
   }
 }

@@ -6,7 +6,7 @@
       <p>Horas estimadas: {{ currentWork!.estimatedHoursWorked }}</p>
       <p>Fecha limite: {{ currentWork!.deadLine | date : "dd/MM/yyyy" }}</p>
       <p>Costo: {{ currentWork!.costPrice | currency }}</p>
-      <p>Estado : {{ currentWork!.statusSerialized }}</p>
+      <p>Estado : {{ currentWork!.workStatus }}</p>
     </div>
   </div>
 

@@ -47,7 +47,7 @@ export class WorkControllerService {
       estimatedHoursWorked: 0,
       deadLine: new Date(),
       costPrice: 0,
-      statusSerialized: '',
+      workStatus: '',
       notes: '',
       budgetId:0,
       image:''

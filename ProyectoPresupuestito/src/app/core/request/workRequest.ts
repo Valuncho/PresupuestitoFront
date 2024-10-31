@@ -4,7 +4,7 @@ export interface WorkRequest{
     deadLine : Date;
     costPrice: number;
     budgetId : number;
-    statusSerialized: string;
+    workStatus: string;
     notes: string;
     image: string;
 }
