@@ -33,8 +33,8 @@ getEmptyInvoice(): Invoice{
     idInvoice:0,
     date: new Date(0),
     isPaid: false,
-    oItems:[],
-    oPayment:[]
+    materials:[],
+    payments:[]
   }
 }
 

@@ -12,11 +12,13 @@ import { ModalService } from '../../../../core/utils/modal.service';
 import { Payment } from '../../../../core/model/Payment';
 import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
 import { SalaryFormComponent } from '../../../salary/components/salary-form/salary-form.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { EmployeeHistory } from '../../../../core/model/EmployeeHistory';
 
 @Component({
     selector: 'app-employee-details',
     standalone: true,
-    imports: [CommonModule, EmployeeComponent,SalaryListComponent,EmployeeCardComponent],
+    imports: [CommonModule, EmployeeComponent,SalaryListComponent,EmployeeCardComponent,NgxPaginationModule],
     templateUrl: './employee-Details.component.html',
     styleUrl: './employee-Details.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,7 +30,31 @@ export class EmployeeDetailsComponent {
     private employeeService = inject(EmployeeService);
     private modalService = inject(ModalService)
     id : number  = 0;
-    currentEmployee! : Employee;
+    currentEmployee : EmployeeHistory = {
+        idEmployeeHistory: 1,
+        oEmployee: {
+            oPerson: {
+                idPerson: 1,
+                name: 'John',
+                lastName: 'Doe',
+                direction: '123 Main St',
+                phoneNumber: '1234567890',
+                mail: 'johndoe@example.com',
+                dni: '123456789',
+                cuit: '30-12345678-9',
+            },
+            idEmployee: 0,
+            salary: 0
+        },
+        salaries: [
+            {
+            idSalary: 0,
+            amount: 400,
+            billDate: 0,
+            payments: []
+        }
+        ]
+    }
     employee = signal<Employee | undefined>(undefined);
     salaries : Salary[] | undefined = [];
     

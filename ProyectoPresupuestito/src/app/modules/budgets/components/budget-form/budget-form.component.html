@@ -1,7 +1,7 @@
-<div>
+
   <form [formGroup]="BudgetForm" (ngSubmit)="onSubmit()" >
     <fieldset>
-      <legend class="List-title"> {{ isEdit ? 'Actualizar un presupuesto' : 'Crear un presupuesto' }}</legend>
+      
       @if(BudgetForm.invalid && BudgetForm.dirty){
         <div class="invalid">
           @if (BudgetForm.get('idClient')?.invalid){
@@ -21,7 +21,7 @@
           }
         </div>
       }
-
+      <legend class="List-title"> {{ isEdit ? 'Actualizar un presupuesto' : 'Crear un presupuesto' }}</legend>
       @if (!isEdit) {
         <label for="client">Cliente:</label>
         <input type="text" id="client" (click)="openClientForm()" placeholder="Seleccionar cliente" readonly formControlName="client">
@@ -62,6 +62,5 @@
     </fieldset>
   </form>
 
-</div>
 
 

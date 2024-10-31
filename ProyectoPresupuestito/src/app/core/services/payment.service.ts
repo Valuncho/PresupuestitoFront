@@ -68,7 +68,7 @@ export class PaymentService {
    * @returns un observable de tipo objeto
    */
   postPayment(payment: Payment){
-    const url = API_URL+ENDPOINTS.payments.post;
+    const url = API_URL+ENDPOINTS.payments.postBudgetPayment;
     return this.http.post(url,payment).pipe(
       tap(() => {
         this.notification.showNotification("¡Pago guardado con éxito!"); 
@@ -80,6 +80,9 @@ export class PaymentService {
     })
     );   
   }
+
+  //HACER TRES METODOS DE POST PARA CADA ENTIDAD, BUDGET,SALARY e INVOICE
+
 
   /**
    * Método para actualizar información de un pago existente.

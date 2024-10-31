@@ -36,12 +36,25 @@ export class ClientFormComponent {
     cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
   });
   
-  ngAfterViewInit(): void {
+
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.clientId = Number(params.get('clientId'));   
+      this.onEditHandler()
+    });
+
+    this.clientController.getEditMode().subscribe(res =>
+      {
+        if(res == true){
+          this.isEdit=res
+          
+        }
+      }
+    )
     this.setUp();
-    this.onEditHandler();
-    
   }
 
+ 
   get canSubmit(){
     let  flag : boolean = false;
     if(
@@ -68,22 +81,33 @@ export class ClientFormComponent {
   }
 
   onEditHandler(){
-    this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
-    if(this.clientId){
-      let url = "/client/edit/" + this.clientId;
+    
+    let url = "/client/edit/" + this.clientId;
       if(this.router.url == url){
-        this.isEdit = true;
-        this.clientService.getClientById(this.clientId).subscribe(
-        {
-          next: (res:Client) => {this.currentClient = res!},
+        this.clientService.getClientById(this.clientId!).subscribe( {
+          next:res =>{
+            this.currentClient = res!
+            this.setClientToEdit()
+          }
         }
+          
       )
-        this.clientForm.patchValue(this.currentClient.oPerson);
       }else{
         this.isEdit = false;
-      }
     }
     
+  }
+
+  setClientToEdit(){
+    this.clientForm.patchValue({
+      name : this.currentClient.oPerson.name,
+      lastName : this.currentClient.oPerson.lastName,
+      direction : this.currentClient.oPerson.direction,
+      phoneNumber : this.currentClient.oPerson.phoneNumber,
+      mail : this.currentClient.oPerson.mail,
+      dni : this.currentClient.oPerson.dni,
+      cuit : this.currentClient.oPerson.cuit,
+    });
   }
 
   onSubmit(){

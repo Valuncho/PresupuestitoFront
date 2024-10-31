@@ -8,24 +8,16 @@
             <p>la fecha es obligatoria.</p>
           }
           
-          @if (invoiceForm.get('pago')?.invalid) {
-            <p>el pago es obligatorio.</p>
-          }
-  
-          @if (invoiceForm.get('pagado')?.invalid) {
-            <p>la confirmacion de pago es obligatoria.</p>
-          }
+         
       
         </div>
       }     
       
-      <legend class="List-title">Cargar boleta</legend>
+      <legend class="List-title">Cargar factura</legend>
       <label for="fecha">fecha:</label>
-      <input type="text" name="fecha" id="fecha" placeholder="fecha..." formControlName="fecha">
-      <label for="pago">pago:</label>
-      <input type="text" name="pago" id="pago" placeholder="pago..." formControlName="pago">
-      <label for="estaPagado">pagado:</label>
-      <input type="text" name="estaPagado" id="estaPagado" placeholder="estaPagado..." formControlName="estaPagado">
+      <input type="date" name="fecha" id="fecha" placeholder="fecha..." formControlName="fecha">
+      
+
     </fieldset>
     <fieldset class="Botones">
       <button type="reset" (click)="resetForm($event)">Limpiar</button>

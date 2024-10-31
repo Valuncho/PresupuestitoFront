@@ -1,16 +1,13 @@
 <div class="List">
         <h3 class="List-title">Listado de trabajos</h3>
-    <app-work-search/>
-
+  
 
         @for (work of works | paginate: { itemsPerPage: worksToPage, currentPage: workPage }; track work.idWork; let idx = $index) {
-
             <app-work-card
             [Work]="work" 
-            [idWork]="work.idWork"
-            (isClick)="seleccionar($event)"
-            (isEdit)="editar($event)" 
-            (isDeleted)="eliminar($event)" 
+            (isClick)="handleView($event)"
+            (isEdit)="handleEdit($event)" 
+            (isDeleted)="handleDelete($event)" 
             />
         }@empty {
             <app-text-card [message]="'No hay trabajos que mostrar.'"/>
@@ -24,7 +21,6 @@
 
         @if(options){
             <button class="Boton1" (click)="addWorkHandler()">Agregar trabajo</button>
-            <button class="Boton1" (click)="onSaveWorksHandler()">Guardar</button>
         }
 
     </div>

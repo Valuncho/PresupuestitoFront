@@ -1,10 +1,6 @@
 <div class="List">
   <h3 class="List-title">Listado de materiales</h3>
-  <app-material-search
-    [material]="materials"
-    (results)="handleSearch($event)"
-    (sortedResults)="handleSearch($event)"
-  />
+ 
   <div>
     @for (material of materials | paginate:{ itemsPerPage: items,
     currentPage: page }; track material.idMaterial; let idx = $index) {

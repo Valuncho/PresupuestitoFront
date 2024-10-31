@@ -83,7 +83,7 @@ export class WorkService {
    * @returns un observable de tipo objeto
    */
   putWork(work: Work) {
-    const url = API_URL+ENDPOINTS.works.update;
+    const url = API_URL+ENDPOINTS.works.update.replace(':id', work.idWork.toString());
     return this.http.put(url,work).pipe(
       tap(() => {
         this.notification.showNotification("¡Trabajo editado con éxito!"); 
@@ -104,8 +104,8 @@ export class WorkService {
    * @returns un observable de tipo objeto
    */
    deleteWork(idWork: number) {
-    const url = API_URL+ENDPOINTS.works.delete;
-    return this.http.put(url,idWork).pipe(
+    const url = API_URL+ENDPOINTS.works.delete.replace(':id', idWork.toString());
+    return this.http.patch(url,idWork).pipe(
       tap(() => {
         this.notification.showNotification("¡Trabajo eliminado con éxito!"); 
       }),
@@ -121,19 +121,6 @@ export class WorkService {
     return this.estados;
   }
 
-  getEmptyWork() : Work{
-    const work : Work = {
-      idWork: 0,
-      order: 0,
-      materials: [],
-      estimatedHoursWorked: 8,
-      deadline: new Date(),
-      costPrice: 0,
-      status: 'Presupuestado',
-      notes: '',
-      images: []
-    }
-    return work;
-  }
+
 
 }

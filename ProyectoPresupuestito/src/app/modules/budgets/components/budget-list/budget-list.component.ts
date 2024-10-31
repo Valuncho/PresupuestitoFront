@@ -34,9 +34,36 @@ export class BudgetListComponent {
   private budgetService = inject(BudgetService);
 
   //Properties
-  @Input() budgets : Budget[] = [];
+  @Input() budgets : Budget[] = [
+    {
+      idBudget: 1,
+      works: [
+        
+      ], // Replace with actual work data if needed
+      createdDate: new Date('2023-08-20'),
+      deadLine: new Date('2023-12-22'),
+      description: 'Kitchen renovation',
+      cost: 5000,
+      Status: 'Cancelado',
+      payments: [
+        
+      ], // Or provide payment data if needed
+    },
+    {
+      idBudget: 2,
+      works: [
+        
+      ],
+      createdDate: new Date('2024-01-15'),
+      deadLine: new Date('2024-02-15'),
+      description: 'Bathroom remodeling',
+      cost: 3000,
+      Status: 'Aprobado',
+      payments: [
+        // Payment data if applicable
+      ],
+    }]
   
-  budgetsToDisplay : Budget[] = [];
   clientId : number = 0
   options : boolean = false;
   //Pagination
@@ -48,7 +75,6 @@ export class BudgetListComponent {
     this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
     const clientUrl = "/client/detail/"+this.clientId;
     if(this.router.url == clientUrl){
-      console.log(this.router.url)
       this.options = true;
     }else{
       this.budgetService.getBudgets().subscribe(
@@ -60,34 +86,28 @@ export class BudgetListComponent {
 
 
   }
-
-  handleSelectBudget($Event : number){
-    this.router.navigate(['/budget/detail/', $Event]);
-  }
-
-  handleAction($Event : any){
-    this.router.navigate(['/work/new/',$Event ]);
-  }
+  //BudgetCard
+ 
 
   handleView($Event : any){
-    this.router.navigate(['/budget/detail/', $Event]);
+    this.router.navigate(['/budget/detail/', $Event.idBudget]);
   }
 
-  handleEdit($Event : any){
-    this.router.navigate(['/budget/edit/',$Event]);
+  handleEdit($Event : Budget){
+    this.router.navigate(['/budget/edit/',$Event.idBudget]);
   }
 
-  handleDelete($Event : any){
+  handleDelete($Event : Budget){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar al presupuesto con ID ${$Event}?`
+        mensaje: `¿Estás seguro de que deseas eliminar al presupuesto: ${$Event.description}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         
-        this.budgetService.deleteBudget($Event).subscribe({
+        this.budgetService.deleteBudget($Event.idBudget).subscribe({
           next : () => {
             this.router.navigate(['/budget']);
           }

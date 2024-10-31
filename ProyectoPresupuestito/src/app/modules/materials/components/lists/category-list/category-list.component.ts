@@ -8,6 +8,8 @@ import { ModalService } from '../../../../../core/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
+
 
 @Component({
   selector: 'app-category-list',
@@ -24,8 +26,8 @@ export class CategoryListComponent {
    private materialController = inject(MaterialControllerService);
    
  
- 
-   //categories : Category[] = []
+ //SE PUEDE BORRAR PORQUE SE USO PARA PROBAR CON EL BACK
+   //categories : dto[] = []
    categories : Category[]=[
      {
        idCategory: 1,
@@ -77,7 +79,6 @@ export class CategoryListComponent {
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
          this.materialService.deleteCategory($Event.idCategory);
-         //this.notification.showNotification("Rubro eliminado con éxito");
        }
      });
  

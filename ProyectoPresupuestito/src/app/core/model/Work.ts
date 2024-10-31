@@ -10,6 +10,4 @@ export interface Work
     costPrice: number;
     status : string;
     notes: string;
-    images: string[];
-
 }

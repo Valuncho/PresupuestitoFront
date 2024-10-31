@@ -12,19 +12,17 @@ import { ButtonCardComponent } from '../../../../components/button-card/button-c
 })
 export class BudgetCardComponent {
   @Input() Budget: Budget | undefined;
-  @Input() idBudget: number = 0;
-  @Output() isSelect = new EventEmitter<number>();
-  @Output() isEdit = new EventEmitter<number>();
-  @Output() isDeleted = new EventEmitter<number>();
-  botones: Array<{  url: string; icon: string }> =[];
+  @Output() isSelect = new EventEmitter<Budget>();
+  @Output() isEdit = new EventEmitter<Budget>();
+  @Output() isDeleted = new EventEmitter<Budget>();
+  botones: Array<{ icon: string }> =[];
 
 
   ngOnInit(){
     this.botones = [
-      { url: '/budget/detail/'+this.idBudget+'', icon: 'info' },
-      { url: '/budget/edit/'+this.idBudget, icon: 'edit' },
-      { url: '/budget/delete'+this.idBudget+'', icon: 'delete' },
-      { url: '/payment/'+this.idBudget+'', icon: 'payments' },
+      {icon : 'info'},
+      {icon: 'edit'},
+      {icon: 'delete'}
     ];
     
   }
@@ -32,14 +30,14 @@ export class BudgetCardComponent {
    
   }
   select(){
-    this.isSelect.emit(this.idBudget);
+    this.isSelect.emit(this.Budget);
   }
   edit(){
-    this.isEdit.emit(this.idBudget);
+    this.isEdit.emit(this.Budget);
   }
 
   deleteC(){
-    this.isDeleted.emit(this.idBudget);
+    this.isDeleted.emit(this.Budget);
   }
   
 }

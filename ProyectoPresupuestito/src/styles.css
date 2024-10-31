@@ -87,9 +87,7 @@ button {
     border: none;
 }
 
-.Arriba {
-    align-items: flex-start;
-}
+
 
 /*Forms*/
 
@@ -104,7 +102,6 @@ form {
     overflow: hidden;
     overflow-y: auto;
     height: 76vh;
-    /*margin: 0 auto;*/
 }
 
 fieldset {
@@ -173,19 +170,35 @@ form .invalid p::before{
 .Componente {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    
+    max-width: 40vw;
     padding: 1em;
     margin: 10px;
-    border-radius: 10px 10px;
+    border-radius: 10px;
     background-color: var(--gris);
 }
-
-.Componente .Interior {
-    background-color: var(--arce);
-    padding: inherit;
-    border-radius: inherit;
-    width: 25vw;
+.Componente div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
+.Componente .Interior{
+    align-items: flex-start;
+    background-color: var(--arce);
+    padding: 1em;
+    border-radius: 10px;
+    width: auto;
+}
+
+
+.ItemTable{
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+/*Detalles*/
 .Detalle {
     border-radius: 5px;
     padding: 10px;
@@ -319,16 +332,91 @@ form .invalid p::before{
 
 
 
-@media only screen and (max-width: 900px) {
-    main section{
+@media only screen and (max-width: 950px) {
+    main section, article{
         flex-direction: column;
         align-items: center;
     }
-    .List {
+
+    
+    .List, .Componente, form {
         min-width: 50vh;
         max-width: 40vw;
         
     }
+    .Details{
+        min-width: 300px;
+    }
     
 
 }
+
+@media only screen and (max-width: 480px) {
+
+    .Card, .Componente{
+        padding: 5px;
+        flex-direction: column;
+    }
+    .List, form, .Componente {
+        
+        max-width: none;
+        min-width: 260px;
+        border-radius: 10px;
+    }
+    
+
+}
+
+@media (orientation: landscape) {
+  
+    .List, form, .Componente {
+        min-width: 360px;
+        border-radius: 10px;
+    }
+  }
+
+
+
+
+@media only screen and (max-width: 950px) {
+    main section, article{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    
+    .List, .Componente, form {
+        min-width: 50vh;
+        max-width: 40vw;
+        
+    }
+    .Details{
+        min-width: 300px;
+    }
+    
+
+}
+
+@media only screen and (max-width: 480px) {
+
+    .Card, .Componente{
+        padding: 5px;
+        flex-direction: column;
+    }
+    .List, form, .Componente {
+        
+        max-width: none;
+        min-width: 260px;
+        border-radius: 10px;
+    }
+    
+
+}
+
+@media (orientation: landscape) {
+  
+    .List, form, .Componente {
+        min-width: 360px;
+        border-radius: 10px;
+    }
+  }

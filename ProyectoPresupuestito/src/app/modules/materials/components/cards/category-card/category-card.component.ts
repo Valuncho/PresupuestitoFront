@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from '../../../../../core/model/Category';
 import { ButtonCardComponent } from '../../../../../components/button-card/button-card.component';
 
+
 @Component({
   selector: 'app-category-card',
   standalone: true,

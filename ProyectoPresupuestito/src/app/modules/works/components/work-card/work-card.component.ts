@@ -14,27 +14,28 @@ export class WorkCardComponent {
 
   
   @Input() Work: Work | undefined;
-  @Input() idWork: number = 0;
-  @Output() isClick = new EventEmitter<number>();
-  @Output() isEdit = new EventEmitter<number>();
-  @Output() isDeleted = new EventEmitter<number>();
-  botones: Array<{  url: string; icon: string }> =[];
+  @Output() isClick = new EventEmitter<Work>();
+  @Output() isEdit = new EventEmitter<Work>();
+  @Output() isDeleted = new EventEmitter<Work>();
+  botones: Array<{ icon: string }> =[
+
+  ];
 
   ngOnInit(){
     this.botones = [
-      { url: '/work/detail/'+this.idWork+'', icon: 'info' },
-      { url: '/work/edit/'+this.idWork, icon: 'edit' },
-      { url: '/work/delete'+this.idWork+'', icon: 'delete' },
+      { icon: 'info' },
+      { icon: 'edit' },
+      { icon: 'delete' }
     ];
   }
 
   select(){
-    this.isClick.emit(this.idWork);
+    this.isClick.emit(this.Work);
   }
   edit(){
-    console.log();
+    this.isEdit.emit(this.Work);
   }
   deleteC(){
-    console.log();
+    this.isDeleted.emit(this.Work);
   }
 }

@@ -1,9 +1,8 @@
-import { Component, inject, Input, signal, SimpleChange } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from '../../../../core/services/client.service';
 import { ModalService } from '../../../../core/utils/modal.service';
-import { NotificationService } from '../../../../core/utils/notification.service';
 import { Client } from '../../../../core/model/Client';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { ClientSearchComponent } from "../client-search/client-search.component";
@@ -33,10 +32,11 @@ import { ClientControllerService } from '../../../../core/controllers/client-con
 export class ClientListComponent {
   //Utils
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
-  private clientController = inject(ClientControllerService);
+
   //Properties
   options : boolean = false;
   //clients : Client[] = [];
@@ -72,7 +72,7 @@ export class ClientListComponent {
 
 
   searchedClients : Client[] = [];
-  
+  clientId = 0;
   
   //Pagination
   page = 1
@@ -85,6 +85,17 @@ export class ClientListComponent {
       next: x => this.clients = x,  
     })
 
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.clientId = Number(params.get('clientId'));   
+      
+    });
+
+    let url = "/budget/new/" + this.clientId;
+    let url2 = "/budget";
+    if(this.router.url == url || this.router.url == url2){
+      this.options = true;
+
+    }
   }
 
 //BudgetForm
@@ -92,20 +103,10 @@ export class ClientListComponent {
     this.modalService.openModal<ClientFormComponent,Client>(ClientFormComponent);
   }
 
-  //Search
-  handleSearch($Event : Client[]){
-    this.page = 1
-    /*
-    this.clientService.getClientsBySearch("filto").subscribe({
-      next : (clients) =>{
-        this.searchedClients = clients;
-      }
-    })*/
-  }
+
 
   //Card
   handleAction($Event : Client){
-    this.clientController.setClient($Event);
     this.router.navigate(['/budget/new/',$Event.idClient]);
   }
 
@@ -114,9 +115,7 @@ export class ClientListComponent {
   }
 
   handleEditClient($Event : Client){
-    this.clientController.setEditMode(true);
-    this.clientController.setClient($Event);
-    this.router.navigate(['/client/edit/',$Event.idClient]);
+    this.router.navigate(['/client/edit/',$Event.idClient]);    
   }
 
   handleDeleteClient($Event : Client){

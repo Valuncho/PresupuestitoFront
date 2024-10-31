@@ -34,13 +34,15 @@ export class ClientControllerService {
  }
  
  //Edit
- private editMode : boolean = false;
+ private editMode : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+ 
 
  setEditMode(option : boolean){
- this.editMode = option;
+  this.editMode.next(option)
+ 
  }
- getEditMode() : boolean{
- return this.editMode;
+ getEditMode() : Observable<boolean>{
+  return this.editMode.asObservable()
  }
 
  //GetEmptyObjects

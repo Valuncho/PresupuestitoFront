@@ -16,7 +16,7 @@ export const ENDPOINTS = {
   // Client Histories
   clientHistories: {
     getAll: '/ClientHistory',
-    getById: '/ClientHistory/:id',    
+    getById: '/ClientHistory/:id',
     post: '/ClientHistory',
     update: '/ClientHistory/:id',
     delete: '/clientHistory/:id',
@@ -27,7 +27,7 @@ export const ENDPOINTS = {
     getById: '/Budget/:id',
     getPriceById: '/Budget/price/:id',
     getDeadlineById: '/Budget/deadline/:id',
-    post: '/Budget',
+    post: '/Budget/:cliendId',
     update: '/Budget/:id',
     delete: '/Budget/:id',
   },
@@ -35,9 +35,17 @@ export const ENDPOINTS = {
   works: {
     getAll: '/Work',
     getById: '/Work/:id',
-    post: '/Work',
+    post: '/Work/:budgetId',
     update: '/Work/:id',
     delete: '/Work/:id',
+  },
+  //Items
+  items: {
+    getAll: '/Item',
+    getById: '/Item/:id',
+    post: '/Item/:idWork',
+    update: '/Item/:id',
+    delete: '/Item/:id',
   },
   //Materials
   materials: {
@@ -67,15 +75,15 @@ export const ENDPOINTS = {
   suppliers: {
     getAll: '/Supplier',
     getById: '/Supplier/:id',
-    getByInvoiceId: '/Supplier/:idBudget',
+    getByInvoiceId: '/Supplier/:idInvoice',
     post: '/Supplier',
     update: '/Supplier/:id',
     delete: '/Supplier/:id',
   },
-  // Client Histories
+  // Supplier History
   supplierHistories: {
     getAll: '/SupplierHistory',
-    getById: '/SupplierHistory/:id',    
+    getById: '/SupplierHistory/:id',
     post: '/SupplierHistory',
     update: '/SupplierHistory/:id',
     delete: '/SupplierHistory/:id',
@@ -84,16 +92,22 @@ export const ENDPOINTS = {
   invoices: {
     getAll: '/Invoices',
     getById: '/Invoices/:id',
-    getByInvoiceId: '/Invoices/:idBudget',
-    post: '/Invoices',
+    post: '/Invoices/:supplierId',
     update: '/Invoices/:id',
     delete: '/Invoices/:id',
+  },
+  //InvoiceItems
+  invoiceItem: {
+    getAll: '/Item',
+    getById: '/Item/:id',
+    post: '/Item/:idInvoice',
+    update: '/Item/:id',
+    delete: '/Item/:id',
   },
   //Employees
   employees: {
     getAll: '/Employee',
     getById: '/Employee/:id',
-    getByInvoiceId: '/Employee/:idBudget',
     post: '/Employee',
     update: '/Employee/:id',
     delete: '/Employee/:id',
@@ -101,7 +115,7 @@ export const ENDPOINTS = {
   // Employee History
   employeeHistories: {
     getAll: '/EmployeeHistory',
-    getById: '/EmployeeHistory/:id',    
+    getById: '/EmployeeHistory/:id',
     post: '/EmployeeHistory',
     update: '/EmployeeHistory/:id',
     delete: '/EmployeeHistory/:id',
@@ -110,27 +124,26 @@ export const ENDPOINTS = {
   salaries: {
     getAll: '/Salary',
     getById: '/Salary/:id',
-    getByInvoiceId: '/Salary/:idBudget',
-    post: '/Salary',
+    post: '/Salary/:employeeId',
     update: '/Salary/:id',
     delete: '/Salary/:id',
   },
-    // FixedCost
-    fixedCost: {
-      getAll: '/FixedCost',
-      getById: '/FixedCost/:id',
-      getByInvoiceId: '/FixedCost/:idBudget',
-      post: '/FixedCost',
-      update: '/FixedCost/:id',
-      delete: '/FixedCost/:id',
-    },
-
-    payments: {
-      getAll: '/payments',
-      getById: '/payments/:id',
-      getByInvoiceId: '/payments/:id',
-      post: '/payments',
-      update: '/payments/:id',
-      delete: '/payments/:id',
-    },
+  // FixedCost
+  fixedCost: {
+    getAll: '/FixedCost',
+    getById: '/FixedCost/:id',
+    post: '/FixedCost',
+    update: '/FixedCost/:id',
+    delete: '/FixedCost/:id',
+  },
+  //Payments
+  payments: {
+    getAll: '/payments',
+    getById: '/payments/:id',
+    postInvoicePayment: '/payments/invoce/:idInvoice',
+    postBudgetPayment: '/payments/budget/:idBudget',
+    postSalaryPayment: '/payments/invoce/idSalary',
+    update: '/payments/:id',
+    delete: '/payments/:id',
+  },
 };

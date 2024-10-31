@@ -32,8 +32,12 @@
     
       </div>
     }     
+    @if (isEdit) {
+      <legend class="List-title">Actualizar cliente</legend>
+    }@else {
+      <legend class="List-title">Cargar cliente</legend>
+    }
     
-    <legend class="List-title">Cargar cliente</legend>
     <label for="name">Nombre:</label>
     <input type="text" name="name" id="name" placeholder="Nombre..." formControlName="name">
     <label for="lastName">Apellido:</label>

@@ -1,6 +1,6 @@
 <section>
     <article>
-        <app-employee [employee] = "currentEmployee"/>
+        <app-employee [employee] = "currentEmployee.oEmployee"/>
         <button class="Boton1"(click)="goToSalaryForm()">Crear salario nuevo</button>
         <button class="Boton1"(click)="openPaymentForm()">Cargar pago nuevo</button>
         <div class="Details">
@@ -10,8 +10,8 @@
         
     </article>
     <article>
-        <app-salary-list></app-salary-list>
-        
+        <app-salary-list 
+            [salaries]="currentEmployee.salaries"
+        />
     </article>
-    
 </section>

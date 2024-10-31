@@ -89,7 +89,7 @@ export class ClientService {
    * @returns un observable de tipo objeto
    */
   putClient(client: Client) {
-    const url = API_URL+ENDPOINTS.clients.update;
+    const url = API_URL+ENDPOINTS.clients.update.replace(':id', client.idClient.toString());
     return this.http.put(url,client).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente editado con éxito!"); 
@@ -110,7 +110,7 @@ export class ClientService {
    * @returns un observable de tipo objeto
    */
   deleteClient(idClient: number) {
-    const url = API_URL+ENDPOINTS.clients.delete;
+    const url = API_URL+ENDPOINTS.clients.delete.replace(':id', idClient.toString());
     return this.http.put(url,idClient).pipe(
       tap(() => {
         this.notification.showNotification("¡Cliente eliminado con éxito!"); 

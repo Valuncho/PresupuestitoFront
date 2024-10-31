@@ -1,15 +1,17 @@
-import { Component, EventEmitter, inject, input, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Work } from '../../../../core/model/Work';
 import { CommonModule } from '@angular/common';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
-import { WorkService } from '../../../../core/services/work.service';
 import { Router } from '@angular/router';
-import { BudgetService } from '../../../../core/services/budget.service';
-import { Budget } from '../../../../core/model/Budget';
-import { set } from 'lodash';
 import {BudgetViewComponent} from "../../../budgets/pages/budget-view/budget-view.component";
 import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
 import { Item } from '../../../../core/model/Item';
+import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
+import { ModalService } from '../../../../core/utils/modal.service';
+import { MaterialManagerComponent } from '../../../materials/components/forms/material-manager/material-manager.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
+import { ItemService } from '../../../../core/services/item.service';
 
 @Component({
   selector: 'app-work-detail',
@@ -18,43 +20,69 @@ import { Item } from '../../../../core/model/Item';
   templateUrl: './work-detail.component.html',
   styleUrl: './work-detail.component.css'
 })
-export class WorkComponent {
+export class WorkDetailComponent {
+  //Utils
   private router = inject(Router);
-  private workService = inject(WorkService);
-  private budgetService = inject(BudgetService);
+  private dialog = inject(MatDialog);
+  private modalService = inject(ModalService);
+  private itemService = inject(ItemService);
   private materialController = inject(MaterialControllerService);
-
-  budget : Budget = this.budgetService.getEmptyBudget();
-  currentWork : Work = this.workService.getEmptyWork();
+  private workController = inject(WorkControllerService);
+  
+  currentWork! : Work;
   item : Item = this.materialController.getEmptyItem();
-  options = false;
-
+  options : boolean = false;
+  enabled : boolean = false;
   ngOnInit(): void {
-
-
-/*
-    this.workService.getSelectedWork().subscribe(work=>{
-      this.currentWork = work;
-      
-
-      if(this.router.url == "/work" && this.currentWork.idWork != 0){
+  
+      if(this.router.url == "/work" ){
         this.options = true;
+
       }
-    })
-*/
 
-  }
+      this.workController.getWork().subscribe(res =>{
+        this.currentWork = res;
+        if(res.idWork != 0 ){
+          this.enabled =  true;
+        } else{
+          this.enabled = false;
+        }
+      }
+      )
 
-  editItem(item : Item){
-    this.materialController.setItem(item);
   }
 
   goToWorkArea(){
-    this.router.navigate(["/work/edit"]);
+    this.router.navigate(["/workArea/"]);
   }
 
   goToBudgetDetail(){
     this.router.navigate(["/budget/detail"]);
   }
+
+  openMaterialManager(){
+    this.modalService.openModal<MaterialManagerComponent,Item>(MaterialManagerComponent);
+  }
+
+  updateItem(item : Item){
+    this.materialController.setEditMode(true);
+    this.materialController.setItem(item);
+    this.openMaterialManager();
+  }
+
+  deleteItem(item : Item){
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        mensaje: `¿Estás seguro de que deseas eliminar el item seleccionado?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.itemService.deleteItem(item.idItem).subscribe();
+      }
+    });
+  }
+
 
 }

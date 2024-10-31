@@ -11,4 +11,8 @@ import { CostFormComponent } from '../../component/cost-form/cost-form.component
     styleUrl: './cost-view.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CostViewComponent { }
+export class CostViewComponent {
+
+    
+
+}

@@ -11,13 +11,13 @@ import { Client } from '../../../../core/model/Client';
 import { ClientSearchComponent } from "../../../clients/components/client-search/client-search.component";
 import { ModalService } from '../../../../core/utils/modal.service';
 import { ClientListComponent } from '../../../clients/components/client-list/client-list.component';
-import { NotificationService } from '../../../../core/utils/notification.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
+import { ClientService } from '../../../../core/services/client.service';
 
 /**
  * @class BudgetFormComponent
@@ -41,10 +41,11 @@ export class BudgetFormComponent {
   private activatedRoute = inject(ActivatedRoute);
   private modalService = inject(ModalService);
   private budgetService = inject(BudgetService);
-  private clientontroller = inject(ClientControllerService);
+  private clientService = inject(ClientService);
+  private clientController = inject(ClientControllerService);
   //Properties
   currentBudget : Budget = this.budgetService.getEmptyBudget();
-  currentClient : Client = this.clientontroller.getEmptyClient();
+  currentClient : Client = this.clientController.getEmptyClient();
   budgetId : number = 0;
   isEdit : boolean = false;
   estados : string[] = this.budgetService.getEstados();
@@ -55,7 +56,7 @@ export class BudgetFormComponent {
     description : new FormControl('Descripción', Validators.required),
     cost : new FormControl(1000, Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
-    idClient : new FormControl('', Validators.required),
+    idClient : new FormControl(0, Validators.required),
     client : new FormControl('Seleccionar cliente')
   });
 
@@ -63,18 +64,38 @@ export class BudgetFormComponent {
   ngOnInit(){
 
     this.setDateFortmat('es');
-
-    this.OnEditHandler();
-    /*
-    this.clientontroller.selectedClient.subscribe(client =>{
-      this.currentClient=client;
-      this.BudgetForm.patchValue({idClient:this.currentClient.idClient});
-      this.BudgetForm.patchValue({client:this.currentClient.oPerson.lastName + ' ' + this.currentClient.oPerson.name});
-    });
-  */
+    this.OnEditHandler()
     
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.currentClient.idClient = Number(params.get('clientId'));   
+      let url = "/budget/new/"+ this.currentClient.idClient;
+      if(this.router.url == url)
+      {
+        this.clientService.getClientById(this.currentClient.idClient).subscribe(res =>{
+          this.currentClient = res!
+        })
+      } 
+    });
+ 
 
   }
+/**
+ * Formateado de fecha para los input tipo fecha.
+ * @param format pais
+ */
+  setDateFortmat(format : string){
+    this._locale.set(format);
+    this._adapter.setLocale(this._locale());
+  }
+
+  setUp(){
+    this.BudgetForm.reset();
+    this.isEdit = false;
+    this.currentBudget = this.budgetService.getEmptyBudget();  
+  }
+
+
+
   OnEditHandler(){
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let url = "/budget/edit/" + this.budgetId;
@@ -87,17 +108,9 @@ export class BudgetFormComponent {
       this.isEdit = false;
     }
   }
-  setDateFortmat(format : string){
-    this._locale.set(format);
-    this._adapter.setLocale(this._locale());
-  }
 
-  setUp(){
-    this.BudgetForm.reset();
-    this.isEdit = false;
-    this.currentBudget = this.budgetService.getEmptyBudget();
-    
-  }
+
+  
 
   resetForm($Event : Event){
     this.setUp();
@@ -126,18 +139,11 @@ export class BudgetFormComponent {
       this.BudgetForm.get('client')?.disabled;
   }
   onSubmit(){
-    this.toBudget();
+    this.toBudget(); 
     if(this.isEdit){
       this.budgetService.putBudget(this.currentBudget).subscribe();
     }else{
-      //let history = this.clientontroller.getClienHistory(this.BudgetForm.get('idClient')?.value);
-
-      let id = this.budgetService.postBudget(this.currentBudget).subscribe({
-        next: ()=> {
-          this.router.navigate(["/work/edit"]);
-        },
-      });
-      
+      this.budgetService.postBudget(this.currentBudget).subscribe();
     }
     this.setUp();
   }
