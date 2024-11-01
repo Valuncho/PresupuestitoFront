@@ -115,8 +115,8 @@ export class MaterialControllerService {
 
   getEmptyItem() : Item {
     return {
-      idItem: 0,
-      material:this.getEmptyMaterial(),
+      itemId: 0,
+      oMaterial:this.getEmptyMaterial(),
       quantity: 0
     }
   }

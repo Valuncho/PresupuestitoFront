@@ -1,6 +1,6 @@
 <section>
   <article>
-    <app-client [client]="budgetClient" />
+    <app-client [client]="budgetClient!" />
     <app-budget [budget]="currentBudget" />
     <button class="Boton1" (click)="calculatePrice()">
       Calcular precio presupuesto
@@ -11,6 +11,6 @@
     </button>
   </article>
   <app-work-list [works]="currentBudget.works!" />
-  <app-work-item-list [items]="currentWork.materials"/>
+  <app-work-item-list [items]="currentWork.itemsId"/>
   <!-- <app-work-detail /> -->
 </section>

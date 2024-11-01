@@ -3,7 +3,7 @@ import { Item } from "./Item";
 export interface Work
 {
     idWork: number;
-    materials : Item[];
+    itemsId : Item[];
     workStatus : string;
     workName : string;
     estimatedHoursWorked: number;

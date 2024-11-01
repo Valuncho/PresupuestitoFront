@@ -40,20 +40,7 @@ export class BudgetDetailsComponent {
   //Properties
   currentBudget! : Budget;
   budgetId? : number;
-  budgetClient : Client ={
-    clientId: 1001,
-      personId: {
-        personId: 1,
-        name: 'John',
-        lastName: 'Doe',
-        address: '123 Main St',
-        phoneNumber: '1234567890',
-        email: 'johndoe@example.com',
-        dni: '123456789',
-        cuit: '30-12345678-9',
-      }
-  };
-
+  budgetClient! : Client;
   currentWork : Work = this.workController.getEmptyWork();
 
   
@@ -71,6 +58,11 @@ export class BudgetDetailsComponent {
               }
             }
           )
+          this.workController.getWorkModel().subscribe({
+            next : (workRes) =>{
+              this.currentWork = workRes;
+            }
+          })
         }
       }
      )

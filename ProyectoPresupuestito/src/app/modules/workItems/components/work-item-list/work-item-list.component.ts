@@ -43,13 +43,13 @@ export class WorkItemListComponent {
  eliminar($Event : Item){
    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
      data: {
-       mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event}?`
+       mensaje: `¿Estás seguro de que deseas eliminar el item de: ${$Event.oMaterial.materialName}?`
      }
    });
 
    dialogRef.afterClosed().subscribe(result => {
      if (result) {
-       this.categoryService.deleteCategory($Event.idItem).subscribe(
+       this.categoryService.deleteCategory($Event.itemId).subscribe(
         {
           next: ()=>{
             this.utils.reaload()

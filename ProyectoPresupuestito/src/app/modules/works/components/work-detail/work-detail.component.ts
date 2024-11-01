@@ -80,7 +80,7 @@ export class WorkDetailComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.itemService.deleteItem(item.idItem).subscribe();
+        this.itemService.deleteItem(item.itemId).subscribe();
       }
     });
   }

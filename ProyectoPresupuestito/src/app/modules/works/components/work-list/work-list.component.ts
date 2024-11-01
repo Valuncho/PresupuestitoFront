@@ -53,7 +53,7 @@ export class WorkListComponent {
  
   //Card
   handleView($Event: Work) {
-    //this.workController.setWork($Event);
+    this.workController.setWorkModel($Event);
   }
   handleEdit($Event: Work) {
     this.workController.setEditMode(true);

@@ -1,9 +1,13 @@
 <div class="Details">
     <h3 class="Details-title">Detalle del material</h3>
-    <p>Nombre: {{material!.materialName}}  </p>
-    <p>Descripción: {{material!.materialDescription}}</p>
-    <p>Marca: {{material!.materialBrand}}</p>
-    <p>Medida: {{material!.materialMeasure}}</p>
-    <p>Unidad de medida: {{material!.materialUnitMeasure}}</p>
-    <p>Sub-Rubro: {{material!.subCategoryMaterialId.subCategoryName}}</p>
+    @if (material.materialId! != 0) {
+        <p>Nombre: {{material!.materialName}}  </p>
+        <p>Descripción: {{material!.materialDescription}}</p>
+        <p>Marca: {{material!.materialBrand}}</p>
+        <p>Medida: {{material!.materialMeasure}}</p>
+        <p>Unidad de medida: {{material!.materialUnitMeasure}}</p>
+        <p>Sub-Rubro: {{material!.subCategoryMaterialId.subCategoryName}}</p>
+    }@else {
+        <p>Por favor seleccione un material.</p>
+    }
 </div>

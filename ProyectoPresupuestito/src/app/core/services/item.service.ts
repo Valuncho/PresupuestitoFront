@@ -84,7 +84,7 @@ export class ItemService {
    * @returns un observable de tipo objeto
    */
     putItem(item: Item) {
-      const url = API_URL+ENDPOINTS.items.update.replace(':id', item.idItem.toString());;
+      const url = API_URL+ENDPOINTS.items.update.replace(':id', item.itemId.toString());;
       return this.http.put(url,item).pipe(
         tap(() => {
           this.notification.showNotification("¡Item editado con éxito!"); 

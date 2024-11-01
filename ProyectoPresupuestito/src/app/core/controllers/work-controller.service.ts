@@ -9,13 +9,21 @@ import { WorkRequest } from '../request/workRequest';
 export class WorkControllerService {
   //Selected entities
   private work: BehaviorSubject<WorkRequest > = new BehaviorSubject<WorkRequest >(this.getEmptyWorkRequest());
-
+  private workModel: BehaviorSubject<Work > = new BehaviorSubject<Work >(this.getEmptyWork());
+  
   public getWork(): Observable<WorkRequest> {
     return this.work.asObservable();
   }
 
   public setWork(work: WorkRequest) {
     this.work.next(work);
+  }
+  public getWorkModel(): Observable<Work> {
+    return this.workModel.asObservable();
+  }
+
+  public setWorkModel(work: Work) {
+    this.workModel.next(work);
   }
 
   //Edit
@@ -35,7 +43,7 @@ export class WorkControllerService {
       idWork: 0,
       workName : '',
       workStatus : '',
-      materials: [],
+      itemsId: [],
       estimatedHoursWorked: 0,
       deadLine: new Date(),
       costPrice: 0,
@@ -55,4 +63,19 @@ export class WorkControllerService {
       workName:''
     };
   }
+  //Mapping
+  toWorkModel() : Work{
+    return this.getEmptyWork();
+  }
+
+  toWorkRequest() : WorkRequest{
+    this.work.getValue().deadLine = this.workModel.getValue().deadLine;
+    this.work.getValue().workStatus = this.workModel.getValue().workStatus;
+    this.work.getValue().workName = this.workModel.getValue().workName;
+    this.work.getValue().notes = this.workModel.getValue().notes;
+    this.work.getValue().workId = this.workModel.getValue().idWork;
+
+    return this.getEmptyWorkRequest();
+  }
+
 }

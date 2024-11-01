@@ -1,9 +1,14 @@
 <div class="Details">
     <h3 class="Details-title">Detalle del trabajo</h3>
-    <p>Notas : {{ work!.notes }}</p>
-    <p>Horas estimadas: {{ work!.estimatedHoursWorked }}</p>
-    <p>Fecha limite: {{ work!.deadLine | date : "dd/MM/yyyy" }}</p>
-    <p>Costo: {{ work!.costPrice | currency }}</p>
-    <p>Estado : {{ work!.status }}</p>
-  </div>
+    @if (work.idWork! != 0) {
+      <p>Nombre : {{ work!.workName }}</p>
+      <p>Notas : {{ work!.notes }}</p>
+      <p>Horas estimadas: {{ work!.estimatedHoursWorked }}</p>
+      <p>Fecha limite: {{ work!.deadLine | date : "dd/MM/yyyy" }}</p>
+      <p>Estado : {{ work!.workStatus }}</p>
+      <p>Costo: {{ work!.costPrice | currency }}</p>
+    }@else {
+     <p>Por favor seleccione un trabajo.</p> 
+    }
+</div>
   

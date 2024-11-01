@@ -59,7 +59,7 @@ ngOnInit(): void {
     
     this.ItemSubscription = this.materialController.getItem().subscribe(res =>{ 
       this.edit = this.materialController.getEditMode()
-      this.itemForm.patchValue({id : res?.idItem, material : res?.material.materialName,idmaterial : res?.material.materialId, quantity : res?.quantity});
+      this.itemForm.patchValue({id : res?.itemId, material : res?.oMaterial.materialName,idmaterial : res?.oMaterial.materialId, quantity : res?.quantity});
      })
 
      this.MaterialSubscription = this.materialController.getMaterial().subscribe(res =>{
@@ -111,8 +111,8 @@ ngOnInit(): void {
 
   itemFormToItem(){
     console.log(this.itemForm.value)
-    this.currentItem.idItem = this.itemForm.get("id")?.value;
-    this.currentItem.material = this.currentMaterial;  
+    this.currentItem.itemId = this.itemForm.get("id")?.value;
+    this.currentItem.oMaterial = this.currentMaterial;  
     this.currentItem.quantity = this.itemForm.get("quantity")?.value
   }
 }
