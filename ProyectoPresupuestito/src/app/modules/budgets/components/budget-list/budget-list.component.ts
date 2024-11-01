@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, inject, Input, signal } from '@angular/core';
 import { BudgetComponent } from '../budget/budget.component';
 import { BudgetService } from '../../../../core/services/budget.service';
@@ -13,6 +13,8 @@ import { NotificationService } from '../../../../core/utils/notification.service
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BudgetSearchComponent } from "../budget-search/budget-search.component";
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { LoadingService } from '../../../../core/utils/loading.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 /**
  * @class BudgetListComponent
  * 
@@ -22,7 +24,7 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
 @Component({
   selector: 'app-budget-list',
   standalone: true,
-  imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule, BudgetSearchComponent, TextCardComponent],
+  imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule, BudgetSearchComponent, TextCardComponent, MatProgressSpinnerModule, CommonModule],
   templateUrl: './budget-list.component.html',
   styleUrl: './budget-list.component.css'
 })
@@ -32,37 +34,12 @@ export class BudgetListComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);  
   private budgetService = inject(BudgetService);
+  private loadingService = inject(LoadingService)
 
+  
+  
   //Properties
-  @Input() budgets : Budget[] = [
-    {
-      idBudget: 1,
-      works: [
-        
-      ], // Replace with actual work data if needed
-      createdDate: new Date('2023-08-20'),
-      deadLine: new Date('2023-12-22'),
-      description: 'Kitchen renovation',
-      cost: 5000,
-      Status: 'Cancelado',
-      payments: [
-        
-      ], // Or provide payment data if needed
-    },
-    {
-      idBudget: 2,
-      works: [
-        
-      ],
-      createdDate: new Date('2024-01-15'),
-      deadLine: new Date('2024-02-15'),
-      description: 'Bathroom remodeling',
-      cost: 3000,
-      Status: 'Aprobado',
-      payments: [
-        // Payment data if applicable
-      ],
-    }]
+  @Input() budgets : Budget[] = [    ]
   
   clientId : number = 0
   options : boolean = false;

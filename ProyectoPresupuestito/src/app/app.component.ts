@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "./components/navbar/navbar.component";
-import { LoadingService } from './core/services/loading.service';
+import { LoadingService } from './core/utils/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'ProyectoPresupuestito';
+  private loadingService = inject(LoadingService);
   isLoading$ = this.loadingService.loading$;
-  constructor(private loadingService: LoadingService) {}
+  
 }

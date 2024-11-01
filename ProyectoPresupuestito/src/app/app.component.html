@@ -1,13 +1,16 @@
-<div *ngIf="isLoading$ | async" class="spinner-container">
-    <mat-progress-spinner
-      mode="indeterminate"
-      diameter="50"
-      strokeWidth="5"
-      color="primary">
-    </mat-progress-spinner>
-  </div>
 <main>
-    <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
+  @if (isLoading$ | async) {
+    <div class="spinner-container">
+      <mat-progress-spinner
+          mode="indeterminate"
+          diameter="50"
+          strokeWidth="5"
+          color="primary">
+      </mat-progress-spinner>
+    </div>
+  }@else{
+    <app-navbar/>
+    <router-outlet/>
+  }
 </main>
 
