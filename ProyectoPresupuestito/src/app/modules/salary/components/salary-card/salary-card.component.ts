@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Salary } from '../../../../core/model/Salary';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * @class salaryCardComponent
@@ -17,8 +18,7 @@ import { ButtonCardComponent } from '../../../../components/button-card/button-c
     selector: 'app-salary-card',
     standalone: true,
     imports: [
-        CommonModule,ButtonCardComponent
-    ],
+        CommonModule,ButtonCardComponent,MatTooltip],
     templateUrl: './salary-card.component.html',
     styleUrl: './salary-card.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

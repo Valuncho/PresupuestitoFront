@@ -6,8 +6,8 @@
         <p>Telefono: {{Employee!.oPerson.phoneNumber}}</p>
     </div>
     <div class="Card-Options"> 
-        <app-button-card [icon]="botones[0].icon" (click)="view()"></app-button-card>
-        <app-button-card [icon]="botones[1].icon" (click)="edit()"></app-button-card>
-        <app-button-card [icon]="botones[2].icon" (click)="deleteC()"></app-button-card>
+        <app-button-card [icon]="botones[0].icon" (click)="view()" mat-raised-button matTooltip="Ver detalle del empleado."></app-button-card>
+        <app-button-card [icon]="botones[1].icon" (click)="edit()" mat-raised-button matTooltip="Editar el empleado."></app-button-card>
+        <app-button-card [icon]="botones[2].icon" (click)="deleteC()" mat-raised-button matTooltip="Borrar el empleado."></app-button-card>
     </div>
 </div>

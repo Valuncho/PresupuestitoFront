@@ -3,11 +3,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { Person } from '../../../../core/model/Person';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { Supplier } from '../../../../core/model/Supplier';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-supplier-card',
     standalone: true,
-    imports: [CommonModule,ButtonCardComponent],
+    imports: [CommonModule,ButtonCardComponent,MatTooltipModule],
     templateUrl: './supplierCard.component.html',
     styleUrl: './supplierCard.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

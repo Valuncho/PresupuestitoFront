@@ -10,6 +10,8 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BudgetSearchComponent } from "../budget-search/budget-search.component";
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
+import { LoadingService } from '../../../../core/utils/loading.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 /**
  * @class BudgetListComponent
  * 
@@ -29,7 +31,10 @@ export class BudgetListComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);  
   private budgetService = inject(BudgetService);
+  private loadingService = inject(LoadingService)
 
+  
+  
   //Properties
   @Input() budgets : Budget[] = []
   
