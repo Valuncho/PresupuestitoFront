@@ -69,9 +69,10 @@ export class BudgetDetailsComponent {
  
   }
 
-  goToWorkArea(){
-    this.router.navigate(["/work/edit/",this.currentBudget.budgetId]);
+  ngOnDestroy(): void {
+    this.workController.setWorkModel(this.workController.getEmptyWork())
   }
+
   calculatePrice(){
 
   }
