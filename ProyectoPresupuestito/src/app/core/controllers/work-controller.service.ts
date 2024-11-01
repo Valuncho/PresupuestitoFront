@@ -33,9 +33,11 @@ export class WorkControllerService {
   getEmptyWork(): Work {
     return {
       idWork: 0,
+      workName : '',
+      workStatus : '',
       materials: [],
       estimatedHoursWorked: 0,
-      deadline: new Date(),
+      deadLine: new Date(),
       costPrice: 0,
       status: '',
       notes: '',
@@ -50,7 +52,7 @@ export class WorkControllerService {
       workStatus: '',
       notes: '',
       budgetId:0,
-      image:''
+      workName:''
     };
   }
 }

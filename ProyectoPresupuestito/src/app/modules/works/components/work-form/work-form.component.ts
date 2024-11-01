@@ -25,15 +25,16 @@ export class WorkFormComponent {
   private workController = inject(WorkControllerService);
   private workService = inject(WorkService);
   private utils = inject(UtilsService);
-  private activatedRoute = inject(ActivatedRoute);
   //Properties
   currentWork : WorkRequest = this.workController.getEmptyWorkRequest();
   estados = this.workService.getEstados();
   isEdit : boolean = this.workController.getEditMode();
   //Form
   WorkForm : FormGroup = new FormGroup({
-    deadLine : new FormControl(new Date(), Validators.required),
+    
+    name : new FormControl('', Validators.required),
     notes : new FormControl('', Validators.required),
+    deadLine : new FormControl(new Date(), Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
     hours : new FormControl(1, Validators.required),
   });
@@ -81,6 +82,7 @@ export class WorkFormComponent {
 
   toWork(){
 
+    this.currentWork.workName = this.WorkForm.get('name')?.value;
     this.currentWork.deadLine = this.WorkForm.get('deadLine')?.value;
     this.currentWork.estimatedHoursWorked = this.WorkForm.get('hours')?.value;
     this.currentWork.workStatus = this.WorkForm.get('estado')?.value;

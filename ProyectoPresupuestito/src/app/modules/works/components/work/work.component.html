@@ -2,7 +2,7 @@
     <h3 class="Details-title">Detalle del trabajo</h3>
     <p>Notas : {{ work!.notes }}</p>
     <p>Horas estimadas: {{ work!.estimatedHoursWorked }}</p>
-    <p>Fecha limite: {{ work!.deadline | date : "dd/MM/yyyy" }}</p>
+    <p>Fecha limite: {{ work!.deadLine | date : "dd/MM/yyyy" }}</p>
     <p>Costo: {{ work!.costPrice | currency }}</p>
     <p>Estado : {{ work!.status }}</p>
   </div>

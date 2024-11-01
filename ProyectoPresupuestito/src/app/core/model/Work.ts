@@ -4,8 +4,10 @@ export interface Work
 {
     idWork: number;
     materials : Item[];
+    workStatus : string;
+    workName : string;
     estimatedHoursWorked: number;
-    deadline : Date;
+    deadLine : Date;
     costPrice: number;
     status : string;
     notes: string;

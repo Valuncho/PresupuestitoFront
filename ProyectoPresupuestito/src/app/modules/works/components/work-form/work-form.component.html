@@ -22,6 +22,8 @@
           </div>
         }
         <legend class="List-title"> {{ isEdit ? 'Actualizar un trabajo' : 'Crear un trabajo' }}</legend>
+        <label for="name">Nombre:</label>
+        <input type="text" name="name" id="name" formControlName="name"> 
         <label for="hours">Horas estimadas:</label>
         <input type="number" name="hours" id="hours" formControlName="hours"> 
         <label for="deadLine">Fecha limite:</label>
