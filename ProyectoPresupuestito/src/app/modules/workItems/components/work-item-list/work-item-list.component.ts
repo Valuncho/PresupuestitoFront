@@ -27,7 +27,7 @@ export class WorkItemListComponent {
  private materialController = inject(MaterialControllerService);
  private utils = inject(UtilsService);
  @Input() items : Item[]=[]
-
+ @Input() options : boolean = false;
  addItemHandler(){
   this.modalService.openModal<MaterialManagerComponent,Item>(MaterialManagerComponent);
 

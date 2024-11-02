@@ -2,7 +2,7 @@
 export const API_URL = 'http://localhost:5130/api';
 // export const API_URL = 'https://localhost:7114/api';
 
-
+//Hacer una carpeta endpoints para poner un archivo para establecer una constante por de enpoints por cada entidad.
 // Endpoints para diferentes recursos
 export const ENDPOINTS = {
   // Clients

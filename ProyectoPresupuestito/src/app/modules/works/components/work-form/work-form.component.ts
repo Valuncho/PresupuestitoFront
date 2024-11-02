@@ -39,15 +39,18 @@ export class WorkFormComponent {
     hours : new FormControl(1, Validators.required),
   });
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
 
     this.workController.getWork().subscribe(res =>{
       this.currentWork = res!;
+
     })
     
     if(this.isEdit){  
-      //formatDate(this.currentWork.deadline, 'dd/MM/yyyy', 'es-ES')
-      //this.WorkForm.patchValue({deadLine : this.currentWork.deadline, notes : this.currentWork.notes, estado: this.currentWork.status, hours: this.currentWork.estimatedHoursWorked})
+      this.workService.getWorkById(this.currentWork.workId!).subscribe(res=>{
+        this.currentWork =this.workController.toWorkRequest(res!.value)
+        this.toForm()
+      })
       
     }
     
@@ -78,6 +81,17 @@ export class WorkFormComponent {
       });
     }
     this.setUp();
+  }
+
+  toForm(){
+    console.log(this.currentWork)
+    this.WorkForm.patchValue({
+      name : this.currentWork.workName,
+      estado : this.currentWork.workStatus,
+      deadLine : this.currentWork.deadLine,
+      notes : this.currentWork.notes,
+      hours : this.currentWork.estimatedHoursWorked,
+    })
   }
 
   toWork(){

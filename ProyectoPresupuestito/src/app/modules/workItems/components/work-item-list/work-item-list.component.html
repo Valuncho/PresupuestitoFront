@@ -1,16 +1,19 @@
 <div class="List">
     <h3 class="List-title">Listado de items del trabajo</h3>
-    <button class="Boton1" (click)="addItemHandler()">Agregar item</button>
-    <div>
-        @for (item of items ; track item; let idx = $index) {
-            <app-work-item-card
-            [Item]="item"
-            (isEdit)="editar($event)"
-            (isDeleted)="eliminar($event)"
-          />
-        }@empty {
-            <app-text-card [message]="'No hay items que mostrar.'"/>
-        }  
-    </div>
-      
+    @if(options){
+        <app-text-card [message]="'Seleccione un trabajo por favor.'"/>  
+    }@else {
+        <button class="Boton1" (click)="addItemHandler()">Agregar item</button>
+        <div>
+            @for (item of items ; track item; let idx = $index) {
+                <app-work-item-card
+                [Item]="item"
+                (isEdit)="editar($event)"
+                (isDeleted)="eliminar($event)"
+              />
+            }@empty {
+                <app-text-card [message]="'No hay items que mostrar.'"/>
+            }  
+        </div>
+    }
 </div>

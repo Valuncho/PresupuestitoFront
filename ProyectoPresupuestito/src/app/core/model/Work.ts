@@ -2,7 +2,7 @@ import { Item } from "./Item";
 
 export interface Work
 {
-    idWork: number;
+    workId: number;
     itemsId : Item[];
     workStatus : string;
     workName : string;

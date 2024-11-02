@@ -57,19 +57,19 @@ export class WorkListComponent {
   }
   handleEdit($Event: Work) {
     this.workController.setEditMode(true);
-    //this.workController.setWork($Event);
+    this.workController.setWork(this.workController.toWorkRequest($Event));
     this.modalService.openModal(WorkFormComponent);
   }
   handleDelete($Event: Work) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar el trabajo: ${$Event.notes}?`
+        mensaje: `¿Estás seguro de que deseas eliminar el trabajo: ${$Event.workName}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.workService.deleteWork($Event.idWork).subscribe();
+        this.workService.deleteWork($Event.workId).subscribe();
       }
     });
   }

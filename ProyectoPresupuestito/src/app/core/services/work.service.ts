@@ -46,7 +46,8 @@ export class WorkService {
    * @param idWork id del trabajo solicitado.
    * @returns Un trabajo como un observable.
    */
-  getWorkById(idWork : number) : Observable<Work> {
+  getWorkById(idWork : number) : Observable<any> {
+    
     const url = API_URL+ENDPOINTS.works.getById.replace(':id', idWork.toString());
     return this.http.get<Work>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {

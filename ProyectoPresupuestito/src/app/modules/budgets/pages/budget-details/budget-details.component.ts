@@ -42,7 +42,7 @@ export class BudgetDetailsComponent {
   budgetId? : number;
   budgetClient! : Client;
   currentWork : Work = this.workController.getEmptyWork();
-
+  option = this.currentWork.workId != 0 ? false : true;
   
 
   ngOnInit(){
@@ -61,8 +61,12 @@ export class BudgetDetailsComponent {
           this.workController.getWorkModel().subscribe({
             next : (workRes) =>{
               this.currentWork = workRes;
+              if(workRes.workId != 0){
+                this.option = false
+              }
             }
           })
+
         }
       }
      )

@@ -40,7 +40,7 @@ export class WorkControllerService {
 
   getEmptyWork(): Work {
     return {
-      idWork: 0,
+      workId: 0,
       workName : '',
       workStatus : '',
       itemsId: [],
@@ -68,14 +68,14 @@ export class WorkControllerService {
     return this.getEmptyWork();
   }
 
-  toWorkRequest() : WorkRequest{
-    this.work.getValue().deadLine = this.workModel.getValue().deadLine;
-    this.work.getValue().workStatus = this.workModel.getValue().workStatus;
-    this.work.getValue().workName = this.workModel.getValue().workName;
-    this.work.getValue().notes = this.workModel.getValue().notes;
-    this.work.getValue().workId = this.workModel.getValue().idWork;
-
-    return this.getEmptyWorkRequest();
+  toWorkRequest(work : Work) : WorkRequest{
+    this.work.getValue().deadLine = work.deadLine;
+    this.work.getValue().workStatus = work.workStatus;
+    this.work.getValue().workName = work.workName;
+    this.work.getValue().notes = work.notes;
+    this.work.getValue().workId = work.workId;
+    console.log(work)
+    return this.work.getValue();
   }
 
 }
