@@ -1,17 +1,15 @@
-import { Component, inject, Input, input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Item } from '../../../../core/model/Item';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
-import { Category } from '../../../../core/model/Category';
 import { CategoryService } from '../../../../core/services/category.service';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { UtilsService } from '../../../../core/utils/utils.service';
-import { CategoryFormComponent } from '../../../materials/components/forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
-import { MaterialManagerComponent } from '../../../materials/components/forms/material-manager/material-manager.component';
 import { WorkItemCardComponent } from '../work-item-card/work-item-card.component';
 import { WorkItemFormComponent } from '../work-item-form/work-item-form.component';
+import { ItemService } from '../../../../core/services/item.service';
 
 @Component({
   selector: 'app-work-item-list',
@@ -24,7 +22,7 @@ export class WorkItemListComponent {
  //Utils
  private dialog = inject(MatDialog);
  private modalService = inject(ModalService);
- private categoryService = inject(CategoryService);
+ private itemService = inject(ItemService);
  private materialController = inject(MaterialControllerService);
  private utils = inject(UtilsService);
  @Input() items : Item[]=[]
@@ -49,7 +47,7 @@ export class WorkItemListComponent {
 
    dialogRef.afterClosed().subscribe(result => {
      if (result) {
-       this.categoryService.deleteCategory($Event.itemId).subscribe(
+       this.itemService.deleteItem($Event.itemId).subscribe(
         {
           next: ()=>{
             this.utils.reaload()

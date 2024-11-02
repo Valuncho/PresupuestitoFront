@@ -29,7 +29,6 @@ export class WorkItemFormComponent {
   private workController = inject(WorkControllerService);
   private utils = inject(UtilsService);
   
-  @Output() item = new EventEmitter<Item | InvoiceItem>();
   currentItem : ItemRequest  =  this.materialController.getEmptyItemRequest();  
   workId : number = 0;
   currentMaterial : Material = this.materialController.getEmptyMaterial();
@@ -58,6 +57,8 @@ ngOnInit(): void {
     this.ItemSubscription = this.materialController.getItem().subscribe(res =>{ 
       this.edit = this.materialController.getEditMode();
       this.toEdit(res!)
+      
+      
      })
 
      this.MaterialSubscription = this.materialController.getMaterial().subscribe(res =>{
@@ -68,22 +69,20 @@ ngOnInit(): void {
 }
 
 toEdit(item : Item){
-  console.log(item)
-  
+  this.materialController.setMaterial(item.oMaterial)
   this.itemForm.patchValue({
     id: item.itemId,
     material : item.oMaterial.materialName,
     idmaterial : item.oMaterial.materialId,
     quantity : item.quantity
   })
-  console.log(this.itemForm.get("material")?.value)
-  console.log(this.itemForm.get("idmaterial")?.value)
+  
 }
   ngOnDestroy(): void {
 
     this.materialController.setMaterial(this.materialController.getEmptyMaterial());
     this.materialController.setItem(this.materialController.getEmptyItem());
-    
+    this.materialController.setEditMode(false)
     this.WorkSubscription.unsubscribe();
     this.MaterialSubscription.unsubscribe();
     this.ItemSubscription.unsubscribe();
@@ -103,7 +102,6 @@ toEdit(item : Item){
             this.utils.reaload()
           }
         });
-      this.materialController.setEditMode(false)
     }else{
       this.itemService.postItem(this.currentItem).subscribe(
         {
