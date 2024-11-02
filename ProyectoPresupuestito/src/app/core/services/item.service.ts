@@ -7,6 +7,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { API_URL, ENDPOINTS } from '../endpoints';
 import { Item } from '../model/Item';
+import { ItemRequest } from '../request/itemRequest';
 /**
  * @class
  * 
@@ -62,8 +63,8 @@ export class ItemService {
    * @param item item a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-   postItem(item: Item, idWork : number){
-    const url = API_URL+ENDPOINTS.items.post.replace(':idWork', idWork.toString());
+   postItem(item: ItemRequest){
+    const url = API_URL+ENDPOINTS.items.post
     return this.http.post(url,item).pipe(
       tap(() => {
         this.notification.showNotification("¡Item guardado con éxito!"); 
@@ -83,8 +84,8 @@ export class ItemService {
    * @param item item actualizado.
    * @returns un observable de tipo objeto
    */
-    putItem(item: Item) {
-      const url = API_URL+ENDPOINTS.items.update.replace(':id', item.itemId.toString());;
+    putItem(item: ItemRequest) {
+      const url = API_URL+ENDPOINTS.items.update.replace(':id', item.itemId!.toString());;
       return this.http.put(url,item).pipe(
         tap(() => {
           this.notification.showNotification("¡Item editado con éxito!"); 
