@@ -96,10 +96,10 @@ ngOnInit(): void {
     this.itemFormToItem();
     this.materialController.setItem(this.currentItem);
     if(this.edit){
-      this.itemService.putItem(this.currentItem).subscribe();
+      //this.itemService.putItem(this.currentItem).subscribe();
       this.materialController.setEditMode(false)
     }else{
-      this.itemService.postItem(this.currentItem, this.currentWork.workId!).subscribe();
+      //this.itemService.postItem(this.currentItem, this.currentWork.workId!).subscribe();
     }
     
     //this.item.emit(this.currentItem);
