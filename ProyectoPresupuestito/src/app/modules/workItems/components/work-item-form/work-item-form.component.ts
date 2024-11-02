@@ -10,6 +10,8 @@ import { WorkRequest } from '../../../../core/request/workRequest';
 import { ItemService } from '../../../../core/services/item.service';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { MaterialListComponent } from '../../../materials/components/lists/material-list/material-list.component';
+import { ItemRequest } from '../../../../core/request/itemRequest';
+import { UtilsService } from '../../../../core/utils/utils.service';
 
 @Component({
   selector: 'app-work-item-form',
@@ -25,12 +27,11 @@ export class WorkItemFormComponent {
   private modalService = inject(ModalService);
   private itemService = inject(ItemService);
   private workController = inject(WorkControllerService);
-
+  private utils = inject(UtilsService);
+  
   @Output() item = new EventEmitter<Item | InvoiceItem>();
-
-  currentItem : Item  =  this.materialController.getEmptyItem();
-  currentInvoiceItem : InvoiceItem  =  this.materialController.getEmptyInvoiceItem();
-  currentWork : WorkRequest = this.workController.getEmptyWorkRequest();
+  currentItem : ItemRequest  =  this.materialController.getEmptyItemRequest();  
+  workId : number = 0;
   currentMaterial : Material = this.materialController.getEmptyMaterial();
 
   
@@ -50,8 +51,8 @@ export class WorkItemFormComponent {
 
 ngOnInit(): void {
   this.edit = this.materialController.getEditMode()
-   this.WorkSubscription = this.workController.getWork().subscribe(res =>{
-      this.currentWork = res;
+   this.WorkSubscription = this.workController.getWorkModel().subscribe(res =>{
+    this.workId = res.workId;
     })
     
     this.ItemSubscription = this.materialController.getItem().subscribe(res =>{ 
@@ -89,17 +90,24 @@ ngOnInit(): void {
 
 
   sent(){
-    
     this.itemFormToItem();
-    this.materialController.setItem(this.currentItem);
     if(this.edit){
-      //this.itemService.putItem(this.currentItem).subscribe();
+      this.itemService.putItem(this.currentItem).subscribe({
+          next: ()=>{
+            this.utils.reaload()
+          }
+        });
       this.materialController.setEditMode(false)
     }else{
-      //this.itemService.postItem(this.currentItem, this.currentWork.workId!).subscribe();
+      this.itemService.postItem(this.currentItem).subscribe(
+        {
+          next: ()=>{
+            this.utils.reaload()
+          }
+        }
+      );
     }
     
-    //this.item.emit(this.currentItem);
   }
 
   setNewMaterial(){
@@ -107,9 +115,13 @@ ngOnInit(): void {
   }
 
   itemFormToItem(){
-    console.log(this.itemForm.value)
-    this.currentItem.itemId = this.itemForm.get("id")?.value;
-    this.currentItem.oMaterial = this.currentMaterial;  
-    this.currentItem.quantity = this.itemForm.get("quantity")?.value
+    if(this.itemForm.get("id")?.value == 0){
+      this.currentItem.itemId = undefined;
+    }else{
+      this.currentItem.itemId = this.itemForm.get("id")?.value;
+    }
+    this.currentItem.WorkId = this.workId;
+    this.currentItem.MaterialId = this.currentMaterial.materialId;  
+    this.currentItem.Quantity = this.itemForm.get("quantity")?.value;
   }
 }

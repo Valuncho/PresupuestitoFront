@@ -8,6 +8,7 @@ import { InvoiceItem } from '../model/invoiceItem';
 import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialRequest';
 import { CategoryRequest } from '../request/categoryRequest';
 import { MaterialRequest } from '../request/materialRequest';
+import { ItemRequest } from '../request/itemRequest';
 /**
  * 
  * @class MaterialControllerService
@@ -118,6 +119,15 @@ export class MaterialControllerService {
       itemId: 0,
       oMaterial:this.getEmptyMaterial(),
       quantity: 0
+    }
+  }
+
+  getEmptyItemRequest() : ItemRequest{
+    return {
+      itemId : 0,
+      MaterialId:0,
+      Quantity : 0,
+      WorkId :0
     }
   }
   getEmptyInvoiceItem() : InvoiceItem {
