@@ -46,7 +46,7 @@ export class SupplierService {
    * @returns Un proveedor como un observable.
    */
   getSupplierById(idSupplier : number) : Observable<any> {
-    const url = API_URL+ENDPOINTS.clients.getById.replace(':id', idSupplier.toString());
+    const url = API_URL+ENDPOINTS.suppliers.getById.replace(':id', idSupplier.toString());
     return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);

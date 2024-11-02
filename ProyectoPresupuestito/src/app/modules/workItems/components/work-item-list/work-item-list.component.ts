@@ -11,6 +11,7 @@ import { CategoryFormComponent } from '../../../materials/components/forms/categ
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 import { MaterialManagerComponent } from '../../../materials/components/forms/material-manager/material-manager.component';
 import { WorkItemCardComponent } from '../work-item-card/work-item-card.component';
+import { WorkItemFormComponent } from '../work-item-form/work-item-form.component';
 
 @Component({
   selector: 'app-work-item-list',
@@ -29,7 +30,7 @@ export class WorkItemListComponent {
  @Input() items : Item[]=[]
  @Input() options : boolean = false;
  addItemHandler(){
-  this.modalService.openModal<MaterialManagerComponent,Item>(MaterialManagerComponent);
+  this.modalService.openModal<WorkItemFormComponent,Item>(WorkItemFormComponent);
 
  }
 

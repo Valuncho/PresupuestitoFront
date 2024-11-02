@@ -1,1 +1,21 @@
-<p>work-item-form works!</p>
+<form [formGroup]="itemForm" (ngSubmit)="sent()">
+    @if(edit){
+        <legend class="List-title">Editar material:</legend>
+    }@else {
+        <legend class="List-title">Agregar material:</legend>
+    }
+    
+    <fieldset>
+        <label for="material">Material</label>
+        <input type="text" name="material" id="material" (click)="openMaterialList()" placeholder="Seleccionar material"  formControlName="material">
+        <input type="hidden" name="idMaterial">
+        <label for="quantity">Cantidad:</label>
+        <input type="number" name="quantity" id="quantity" formControlName="quantity">
+    </fieldset>
+    @if(edit){
+        <button class="Boton1" type="submit">Editar</button>
+    }@else {
+        <button class="Boton1" type="submit">Agregar</button>
+    }
+    
+</form>
