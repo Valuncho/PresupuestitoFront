@@ -11,6 +11,7 @@ import { Work } from '../../../../core/model/Work';
 import { WorkRequest } from '../../../../core/request/workRequest';
 import { UtilsService } from '../../../../core/utils/utils.service';
 import { ActivatedRoute } from '@angular/router';
+import { BudgetControllerService } from '../../../../core/controllers/budget-controller.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ import { ActivatedRoute } from '@angular/router';
 export class WorkFormComponent {
   //Utils
   private workController = inject(WorkControllerService);
+  private budgetController = inject(BudgetControllerService);
   private workService = inject(WorkService);
   private utils = inject(UtilsService);
   //Properties
@@ -36,11 +38,12 @@ export class WorkFormComponent {
     notes : new FormControl('', Validators.required),
     deadLine : new FormControl(new Date(), Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
-    hours : new FormControl(1, Validators.required),
+    hours : new FormControl(0, Validators.required),
   });
 
   ngOnInit(): void {
-
+    
+   
     this.workController.getWork().subscribe(res =>{
       this.currentWork = res!;
 
@@ -48,15 +51,23 @@ export class WorkFormComponent {
     
     if(this.isEdit){  
       this.workService.getWorkById(this.currentWork.workId!).subscribe(res=>{
-        this.currentWork =this.workController.toWorkRequest(res!.value)
+        this.currentWork =this.workController.toWorkRequest(res!.value);
+        this.budgetController.getBudgetId().subscribe(res=>
+          this.currentWork.budgetId = res
+        )
         this.toForm()
       })
       
     }
     
   }
+
+  ngOnDestroy(): void {
+    
+    this.setUp()
+  }
   setUp(){
-    this.WorkForm.reset();
+    this.workController.setEditMode(false)
     this.isEdit = false;
   }
 
@@ -95,7 +106,6 @@ export class WorkFormComponent {
   }
 
   toWork(){
-
     this.currentWork.workName = this.WorkForm.get('name')?.value;
     this.currentWork.deadLine = this.WorkForm.get('deadLine')?.value;
     this.currentWork.estimatedHoursWorked = this.WorkForm.get('hours')?.value;

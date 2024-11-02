@@ -11,6 +11,7 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
 import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
+import { UtilsService } from '../../../../core/utils/utils.service';
 
 @Component({
   selector: 'app-work-list',
@@ -27,6 +28,7 @@ export class WorkListComponent {
   private modalService = inject(ModalService);
   private workService = inject(WorkService);
   private workController = inject(WorkControllerService);
+  private utils = inject(UtilsService);
 
   //Properties
   @Input() works: Work[] = [];
@@ -56,9 +58,14 @@ export class WorkListComponent {
     this.workController.setWorkModel($Event);
   }
   handleEdit($Event: Work) {
-    this.workController.setEditMode(true);
-    this.workController.setWork(this.workController.toWorkRequest($Event));
-    this.modalService.openModal(WorkFormComponent);
+    if( "/work" != this.router.url){
+      this.workController.setEditMode(true);
+      this.workController.setWork(this.workController.toWorkRequest($Event));
+      this.modalService.openModal(WorkFormComponent);
+    }else{
+      alert("Debe ir al presupuesto para poder editarlo.");
+    }
+   
   }
   handleDelete($Event: Work) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -69,7 +76,11 @@ export class WorkListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.workService.deleteWork($Event.workId).subscribe();
+        this.workService.deleteWork($Event.workId).subscribe({
+          next: ()=>{
+            this.utils.reaload()
+          }
+        });
       }
     });
   }

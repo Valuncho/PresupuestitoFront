@@ -74,7 +74,7 @@ export class WorkControllerService {
     this.work.getValue().workName = work.workName;
     this.work.getValue().notes = work.notes;
     this.work.getValue().workId = work.workId;
-    console.log(work)
+    this.work.getValue().estimatedHoursWorked = work.estimatedHoursWorked;
     return this.work.getValue();
   }
 

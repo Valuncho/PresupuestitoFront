@@ -15,6 +15,8 @@ import { WorkControllerService } from '../../../../core/controllers/work-control
 import { WorkComponent } from '../../../works/components/work/work.component';
 import { ClientService } from '../../../../core/services/client.service';
 import { WorkItemListComponent } from "../../../workItems/components/work-item-list/work-item-list.component";
+import { throwIfEmpty } from 'rxjs';
+import { BudgetControllerService } from '../../../../core/controllers/budget-controller.service';
 /**
  * @class BudgetDetailsComponent
  * 
@@ -30,11 +32,12 @@ import { WorkItemListComponent } from "../../../workItems/components/work-item-l
 })
 export class BudgetDetailsComponent {
   //Utils
-  private router = inject(Router);
+  
   private activatedRoute = inject(ActivatedRoute);
   private clientService = inject(ClientService);
   private budgetService = inject(BudgetService);
   private workController = inject(WorkControllerService);
+  private budgetController = inject(BudgetControllerService);
   
   
   //Properties
@@ -66,7 +69,7 @@ export class BudgetDetailsComponent {
               }
             }
           })
-
+          this.budgetController.setBudgetId(this.budgetId!);
         }
       }
      )
