@@ -31,7 +31,7 @@ export class WorkListComponent {
   private utils = inject(UtilsService);
 
   //Properties
-  @Input() works: Work[] = [];
+  @Input() works!: Work[];
 
   options: Boolean = false;
   budgetId : number = 0;

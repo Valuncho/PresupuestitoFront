@@ -42,10 +42,10 @@ export class WorkItemFormComponent {
 
   edit : boolean = false;
   itemForm : FormGroup = new FormGroup({
-    id : new FormControl(),
-    material : new FormControl(),
-    idmaterial : new FormControl(),
-    quantity : new FormControl()
+    id : new FormControl(0),
+    material : new FormControl(''),
+    idmaterial : new FormControl(0),
+    quantity : new FormControl(0)
   });
 
 
@@ -56,8 +56,8 @@ ngOnInit(): void {
     })
     
     this.ItemSubscription = this.materialController.getItem().subscribe(res =>{ 
-      this.edit = this.materialController.getEditMode()
-      this.itemForm.patchValue({id : res?.itemId, material : res?.oMaterial.materialName,idmaterial : res?.oMaterial.materialId, quantity : res?.quantity});
+      this.edit = this.materialController.getEditMode();
+      this.toEdit(res!)
      })
 
      this.MaterialSubscription = this.materialController.getMaterial().subscribe(res =>{
@@ -67,12 +67,18 @@ ngOnInit(): void {
      })
 }
 
-  ngAfterViewInit(): void {
-
-    
-   
-  }
-
+toEdit(item : Item){
+  console.log(item)
+  
+  this.itemForm.patchValue({
+    id: item.itemId,
+    material : item.oMaterial.materialName,
+    idmaterial : item.oMaterial.materialId,
+    quantity : item.quantity
+  })
+  console.log(this.itemForm.get("material")?.value)
+  console.log(this.itemForm.get("idmaterial")?.value)
+}
   ngOnDestroy(): void {
 
     this.materialController.setMaterial(this.materialController.getEmptyMaterial());

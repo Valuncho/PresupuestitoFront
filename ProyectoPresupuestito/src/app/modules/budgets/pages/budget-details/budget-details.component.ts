@@ -17,6 +17,7 @@ import { ClientService } from '../../../../core/services/client.service';
 import { WorkItemListComponent } from "../../../workItems/components/work-item-list/work-item-list.component";
 import { throwIfEmpty } from 'rxjs';
 import { BudgetControllerService } from '../../../../core/controllers/budget-controller.service';
+import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
 /**
  * @class BudgetDetailsComponent
  * 
@@ -32,18 +33,18 @@ import { BudgetControllerService } from '../../../../core/controllers/budget-con
 })
 export class BudgetDetailsComponent {
   //Utils
-  
   private activatedRoute = inject(ActivatedRoute);
   private clientService = inject(ClientService);
   private budgetService = inject(BudgetService);
   private workController = inject(WorkControllerService);
   private budgetController = inject(BudgetControllerService);
+  private clientController = inject(ClientControllerService);
   
   
   //Properties
-  currentBudget! : Budget;
-  budgetId? : number;
-  budgetClient! : Client;
+  currentBudget : Budget = this.budgetController.getEmptyBudget();
+  budgetId : number = this.currentBudget.budgetId;
+  budgetClient : Client = this.clientController.getEmptyClient();
   currentWork : Work = this.workController.getEmptyWork();
   option = this.currentWork.workId != 0 ? false : true;
   

@@ -35,10 +35,9 @@ export class WorkItemListComponent {
  }
 
  editar($Event : Item){
-   
    this.materialController.setEditMode(true);
-   //this.materialController.setCategory($Event);
-   this.modalService.openModal<CategoryFormComponent,Category>(CategoryFormComponent);
+   this.materialController.setItem($Event);
+   this.modalService.openModal<WorkItemFormComponent,Item>(WorkItemFormComponent);
  }
 
  eliminar($Event : Item){
