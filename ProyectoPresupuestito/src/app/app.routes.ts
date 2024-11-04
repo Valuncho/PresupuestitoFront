@@ -43,12 +43,12 @@ export const routes: Routes = [
     //FixedCostRoute
     {path: 'cost', component: CostViewComponent},
     {path: 'cost/edit/:costId', component: CostViewComponent},
-    //EmployesRoutes
+    //EmployeeRoutes
     {path: 'employee', component: EmployeeViewComponent},
     {path: 'employee/detail/:employeeId', component: EmployeeDetailsComponent},
     {path: 'employee/edit/:employeeId', component: EmployeeFormComponent},
     //RedirectionRoutes
     {path: '', redirectTo: 'home' , pathMatch: 'full'},
     {path: '**' , component : HomeComponent},
-    
+
 ];

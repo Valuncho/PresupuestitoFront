@@ -7,12 +7,6 @@ import {BudgetViewComponent} from "../../../budgets/pages/budget-view/budget-vie
 import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
 import { Item } from '../../../../core/model/Item';
 import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
-import { ModalService } from '../../../../core/utils/modal.service';
-import { MaterialManagerComponent } from '../../../materials/components/forms/material-manager/material-manager.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
-import { ItemService } from '../../../../core/services/item.service';
-import { WorkRequest } from '../../../../core/request/workRequest';
 
 @Component({
   selector: 'app-work-detail',
@@ -24,65 +18,28 @@ import { WorkRequest } from '../../../../core/request/workRequest';
 export class WorkDetailComponent {
   //Utils
   private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private modalService = inject(ModalService);
-  private itemService = inject(ItemService);
   private materialController = inject(MaterialControllerService);
   private workController = inject(WorkControllerService);
-  
-  currentWork! : WorkRequest;
+
+  currentWork! : Work;
   item : Item = this.materialController.getEmptyItem();
   options : boolean = false;
   enabled : boolean = false;
   ngOnInit(): void {
-  
+
       if(this.router.url == "/work" ){
         this.options = true;
-
       }
-
-      this.workController.getWork().subscribe(res =>{
+      this.workController.getWorkModel().subscribe(res =>{
         this.currentWork = res;
-        if(res.workId != 0 ){
-          this.enabled =  true;
-        } else{
-          this.enabled = false;
-        }
+        this.enabled = res.workId != 0;
       }
       )
 
   }
 
-  goToWorkArea(){
-    this.router.navigate(["/workArea/"]);
-  }
-
   goToBudgetDetail(){
     this.router.navigate(["/budget/detail"]);
-  }
-
-  openMaterialManager(){
-    this.modalService.openModal<MaterialManagerComponent,Item>(MaterialManagerComponent);
-  }
-
-  updateItem(item : Item){
-    this.materialController.setEditMode(true);
-    this.materialController.setItem(item);
-    this.openMaterialManager();
-  }
-
-  deleteItem(item : Item){
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: {
-        mensaje: `¿Estás seguro de que deseas eliminar el item seleccionado?`
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.itemService.deleteItem(item.itemId).subscribe();
-      }
-    });
   }
 
 
