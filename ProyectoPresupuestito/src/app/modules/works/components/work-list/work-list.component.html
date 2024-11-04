@@ -1,20 +1,20 @@
 <div class="List">
         <h3 class="List-title">Listado de trabajos</h3>
-  
+
         @if(options){
             <button class="Boton1" (click)="addWorkHandler()">Agregar trabajo</button>
         }
 
         @for (work of works ; track work.workId; let idx = $index) {
             <app-work-card
-            [Work]="work" 
+            [Work]="work"
             (isClick)="handleView($event)"
-            (isEdit)="handleEdit($event)" 
-            (isDeleted)="handleDelete($event)" 
+            (isEdit)="handleEdit($event)"
+            (isDeleted)="handleDelete($event)"
             />
         }@empty {
             <app-text-card [message]="'No hay trabajos que mostrar.'"/>
         }
-    
+
 
     </div>

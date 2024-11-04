@@ -24,18 +24,19 @@ export class WorkDetailComponent {
   currentWork! : Work;
   item : Item = this.materialController.getEmptyItem();
   options : boolean = false;
-  enabled : boolean = false;
-  ngOnInit(): void {
 
+  ngOnInit(): void {
       if(this.router.url == "/work" ){
         this.options = true;
       }
       this.workController.getWorkModel().subscribe(res =>{
         this.currentWork = res;
-        this.enabled = res.workId != 0;
-      }
-      )
+      })
 
+  }
+
+  ngOnDestroy():void{
+    this.workController.setWorkModel(this.workController.getEmptyWork());
   }
 
   goToBudgetDetail(){
