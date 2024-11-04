@@ -43,12 +43,15 @@ export class ClientFormComponent {
     dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
     cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
   });
-  
-  ngAfterViewInit(): void {
+
+  ngOnInit(): void{
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.clientId = Number(params.get('clientId'));
+      this.onEditHandler()
+    });
     this.setUp();
   }
 
- 
   get canSubmit(){
     let  flag : boolean = false;
     if(
@@ -76,6 +79,7 @@ export class ClientFormComponent {
   }
 
   onEditHandler(){
+    console.log(this.router.url)
       if(this.router.url == "/client/edit/" + this.clientId){
         this.clientService.getClientById(this.clientId!).subscribe( {
           next:res =>{
@@ -87,10 +91,10 @@ export class ClientFormComponent {
       }else{
         this.isEdit = false;
     }
-    
+
   }
 
-  
+
   onSubmit(){
     this.toPerson();
     if(this.isEdit){
@@ -105,11 +109,11 @@ export class ClientFormComponent {
           this.utils.reaload()
         }
       });
-      
+
     }
     this.setUp();
   }
-  
+
   closeModal(){
     if(this.router.url == "/budget/new/" + this.clientId){
       this.modalService.closeModal();
