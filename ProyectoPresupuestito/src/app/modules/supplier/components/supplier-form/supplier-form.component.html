@@ -38,7 +38,12 @@
         </div>
       }     
       
-      <legend class="List-title">Cargar proveedor</legend>
+      @if (isEdit) {
+        <legend class="List-title">Actualizar proveedor</legend>
+      }@else {
+        <legend class="List-title">Cargar proveedor</legend>
+      }
+      
       <label for="name">Nombre:</label>
       <input type="text" name="name" id="name" placeholder="Nombre..." formControlName="name">
       <label for="lastName">Apellido:</label>

@@ -40,7 +40,7 @@ export class SupplierFormComponent {
         mail: new FormControl('', [Validators.email]),
         dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
         cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
-        note: new FormControl('',[Validators.maxLength(220),Validators.minLength(10)])
+       // note: new FormControl('',[Validators.maxLength(220),Validators.minLength(10)])
     });
     
     ngOnInit(): void {
@@ -67,6 +67,7 @@ export class SupplierFormComponent {
     setUp(){
         this.supplierForm.reset();
         this.isEdit = false;
+        //poner suppliercontroller
         //this.currentSupplier = this.supplierService.getEmptySupplier();
     }
 
@@ -125,9 +126,24 @@ export class SupplierFormComponent {
         this.supplierDto.lastName = this.supplierForm.get("lastName")?.value
         this.supplierDto.address = this.supplierForm.get("direction")?.value
         this.supplierDto.phoneNumber = this.supplierForm.get("phoneNumber")?.value
-        this.supplierDto.email = this.supplierForm.get("mail")?.value
-        this.supplierDto.dni = this.supplierForm.get("dni")?.value
-        this.supplierDto.cuit = this.supplierForm.get("cuit")?.value
+        if(this.supplierForm.get("mail")?.value == null){
+            this.supplierDto.email = ""
+          }else{
+            this.supplierDto.email = this.supplierForm.get("mail")?.value
+      
+          }
+      
+          if(this.supplierForm.get("dni")?.value == null){
+            this.supplierDto.dni = ""
+          }else{
+            this.supplierDto.dni = this.supplierForm.get("dni")?.value
+          }
+      
+          if(this.supplierForm.get("cuit")?.value == null){
+            this.supplierDto.cuit = ""
+          }else{
+            this.supplierDto.cuit = this.supplierForm.get("cuit")?.value
+          }
         if(this.isEdit){
             this.supplierDto.supplierId = this.supplierId;
         }
