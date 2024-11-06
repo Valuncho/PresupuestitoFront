@@ -12,9 +12,9 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
 
 /**
  * @class invoiceService
- * 
+ *
  * Servicio de la entidad invoice para comunicarse con el backend, gestionando errores y aciertos.
- * 
+ *
  */
 
 @Injectable({
@@ -28,19 +28,19 @@ export class InvoiceService {
   private notification = inject(NotificationService);
 
   //METODOS HTTP ----------------------------------------------------------------------------------------------
-  
+
     /**
    * Retorna todos los boletas disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de boletas como un observable.
    */
   getInvoices() : Observable<Invoice[]> {
-    return this.http.get<Invoice[]>(API_URL+ENDPOINTS.invoices.getAll).pipe(      
+    return this.http.get<Invoice[]>(API_URL+ENDPOINTS.invoices.getAll).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
-    }));   
+    }));  
   }
 
   /**
@@ -49,15 +49,15 @@ export class InvoiceService {
    * @param idInvoice id de la boleta solicitado.
    * @returns Una boleta como un observable.
    */
-  getInvoiceById(idInvoice : number) : Observable<Invoice> {
+  getInvoiceById(idInvoice : number) : Observable<any> {
     const url = API_URL+ENDPOINTS.invoices.getById.replace(':id', idInvoice.toString());
-    return this.http.get<Invoice>(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );
   }
 
     /**
@@ -71,14 +71,14 @@ export class InvoiceService {
     const url = API_URL+ENDPOINTS.invoices.post;
     return this.http.post(url,invoice).pipe(
       tap(() => {
-        this.notification.showNotification("¡boleta guardada con éxito!"); 
+        this.notification.showNotification("¡boleta guardada con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -92,14 +92,14 @@ export class InvoiceService {
     const url = API_URL+ENDPOINTS.invoices.update;
     return this.http.put(url,invoice).pipe(
       tap(() => {
-        this.notification.showNotification("¡Boleta editada con éxito!"); 
+        this.notification.showNotification("¡Boleta editada con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
     /**
@@ -113,13 +113,13 @@ export class InvoiceService {
     const url = API_URL+ENDPOINTS.invoices.delete;
     return this.http.patch(url,idInvoice).pipe(
       tap(() => {
-        this.notification.showNotification("¡boleta eliminada con éxito!"); 
+        this.notification.showNotification("¡boleta eliminada con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 }

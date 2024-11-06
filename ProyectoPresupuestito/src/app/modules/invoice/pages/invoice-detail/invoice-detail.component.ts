@@ -9,6 +9,8 @@ import { SupplierDetailsComponent } from '../../../supplier/pages/supplier-Detai
 import { SupplierComponent } from '../../../supplier/components/supplier/supplier.component';
 import { SupplierHistory } from '../../../../core/model/SupplierHistory';
 import { InvoiceItemListComponent } from "../../components/invoice-item-list/invoice-item-list.component";
+import {SupplierService} from "../../../../core/services/supplier.service";
+import {Supplier} from "../../../../core/model/Supplier";
 
 @Component({
   selector: 'app-invoice-detail',
@@ -18,11 +20,12 @@ import { InvoiceItemListComponent } from "../../components/invoice-item-list/inv
   styleUrl: './invoice-detail.component.css'
 })
 export class InvoiceDetailComponent {
-    private router = inject(Router);
+
     private activatedRoute = inject(ActivatedRoute);
     private invoiceService = inject(InvoiceService);
-    @Input() invoices! : Invoice[];
-    id : number  = 0;
+    private supplierService = inject(SupplierService);
+
+    invoiceId : number  = 0;
     currentInvoice : Invoice = {
       idInvoice: 0,
       date: new Date(0),
@@ -30,29 +33,44 @@ export class InvoiceDetailComponent {
       isPaid: false,
       materials: []
     }
-    invoice = signal<Invoice | undefined>(undefined);
-    
-    currentSupplier! : SupplierHistory //= {
-      // idSupplierHistory: 1,
-      // oSupplier: {
-      //     idSupplier: 1001,
-      //     oPerson: {
-      //         personId: 1,
-      //         name: 'John',
-      //         lastName: 'Doe',
-      //         address: '123 Main St',
-      //         phoneNumber: '1234567890',
-      //         email: 'johndoe@example.com',
-      //         dni: '123456789',
-      //         cuit: '30-12345678-9',
-      //     },
-      //     note: 'nota vacia'
-      // },
-      // invoices: []
-    //}
+    invoice! : Invoice;
+
+  currentSupplier : Supplier = {
+
+
+      supplierId: 0,
+      personId: {
+        personId: 0,
+        name: '',
+        lastName: '',
+        address: '',
+        phoneNumber: '',
+        email: '',
+        dni: '',
+        cuit: '',
+      },
+
+  };
 
     ngOnInit(): void {
-        this.id = parseInt(this.activatedRoute.snapshot.params['invoiceId']);
+        this.invoiceId = Number(this.activatedRoute.snapshot.params['invoicedId']);
+        console.log(this.invoiceId);
+        this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
+          {
+            next: (invoiceRes)=>{
+              this.currentInvoice = invoiceRes.value;
+              this.supplierService.getSupplierById(invoiceRes.value.oSupplier.supplierId).subscribe(
+                {
+                  next : (supplierRes) =>{
+                    this.currentSupplier = supplierRes.value;
+                  }
+                }
+              )
+            }
+          }
+        )
+
     }
 
 }
+

@@ -87,11 +87,11 @@ export const ENDPOINTS = {
   },
   // Invoices
   invoices: {
-    getAll: '/Invoices',
-    getById: '/Invoices/:id',
-    post: '/Invoices',
-    update: '/Invoices/:id',
-    delete: '/Invoices/:id',
+    getAll: '/Invoice',
+    getById: '/Invoice/:id',
+    post: '/Invoice',
+    update: '/Invoice/:id',
+    delete: '/Invoice/:id',
   },
   //InvoiceItems
   invoiceItem: {
