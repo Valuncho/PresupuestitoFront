@@ -195,8 +195,19 @@ form .invalid p::before{
 
 
 .ItemTable{
+    width: 200%;
     max-height: 50vh;
     overflow-y: scroll;
+}
+
+.ItemTable thead{
+    font-size: large;
+}
+
+
+.ItemTable td{
+    border: var(--negro) 1px solid;
+    padding: 5px;
 }
 /*Detalles*/
 .Detalle {
