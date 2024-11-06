@@ -1,3 +1,6 @@
+section{
+  align-items: center;
+}
 .Menu{
   margin: 20px;
   background-color: var(--gris);
