@@ -18,16 +18,17 @@ import { WorkItemListComponent } from "../../../workItems/components/work-item-l
 import { throwIfEmpty } from 'rxjs';
 import { BudgetControllerService } from '../../../../core/controllers/budget-controller.service';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
+import {StonksCalculatorComponent} from "../../components/stonks-calculator/stonks-calculator.component";
 /**
  * @class BudgetDetailsComponent
- * 
- * Buscador de la entidad cliente, sin funcionar por el momento.
+ *
+ *
  *
  */
 @Component({
   selector: 'app-budget-details',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkListComponent, WorkComponent, WorkItemListComponent],
+  imports: [NavbarComponent, CommonModule, WorkDetailComponent, WorkCardComponent, BudgetComponent, ClientComponent, WorkListComponent, WorkComponent, WorkItemListComponent, StonksCalculatorComponent],
   templateUrl: './budget-details.component.html',
   styleUrl: './budget-details.component.css'
 })
@@ -39,18 +40,18 @@ export class BudgetDetailsComponent {
   private workController = inject(WorkControllerService);
   private budgetController = inject(BudgetControllerService);
   private clientController = inject(ClientControllerService);
-  
-  
+
+
   //Properties
   currentBudget : Budget = this.budgetController.getEmptyBudget();
   budgetId : number = this.currentBudget.budgetId;
   budgetClient : Client = this.clientController.getEmptyClient();
   currentWork : Work = this.workController.getEmptyWork();
   option = this.currentWork.workId != 0 ? false : true;
-  
+
 
   ngOnInit(){
-    this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);    
+    this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     this.budgetService.getBudgetById(this.budgetId).subscribe(
       {
         next : (res) => {
@@ -74,7 +75,7 @@ export class BudgetDetailsComponent {
         }
       }
      )
- 
+
   }
 
   ngOnDestroy(): void {
@@ -85,9 +86,9 @@ export class BudgetDetailsComponent {
 
   }
   calculateDeadline(){
-    
+
   }
 
-  
+
 }
 

@@ -1,0 +1,8 @@
+
+@media (orientation: landscape) {
+  form{
+    min-width: auto;
+    width: 190px;
+  }
+
+}

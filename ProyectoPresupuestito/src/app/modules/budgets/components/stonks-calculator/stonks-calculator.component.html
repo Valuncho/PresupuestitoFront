@@ -1,0 +1,11 @@
+<form>
+  <label for="stonks">Ganacia:</label>
+  <input
+    type="number"
+    name="stonks"
+    id="stonks"
+    [(ngModel)]="stonks"
+    placeholder="Margen de ganancia%"
+  >
+  <p>Precio final: {{this.calculateStonk() | currency}}</p>
+</form>
