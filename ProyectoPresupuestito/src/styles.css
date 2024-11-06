@@ -95,13 +95,12 @@ form {
     display: flex;
     flex-direction: column;
     background-color: var(--gris);
-     width:  50vh;
+    width:  50vh;
     margin: auto;
     padding: 1em;
     border-radius: 10px 10px;
     overflow: hidden;
     overflow-y: auto;
-    height: 76vh;
 }
 
 fieldset {
