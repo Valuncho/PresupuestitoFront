@@ -22,3 +22,8 @@ form .invalid p::before{
   background-color: var(--blanquecino);
   color:var(--negro);
 }
+
+
+form{
+  height: auto
+}
