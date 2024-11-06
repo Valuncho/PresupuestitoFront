@@ -257,6 +257,9 @@ form .invalid p::before{
     margin: 10px 0;
     font-family: var(--dato);
 }
+.Card:hover{
+    box-shadow: var(--abedul) 2px 10px 10px inset;
+}
 
 .Card-Details {
     margin: 0 10px;
