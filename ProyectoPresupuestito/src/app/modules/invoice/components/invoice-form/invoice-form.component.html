@@ -1,32 +1,31 @@
 <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
-    <fieldset>
-  
-      @if (invoiceForm.invalid && invoiceForm.dirty) {
-        <div class="invalid">
-          
-          @if (invoiceForm.get('fecha')?.invalid) {
-            <p>la fecha es obligatoria.</p>
-          }
-          
-      
-        </div>
-      }     
-      
-      <legend class="List-title">Cargar factura</legend>
-      <label for="fecha">fecha:</label>
-      <input type="date" name="fecha" id="fecha" placeholder="fecha..." formControlName="fecha">
-      
+  @if (invoiceForm.invalid && invoiceForm.dirty) {
+  <div class="invalid">
+    @if (invoiceForm.get('fecha')?.invalid) {
+    <p>la fecha es obligatoria.</p>
+    }
+  </div>
+  }
+  <fieldset>
+    <legend class="List-title">Cargar factura</legend>
+    <label for="fecha">fecha:</label>
+    <input
+      type="date"
+      name="fecha"
+      id="fecha"
+      placeholder="fecha..."
+      formControlName="date"
+    />
+  </fieldset>
+  <fieldset class="Botones">
+    <button type="reset" (click)="resetForm($event)">Limpiar</button>
 
-    </fieldset>
-    <fieldset class="Botones">
-      <button type="reset" (click)="resetForm($event)">Limpiar</button>
-      
-      <button type="submit" [disabled]="!canSubmit" [class.disactive]="!canSubmit">
-        @if (isEdit) {
-          Actualizar
-        }@else {
-          Guardar
-        }
-      </button>
-    </fieldset>
+    <button
+      type="submit"
+      [disabled]="!canSubmit"
+      [class.disactive]="!canSubmit"
+    >
+      @if (isEdit) { Actualizar }@else { Guardar }
+    </button>
+  </fieldset>
 </form>

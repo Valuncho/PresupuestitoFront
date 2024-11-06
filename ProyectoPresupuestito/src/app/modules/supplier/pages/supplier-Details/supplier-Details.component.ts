@@ -12,6 +12,7 @@ import { ModalService } from '../../../../core/utils/modal.service';
 import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
 import { Payment } from '../../../../core/model/Payment';
 import { invoiceFormComponent } from '../../../invoice/components/invoice-form/invoice-form.component';
+import { InvoceItemRequest } from '../../../../core/request/invoceItemRequest';
 
 
 @Component({
@@ -29,8 +30,25 @@ export class SupplierDetailsComponent {
     private modalService = inject(ModalService);
     id : number  = 0;
 
-    currentSupplier! : SupplierHistory;
-    @Input() invoice! : Invoice;
+    currentSupplier : SupplierHistory = {
+        supplierHistoryId: 0,
+    oSupplier : {
+      supplierId: 0,
+      personId: {
+        personId: 0,
+        name: '',
+        lastName: '',
+        address: '',
+        phoneNumber: '',
+        email: '',
+        dni: '',
+        cuit: '',
+      },
+    },
+    invoices : []
+    };
+    
+    invoices : Invoice[] | undefined = []
     
     /*
     ngOnInit(): void {

@@ -38,11 +38,11 @@ export class ClientControllerService {
  
 
  setEditMode(option : boolean){
-  this.editMode.next(option)
+  this.editMode.next(option);
  
  }
  getEditMode() : Observable<boolean>{
-  return this.editMode.asObservable()
+  return this.editMode.asObservable();
  }
 
  //GetEmptyObjects

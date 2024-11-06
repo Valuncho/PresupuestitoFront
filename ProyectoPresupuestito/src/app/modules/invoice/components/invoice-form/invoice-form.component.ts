@@ -26,9 +26,9 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
     isEdit : boolean = false;
     //Form
     invoiceForm : FormGroup = new FormGroup({
-        Date: new FormControl('',[ Validators.required]),
-        payment: new FormControl('', Validators.required),
-        paid : new FormControl('', Validators.required),
+        date: new FormControl('',[ Validators.required]),
+    //    payment: new FormControl('', Validators.required),
+      //  paid : new FormControl('', Validators.required),
     });
     
     ngAfterViewInit(): void {
@@ -40,9 +40,10 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
     get canSubmit(){
         let  flag : boolean = false;
         if(
-        this.invoiceForm.get('date')?.valid &&
-        this.invoiceForm.get('payment')?.valid &&
-        this.invoiceForm.get('paid')?.valid
+        this.invoiceForm.get('date')?.valid 
+        // &&
+        // this.invoiceForm.get('payment')?.valid &&
+        // this.invoiceForm.get('paid')?.valid
         ){
         flag = true;
         }
@@ -51,7 +52,7 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
 
     setUp(){
         this.invoiceForm.reset();
-        this.isEdit = false;
+        //this.isEdit = false;
         /*this.currentInvoice = this.invoiceForm.getEmptyInvoice();*/
     }
 
@@ -66,14 +67,14 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
         if(this.invoiceId){
         let url = "/invoice/edit/" + this.invoiceId;
         if(this.router.url == url){
-            this.isEdit = true;
+           // this.isEdit = true;
             this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
             {
             next: (res:Invoice) => {this.currentInvoice = res!},
             }
         )
         }else{
-            this.isEdit = false;
+          //  this.isEdit = false;
         }
         }
         
