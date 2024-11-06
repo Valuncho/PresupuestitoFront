@@ -37,7 +37,7 @@ export class EmployeeFormComponent {
         mail: new FormControl('', [Validators.email]),
         dni : new FormControl('',[Validators.maxLength(10),Validators.minLength(7)]),
         cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
-        salary : new FormControl('',[Validators.required])
+        //salary : new FormControl('',[Validators.required])
     });
 
     ngOnInit(): void {
@@ -54,7 +54,9 @@ export class EmployeeFormComponent {
         this.employeeForm.get('name')?.valid &&
         this.employeeForm.get('lastName')?.valid &&
         this.employeeForm.get('direction')?.valid &&
-        this.employeeForm.get('phoneNumber')?.valid
+        this.employeeForm.get('phoneNumber')?.valid &&
+        this.employeeForm.get('dni')?.valid &&
+        this.employeeForm.get('cuit')?.valid
         ){
         flag = true;
         }
