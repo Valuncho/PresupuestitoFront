@@ -40,7 +40,7 @@ export class WorkDetailComponent {
   }
 
   goToBudgetDetail(){
-    this.router.navigate(["/budget/detail"]);
+    this.router.navigate(["/budget/detail/",this.currentWork.budgetId]);
   }
 
 

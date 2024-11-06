@@ -3,6 +3,7 @@ import { Item } from "./Item";
 export interface Work
 {
     workId: number;
+    budgetId: number;
     itemsId : Item[];
     workStatus : string;
     workName : string;

@@ -41,6 +41,7 @@ export class WorkControllerService {
   getEmptyWork(): Work {
     return {
       workId: 0,
+      budgetId: 0,
       workName : '',
       workStatus : '',
       itemsId: [],
