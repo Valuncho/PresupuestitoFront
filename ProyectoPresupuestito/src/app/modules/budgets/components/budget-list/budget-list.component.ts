@@ -14,7 +14,7 @@ import { LoadingService } from '../../../../core/utils/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 /**
  * @class BudgetListComponent
- * 
+ *
  * Componente listado de presupuestos.
  *
  */
@@ -29,15 +29,15 @@ export class BudgetListComponent {
   //Utils
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
-  private dialog = inject(MatDialog);  
+  private dialog = inject(MatDialog);
   private budgetService = inject(BudgetService);
   private loadingService = inject(LoadingService)
 
-  
-  
+
+
   //Properties
   @Input() budgets : Budget[] = []
-  
+
   clientId : number = 0
   options : boolean = false;
   //Pagination
@@ -47,7 +47,7 @@ export class BudgetListComponent {
   pipe = new DatePipe('en-US');
   ngOnInit(){
 
-    
+
     this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
     const clientUrl = "/client/detail/"+this.clientId;
     if(this.router.url == clientUrl){
@@ -55,7 +55,7 @@ export class BudgetListComponent {
     }else{
       this.budgetService.getBudgets().subscribe(
         {
-          
+
           next: res => {
             this.budgets = res;
 
@@ -63,14 +63,12 @@ export class BudgetListComponent {
         }
       )
 
-   
+
     }
 
 
   }
   //BudgetCard
- 
-
   handleView($Event : any){
     this.router.navigate(['/budget/detail/', $Event.budgetId]);
   }
@@ -88,14 +86,14 @@ export class BudgetListComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        
+
         this.budgetService.deleteBudget($Event.budgetId).subscribe({
           next : () => {
             this.router.navigate(['/budget']);
           }
         });
-        
-        
+
+
       }
     });
 
@@ -106,6 +104,6 @@ export class BudgetListComponent {
     this.page = page;
   }
 
- 
+
 
 }

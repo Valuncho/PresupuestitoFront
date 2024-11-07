@@ -10,9 +10,9 @@ import { NotificationService } from '../utils/notification.service';
 import { BudgetRequest } from '../request/budgetRequest';
 /**
  * @class BudgetService
- * 
+ *
  * Servicio de la entidad presupuesto para comunicarse con el backend, gestionando errores y aciertos.
- * 
+ *
  */
 @Injectable({
   providedIn: 'root',
@@ -46,7 +46,7 @@ export class BudgetService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );    
+    );  
   }
 
   /**
@@ -63,7 +63,24 @@ export class BudgetService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );    
+    );  
+  }
+
+  /**
+   * Retorna los presupuestos de un cliente por su id.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param clientId id de los presupuestos solicitados.
+   * @returns Una lista de presupuestos como un observable.
+   */
+  getBudgetsByClientId(clientId : number) : Observable<any>{
+    const url = API_URL+ENDPOINTS.budgets.getByClientId.replace(':ClientId', clientId.toString());
+    return this.http.get<any>(url).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+      })
+    );
   }
 
    /**
@@ -77,14 +94,14 @@ export class BudgetService {
     const url = API_URL+ENDPOINTS.budgets.post;
     return this.http.post(url,budget).pipe(
       tap(() => {
-        this.notification.showNotification("¡Presupuesto creado con éxito!"); 
+        this.notification.showNotification("¡Presupuesto creado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );    
+    );  
   }
 
   /**
@@ -98,14 +115,14 @@ export class BudgetService {
     const url = API_URL+ENDPOINTS.budgets.update.replace(':id', budget.budgetId!.toString());
     return this.http.put(url,budget).pipe(
       tap(() => {
-        this.notification.showNotification("¡Presupuesto actualizado con éxito!"); 
+        this.notification.showNotification("¡Presupuesto actualizado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );    
+    );  
   }
 
    /**
@@ -119,14 +136,14 @@ export class BudgetService {
     const url = API_URL+ENDPOINTS.budgets.delete.replace(':id', idBudget.toString());
     return this.http.patch(url,idBudget).pipe(
       tap(() => {
-        this.notification.showNotification("¡Presupuesto eliminado con éxito!"); 
+        this.notification.showNotification("¡Presupuesto eliminado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );    
+    );  
   }
 
   //Metodos
@@ -144,13 +161,13 @@ export class BudgetService {
       cost: 0,
       budgetStatus: 'Creado',
       payments: [],
-    
+
     };
     return EmptyBudget;
   }
 
   getEmptyBudgetRequest(): BudgetRequest {
-    
+
     return {
       clientId : 0,
       budgetStatus : "",

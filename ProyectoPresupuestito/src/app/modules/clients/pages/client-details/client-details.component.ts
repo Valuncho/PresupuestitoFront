@@ -11,10 +11,11 @@ import { ClientComponent } from '../../components/client/client.component';
 import { ClientHistory } from '../../../../core/model/ClientHistory';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { ClientControllerService } from '../../../../core/controllers/client-controller.service';
+import {BudgetService} from "../../../../core/services/budget.service";
 
 /**
  * @class ClientDetailsComponent
- * 
+ *
  * Componente a renderizar que contiene informacion relacionada con los clientes.
  *
  */
@@ -29,10 +30,11 @@ export class ClientDetailsComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private clientService = inject(ClientService);
+  private budgetService = inject(BudgetService);
   private clientController = Inject(ClientControllerService)
   private modalService = inject(ModalService);
   id : number  = 0;
-  
+
   currentClient : ClientHistory = {
     clientHistoryId: 0,
     clientId : {
@@ -49,16 +51,24 @@ export class ClientDetailsComponent {
       },
     },
     budgetsId : []
-  } 
+  }
   budgets : Budget[] | undefined = [];
   payments: Payment[] | undefined = [];
-  
-  ngOnInit(): void {
-    //this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
 
-    // this.clientService.getClientHistoryById(this.id).subscribe({
-    //     next: res => this.currentClient = res,    
-    // })
+  ngOnInit(): void {
+    this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
+
+    this.budgetService.getBudgetsByClientId(this.id).subscribe({
+      next: (budgetsRes) => {
+        this.currentClient.budgetsId = budgetsRes;
+        this.clientService.getClientById(budgetsRes[0].clientId.clientId).subscribe({
+          next: (clientRes) => {
+            this.currentClient.clientId = clientRes.value;
+
+          }
+        })
+      }
+    })
   }
 
   //Botones
@@ -68,6 +78,6 @@ export class ClientDetailsComponent {
   openPaymentForm(){
     //this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
   }
-  
-  
+
+
 }
