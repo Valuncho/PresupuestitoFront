@@ -1,27 +1,39 @@
-/*div{
-    padding-left: 15px;
-    padding-top: 10px;
-}*/
-
-h3,h4,p{
-    font-size: 1.5em;
-    line-height: 1em;
+/* Definición de colores */
+:root {
+    --blanquecino: #f8f8f8;
+    --abedul: #f0e6d6;
 }
 
-/* Estilo general para todo el contenedor */
-.container {
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--blanquecino);
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Alinea el contenido hacia la izquierda */
-    padding: 10px;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
 }
-  /* Estilo para los bloques de texto */
+
+/* Contenedor principal */
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 100px 0;
+}
+
+/* Estilos para los bloques */
 .block {
-    background-color: #BD8A3E;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px; 
-    width: 50%;
-    height: 200px;
-    
+    background-color: var(--abedul);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Asegura que no haya scroll */
+html, body {
+    overflow: hidden;
 }
