@@ -44,7 +44,23 @@ export class InvoiceService {
   }
 
   /**
-   * Retorna una boleta solicitada por id.
+   * Retorna una lista de facturas de un proveedor.
+   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
+   * @param supplierId id del proveedor.
+   * @returns Una lista de facturas como un observable.
+   */
+  getInvoicesBySupplierId(supplierId : number) : Observable<any> {
+    const url = API_URL+ENDPOINTS.invoices.getBySupplierId.replace(':SupplierId', supplierId.toString());
+    return this.http.get<any>(url).pipe(
+      catchError((error: any, caught: Observable<any>): Observable<any> => {
+        this.error.setError(error);
+        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+        return of();
+    })
+    );
+  }
+  /**
+   * Retorna una lista de boletas solicitada por id.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param idInvoice id de la boleta solicitado.
    * @returns Una boleta como un observable.
@@ -56,9 +72,10 @@ export class InvoiceService {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
-    })
+      })
     );
   }
+
 
     /**
    * Método para crear una boleta nueva.

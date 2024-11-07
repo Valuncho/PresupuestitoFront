@@ -13,20 +13,22 @@ import { PaymentsFormComponent } from '../../../payments/components/payments-for
 import { Payment } from '../../../../core/model/Payment';
 import { invoiceFormComponent } from '../../../invoice/components/invoice-form/invoice-form.component';
 import { InvoceItemRequest } from '../../../../core/request/invoceItemRequest';
+import {InvoiceService} from "../../../../core/services/invoice.service";
 
 
 @Component({
     selector: 'app-supplier-details',
     standalone: true,
-    imports: [CommonModule,NavbarComponent,SupplierComponent,InvoiceListComponent,InvoiceDetailComponent],
+    imports: [CommonModule,NavbarComponent,SupplierComponent,InvoiceListComponent],
     templateUrl: './supplier-Details.component.html',
     styleUrl: './supplier-Details.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SupplierDetailsComponent { 
+export class SupplierDetailsComponent {
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private supplierService = inject(SupplierService);
+    private invoiceService = inject(InvoiceService);
     private modalService = inject(ModalService);
     id : number  = 0;
 
@@ -47,19 +49,24 @@ export class SupplierDetailsComponent {
     },
     invoices : []
     };
-    
-    invoices : Invoice[] | undefined = []
-    
-    /*
-    ngOnInit(): void {
-        this.id = parseInt(this.activatedRoute.snapshot.params['supplierId']);
 
-        this.supplierService.selectedSupplier.subscribe(supplier =>{
-        this.supplier.set(supplier);
-        this.currentSupplier = supplier;
+    invoices : Invoice[] | undefined = []
+
+  ngOnInit(): void {
+    this.id = Number(this.activatedRoute.snapshot.params['supplierId']);
+
+    this.invoiceService.getInvoicesBySupplierId(this.id).subscribe({
+      next : (invocesRes) => {
+        this.currentSupplier.invoices = invocesRes;
+        this.supplierService.getSupplierById(invocesRes[0].supplierId.supplierId).subscribe({
+          next : (supplierRes) =>{
+            this.currentSupplier.oSupplier = supplierRes.value;
+          }
         })
-        
-    }*/
+      }
+    })
+    }
+
 
     openInvoiceForm(){
         this.modalService.openModal<invoiceFormComponent,Invoice>(invoiceFormComponent);
