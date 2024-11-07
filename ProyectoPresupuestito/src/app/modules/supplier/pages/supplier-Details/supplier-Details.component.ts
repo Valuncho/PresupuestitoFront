@@ -6,13 +6,12 @@ import { NavbarComponent } from '../../../../components/navbar/navbar.component'
 import { SupplierComponent } from '../../components/supplier/supplier.component';
 import { InvoiceListComponent } from '../../../invoice/components/invoice-list/invoice-list.component';
 import { SupplierHistory } from '../../../../core/model/SupplierHistory';
-import { InvoiceDetailComponent } from '../../../invoice/pages/invoice-detail/invoice-detail.component';
 import { Invoice } from '../../../../core/model/Invoice';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
 import { Payment } from '../../../../core/model/Payment';
 import { invoiceFormComponent } from '../../../invoice/components/invoice-form/invoice-form.component';
-import { InvoceItemRequest } from '../../../../core/request/invoceItemRequest';
+
 import {InvoiceService} from "../../../../core/services/invoice.service";
 
 
@@ -50,21 +49,25 @@ export class SupplierDetailsComponent {
     invoices : []
     };
 
-    invoices : Invoice[] | undefined = []
 
   ngOnInit(): void {
+
     this.id = Number(this.activatedRoute.snapshot.params['supplierId']);
 
     this.invoiceService.getInvoicesBySupplierId(this.id).subscribe({
       next : (invocesRes) => {
+        console.log(invocesRes)
         this.currentSupplier.invoices = invocesRes;
-        this.supplierService.getSupplierById(invocesRes[0].supplierId.supplierId).subscribe({
+        this.supplierService.getSupplierById(invocesRes[0].oSupplier.supplierId).subscribe({
           next : (supplierRes) =>{
             this.currentSupplier.oSupplier = supplierRes.value;
+            console.log(supplierRes.value);
           }
         })
       }
     })
+
+    console.log(this.currentSupplier);
     }
 
 

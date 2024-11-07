@@ -5,5 +5,5 @@ export interface SupplierHistory
 {
     supplierHistoryId : number;
     oSupplier : Supplier;
-    invoices : Invoice[]
+    invoices : any[]
 }
