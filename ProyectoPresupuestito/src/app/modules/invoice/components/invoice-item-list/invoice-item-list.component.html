@@ -1,10 +1,15 @@
 <div class="List">
-    <h3 class="List-title">Listado de items</h3>
-    
+    <h3 class="List-title">Listado de materiales de la factura</h3>
+    <button class="Boton1" (click)="addItemHandler()">Agregar item</button>
     <div class="Interior">
-        @for (item of invoice.materials; track $index) {
-        <p>{{ item.material.materialName }} * {{ item.quantity }}</p>
+        @for (item of items ; track item; let idx = $index) {
+            <app-invoice-item-card
+            [Item]="item"
+            (isEdit)="editar($event)"
+            (isDeleted)="eliminar($event)"
+            />
         }@empty {
-            <app-text-card [message]="'No hay items que mostrar.'"/>}
+            <app-text-card [message]="'No hay items que mostrar.'"/>
+        }  
     </div>
 </div>
