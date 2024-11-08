@@ -1,0 +1,61 @@
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: transparent; /* Fondo transparente para mostrar solo el icono */
+    border: none;
+    cursor: pointer;
+    z-index: 1000; /* Para que siempre esté visible */
+}
+
+button img {
+    width: 40px; /* Ajusta el tamaño según sea necesario */
+    height: 40px;
+}
+
+button:hover img {
+    transform: scale(1.1); /* Agranda el icono al hacer hover */
+}
+
+button:focus {
+    outline: none; /* Remueve el borde del botón cuando está enfocado */
+}
+
+button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;           /* Ancho del botón */
+    height: 60px;          /* Alto del botón, igual al ancho para que sea redondo */
+    background-color: #e1bf92; /* Color de fondo personalizado */
+    border: none;          /* Sin bordes */
+    border-radius: 50%;    /* Hace que el botón sea circular */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para dar efecto de elevación */
+    cursor: pointer;       /* Cambia el cursor cuando pasa sobre el botón */
+    z-index: 1000;         /* Asegura que el botón esté visible sobre otros elementos */
+    display: flex;         /* Flexbox para centrar el ícono dentro del botón */
+    align-items: center;
+    justify-content: center;
+}
+
+button img {
+    width: 50%;            /* El ícono ocupará el 50% del botón */
+    height: 50%;
+}
+
+button:hover {
+    background-color: #d1ac7f; /* Cambia el color al pasar el ratón por encima */
+}
+
+button:focus {
+    outline: none;         /* Remueve el borde de enfoque predeterminado */
+}
