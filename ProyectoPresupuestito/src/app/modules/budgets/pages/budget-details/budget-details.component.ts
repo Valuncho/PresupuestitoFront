@@ -83,7 +83,11 @@ export class BudgetDetailsComponent {
   }
 
   calculatePrice(){
-
+    this.budgetService.getCost(this.budgetId).subscribe({
+      next : (res) => {
+        this.currentBudget.cost = res
+      }
+    })
   }
   calculateDeadline(){
 

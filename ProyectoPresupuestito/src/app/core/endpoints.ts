@@ -26,6 +26,7 @@ export const ENDPOINTS = {
     getAll: '/Budget',
     getById: '/Budget/ById/:id',
     getByClientId : '/Budget/ByClient/:ClientId',
+    getCost : '/CalculatePrice:BudgetId',
     post: '/Budget',
     update: '/Budget/:id',
     delete: '/Budget/:id',
@@ -89,7 +90,7 @@ export const ENDPOINTS = {
   // Invoices
   invoices: {
     getAll: '/Invoice',
-    getById: '/Invoice/ById/:id',
+    getById: '/Invoice/:id',
     getBySupplierId: '/Invoice/BySupplier/:SupplierId',
     post: '/Invoice',
     update: '/Invoice/:id',

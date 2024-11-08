@@ -8,6 +8,7 @@ import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
+import {InvoiceRequest} from "../request/invoiceRequest";
 
 
 /**
@@ -84,11 +85,11 @@ export class InvoiceService {
    * @param invoice invoice a cargar en la base de datos
    * @returns un observable de tipo objeto
    */
-  postInvoice(invoice: Invoice){
+  postInvoice(invoice: InvoiceRequest){
     const url = API_URL+ENDPOINTS.invoices.post;
     return this.http.post(url,invoice).pipe(
       tap(() => {
-        this.notification.showNotification("¡boleta guardada con éxito!");
+        this.notification.showNotification("¡Factura guardada con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
@@ -105,11 +106,11 @@ export class InvoiceService {
    * @param invoice invoice actualizado.
    * @returns un observable de tipo objeto
    */
-  putInvoice(invoice: Invoice) {
-    const url = API_URL+ENDPOINTS.invoices.update;
+  putInvoice(invoice: InvoiceRequest) {
+    const url = API_URL+ENDPOINTS.invoices.update.replace(':id', invoice.invoiceId!.toString());
     return this.http.put(url,invoice).pipe(
       tap(() => {
-        this.notification.showNotification("¡Boleta editada con éxito!");
+        this.notification.showNotification("¡Factura editada con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
@@ -127,10 +128,10 @@ export class InvoiceService {
    * @returns un observable de tipo objeto
    */
   deleteInvoice(idInvoice: number) {
-    const url = API_URL+ENDPOINTS.invoices.delete;
+    const url = API_URL+ENDPOINTS.invoices.delete.replace(':id', idInvoice.toString());
     return this.http.patch(url,idInvoice).pipe(
       tap(() => {
-        this.notification.showNotification("¡boleta eliminada con éxito!");
+        this.notification.showNotification("¡Factura eliminada con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);

@@ -83,6 +83,18 @@ export class BudgetService {
     );
   }
 
+
+getCost(budgetId : number) : Observable<any>{
+  const url = API_URL+ENDPOINTS.budgets.getCost.replace(':BudgetId', budgetId.toString());
+  return this.http.get<any>(url).pipe(
+    catchError((error: any, caught: Observable<any>): Observable<any> => {
+      this.error.setError(error);
+      this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
+      return of();
+    })
+  );
+}
+
    /**
    * Método para crear un presupuesto nuevo.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.

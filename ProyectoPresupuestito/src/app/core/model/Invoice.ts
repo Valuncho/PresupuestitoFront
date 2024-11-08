@@ -4,9 +4,10 @@ import { InvoiceItem } from "./invoiceItem";
 
 export interface Invoice
 {
-    idInvoice : number;
+  invoiceId : number;
     date : Date;
     payments : Payment[];
-    isPaid: boolean;
-    materials: InvoiceItem[];
+  isPaid: boolean;
+  oInvoiceItems: InvoiceItem[];
+  supplierId?:0;
 }

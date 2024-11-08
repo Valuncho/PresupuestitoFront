@@ -6,13 +6,14 @@ import { NavbarComponent } from '../../../../components/navbar/navbar.component'
 import { SupplierComponent } from '../../components/supplier/supplier.component';
 import { InvoiceListComponent } from '../../../invoice/components/invoice-list/invoice-list.component';
 import { SupplierHistory } from '../../../../core/model/SupplierHistory';
-import { Invoice } from '../../../../core/model/Invoice';
+import {Supplier} from "../../../../core/model/Supplier";
 import { ModalService } from '../../../../core/utils/modal.service';
 import { PaymentsFormComponent } from '../../../payments/components/payments-form/payments-form.component';
 import { Payment } from '../../../../core/model/Payment';
 import { invoiceFormComponent } from '../../../invoice/components/invoice-form/invoice-form.component';
-
+import {Invoice} from "../../../../core/model/Invoice";
 import {InvoiceService} from "../../../../core/services/invoice.service";
+import {InvoiceControllerService} from "../../../../core/controllers/invoice-controller.service";
 
 
 @Component({
@@ -21,17 +22,16 @@ import {InvoiceService} from "../../../../core/services/invoice.service";
     imports: [CommonModule,NavbarComponent,SupplierComponent,InvoiceListComponent],
     templateUrl: './supplier-Details.component.html',
     styleUrl: './supplier-Details.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SupplierDetailsComponent {
-    private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private supplierService = inject(SupplierService);
     private invoiceService = inject(InvoiceService);
+    private invoiceController = inject(InvoiceControllerService);
     private modalService = inject(ModalService);
     id : number  = 0;
 
-    currentSupplier : SupplierHistory = {
+     currentSupplier: any  = {
         supplierHistoryId: 0,
     oSupplier : {
       supplierId: 0,
@@ -51,30 +51,39 @@ export class SupplierDetailsComponent {
 
 
   ngOnInit(): void {
-
     this.id = Number(this.activatedRoute.snapshot.params['supplierId']);
 
-    this.invoiceService.getInvoicesBySupplierId(this.id).subscribe({
-      next : (invocesRes) => {
-        console.log(invocesRes)
-        this.currentSupplier.invoices = invocesRes;
-        this.supplierService.getSupplierById(invocesRes[0].oSupplier.supplierId).subscribe({
-          next : (supplierRes) =>{
-            this.currentSupplier.oSupplier = supplierRes.value;
-            console.log(supplierRes.value);
-          }
-        })
+    this.supplierService.getSupplierById(this.id).subscribe({
+      next: (supplierRes) => {
+        this.currentSupplier!.oSupplier = supplierRes.value;
       }
     })
 
-    console.log(this.currentSupplier);
-    }
+    this.invoiceService.getInvoicesBySupplierId(this.id).subscribe({
+      next: (invocesRes) => {
+
+        this.currentSupplier!.invoices = invocesRes;
+      }
+    })
+
+
+  }
+
+
+
+
 
 
     openInvoiceForm(){
+        this.invoiceController.setInvoice({
+          invoiceId : 0,
+          supplierId : this.id,
+          date: new Date(),
+          isPaid: false
+        })
         this.modalService.openModal<invoiceFormComponent,Invoice>(invoiceFormComponent);
     }
     openPaymentForm(){
-        this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
+        //this.modalService.openModal<PaymentsFormComponent,Payment>(PaymentsFormComponent);
     }
 }

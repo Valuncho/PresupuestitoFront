@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceControllerService } from '../../../../core/controllers/invoice-controller.service';
 import { Invoice } from '../../../../core/model/Invoice';
 import { InvoiceService } from '../../../../core/services/invoice.service';
+import {UtilsService} from "../../../../core/utils/utils.service";
+import {InvoiceRequest} from "../../../../core/request/invoiceRequest";
 
 
 @Component({
@@ -20,30 +22,33 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
     private activatedRoute = inject(ActivatedRoute);
     private invoiceControllerService = inject(InvoiceControllerService)
     private invoiceService = inject(InvoiceService);
+    private utils = inject(UtilsService);
     //Properties
-    currentInvoice : Invoice = this.invoiceControllerService.getEmptyInvoice();
+    currentInvoice : InvoiceRequest =this.invoiceControllerService.getEmptyInvoice();
     invoiceId? : number;
-    isEdit : boolean = false;
+    isEdit : boolean = this.invoiceControllerService.getEditMode();
     //Form
     invoiceForm : FormGroup = new FormGroup({
         date: new FormControl('',[ Validators.required]),
     //    payment: new FormControl('', Validators.required),
       //  paid : new FormControl('', Validators.required),
     });
-    
+
     ngAfterViewInit(): void {
-        this.setUp();
+        this.invoiceControllerService.getInvoice().subscribe(res=>{
+          this.currentInvoice = res!;
+          console.log(this.currentInvoice)
+
+        })
         this.onEditHandler();
-        
+
     }
 
     get canSubmit(){
         let  flag : boolean = false;
         if(
-        this.invoiceForm.get('date')?.valid 
-        // &&
-        // this.invoiceForm.get('payment')?.valid &&
-        // this.invoiceForm.get('paid')?.valid
+        this.invoiceForm.get('date')?.valid
+
         ){
         flag = true;
         }
@@ -52,8 +57,8 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
 
     setUp(){
         this.invoiceForm.reset();
-        //this.isEdit = false;
-        /*this.currentInvoice = this.invoiceForm.getEmptyInvoice();*/
+        this.isEdit = false;
+        this.currentInvoice = this.invoiceControllerService.getEmptyInvoice();
     }
 
     resetForm($Event : Event){
@@ -67,32 +72,42 @@ import { InvoiceService } from '../../../../core/services/invoice.service';
         if(this.invoiceId){
         let url = "/invoice/edit/" + this.invoiceId;
         if(this.router.url == url){
-           // this.isEdit = true;
-            this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
-            {
-            next: (res:Invoice) => {this.currentInvoice = res!},
-            }
-        )
+           this.isEdit = true;
+        this.invoiceControllerService.getInvoice().subscribe(res=>{
+          this.currentInvoice = res!;
+        })
         }else{
-          //  this.isEdit = false;
+           this.isEdit = false;
         }
         }
-        
+
     }
 
     onSubmit(){
-        
-        this.currentInvoice = this.invoiceForm.value;
-        console.log(this.currentInvoice)
-        
-        /*
+         this.toInvoiceRequest()
+
+
+
+
         if(this.isEdit){
-        this.invoiceForm.putInvoice(this.currentInvoice).subscribe();
+        this.invoiceService.putInvoice(this.currentInvoice).subscribe({
+          next: ()=>{
+            this.utils.reaload()
+          }
+        });
         }else{
-        this.invoiceForm.postInvoice(this.currentInvoice).subscribe();
-        }*/
+        this.invoiceService.postInvoice(this.currentInvoice).subscribe({
+          next: ()=>{
+            this.utils.reaload()
+          }
+        });
+        }
 
         this.setUp();
+    }
+
+    toInvoiceRequest(){
+    this.currentInvoice.date = this.invoiceForm.get('date')?.value;
     }
 
 

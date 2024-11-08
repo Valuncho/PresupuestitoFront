@@ -27,11 +27,11 @@ export class InvoiceDetailComponent {
 
     invoiceId : number  = 0;
     currentInvoice : Invoice = {
-      idInvoice: 0,
+      invoiceId: 0,
       date: new Date(0),
       payments: [],
       isPaid: false,
-      materials: []
+      oInvoiceItems: []
     }
     invoice! : Invoice;
 

@@ -1,5 +1,6 @@
 export interface InvoiceRequest{
-    Date: Date,
-    IsPaid: boolean,
-    SupplierId : number
+  date: Date,
+  isPaid: boolean,
+  supplierId : number,
+  invoiceId? : number
 }

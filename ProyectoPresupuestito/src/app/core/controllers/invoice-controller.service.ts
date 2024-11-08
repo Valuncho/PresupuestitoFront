@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Invoice } from '../model/Invoice';
+import {InvoiceRequest} from "../request/invoiceRequest";
 /**
- * 
+ *
  * @class InvoiceControllerService
- * 
+ *
  * Clase controller de la entidad invoice para:
  * -Ser pasamanos de información,
  * -Obtener objetos vacios,
  * -Manejar el editado en el formulario.
- * 
+ *
  */
 @Injectable({
   providedIn: 'root'
 })
 export class InvoiceControllerService {
-  
-  private invoice: BehaviorSubject<Invoice | undefined> = new BehaviorSubject<Invoice | undefined>(undefined);
 
-  public getInvoice() : Observable<Invoice | undefined>{
+  private invoice: BehaviorSubject<InvoiceRequest | undefined> = new BehaviorSubject<InvoiceRequest | undefined>(undefined);
+
+  public getInvoice() : Observable<InvoiceRequest | undefined>{
     return this.invoice.asObservable();
   }
 
-  public setInvoice(invoice: Invoice) {
+  public setInvoice(invoice: InvoiceRequest) {
     this.invoice.next(invoice);
   }
   //Edit
@@ -37,13 +38,12 @@ export class InvoiceControllerService {
 
  //GetEmptyObjects
 
-getEmptyInvoice(): Invoice{
+getEmptyInvoice(): InvoiceRequest{
   return {
-    idInvoice:0,
-    date: new Date(0),
-    isPaid: false,
-    materials:[],
-    payments:[]
+    invoiceId : 0,
+    supplierId : 0,
+    isPaid : false,
+    date : new Date()
   }
 }
 
