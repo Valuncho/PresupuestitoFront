@@ -7,11 +7,12 @@ import { ModalService } from '../utils/modal.service';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
+//Futura implementacion con el backend
 /**
  * @class PaymentService
- * 
+ *
  * Servicio de la entidad cliente para comunicarse con el backend, gestionando errores y aciertos.
- * 
+ *
  */
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class PaymentService {
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
 
-  constructor() { 
-  
+  constructor() {
+
   }
 
   /**
@@ -33,15 +34,15 @@ export class PaymentService {
    * @returns Un array de pagos como un observable.
    */
   getPayments() : Observable<Payment[]> {
-    return this.http.get<Payment[]>(API_URL+ENDPOINTS.payments.getAll).pipe(      
+    return this.http.get<Payment[]>(API_URL+ENDPOINTS.payments.getAll).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
-    })); 
+    }));
   }
 
-  
+
 
   /**
    * Retorna al pago solicitado por id.
@@ -57,7 +58,7 @@ export class PaymentService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -72,14 +73,14 @@ export class PaymentService {
     const url = API_URL+ENDPOINTS.payments.postBudgetPayment;
     return this.http.post(url,payment).pipe(
       tap(() => {
-        this.notification.showNotification("¡Pago guardado al presupuesto con éxito!"); 
+        this.notification.showNotification("¡Pago guardado al presupuesto con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
   /**
    * Método para crear un pago nuevo.
@@ -93,14 +94,14 @@ export class PaymentService {
     const url = API_URL+ENDPOINTS.payments.postSalaryPayment;
     return this.http.post(url,payment).pipe(
       tap(() => {
-        this.notification.showNotification("¡Pago guardado al salario con éxito!"); 
+        this.notification.showNotification("¡Pago guardado al salario con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
   /**
    * Método para crear un pago nuevo.
@@ -114,14 +115,14 @@ export class PaymentService {
     const url = API_URL+ENDPOINTS.payments.postInvoicePayment;
     return this.http.post(url,payment).pipe(
       tap(() => {
-        this.notification.showNotification("¡Pago guardado a la factura con éxito!"); 
+        this.notification.showNotification("¡Pago guardado a la factura con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   //HACER TRES METODOS DE POST PARA CADA ENTIDAD, BUDGET,SALARY e INVOICE
@@ -138,14 +139,14 @@ export class PaymentService {
     const url = API_URL+ENDPOINTS.payments.update;
     return this.http.put(url,payment).pipe(
       tap(() => {
-        this.notification.showNotification("¡Pago editado con éxito!"); 
+        this.notification.showNotification("¡Pago editado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -159,14 +160,14 @@ export class PaymentService {
     const url = API_URL+ENDPOINTS.payments.delete;
     return this.http.patch(url,idPayment).pipe(
       tap(() => {
-        this.notification.showNotification("¡Pago eliminado con éxito!"); 
+        this.notification.showNotification("¡Pago eliminado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
-  
+
 }

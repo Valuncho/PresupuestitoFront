@@ -7,11 +7,12 @@ import { Salary } from '../model/Salary';
 import { ErrorControllerService } from '../utils/error-controller.service';
 import { ModalService } from '../utils/modal.service';
 import { NotificationService } from '../utils/notification.service';
+//Futura implementacion
 /**
  * @class SalaryService
- * 
+ *
  * Servicio de la entidad salario para comunicarse con el backend, gestionando errores y aciertos.
- * 
+ *
  */
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,12 @@ export class SalaryService {
      * @returns Un array de salarios como un observable.
      */
       getSalaries() : Observable<Salary[]> {
-        return this.http.get<Salary[]>(API_URL+ENDPOINTS.salaries.getAll).pipe(      
+        return this.http.get<Salary[]>(API_URL+ENDPOINTS.salaries.getAll).pipe(
           catchError((error: any, caught: Observable<any>): Observable<any> => {
             this.error.setError(error);
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
             return of();
-        })); 
+        }));
       }
 
   /**
@@ -51,7 +52,7 @@ export class SalaryService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -65,14 +66,14 @@ export class SalaryService {
     const url = API_URL+ENDPOINTS.salaries.post;
     return this.http.post(url,salaries).pipe(
       tap(() => {
-        this.notification.showNotification("¡Salario guardado con éxito!"); 
+        this.notification.showNotification("¡Salario guardado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -86,14 +87,14 @@ export class SalaryService {
     const url = API_URL+ENDPOINTS.salaries.update;
     return this.http.put(url,salaries).pipe(
       tap(() => {
-        this.notification.showNotification("¡Salario editado con éxito!"); 
+        this.notification.showNotification("¡Salario editado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -107,13 +108,13 @@ export class SalaryService {
     const url = API_URL+ENDPOINTS.salaries.delete;
     return this.http.patch(url,idEmployee).pipe(
       tap(() => {
-        this.notification.showNotification("¡salario eliminado con éxito!"); 
+        this.notification.showNotification("¡salario eliminado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 }

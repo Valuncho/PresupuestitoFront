@@ -20,10 +20,11 @@ import { ClientControllerService } from '../../../../core/controllers/client-con
 import { ClientService } from '../../../../core/services/client.service';
 import { BudgetRequest } from '../../../../core/request/budgetRequest';
 import { UtilsService } from '../../../../core/utils/utils.service';
+import {BudgetControllerService} from "../../../../core/controllers/budget-controller.service";
 
 /**
  * @class BudgetFormComponent
- * 
+ *
  * Componente del formulario de presupuestos.
  *
  */
@@ -45,9 +46,10 @@ export class BudgetFormComponent {
   private budgetService = inject(BudgetService);
   private clientService = inject(ClientService);
   private clientController = inject(ClientControllerService);
+  private budgetController = inject(BudgetControllerService);
   private utils = inject(UtilsService);
   //Properties
-  currentBudget : any = this.budgetService.getEmptyBudgetRequest();
+  currentBudget : any = this.budgetController.getEmptyBudgetRequest();
   currentClient : Client = this.clientController.getEmptyClient();
   budgetId : number = 0;
   isEdit : boolean = false;
@@ -67,13 +69,13 @@ export class BudgetFormComponent {
   ngOnInit(){
 
     this.setDateFortmat('es');
-    
+
     this.activatedRoute.paramMap.subscribe(params => {
       this.OnEditHandler()
       this.onClientSelectHandler(params)
 
     });
- 
+
 
   }
 
@@ -89,11 +91,11 @@ export class BudgetFormComponent {
   setUp(){
     this.BudgetForm.reset();
     this.isEdit = false;
-    this.currentBudget = this.budgetService.getEmptyBudgetRequest();  
+    this.currentBudget = this.budgetController.getEmptyBudgetRequest();
   }
 
   onClientSelectHandler(params : any){
-    this.currentClient.clientId = Number(params.get('clientId'));   
+    this.currentClient.clientId = Number(params.get('clientId'));  
     if(this.router.url == "/budget/new/"+ this.currentClient.clientId)
       {
         this.clientService.getClientById(this.currentClient.clientId).subscribe(res =>{
@@ -115,7 +117,7 @@ export class BudgetFormComponent {
   }
 
 
-  
+
 
   resetForm($Event : Event){
     this.setUp();
@@ -128,7 +130,7 @@ export class BudgetFormComponent {
   }
 
   onClientSelected(res : any) {
-    let name = res.value.personId.name+ " " +res.value.personId.lastName      
+    let name = res.value.personId.name+ " " +res.value.personId.lastName
     this.BudgetForm.patchValue({
       client : name,
       clientId: this.currentClient.clientId
@@ -146,11 +148,11 @@ export class BudgetFormComponent {
         estado : this.currentBudget.budgetStatus,
         clientId : this.currentBudget.clientId.clientId
       })
-      
+
       this.BudgetForm.get('client')?.disabled;
   }
   onSubmit(){
-    this.toBudget(); 
+    this.toBudget();
     if(this.isEdit){
       this.budgetService.putBudget(this.currentBudget).subscribe({
         next: ()=>{
@@ -168,13 +170,13 @@ export class BudgetFormComponent {
   }
 
   toBudget(){
-    
+
     this.currentBudget.deadLine = this.BudgetForm.get('deadLine')?.value;
     this.currentBudget.clientId = this.BudgetForm.get('clientId')?.value;
     this.currentBudget.descriptionBudget = this.BudgetForm.get('description')?.value;
     this.currentBudget.dateCreated = this.BudgetForm.get('createdDate')?.value;
     this.currentBudget.budgetStatus = this.BudgetForm.get('estado')?.value;
-    
+
   }
 }
 

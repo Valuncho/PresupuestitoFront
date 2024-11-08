@@ -34,6 +34,11 @@ export class BudgetService {
     'Cancelado',
   ];
 
+  //Implementar con el back
+  getEstados() {
+    return this.estados;
+  }
+
    /**
    * Retorna todos los presupuestos disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
@@ -158,34 +163,6 @@ getCost(budgetId : number) : Observable<any>{
     );  
   }
 
-  //Metodos
-  getEstados() {
-    return this.estados;
-  }
 
-  getEmptyBudget(): Budget {
-    const EmptyBudget: Budget = {
-      budgetId: 0,
-      works: [],
-      dateCreated: new Date(),
-      deadLine: new Date(),
-      descriptionBudget: '',
-      cost: 0,
-      budgetStatus: 'Creado',
-      payments: [],
 
-    };
-    return EmptyBudget;
-  }
-
-  getEmptyBudgetRequest(): BudgetRequest {
-
-    return {
-      clientId : 0,
-      budgetStatus : "",
-      deadLine : new Date(),
-      dateCreated:new Date(),
-      descriptionBudget : ""
-    }
-  }
 }

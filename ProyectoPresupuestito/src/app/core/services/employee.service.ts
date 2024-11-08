@@ -12,7 +12,7 @@ import { ErrorControllerService } from '../utils/error-controller.service';
 import { NotificationService } from '../utils/notification.service';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { EmployeeRequest } from '../request/employeeRequest';
-
+//Para futuras implementaciones
 @Injectable({
   providedIn: 'root'
 })
@@ -22,22 +22,22 @@ export class EmployeeService {
   private modal = inject(ModalService);
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
-  
-  
+
+
   //METODOS HTTP ----------------------------------------------------------------------------------------------
-  
+
     /**
      * Retorna todos los empleados disponibles guardados.
      * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
      * @returns Un array de empleados como un observable.
      */
     getEmployees() : Observable<Employee[]> {
-      return this.http.get<Employee[]>(API_URL+ENDPOINTS.employees.getAll).pipe(      
+      return this.http.get<Employee[]>(API_URL+ENDPOINTS.employees.getAll).pipe(
         catchError((error: any, caught: Observable<any>): Observable<any> => {
           this.error.setError(error);
           this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
           return of();
-      })); 
+      }));
     }
 
   /**
@@ -54,7 +54,7 @@ export class EmployeeService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -68,14 +68,14 @@ export class EmployeeService {
     const url = API_URL+ENDPOINTS.employees.post;
     return this.http.post(url,employee).pipe(
       tap(() => {
-        this.notification.showNotification("¡empleado guardado con éxito!"); 
+        this.notification.showNotification("¡empleado guardado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -89,14 +89,14 @@ export class EmployeeService {
     const url = API_URL+ENDPOINTS.employees.update;
     return this.http.put(url,employee).pipe(
       tap(() => {
-        this.notification.showNotification("¡Empleado editado con éxito!"); 
+        this.notification.showNotification("¡Empleado editado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
   /**
@@ -110,14 +110,14 @@ export class EmployeeService {
     const url = API_URL+ENDPOINTS.employees.delete;
     return this.http.patch(url,idEmployee).pipe(
       tap(() => {
-        this.notification.showNotification("¡Empleado eliminado con éxito!"); 
+        this.notification.showNotification("¡Empleado eliminado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
-    
+
 }

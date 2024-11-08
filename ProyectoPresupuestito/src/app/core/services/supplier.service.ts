@@ -24,19 +24,19 @@ export class SupplierService {
 
 
   //METODOS HTTP ----------------------------------------------------------------------------------------------
-  
+
   /**
    * Retorna todos los proveedores disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de proveedores como un observable.
    */
   getSuppliers() : Observable<any[]> {
-    return this.http.get<any[]>(API_URL+ENDPOINTS.suppliers.getAll).pipe(      
+    return this.http.get<any[]>(API_URL+ENDPOINTS.suppliers.getAll).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
-    }));   
+    }));  
   }
 
   /**
@@ -53,7 +53,7 @@ export class SupplierService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
     /**
@@ -67,14 +67,14 @@ export class SupplierService {
     const url = API_URL+ENDPOINTS.suppliers.post;
     return this.http.post(url,supplier).pipe(
       tap(() => {
-        this.notification.showNotification("¡Proveedor guardado con éxito!"); 
+        this.notification.showNotification("¡Proveedor guardado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
     /**
@@ -88,14 +88,14 @@ export class SupplierService {
     const url = API_URL+ENDPOINTS.suppliers.update.replace(':id', supplier.supplierId!.toString());
     return this.http.put(url,supplier).pipe(
       tap(() => {
-        this.notification.showNotification("¡Proveedor editado con éxito!"); 
+        this.notification.showNotification("¡Proveedor editado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
     /**
@@ -106,33 +106,19 @@ export class SupplierService {
    * @returns un observable de tipo objeto
    */
   deleteSupplier(idSupplier: number) {
-    const url = API_URL+ENDPOINTS.suppliers.delete;
+    const url = API_URL+ENDPOINTS.suppliers.delete.replace(':id',idSupplier.toString());
     return this.http.patch(url,idSupplier).pipe(
       tap(() => {
-        this.notification.showNotification("¡Proveedor eliminado con éxito!"); 
+        this.notification.showNotification("¡Proveedor eliminado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
-  /**
-   * Del backend pido la ficha del proveedor.
-   * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @returns devuelve la ficha del proveedor con su presupuesto y el cliente.
-   */
-  getSupplierHistoryById(idSupplierHistory : number) : Observable<SupplierHistory> {
-    const url = API_URL+ENDPOINTS.supplierHistories.getById.replace(':id', idSupplierHistory.toString());
-    return this.http.get<SupplierHistory>(url).pipe(
-      catchError((error: any, caught: Observable<any>): Observable<any> => {
-        this.error.setError(error);
-        this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
-        return of();
-    })
-    );   
-  }
+
 
 }

@@ -98,11 +98,11 @@ export const ENDPOINTS = {
   },
   //InvoiceItems
   invoiceItem: {
-    getAll: '/Item',
-    getById: '/Item/:id',
-    post: '/Item',
-    update: '/Item/:id',
-    delete: '/Item/:id',
+    getAll: '/InvoiceItem',
+    getById: '/InvoiceItem/:id',
+    post: '/InvoiceItem',
+    update: '/InvoiceItem/:id',
+    delete: '/InvoiceItem/:id',
   },
   //Employees
   employees: {

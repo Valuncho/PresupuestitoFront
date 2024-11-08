@@ -10,9 +10,9 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
 import { WorkRequest } from '../request/workRequest';
 /**
  * @class
- * 
+ *
  * Servicio de la entidad trabajo, para comunicarse con el backend, gestionando errores y aciertos.
- *  
+ *
  */
 
 @Injectable({
@@ -20,25 +20,27 @@ import { WorkRequest } from '../request/workRequest';
 })
 export class WorkService {
   //Util
-  private http = inject(HttpClient);  
+  private http = inject(HttpClient);
   private modal = inject(ModalService);
   private error = inject(ErrorControllerService);
   private notification = inject(NotificationService);
-
+  //Implementar en el back
   private estados : string[] = ['Presupuestado','Pendiente de aprobación','Aprobado','En proceso','Entregado','Cancelado'];
-  
+  getEstados(){
+    return this.estados;
+  }
   /**
    * Retorna todos los trabajos disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de trabajos como un observable.
    */
   getWorks() : Observable<Work[]> {
-    return this.http.get<Work[]>(API_URL+ENDPOINTS.works.getAll).pipe(      
+    return this.http.get<Work[]>(API_URL+ENDPOINTS.works.getAll).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
-    }));   
+    }));  
   }
   /**
    * Retorna al trabajo solicitado por id.
@@ -47,7 +49,7 @@ export class WorkService {
    * @returns Un trabajo como un observable.
    */
   getWorkById(idWork : number) : Observable<any> {
-    
+
     const url = API_URL+ENDPOINTS.works.getById.replace(':id', idWork.toString());
     return this.http.get<Work>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
@@ -55,7 +57,7 @@ export class WorkService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
   /**
    * Método para crear un trabajo nuevo.
@@ -68,14 +70,14 @@ export class WorkService {
     const url = API_URL+ENDPOINTS.works.post;
     return this.http.post(url,work).pipe(
       tap(() => {
-        this.notification.showNotification("¡Trabajo guardado con éxito!"); 
+        this.notification.showNotification("¡Trabajo guardado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
   /**
    * Método para actualizar información de un trabajo existente.
@@ -88,16 +90,16 @@ export class WorkService {
     const url = API_URL+ENDPOINTS.works.update.replace(':id', work.workId!.toString());
     return this.http.put(url,work).pipe(
       tap(() => {
-        this.notification.showNotification("¡Trabajo editado con éxito!"); 
+        this.notification.showNotification("¡Trabajo editado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
-  
+
    /**
    * Método para marcar como borrado a un trabajo existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
@@ -109,19 +111,17 @@ export class WorkService {
     const url = API_URL+ENDPOINTS.works.delete.replace(':id', idWork.toString());
     return this.http.patch(url,idWork).pipe(
       tap(() => {
-        this.notification.showNotification("¡Trabajo eliminado con éxito!"); 
+        this.notification.showNotification("¡Trabajo eliminado con éxito!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
-  getEstados(){
-    return this.estados;
-  }
+
 
 
 

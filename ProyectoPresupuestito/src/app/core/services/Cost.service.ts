@@ -9,7 +9,7 @@ import { NotificationService } from '../utils/notification.service';
 import { FixedCost } from '../model/FixedCost';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 
-
+//Para futuras implementaciones.
 @Injectable({
     providedIn: 'root'
     })
@@ -20,36 +20,20 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
     private error = inject(ErrorControllerService);
     private notification = inject(NotificationService);
 
-    //private costSeleccionado : FixedCost = this.getEmptyFixedCost();
-    private _costSubject = new BehaviorSubject<FixedCost[]>([]);
-
-    //private _selectedCostSubject = new BehaviorSubject<FixedCost>(this.costSeleccionado);
-
-    private fixedCosts : FixedCost[] = [
-        {
-            idFixedCost: 1001,
-            description: "John",
-            amount: 1,
-            workingDays: 1,
-            hoursWorked: 1,
-            date: new Date(0),
-        }
-    ]
-
     //METODOS HTTP ----------------------------------------------------------------------------------------------
-    
+
     /**
      * Retorna todos los costos disponibles guardados.
      * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
      * @returns Un array de costos como un observable.
      */
     getFixedCosts() : Observable<FixedCost[]> {
-        return this.http.get<FixedCost[]>(API_URL+ENDPOINTS.fixedCost.getAll).pipe(      
+        return this.http.get<FixedCost[]>(API_URL+ENDPOINTS.fixedCost.getAll).pipe(
         catchError((error: any, caught: Observable<any>): Observable<any> => {
             this.error.setError(error);
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
             return of();
-        }));   
+        }));  
     }
 
     /**
@@ -66,7 +50,7 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
             return of();
         })
-        ); 
+        );
     }
 
     /**
@@ -80,14 +64,14 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
         const url = API_URL+ENDPOINTS.fixedCost.post;
         return this.http.post(url,fixedCost).pipe(
         tap(() => {
-            this.notification.showNotification("¡Costo guardado con éxito!"); 
+            this.notification.showNotification("¡Costo guardado con éxito!");
         }),
         catchError((error: any, caught: Observable<any>): Observable<any> => {
             this.error.setError(error);
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
             return of();
         })
-        );   
+        );  
     }
 
     /**
@@ -101,14 +85,14 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
         const url = API_URL+ENDPOINTS.fixedCost.update;
         return this.http.put(url,FixedCost).pipe(
         tap(() => {
-            this.notification.showNotification("¡Costo editado con éxito!"); 
+            this.notification.showNotification("¡Costo editado con éxito!");
         }),
         catchError((error: any, caught: Observable<any>): Observable<any> => {
             this.error.setError(error);
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
             return of();
         })
-        );   
+        );  
     }
 
     /**
@@ -122,14 +106,14 @@ import { ErrorAlertComponent } from '../../components/error-alert/error-alert.co
         const url = API_URL+ENDPOINTS.fixedCost.delete;
         return this.http.patch(url,idFixedCost).pipe(
         tap(() => {
-            this.notification.showNotification("¡Costo eliminado con éxito!"); 
+            this.notification.showNotification("¡Costo eliminado con éxito!");
         }),
         catchError((error: any, caught: Observable<any>): Observable<any> => {
             this.error.setError(error);
             this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
             return of();
         })
-        );   
+        );  
     }
-    
+
 }

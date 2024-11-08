@@ -31,7 +31,7 @@ export class InvoiceService {
   //METODOS HTTP ----------------------------------------------------------------------------------------------
 
     /**
-   * Retorna todos los boletas disponibles guardados.
+   * Retorna todos los facturas disponibles guardados.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @returns Un array de boletas como un observable.
    */
@@ -61,10 +61,10 @@ export class InvoiceService {
     );
   }
   /**
-   * Retorna una lista de boletas solicitada por id.
+   * Retorna una lista de facturas solicitada por id.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @param idInvoice id de la boleta solicitado.
-   * @returns Una boleta como un observable.
+   * @param idInvoice id de la factura solicitada.
+   * @returns Una factura como un observable.
    */
   getInvoiceById(idInvoice : number) : Observable<any> {
     const url = API_URL+ENDPOINTS.invoices.getById.replace(':id', idInvoice.toString());
@@ -79,7 +79,7 @@ export class InvoiceService {
 
 
     /**
-   * Método para crear una boleta nueva.
+   * Método para crear una factura nueva.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param invoice invoice a cargar en la base de datos
@@ -100,7 +100,7 @@ export class InvoiceService {
   }
 
   /**
-   * Método para actualizar información de una boleta existente.
+   * Método para actualizar información de una factura existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
    * @param invoice invoice actualizado.
@@ -121,10 +121,10 @@ export class InvoiceService {
   }
 
     /**
-   * Método para marcar como borrada a una boleta existente.
+   * Método para marcar como borrada a una factura existente.
    * @callback any Ejecuto tap cuando se ejecutó con exito la petición para que muestre la notificación al usuario.
    * @throws Abre una ventana modal con un mensaje de error generico y el error detallado.
-   * @param idInvoice id de la boleta a eliminar.
+   * @param idInvoice id de la factura a eliminar.
    * @returns un observable de tipo objeto
    */
   deleteInvoice(idInvoice: number) {
