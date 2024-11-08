@@ -72,6 +72,7 @@ export class BudgetDetailsComponent {
             }
           })
           this.budgetController.setBudgetId(this.budgetId!);
+          this.calculatePrice();
         }
       }
      )
@@ -89,9 +90,7 @@ export class BudgetDetailsComponent {
       }
     })
   }
-  calculateDeadline(){
 
-  }
 
 
 }

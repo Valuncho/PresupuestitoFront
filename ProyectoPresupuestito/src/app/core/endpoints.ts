@@ -26,7 +26,7 @@ export const ENDPOINTS = {
     getAll: '/Budget',
     getById: '/Budget/ById/:id',
     getByClientId : '/Budget/ByClient/:ClientId',
-    getCost : '/CalculatePrice:BudgetId',
+    getCost : '/Budget/CalculatePrice/:BudgetId',
     post: '/Budget',
     update: '/Budget/:id',
     delete: '/Budget/:id',
