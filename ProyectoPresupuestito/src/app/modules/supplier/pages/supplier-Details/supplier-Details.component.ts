@@ -16,7 +16,7 @@ import { InvoiceControllerService } from '../../../../core/controllers/invoice-c
 @Component({
   selector: 'app-supplier-details',
   standalone: true,
-  imports: [NavbarComponent, SupplierComponent, InvoiceListComponent],
+  imports: [ SupplierComponent, InvoiceListComponent],
   templateUrl: './supplier-Details.component.html',
   styleUrl: './supplier-Details.component.css',
 })

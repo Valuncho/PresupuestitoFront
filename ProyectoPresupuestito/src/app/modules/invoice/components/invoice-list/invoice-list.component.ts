@@ -23,7 +23,7 @@ import {UtilsService} from "../../../../core/utils/utils.service";
 @Component({
     selector: 'app-invoice-list',
     standalone: true,
-    imports: [InvoiceSearchComponent,InvoiceCardComponent,NgxPaginationModule,CommonModule,TextCardComponent],
+    imports: [InvoiceCardComponent,NgxPaginationModule,CommonModule,TextCardComponent],
     templateUrl: './invoice-list.component.html',
     styleUrl: './invoice-list.component.css',
 
