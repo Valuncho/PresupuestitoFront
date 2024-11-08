@@ -2,8 +2,9 @@ import { Material } from "./Material";
 
 export interface InvoiceItem
 {
-    idInvoiceItem : number;
-    material : Material;
+    invoiceId? : number;
+    invoiceItemId : number;
+    oMaterial : Material;
     quantity : number;
     price : number;
 }

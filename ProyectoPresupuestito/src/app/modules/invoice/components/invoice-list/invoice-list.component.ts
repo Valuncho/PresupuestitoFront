@@ -42,11 +42,6 @@ import {UtilsService} from "../../../../core/utils/utils.service";
 
     @Input() invoices! : Invoice[];
 
-    //Pagination
-    page = 1
-    pageSize = 5
-
-
     ngOnInit(): void {
 
         this.invoiceService.getInvoices().subscribe({
@@ -58,12 +53,11 @@ import {UtilsService} from "../../../../core/utils/utils.service";
     //Card
 
     handleViewInvoice($Event : Invoice){
-      console.log($Event)
+      this.invoiceController.setInvoiceModel($Event);
         this.router.navigate(['/invoice/detail/',$Event.invoiceId]);
     }
 
     handleEditInvoice($Event : any){
-      console.log($Event)
       this.invoiceController.setEditMode(true);
       this.invoiceController.setInvoice(
         {
@@ -97,9 +91,5 @@ import {UtilsService} from "../../../../core/utils/utils.service";
 
     }
 
-    //Pagination
-    pageChange(page: number) {
-        this.page = page;
-    }
 
 }

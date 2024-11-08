@@ -9,11 +9,13 @@ import { ModalService } from '../../../../core/utils/modal.service';
 import { UtilsService } from '../../../../core/utils/utils.service';
 import { InvoiceItem } from '../../../../core/model/invoiceItem';
 import { InvoiceItemFormComponent } from '../invoice-item-form/invoice-item-form.component';
+import {InvoiceControllerService} from "../../../../core/controllers/invoice-controller.service";
+import {JsonPipe} from "@angular/common";
 
 @Component({
   selector: 'app-invoice-item-list',
   standalone: true,
-  imports: [TextCardComponent,InvoiceItemCardComponent],
+  imports: [TextCardComponent, InvoiceItemCardComponent, JsonPipe],
   templateUrl: './invoice-item-list.component.html',
   styleUrl: './invoice-item-list.component.css'
 })
@@ -23,9 +25,16 @@ export class InvoiceItemListComponent {
   private modalService = inject(ModalService);
   private itemService = inject(ItemService);
   private materialController = inject(MaterialControllerService);
+  private invoiceController = inject(InvoiceControllerService);
   private utils = inject(UtilsService);
-  @Input() items : InvoiceItem[]=[]
-  @Input() options : boolean = false;
+  // @Input() items : any;
+  items : InvoiceItem[] = [];
+
+  ngOnInit(): void {
+    this.invoiceController.getInvoiceModel().subscribe(res =>{
+      this.items = res!.oInvoiceItems;
+    })
+  }
   addItemHandler(){
     this.modalService.openModal<InvoiceItemFormComponent,InvoiceItem>(InvoiceItemFormComponent);
 
@@ -33,20 +42,20 @@ export class InvoiceItemListComponent {
 
   editar($Event : InvoiceItem){
     this.materialController.setEditMode(true);
-    //this.materialController.setItem($Event);
+    this.materialController.setinvoiceItem($Event);
     this.modalService.openModal<InvoiceItemFormComponent,InvoiceItem>(InvoiceItemFormComponent);
   }
 
   eliminar($Event : InvoiceItem){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        mensaje: `¿Estás seguro de que deseas eliminar el item de: ${$Event.material.materialName}?`
+        mensaje: `¿Estás seguro de que deseas eliminar el item de: ${$Event.oMaterial.materialName}?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.itemService.deleteItem($Event.idInvoiceItem).subscribe(
+        this.itemService.deleteItem($Event.invoiceItemId).subscribe(
           {
             next: ()=>{
               this.utils.reaload()

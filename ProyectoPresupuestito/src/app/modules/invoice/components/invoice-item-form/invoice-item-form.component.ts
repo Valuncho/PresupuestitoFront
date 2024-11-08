@@ -5,11 +5,14 @@ import { MaterialControllerService } from '../../../../core/controllers/material
 import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
 import { Item } from '../../../../core/model/Item';
 import { Material } from '../../../../core/model/Material';
-import { ItemRequest } from '../../../../core/request/itemRequest';
+import { InvoceItemRequest } from '../../../../core/request/invoceItemRequest';
 import { ItemService } from '../../../../core/services/item.service';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { UtilsService } from '../../../../core/utils/utils.service';
 import { MaterialListComponent } from '../../../materials/components/lists/material-list/material-list.component';
+import {InvoiceControllerService} from "../../../../core/controllers/invoice-controller.service";
+import {InvoiceItem} from "../../../../core/model/invoiceItem";
+import {InvoiceItemService} from "../../../../core/services/invoice-item.service";
 
 @Component({
   selector: 'app-invoice-item-form',
@@ -22,17 +25,17 @@ export class InvoiceItemFormComponent {
   //Utils
   private materialController = inject(MaterialControllerService);
   private modalService = inject(ModalService);
-  private itemService = inject(ItemService);
-  private workController = inject(WorkControllerService);
+  private itemService = inject(InvoiceItemService);
+  private invoiceControllerService = inject(InvoiceControllerService);
   private utils = inject(UtilsService);
   //Suscriptions
-  private WorkSubscription: Subscription = new Subscription;
+  private InvoiceSubscription: Subscription = new Subscription;
   private ItemSubscription: Subscription = new Subscription;
   private MaterialSubscription: Subscription = new Subscription;
   //Properties
-  currentItem : ItemRequest = this.materialController.getEmptyItemRequest();
-  workId : number = 0;
+  currentItem : InvoceItemRequest = this.materialController.getEmptyInvoiceItemRequest();
   currentMaterial : Material = this.materialController.getEmptyMaterial();
+  invoiceId : number = 0;
   edit : boolean = false;
   itemForm : FormGroup = new FormGroup({
     id : new FormControl(0),
@@ -45,10 +48,10 @@ export class InvoiceItemFormComponent {
 
 ngOnInit(): void {
   this.edit = this.materialController.getEditMode();
-  this.WorkSubscription = this.workController.getWorkModel().subscribe(res =>{
-    this.workId = res.workId;
+  this.InvoiceSubscription = this.invoiceControllerService.getInvoiceId().subscribe(res =>{
+    this.invoiceId = res;
   })
-  this.ItemSubscription = this.materialController.getItem().subscribe(res =>{
+  this.ItemSubscription = this.materialController.getInvoiceItem().subscribe(res =>{
     this.edit = this.materialController.getEditMode();
     if(this.edit) {
       this.toEdit(res!)
@@ -64,18 +67,19 @@ ngOnInit(): void {
     this.materialController.setMaterial(this.materialController.getEmptyMaterial());
     this.materialController.setItem(this.materialController.getEmptyItem());
     this.materialController.setEditMode(false)
-    this.WorkSubscription.unsubscribe();
+    this.InvoiceSubscription.unsubscribe();
     this.MaterialSubscription.unsubscribe();
     this.ItemSubscription.unsubscribe();
   }
 
-toEdit(item : Item){
+toEdit(item : InvoiceItem){
     this.materialController.setMaterial(item.oMaterial)
     this.itemForm.patchValue({
-      id: item.itemId,
+      id: item.invoiceItemId,
       material : item.oMaterial.materialName,
       idmaterial : item.oMaterial.materialId,
-      quantity : item.quantity
+      quantity : item.quantity,
+      price : item.price
     })
 }
 
@@ -91,14 +95,15 @@ setNewMaterial() {
 
 sent(){
   this.itemFormToItem();
+  console.log(this.currentItem)
   if(this.edit){
-    this.itemService.putItem(this.currentItem).subscribe({
+    this.itemService.putInvoiceItem(this.currentItem).subscribe({
       next: ()=>{
         this.utils.reaload()
       }
     });
   }else{
-    this.itemService.postItem(this.currentItem).subscribe({
+    this.itemService.postInvoiceItem(this.currentItem).subscribe({
       next: ()=>{
       this.utils.reaload()
       }
@@ -114,8 +119,11 @@ itemFormToItem(){
   }else{
     this.currentItem.itemId = this.itemForm.get("id")?.value;
   }
-  this.currentItem.WorkId = this.workId;
+  this.currentItem.InvoiceId = this.invoiceId;
   this.currentItem.MaterialId = this.currentMaterial.materialId;
+  this.currentItem.Price = this.itemForm.get("price")?.value;
   this.currentItem.Quantity = this.itemForm.get("quantity")?.value;
+
+
 }
 }

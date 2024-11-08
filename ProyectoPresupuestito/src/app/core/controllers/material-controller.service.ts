@@ -9,15 +9,16 @@ import { SubCategoryMaterialRequest } from '../request/subCategoryMaterialReques
 import { CategoryRequest } from '../request/categoryRequest';
 import { MaterialRequest } from '../request/materialRequest';
 import { ItemRequest } from '../request/itemRequest';
+import { InvoceItemRequest } from '../request/invoceItemRequest';
 /**
- * 
+ *
  * @class MaterialControllerService
- * 
+ *
  * Clase controller de la entidad material, categoria y subcategoria, item e invoceitem para:
  * -Ser pasamanos de información,
  * -Obtener objetos vacios,
  * -Manejar el editado en el formulario.
- * 
+ *
  */
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,7 @@ export class MaterialControllerService {
   public setCategory(category: Category) {
     this.category.next(category);
   }
-  
+
 
   public getSubcategory(): Observable<SubCategoryMaterial | undefined>{
     return this.subCategory.asObservable();
@@ -94,7 +95,7 @@ export class MaterialControllerService {
         materialMeasure: '',
         materialUnitMeasure: '',
         subCategoryMaterialId : this.getEmptySubCategory()
-      
+
     }
   }
 
@@ -105,7 +106,7 @@ export class MaterialControllerService {
       categoryId: this.getEmptyCategory()
     }
   }
-  
+
   getEmptyCategory() : Category{
     return{
       categoryId: 0,
@@ -132,10 +133,13 @@ export class MaterialControllerService {
   }
   getEmptyInvoiceItem() : InvoiceItem {
     return {
-      idInvoiceItem: 0,
-      material:this.getEmptyMaterial(),
-      quantity: 0,
-      price:0
+      invoiceId: 0, invoiceItemId: 0, oMaterial: this.getEmptyMaterial(), price: 0, quantity: 0
+
+    }
+  }
+  getEmptyInvoiceItemRequest() : InvoceItemRequest {
+    return {
+      itemId: 0, InvoiceId: 0, MaterialId: 0, Price: 0, Quantity: 0,
     }
   }
 
@@ -159,7 +163,7 @@ export class MaterialControllerService {
       categoryId: 0
     }
   }
-  
+
   getEmptyCategoryRequest() : CategoryRequest{
     return{
       CategoryId:  '',
@@ -169,5 +173,5 @@ export class MaterialControllerService {
   }
 
 
-  
+
 }

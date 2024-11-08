@@ -18,13 +18,31 @@ import {InvoiceRequest} from "../request/invoiceRequest";
 export class InvoiceControllerService {
 
   private invoice: BehaviorSubject<InvoiceRequest | undefined> = new BehaviorSubject<InvoiceRequest | undefined>(undefined);
+  private invoiceModel: BehaviorSubject<Invoice | undefined> = new BehaviorSubject<Invoice | undefined>(undefined);
+  private invoiceId: BehaviorSubject<number > = new BehaviorSubject<number >(0);
 
+  public getInvoiceId(): Observable<number> {
+    return this.invoiceId.asObservable();
+  }
+
+  public setInvoiceId(invoiceId: number) {
+    this.invoiceId.next(invoiceId);
+
+  }
   public getInvoice() : Observable<InvoiceRequest | undefined>{
     return this.invoice.asObservable();
   }
 
   public setInvoice(invoice: InvoiceRequest) {
     this.invoice.next(invoice);
+  }
+
+  public getInvoiceModel() : Observable<Invoice | undefined>{
+    return this.invoiceModel.asObservable();
+  }
+
+  public setInvoiceModel(invoiceModel: Invoice) {
+    this.invoiceModel.next(invoiceModel);
   }
   //Edit
   private editMode : boolean = false;
@@ -45,6 +63,12 @@ getEmptyInvoice(): InvoiceRequest{
     isPaid : false,
     date : new Date()
   }
+}
+getEmptyInvoceModel() : Invoice {
+    return {
+      date: new Date(), invoiceId: 0, isPaid: false, oInvoiceItems: [], payments: [], supplierId: 0
+
+    }
 }
 
 }

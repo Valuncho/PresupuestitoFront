@@ -1,13 +1,14 @@
 import { Payment } from "./Payment";
 import { Item } from "./Item";
 import { InvoiceItem } from "./invoiceItem";
+import {Supplier} from "./Supplier";
 
-export interface Invoice
-{
-  invoiceId : number;
-    date : Date;
-    payments : Payment[];
+export interface Invoice {
+  date: Date;
+  invoiceId: number;
   isPaid: boolean;
   oInvoiceItems: InvoiceItem[];
-  supplierId?:0;
+  oSupplier?: Supplier;
+  payments: Payment[];
+  supplierId?: 0;
 }

@@ -11,11 +11,13 @@ import { SupplierHistory } from '../../../../core/model/SupplierHistory';
 import { InvoiceItemListComponent } from "../../components/invoice-item-list/invoice-item-list.component";
 import {SupplierService} from "../../../../core/services/supplier.service";
 import {Supplier} from "../../../../core/model/Supplier";
+import {InvoiceControllerService} from "../../../../core/controllers/invoice-controller.service";
+import {JsonPipe} from "@angular/common";
 
 @Component({
   selector: 'app-invoice-detail',
   standalone: true,
-  imports: [InvoiceComponent, SupplierDetailsComponent, SupplierComponent, InvoiceItemListComponent],
+  imports: [InvoiceComponent, SupplierDetailsComponent, SupplierComponent, InvoiceItemListComponent, JsonPipe],
   templateUrl: './invoice-detail.component.html',
   styleUrl: './invoice-detail.component.css'
 })
@@ -24,21 +26,13 @@ export class InvoiceDetailComponent {
     private activatedRoute = inject(ActivatedRoute);
     private invoiceService = inject(InvoiceService);
     private supplierService = inject(SupplierService);
-
+    private invoiceController = inject(InvoiceControllerService);
     invoiceId : number  = 0;
-    currentInvoice : Invoice = {
-      invoiceId: 0,
-      date: new Date(0),
-      payments: [],
-      isPaid: false,
-      oInvoiceItems: []
-    }
+    currentInvoice : Invoice = this.invoiceController.getEmptyInvoceModel();
     invoice! : Invoice;
 
   currentSupplier : Supplier = {
-
-
-      supplierId: 0,
+    supplierId: 0,
       personId: {
         personId: 0,
         name: '',
@@ -54,7 +48,8 @@ export class InvoiceDetailComponent {
 
     ngOnInit(): void {
         this.invoiceId = Number(this.activatedRoute.snapshot.params['invoicedId']);
-        console.log(this.invoiceId);
+
+        this.invoiceController.setInvoiceId(this.invoiceId);
         this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
           {
             next: (invoiceRes)=>{
