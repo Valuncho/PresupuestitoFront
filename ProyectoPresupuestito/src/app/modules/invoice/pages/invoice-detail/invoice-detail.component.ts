@@ -17,19 +17,19 @@ import {JsonPipe} from "@angular/common";
 @Component({
   selector: 'app-invoice-detail',
   standalone: true,
-  imports: [InvoiceComponent, SupplierDetailsComponent, SupplierComponent, InvoiceItemListComponent, JsonPipe],
+  imports: [InvoiceComponent, SupplierComponent, InvoiceItemListComponent],
   templateUrl: './invoice-detail.component.html',
   styleUrl: './invoice-detail.component.css'
 })
 export class InvoiceDetailComponent {
 
-    private activatedRoute = inject(ActivatedRoute);
-    private invoiceService = inject(InvoiceService);
-    private supplierService = inject(SupplierService);
-    private invoiceController = inject(InvoiceControllerService);
-    invoiceId : number  = 0;
-    currentInvoice : Invoice = this.invoiceController.getEmptyInvoceModel();
-    invoice! : Invoice;
+  private activatedRoute = inject(ActivatedRoute);
+  private invoiceService = inject(InvoiceService);
+  private supplierService = inject(SupplierService);
+  private invoiceController = inject(InvoiceControllerService);
+  invoiceId : number  = 0;
+  currentInvoice : any = this.invoiceController.getEmptyInvoceModel();
+  total : number = 0;
 
   currentSupplier : Supplier = {
     supplierId: 0,
@@ -53,6 +53,7 @@ export class InvoiceDetailComponent {
         this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
           {
             next: (invoiceRes)=>{
+              console.log(this.currentInvoice);
               this.currentInvoice = invoiceRes.value;
               this.supplierService.getSupplierById(invoiceRes.value.oSupplier.supplierId).subscribe(
                 {
@@ -64,8 +65,17 @@ export class InvoiceDetailComponent {
             }
           }
         )
-
+        
+        this.total=this.calculateTotal()
     }
+
+    calculateTotal(): number {
+      let total = 0
+      this.currentInvoice.oInvoiceItems.forEach((item: { price: number; quantity: number; })=>{
+          total += item.price * item.quantity
+      })
+      return total
+  }
 
 }
 

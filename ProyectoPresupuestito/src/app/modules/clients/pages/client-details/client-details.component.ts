@@ -22,7 +22,7 @@ import {BudgetService} from "../../../../core/services/budget.service";
 @Component({
   selector: 'app-client-details',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, BudgetListComponent, PaymentsTableComponent, ClientComponent],
+  imports: [ CommonModule, BudgetListComponent, ClientComponent],
   templateUrl: './client-details.component.html',
   styleUrl: './client-details.component.css'
 })
@@ -58,15 +58,16 @@ export class ClientDetailsComponent {
   ngOnInit(): void {
     this.id = parseInt(this.activatedRoute.snapshot.params['clientId']);
 
+    this.clientService.getClientById(this.id).subscribe({
+      next: (clientRes) => {
+        this.currentClient.clientId = clientRes.value;
+
+      }
+    })
+
     this.budgetService.getBudgetsByClientId(this.id).subscribe({
       next: (budgetsRes) => {
         this.currentClient.budgetsId = budgetsRes;
-        this.clientService.getClientById(budgetsRes[0].clientId.clientId).subscribe({
-          next: (clientRes) => {
-            this.currentClient.clientId = clientRes.value;
-
-          }
-        })
       }
     })
   }

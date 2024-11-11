@@ -63,7 +63,6 @@ import {InvoiceRequest} from "../../../../core/request/invoiceRequest";
 
     resetForm($Event : Event){
         this.setUp();
-        this.router.navigate(["/invoice"]);
         $Event.preventDefault();
     }
 

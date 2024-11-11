@@ -1,31 +1,11 @@
-/* Definición de colores */
-:root {
-    --blanquecino: #f8f8f8;
-    --abedul: #f0e6d6;
-}
-
-/* Estilos generales */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: var(--blanquecino);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-}
-
-/* Contenedor principal */
-.container {
-    width: 90%;
-    max-width: 800px;
-    margin: 100px 0;
+section{
+  justify-content: center;
 }
 
 /* Estilos para los bloques */
 .block {
     background-color: var(--abedul);
+    font-family: var(--titulo);
     padding: 20px;
     margin-bottom: 15px;
     border-radius: 8px;
@@ -33,7 +13,3 @@ body {
     text-align: center;
 }
 
-/* Asegura que no haya scroll */
-html, body {
-    overflow: hidden;
-}
