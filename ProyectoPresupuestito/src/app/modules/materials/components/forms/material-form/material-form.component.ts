@@ -46,8 +46,8 @@ export class MaterialFormComponent {
     subCategory : new FormControl(0,Validators.required),
     name : new FormControl('', Validators.required),
     description : new FormControl('', Validators.required),
-    brand : new FormControl('',Validators.required),
-    color : new FormControl('',Validators.required)
+    brand : new FormControl(''),
+    color : new FormControl('')
   })
 
 
