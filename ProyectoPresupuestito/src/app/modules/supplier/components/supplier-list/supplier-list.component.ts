@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
     selector: 'app-supplier-list',
     standalone: true,
-    imports: [SupplierSearchComponent,SupplierCardComponent,TextCardComponent,NgxPaginationModule,MatProgressSpinnerModule],
+    imports: [SupplierCardComponent,TextCardComponent,NgxPaginationModule,MatProgressSpinnerModule],
     templateUrl: './supplier-list.component.html',
     styleUrl: './supplier-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

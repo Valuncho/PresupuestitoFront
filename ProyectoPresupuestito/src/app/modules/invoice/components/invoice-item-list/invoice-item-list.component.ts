@@ -15,7 +15,7 @@ import {JsonPipe} from "@angular/common";
 @Component({
   selector: 'app-invoice-item-list',
   standalone: true,
-  imports: [TextCardComponent, InvoiceItemCardComponent, JsonPipe],
+  imports: [TextCardComponent, InvoiceItemCardComponent],
   templateUrl: './invoice-item-list.component.html',
   styleUrl: './invoice-item-list.component.css'
 })

@@ -1,5 +1,5 @@
 import { Component, inject, Input, signal, SimpleChange } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
@@ -23,7 +23,7 @@ import {UtilsService} from "../../../../core/utils/utils.service";
 @Component({
     selector: 'app-invoice-list',
     standalone: true,
-    imports: [InvoiceSearchComponent,InvoiceCardComponent,NgxPaginationModule,CommonModule,TextCardComponent],
+    imports: [InvoiceCardComponent,NgxPaginationModule,CommonModule,TextCardComponent],
     templateUrl: './invoice-list.component.html',
     styleUrl: './invoice-list.component.css',
 
@@ -37,17 +37,19 @@ import {UtilsService} from "../../../../core/utils/utils.service";
     private invoiceService = inject(InvoiceService);
     private invoiceController = inject(InvoiceControllerService);
     private utils = inject(UtilsService);
+    private activatedRoute = inject(ActivatedRoute);
     //Properties
     options : boolean = false;
 
     @Input() invoices! : Invoice[];
 
     ngOnInit(): void {
-
-        this.invoiceService.getInvoices().subscribe({
+      let id = Number(this.activatedRoute.snapshot.params['supplierId']);
+      this.invoiceService.getInvoicesBySupplierId(id).subscribe({
         next: x => this.invoices = x,
-        })
-
+      })
+      
+      console.log(this.invoices)
     }
 
     //Card

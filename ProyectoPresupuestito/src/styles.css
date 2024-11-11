@@ -170,7 +170,7 @@ form .invalid p::before{
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+overflow: auto;
     max-width: 40vw;
     padding: 1em;
     margin: 10px;
@@ -196,18 +196,23 @@ form .invalid p::before{
 .ItemTable{
     width: 200%;
     max-height: 50vh;
-    overflow-y: scroll;
+    overflow: auto;
 }
 
 .ItemTable thead{
     font-size: large;
 }
 
-
-.ItemTable td{
-    border: var(--negro) 1px solid;
-    padding: 5px;
+.ItemTable tbody td{
+     text-align: center;
 }
+
+/*.ItemTable td{*/
+/*    border: var(--negro) 1px solid;*/
+/*    padding: 5px;*/
+
+/*}*/
+
 /*Detalles*/
 .Detalle {
     border-radius: 5px;
@@ -363,16 +368,16 @@ form .invalid p::before{
         align-items: center;
     }
 
-    
+
     .List, .Componente, form {
         min-width: 50vh;
         max-width: 40vw;
-        
+
     }
     .Details{
         min-width: 300px;
     }
-    
+
 
 }
 
@@ -383,17 +388,17 @@ form .invalid p::before{
         flex-direction: column;
     }
     .List, form, .Componente {
-        
+
         max-width: none;
         min-width: 260px;
         border-radius: 10px;
     }
-    
+
 
 }
 
 @media (orientation: landscape) {
-  
+
     .List, form, .Componente {
         min-width: 360px;
         border-radius: 10px;

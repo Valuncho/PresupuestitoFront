@@ -16,7 +16,7 @@ import { InvoiceControllerService } from '../../../../core/controllers/invoice-c
 @Component({
   selector: 'app-supplier-details',
   standalone: true,
-  imports: [NavbarComponent, SupplierComponent, InvoiceListComponent],
+  imports: [ SupplierComponent, InvoiceListComponent],
   templateUrl: './supplier-Details.component.html',
   styleUrl: './supplier-Details.component.css',
 })
@@ -51,15 +51,16 @@ export class SupplierDetailsComponent {
 
     this.supplierService.getSupplierById(this.id).subscribe({
       next: (supplierRes) => {
+        console.log(supplierRes)
         this.currentSupplier!.oSupplier = supplierRes.value;
       },
     });
-
-    this.invoiceService.getInvoicesBySupplierId(this.id).subscribe({
-      next: (invocesRes) => {
-        this.currentSupplier!.invoices = invocesRes;
-      },
-    });
+    console.log(this.currentSupplier)
+    // this.invoiceService.getInvoicesBySupplierId(this.id).subscribe({
+    //   next: (invocesRes) => {
+    //     this.currentSupplier!.invoices = invocesRes;
+    //   },
+    // });
   }
 
   openInvoiceForm() {
