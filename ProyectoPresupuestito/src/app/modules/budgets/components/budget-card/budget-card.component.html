@@ -2,8 +2,8 @@
 <div class="Card">
     <div class="Card-Details">        
         <p>Estado: {{Budget!.budgetStatus}}</p>
-        <p>Precio: {{Budget!.cost | currency}}</p>
-        <p>Fecha elaboración: {{Budget.dateCreated | date:'dd/MM/yyyy'}}</p>
+        <p>Costo: {{Budget!.cost | currency}}</p>
+        <p>Fecha confección: {{Budget.dateCreated | date:'dd/MM/yyyy'}}</p>
     </div>
     <div class="Card-Options">
         <app-button-card [icon]="botones[0].icon" (click)="select()"  mat-raised-button matTooltip="Ver detalle del presupuesto."/>

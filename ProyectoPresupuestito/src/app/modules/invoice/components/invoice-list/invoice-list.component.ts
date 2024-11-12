@@ -49,14 +49,13 @@ import {UtilsService} from "../../../../core/utils/utils.service";
         next: x => this.invoices = x,
       })
       
-      console.log(this.invoices)
     }
 
     //Card
 
     handleViewInvoice($Event : Invoice){
       this.invoiceController.setInvoiceModel($Event);
-        this.router.navigate(['/invoice/detail/',$Event.invoiceId]);
+      this.router.navigate(['/invoice/detail/',$Event.invoiceId]);
     }
 
     handleEditInvoice($Event : any){
