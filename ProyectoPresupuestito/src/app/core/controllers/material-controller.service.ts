@@ -25,6 +25,17 @@ import { InvoceItemRequest } from '../request/invoceItemRequest';
 })
 export class MaterialControllerService {
   //Selected entities
+  private aviso : BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
+
+  public getAviso() : Observable<boolean>{
+    return  this.aviso.asObservable();
+  }
+
+  public setAviso(aviso : boolean){
+    this.aviso.next(aviso);
+  }
+
+
   private material: BehaviorSubject<Material > = new BehaviorSubject<Material>(this.getEmptyMaterial());
   private category: BehaviorSubject<Category | undefined> = new BehaviorSubject<Category | undefined>(undefined);
   private subCategory: BehaviorSubject<SubCategoryMaterial | undefined> = new BehaviorSubject<SubCategoryMaterial | undefined>(undefined);

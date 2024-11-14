@@ -51,6 +51,12 @@ export class ClientFormComponent {
     });
     this.setUp();
   }
+  setUp(){
+    this.closeModal()
+    this.clientForm.reset();
+    this.isEdit = false;
+    this.currentClient = this.clientController.getEmptyClient();
+  }
 
   get canSubmit(){
     let  flag : boolean = false;
@@ -65,12 +71,6 @@ export class ClientFormComponent {
     return flag;
   }
 
-  setUp(){
-    this.closeModal()
-    this.clientForm.reset();
-    this.isEdit = false;
-    this.currentClient = this.clientController.getEmptyClient();
-  }
 
   resetForm($Event : Event){
     this.setUp();
@@ -79,7 +79,6 @@ export class ClientFormComponent {
   }
 
   onEditHandler(){
-    console.log(this.router.url)
       if(this.router.url == "/client/edit/" + this.clientId){
         this.clientService.getClientById(this.clientId!).subscribe( {
           next:res =>{

@@ -14,5 +14,9 @@ import { SubcategoryListComponent } from "../../components/lists/subcategory-lis
   styleUrl: './material-form-view.component.css'
 })
 export class MaterialFormViewComponent {
+  flag : boolean = false;
 
+  avisar(){
+    this.flag = true;
+  }
 }
