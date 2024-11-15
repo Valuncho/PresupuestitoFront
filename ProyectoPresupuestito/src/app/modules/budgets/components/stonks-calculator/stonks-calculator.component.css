@@ -1,3 +1,6 @@
+form{
+  height: 6em;
+}
 
 @media (orientation: landscape) {
   form{

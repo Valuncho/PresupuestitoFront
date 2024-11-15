@@ -7,6 +7,18 @@ import {BudgetRequest} from "../request/budgetRequest";
   providedIn: 'root'
 })
 export class BudgetControllerService {
+
+  private reload : BehaviorSubject<boolean > = new BehaviorSubject<boolean >(false);
+
+  public getReload(): Observable<boolean> {
+    return this.reload.asObservable();
+  }
+
+  public setReload(flag: boolean) {
+    this.reload.next(flag);
+
+  }
+
   private budgetId: BehaviorSubject<number > = new BehaviorSubject<number >(0);
 
   public getBudgetId(): Observable<number> {

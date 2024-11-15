@@ -10,6 +10,7 @@ import { ModalService } from '../../../../core/utils/modal.service';
 import { MaterialListComponent } from '../../../materials/components/lists/material-list/material-list.component';
 import { ItemRequest } from '../../../../core/request/itemRequest';
 import { UtilsService } from '../../../../core/utils/utils.service';
+import {BudgetControllerService} from "../../../../core/controllers/budget-controller.service";
 
 @Component({
   selector: 'app-work-item-form',
@@ -22,6 +23,8 @@ export class WorkItemFormComponent {
 
   //Utils
   private materialController = inject(MaterialControllerService);
+  private budgetController = inject(BudgetControllerService);
+
   private modalService = inject(ModalService);
   private itemService = inject(ItemService);
   private workController = inject(WorkControllerService);
@@ -61,6 +64,7 @@ ngOnInit(): void {
   })
 }
   ngOnDestroy(): void {
+    this.budgetController.setReload(false);
     this.materialController.setMaterial(this.materialController.getEmptyMaterial());
     this.materialController.setItem(this.materialController.getEmptyItem());
     this.materialController.setEditMode(false)
@@ -94,19 +98,22 @@ sent(){
   if(this.edit){
     this.itemService.putItem(this.currentItem).subscribe({
       next: ()=>{
-        this.utils.reaload()
+        this.closeForm()
       }
     });
   }else{
     this.itemService.postItem(this.currentItem).subscribe({
       next: ()=>{
-      this.utils.reaload()
+        this.closeForm()
       }
     });
   }
 }
 
-
+  closeForm(){
+    this.modalService.closeModal();
+    this.budgetController.setReload(true);
+  }
 
 itemFormToItem(){
   if(this.itemForm.get("id")?.value == 0){

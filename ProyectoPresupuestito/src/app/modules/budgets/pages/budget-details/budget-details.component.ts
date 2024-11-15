@@ -51,6 +51,22 @@ export class BudgetDetailsComponent {
 
 
   ngOnInit(){
+   this.budgetController.getReload().subscribe({
+     next: (Res) =>{
+       if (Res){
+         this.getBudgetData()
+       }
+     }
+   })
+  this.getBudgetData()
+  }
+
+  ngOnDestroy(): void {
+    this.workController.setWorkModel(this.workController.getEmptyWork())
+    this.budgetController.setReload(false);
+  }
+
+  getBudgetData(){
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     this.budgetService.getBudgetById(this.budgetId).subscribe(
       {
@@ -75,12 +91,7 @@ export class BudgetDetailsComponent {
           this.calculatePrice();
         }
       }
-     )
-
-  }
-
-  ngOnDestroy(): void {
-    this.workController.setWorkModel(this.workController.getEmptyWork())
+    )
   }
 
   calculatePrice(){

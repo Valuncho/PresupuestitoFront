@@ -12,6 +12,7 @@ import { WorkRequest } from '../../../../core/request/workRequest';
 import { UtilsService } from '../../../../core/utils/utils.service';
 import { ActivatedRoute } from '@angular/router';
 import { BudgetControllerService } from '../../../../core/controllers/budget-controller.service';
+import {ModalService} from "../../../../core/utils/modal.service";
 
 
 @Component({
@@ -26,7 +27,7 @@ export class WorkFormComponent {
   private workController = inject(WorkControllerService);
   private budgetController = inject(BudgetControllerService);
   private workService = inject(WorkService);
-  private utils = inject(UtilsService);
+private modalService = inject(ModalService);
   //Properties
   currentWork : WorkRequest = this.workController.getEmptyWorkRequest();
   estados = this.workService.getEstados();
@@ -81,18 +82,24 @@ export class WorkFormComponent {
     if(this.isEdit){
       this.workService.putWork(this.currentWork).subscribe({
         next: ()=>{
-          this.utils.reaload()
+          this.closeForm()
         }
       });
     }else{
       this.workService.postWork(this.currentWork).subscribe({
         next: ()=>{
-          this.utils.reaload()
+
+          this.closeForm()
         }
       });
     }
+
     this.setUp();
   }
+closeForm(){
+this.modalService.closeModal();
+  this.budgetController.setReload(true);
+}
 
   toForm(){
     console.log(this.currentWork)
