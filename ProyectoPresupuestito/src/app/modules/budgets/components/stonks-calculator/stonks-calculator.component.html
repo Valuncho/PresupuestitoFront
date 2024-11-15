@@ -1,10 +1,17 @@
-<form>
+<form  [formGroup]="stonksForm">
+  @if(stonksForm.invalid && stonksForm.dirty){
+    <div class="invalid">
+      @if (stonksForm.get('stonks')?.invalid){
+        <p>Debe ingresar números positivos.</p>
+      }
+    </div>
+  }
   <label for="stonks">Ganacia:</label>
   <input
     type="number"
     name="stonks"
     id="stonks"
-    [(ngModel)]="stonks"
+    formControlName="stonks"
     placeholder="Margen de ganancia%"
   >
   <p>Precio final: {{this.calculateStonk() | currency}}</p>

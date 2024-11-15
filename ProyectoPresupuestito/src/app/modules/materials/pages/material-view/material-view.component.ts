@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { MaterialListComponent } from "../../components/lists/material-list/material-list.component";
 import { MaterialComponent } from "../../components/material/material.component";
 import { RouterLink } from '@angular/router';
 import { SubcategoryListComponent } from '../../components/lists/subcategory-list/subcategory-list.component';
 import { CategoryListComponent } from '../../components/lists/category-list/category-list.component';
+import {MaterialControllerService} from "../../../../core/controllers/material-controller.service";
 
 @Component({
   selector: 'app-material-view',
@@ -14,4 +15,8 @@ import { CategoryListComponent } from '../../components/lists/category-list/cate
 })
 export class MaterialViewComponent {
 
+  private materialController = inject(MaterialControllerService);
+  ngOnDestroy(){
+    this.materialController.setMaterial(this.materialController.getEmptyMaterial());
+  }
 }

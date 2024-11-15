@@ -1,19 +1,27 @@
 import {Component, Input} from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CurrencyPipe} from "@angular/common";
 
 @Component({
   selector: 'app-stonks-calculator',
   standalone: true,
-  imports: [FormsModule, CurrencyPipe],
+  imports: [ReactiveFormsModule, CurrencyPipe],
   templateUrl: './stonks-calculator.component.html',
   styleUrl: './stonks-calculator.component.css'
 })
 export class StonksCalculatorComponent {
   @Input() budgetCost : number = 0;
-  stonks : number = 0
+  stonksForm = new FormGroup({
+    stonks : new FormControl(0,Validators.min(0))
+  })
+
+
 
   calculateStonk(){
-    return this.budgetCost + ((this.budgetCost * this.stonks) / 100);
+    let price = 0
+    if (this.stonksForm.get('stonks')?.value! >= 0) {
+      price = this.budgetCost + ((this.budgetCost * this.stonksForm.get('stonks')?.value!) / 100);
+    }
+    return price;
   }
 }

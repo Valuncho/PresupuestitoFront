@@ -33,23 +33,23 @@ export class WorkFormComponent {
   isEdit : boolean = this.workController.getEditMode();
   //Form
   WorkForm : FormGroup = new FormGroup({
-    
+
     name : new FormControl('', Validators.required),
     notes : new FormControl('', Validators.required),
     deadLine : new FormControl(new Date(), Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
-    hours : new FormControl(0, Validators.required),
+    hours : new FormControl(0, [Validators.required ,Validators.min(1)]),
   });
 
   ngOnInit(): void {
-    
-   
+
+
     this.workController.getWork().subscribe(res =>{
       this.currentWork = res!;
 
     })
-    
-    if(this.isEdit){  
+
+    if(this.isEdit){
       this.workService.getWorkById(this.currentWork.workId!).subscribe(res=>{
         this.currentWork =this.workController.toWorkRequest(res!.value);
         this.budgetController.getBudgetId().subscribe(res=>
@@ -57,13 +57,13 @@ export class WorkFormComponent {
         )
         this.toForm()
       })
-      
+
     }
-    
+
   }
 
   ngOnDestroy(): void {
-    
+
     this.setUp()
   }
   setUp(){
