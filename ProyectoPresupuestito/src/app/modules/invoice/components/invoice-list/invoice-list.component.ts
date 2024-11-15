@@ -44,13 +44,16 @@ import {UtilsService} from "../../../../core/utils/utils.service";
     @Input() invoices! : Invoice[];
 
     ngOnInit(): void {
-      let id = Number(this.activatedRoute.snapshot.params['supplierId']);
-      this.invoiceService.getInvoicesBySupplierId(id).subscribe({
-        next: x => this.invoices = x,
-      })
-      
+ this.getData()
+
     }
 
+getData(){
+ let id = Number(this.activatedRoute.snapshot.params['supplierId']);
+  this.invoiceService.getInvoicesBySupplierId(id).subscribe({
+    next: x => this.invoices = x,
+  })
+}
     //Card
 
     handleViewInvoice($Event : Invoice){

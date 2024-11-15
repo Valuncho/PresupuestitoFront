@@ -33,13 +33,13 @@ export class MaterialFormComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   //Properties
-  
+
   newMaterial :  MaterialRequest = this.materialController.getEmptyMaterialRequest();
   isEdit : boolean = this.materialController.getEditMode();
-  
+
   //Properties
   subCategories : SubCategoryMaterial[] =[]
-  
+
   MaterialForm : FormGroup = new FormGroup({
     measure : new FormControl('',Validators.required),
     unitMeasure : new FormControl('',Validators.required),
@@ -53,11 +53,16 @@ export class MaterialFormComponent {
 
   ngOnInit(): void {
 
-    this.subCategoryService.getSubCategories().subscribe({
-      next: res => this.subCategories = res,  
+    this.materialController.getAviso().subscribe({
+      next:(res)=>{
+        if(res) {
+          this.getData()
+        }
+      }
     })
+this.getData()
 
- 
+
 
     if(this.isEdit){
       this.materialController.getMaterial().subscribe(res =>{
@@ -71,13 +76,18 @@ export class MaterialFormComponent {
           unitMeasure : res?.materialUnitMeasure,
           subCategory : res?.subCategoryMaterialId.subCategoryMaterialId
         })
-                
+
       })
 
     }
   }
 
+getData(){
+  this.subCategoryService.getSubCategories().subscribe({
+    next: res => this.subCategories = res,
+  })
 
+}
   resetForm($Event : Event){
     this.MaterialForm.reset();
     this.materialController.setEditMode(false);
@@ -105,7 +115,7 @@ export class MaterialFormComponent {
   }
 
   toMaterialRequest(){
-  
+
     this.newMaterial.MaterialName = this.MaterialForm.value["name"]
     this.newMaterial.MaterialDescription = this.MaterialForm.value["description"]
    this.newMaterial.MaterialBrand = this.MaterialForm.value["brand"]

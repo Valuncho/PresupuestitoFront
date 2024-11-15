@@ -28,10 +28,10 @@ export class InvoiceItemListComponent {
   private invoiceController = inject(InvoiceControllerService);
   private utils = inject(UtilsService);
   @Input() items : any;
- 
+
 
   ngOnInit(): void {
-    
+
   }
   addItemHandler(){
     this.modalService.openModal<InvoiceItemFormComponent,InvoiceItem>(InvoiceItemFormComponent);

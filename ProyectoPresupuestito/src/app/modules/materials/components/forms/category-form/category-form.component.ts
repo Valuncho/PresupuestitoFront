@@ -19,7 +19,7 @@ export class CategoryFormComponent {
   private materialController = inject(MaterialControllerService);
   private utils = inject(UtilsService);
   //Properties
-  @Output() aviso = new EventEmitter<any>();
+  
   newCategory : Category = this.materialController.getEmptyCategory();
   isEdit : boolean = this.materialController.getEditMode();
   CategoryForm : FormGroup = new FormGroup({
