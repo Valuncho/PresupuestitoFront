@@ -10,6 +10,7 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {SupplierControllerService} from "../../../../core/controllers/supplier-controller.service";
 
 @Component({
     selector: 'app-supplier-list',
@@ -19,10 +20,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     styleUrl: './supplier-list.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SupplierListComponent { 
+export class SupplierListComponent {
     private router = inject(Router);
     private dialog = inject(MatDialog);
     private supplierService = inject(SupplierService);
+    private supplierController = inject(SupplierControllerService);
     //Properties
     suppliers : any = [];
 
@@ -31,21 +33,35 @@ export class SupplierListComponent {
     pageSize = 5
 
     ngOnInit(): void {
-        this.suppliers = 2 //Sin esta linea de codigo no anda
-        this.supplierService.getSuppliers().subscribe(res =>{
-            this.suppliers = res
-            
-        })
-        
+      this.supplierController.getReload().subscribe({
+        next:(Res)=>{
+          if (Res){
+            this.getData()
+          }
+        }
+        }
+      )
+      this.getData()
+
+
+
+    }
+
+    getData(){
+      this.suppliers = 2
+      this.supplierService.getSuppliers().subscribe(res =>{
+        this.suppliers = res
+
+      })
     }
 
     //Card
-    handleViewSupplier($Event : Supplier){    
+    handleViewSupplier($Event : Supplier){
         this.router.navigate(['/supplier/detail/',$Event.supplierId]);
     }
 
     handleEditSupplier($Event : Supplier){
-        this.router.navigate(['/supplier/edit/',$Event.supplierId]);    
+        this.router.navigate(['/supplier/edit/',$Event.supplierId]);
     }
 
     handleDeleteSupplier($Event : Supplier){
@@ -62,11 +78,11 @@ export class SupplierListComponent {
                 next: () => this.router.navigate(['/supplier'])
             }
             );
-            
+
         }
         });
 
-    } 
+    }
 
     //Pagination
     pageChange(page: number) {

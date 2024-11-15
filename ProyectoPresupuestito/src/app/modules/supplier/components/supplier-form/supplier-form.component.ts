@@ -19,7 +19,7 @@ import { UtilsService } from '../../../../core/utils/utils.service';
     styleUrl: './supplier-form.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SupplierFormComponent { 
+export class SupplierFormComponent {
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private notificationService = inject(NotificationService);
@@ -42,28 +42,33 @@ export class SupplierFormComponent {
         cuit : new FormControl('',[Validators.maxLength(13),Validators.minLength(10)]),
        // note: new FormControl('',[Validators.maxLength(220),Validators.minLength(10)])
     });
-    
+
     ngOnInit(): void {
+
         this.activatedRoute.paramMap.subscribe(params => {
-            this.supplierId = Number(params.get('supplierId'));   
+            this.supplierId = Number(params.get('supplierId'));  
             this.onEditHandler()
         });
         this.setUp();
     }
 
+    ngOnDestroy(){
+      this.supplierController.setReload(false)
+    }
+
     get canSubmit(){
         let  flag : boolean = false;
         if(
-        this.supplierForm.get('name')?.valid && 
-        this.supplierForm.get('lastName')?.valid && 
-        this.supplierForm.get('direction')?.valid && 
+        this.supplierForm.get('name')?.valid &&
+        this.supplierForm.get('lastName')?.valid &&
+        this.supplierForm.get('direction')?.valid &&
         this.supplierForm.get('phoneNumber')?.valid
         ){
         flag = true;
         }
         return flag;
     }
-    
+
     setUp(){
         this.supplierForm.reset();
         this.isEdit = false;
@@ -97,12 +102,14 @@ export class SupplierFormComponent {
         this.supplierService.putSupplier(this.supplierDto).subscribe({
         next: ()=>{
             this.utils.reaload()
+            this.supplierController.setReload(true)
         }
         });
     }else{
         this.supplierService.postSupplier(this.supplierDto).subscribe({
         next: ()=>{
             this.utils.reaload()
+            this.supplierController.setReload(true)
         }
     });
     }
@@ -120,7 +127,7 @@ export class SupplierFormComponent {
             cuit : res.value.personId.cuit,
         });
     }
-    
+
     toPerson(){
         this.supplierDto.name = this.supplierForm.get("name")?.value
         this.supplierDto.lastName = this.supplierForm.get("lastName")?.value
@@ -130,15 +137,15 @@ export class SupplierFormComponent {
             this.supplierDto.email = ""
           }else{
             this.supplierDto.email = this.supplierForm.get("mail")?.value
-      
+
           }
-      
+
           if(this.supplierForm.get("dni")?.value == null){
             this.supplierDto.dni = ""
           }else{
             this.supplierDto.dni = this.supplierForm.get("dni")?.value
           }
-      
+
           if(this.supplierForm.get("cuit")?.value == null){
             this.supplierDto.cuit = ""
           }else{
