@@ -31,7 +31,7 @@ import {BudgetControllerService} from "../../../../core/controllers/budget-contr
 @Component({
   selector: 'app-budget-form',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, ReactiveFormsModule, CommonModule, BudgetListComponent, ClientSearchComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule],
+  imports: [ FormsModule, ReactiveFormsModule, CommonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule],
   templateUrl: './budget-form.component.html',
   styleUrl: './budget-form.component.css'
 })
@@ -58,7 +58,7 @@ export class BudgetFormComponent {
   BudgetForm : FormGroup = new FormGroup({
     createdDate : new FormControl('', Validators.required),
     deadLine : new FormControl(null),
-    description : new FormControl('Descripción', Validators.required),
+    description : new FormControl('', Validators.required),
     cost : new FormControl(1000, Validators.required),
     estado : new FormControl('Presupuestado', Validators.required),
     clientId : new FormControl(0, Validators.required),

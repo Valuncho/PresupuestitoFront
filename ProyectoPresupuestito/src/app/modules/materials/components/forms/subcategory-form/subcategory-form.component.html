@@ -14,7 +14,7 @@
         <input type="text" name="name" id="name" formControlName="name">
         <label for="category">Rubro:</label>
         <select name="category" id="category" formControlName="category">
-          @for (item of categories; track $index) {
+          @for (item of categories$ | async ; track $index ) {
             <option value="{{item.categoryId}}">{{item.categoryName}}</option>
           }
         </select>

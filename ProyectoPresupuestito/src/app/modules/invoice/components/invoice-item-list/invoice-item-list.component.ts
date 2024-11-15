@@ -27,13 +27,11 @@ export class InvoiceItemListComponent {
   private materialController = inject(MaterialControllerService);
   private invoiceController = inject(InvoiceControllerService);
   private utils = inject(UtilsService);
-  // @Input() items : any;
-  items : InvoiceItem[] = [];
+  @Input() items : any;
+
 
   ngOnInit(): void {
-    this.invoiceController.getInvoiceModel().subscribe(res =>{
-      this.items = res!.oInvoiceItems;
-    })
+
   }
   addItemHandler(){
     this.modalService.openModal<InvoiceItemFormComponent,InvoiceItem>(InvoiceItemFormComponent);

@@ -9,9 +9,19 @@ import { InvoiceControllerService } from './invoice-controller.service';
 })
 export class SupplierControllerService {
 
+  private reload: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public getReload() : Observable<boolean>{
+    return this.reload.asObservable();
+  }
+
+  public setReload(flag : boolean) {
+    this.reload.next(flag);
+  }
+
+
   //Selected entities
   private supplierHistory: BehaviorSubject<SupplierHistory | undefined> = new BehaviorSubject<SupplierHistory | undefined>(undefined);
-  
+
   public getSupplierHistory() : Observable<SupplierHistory | undefined>{
     return this.supplierHistory.asObservable();
   }
@@ -25,7 +35,7 @@ export class SupplierControllerService {
     currentHistory!.oSupplier = supplier;
     this.setSupplierHistory(currentHistory!);
   }
-  
+
   //Edit
   private editMode : boolean = false;
 

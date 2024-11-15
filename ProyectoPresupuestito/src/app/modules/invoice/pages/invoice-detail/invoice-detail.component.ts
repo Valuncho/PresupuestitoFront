@@ -53,8 +53,10 @@ export class InvoiceDetailComponent {
         this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
           {
             next: (invoiceRes)=>{
-              console.log(this.currentInvoice);
+              
               this.currentInvoice = invoiceRes.value;
+              this.total=this.calculateTotal()
+
               this.supplierService.getSupplierById(invoiceRes.value.oSupplier.supplierId).subscribe(
                 {
                   next : (supplierRes) =>{
@@ -66,12 +68,13 @@ export class InvoiceDetailComponent {
           }
         )
         
-        this.total=this.calculateTotal()
+       
     }
 
     calculateTotal(): number {
       let total = 0
       this.currentInvoice.oInvoiceItems.forEach((item: { price: number; quantity: number; })=>{
+        console.log(total)
           total += item.price * item.quantity
       })
       return total

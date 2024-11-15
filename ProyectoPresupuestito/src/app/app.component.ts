@@ -9,7 +9,7 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, NavbarComponent,MatProgressSpinnerModule,ScrollToTopComponent],
+  imports: [ RouterOutlet, CommonModule,NavbarComponent,MatProgressSpinnerModule,ScrollToTopComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../../../../core/model/Category';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
@@ -19,6 +19,7 @@ export class CategoryFormComponent {
   private materialController = inject(MaterialControllerService);
   private utils = inject(UtilsService);
   //Properties
+  
   newCategory : Category = this.materialController.getEmptyCategory();
   isEdit : boolean = this.materialController.getEditMode();
   CategoryForm : FormGroup = new FormGroup({
@@ -33,19 +34,22 @@ export class CategoryFormComponent {
         this.newCategory = res!;
       })
 
-      
+
       this.CategoryForm.patchValue({idcategory : this.newCategory.categoryId, name : this.newCategory.categoryName})
     }
   }
 
-  
+  ngOnDestroy(){
+    this.materialController.setAviso(false);
+  }
+
 
   resetForm($Event : Event){
     this.CategoryForm.reset();
     this.materialController.setEditMode(false);
     this.isEdit = false;
   }
-  
+
 
 
   onSubmit(){
@@ -55,12 +59,14 @@ export class CategoryFormComponent {
       this.categoryService.postCategory(this.newCategory).subscribe({
         next: ()=>{
           this.utils.reaload()
+          this.materialController.setAviso(true);
         }
       });
     }else{
       this.categoryService.putCategory(this.newCategory).subscribe({
         next: ()=>{
           this.utils.reaload()
+          this.materialController.setAviso(true);
         }
       });
       this.materialController.setEditMode(false);
