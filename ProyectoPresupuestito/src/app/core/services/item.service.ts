@@ -10,16 +10,16 @@ import { Item } from '../model/Item';
 import { ItemRequest } from '../request/itemRequest';
 /**
  * @class
- * 
+ *
  * Servicio de la entidad item, para comunicarse con el backend, gestionando errores y aciertos.
- *  
+ *
  */
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
    //Util
-   private http = inject(HttpClient);  
+   private http = inject(HttpClient);
    private modal = inject(ModalService);
    private error = inject(ErrorControllerService);
    private notification = inject(NotificationService);
@@ -31,12 +31,12 @@ export class ItemService {
    */
   getItems() : Observable<Item[]> {
     const url = API_URL+ENDPOINTS.items.getAll;
-    return this.http.get<Item[]>(url).pipe(      
+    return this.http.get<Item[]>(url).pipe(
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
-    }));   
+    }));  
   }
 
    /**
@@ -53,7 +53,7 @@ export class ItemService {
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
    /**
@@ -67,14 +67,15 @@ export class ItemService {
     const url = API_URL+ENDPOINTS.items.post
     return this.http.post(url,item).pipe(
       tap(() => {
-        this.notification.showNotification("¡Item guardado con éxito!"); 
+        this.notification.showNotification("¡Item guardado con éxito!");
+        this.notification.showNotification("¡Seleccione el trabajo de vuelta para ver los cambios!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
     /**
@@ -88,14 +89,15 @@ export class ItemService {
       const url = API_URL+ENDPOINTS.items.update.replace(':id', item.itemId!.toString());;
       return this.http.put(url,item).pipe(
         tap(() => {
-          this.notification.showNotification("¡Item editado con éxito!"); 
+          this.notification.showNotification("¡Item editado con éxito!");
+          this.notification.showNotification("¡Seleccione el trabajo de vuelta para ver los cambios!");
         }),
         catchError((error: any, caught: Observable<any>): Observable<any> => {
           this.error.setError(error);
           this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
           return of();
       })
-      );   
+      );  
     }
 
   /**
@@ -109,14 +111,15 @@ export class ItemService {
     const url = API_URL+ENDPOINTS.items.delete.replace(':id', idItem.toString());
     return this.http.patch(url,idItem).pipe(
       tap(() => {
-        this.notification.showNotification("¡Item eliminado con éxito!"); 
+        this.notification.showNotification("¡Item eliminado con éxito!");
+        this.notification.showNotification("¡Seleccione el trabajo de vuelta para ver los cambios!");
       }),
       catchError((error: any, caught: Observable<any>): Observable<any> => {
         this.error.setError(error);
         this.modal.openModal<ErrorAlertComponent,HttpErrorResponse>(ErrorAlertComponent);
         return of();
     })
-    );   
+    );  
   }
 
 }

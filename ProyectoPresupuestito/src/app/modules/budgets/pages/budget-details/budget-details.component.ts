@@ -79,19 +79,13 @@ export class BudgetDetailsComponent {
               }
             }
           )
-          this.workController.getWorkModel().subscribe({
-            next : (workRes) =>{
-              this.currentWork = workRes;
-              if(workRes.workId != 0){
-                this.option = false
-              }
-            }
-          })
+          this.getWorkData()
           this.budgetController.setBudgetId(this.budgetId!);
           this.calculatePrice();
         }
       }
     )
+    this.getWorkData()
   }
 
   calculatePrice(){
@@ -102,7 +96,16 @@ export class BudgetDetailsComponent {
     })
   }
 
-
+getWorkData(){
+  this.workController.getWorkModel().subscribe({
+    next : (workRes) =>{
+      this.currentWork = workRes;
+      if(workRes.workId != 0){
+        this.option = false
+      }
+    }
+  })
+}
 
 }
 

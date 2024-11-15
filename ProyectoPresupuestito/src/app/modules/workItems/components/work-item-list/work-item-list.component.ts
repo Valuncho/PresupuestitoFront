@@ -10,6 +10,7 @@ import { TextCardComponent } from '../../../../components/text-card/text-card.co
 import { WorkItemCardComponent } from '../work-item-card/work-item-card.component';
 import { WorkItemFormComponent } from '../work-item-form/work-item-form.component';
 import { ItemService } from '../../../../core/services/item.service';
+import {BudgetControllerService} from "../../../../core/controllers/budget-controller.service";
 
 @Component({
   selector: 'app-work-item-list',
@@ -24,7 +25,7 @@ export class WorkItemListComponent {
  private modalService = inject(ModalService);
  private itemService = inject(ItemService);
  private materialController = inject(MaterialControllerService);
- private utils = inject(UtilsService);
+ private budgetController = inject(BudgetControllerService);
  @Input() items : Item[]=[]
  @Input() options : boolean = false;
  addItemHandler(){
@@ -50,7 +51,7 @@ export class WorkItemListComponent {
        this.itemService.deleteItem($Event.itemId).subscribe(
         {
           next: ()=>{
-            this.utils.reaload()
+            this.budgetController.setReload(true);
           }
         }
        );

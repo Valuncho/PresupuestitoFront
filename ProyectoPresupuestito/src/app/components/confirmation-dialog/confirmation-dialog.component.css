@@ -1,0 +1,19 @@
+button{
+  margin: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  font-family: var(--otro);
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.Rojo{
+  background: red;
+  color:var(--blanquecino);
+}
+.Verde{
+  background: green;
+  color:var(--blanquecino);
+}

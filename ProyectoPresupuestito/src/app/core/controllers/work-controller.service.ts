@@ -7,10 +7,20 @@ import { WorkRequest } from '../request/workRequest';
   providedIn: 'root',
 })
 export class WorkControllerService {
+
+  private workId: BehaviorSubject<number > = new BehaviorSubject<number >(0);
+
+  public getWorkId(): Observable<number> {
+    return this.workId.asObservable();
+  }
+
+  public SetWorkId(id: number) {
+    this.workId.next(id);
+  }
   //Selected entities
   private work: BehaviorSubject<WorkRequest > = new BehaviorSubject<WorkRequest >(this.getEmptyWorkRequest());
   private workModel: BehaviorSubject<Work > = new BehaviorSubject<Work >(this.getEmptyWork());
-  
+
   public getWork(): Observable<WorkRequest> {
     return this.work.asObservable();
   }
@@ -54,7 +64,7 @@ export class WorkControllerService {
   }
   getEmptyWorkRequest(): WorkRequest {
     return {
-     
+
       estimatedHoursWorked: 0,
       deadLine: new Date(),
       costPrice: 0,

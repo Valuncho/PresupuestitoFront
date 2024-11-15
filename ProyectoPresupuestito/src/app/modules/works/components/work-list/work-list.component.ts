@@ -12,6 +12,7 @@ import { WorkControllerService } from '../../../../core/controllers/work-control
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { UtilsService } from '../../../../core/utils/utils.service';
+import {BudgetControllerService} from "../../../../core/controllers/budget-controller.service";
 
 @Component({
   selector: 'app-work-list',
@@ -28,7 +29,7 @@ export class WorkListComponent {
   private modalService = inject(ModalService);
   private workService = inject(WorkService);
   private workController = inject(WorkControllerService);
-  private utils = inject(UtilsService);
+  private budgetController = inject(BudgetControllerService);
 
   //Properties
   @Input() works!: Work[];
@@ -38,13 +39,13 @@ export class WorkListComponent {
 
 
   ngOnInit(): void {
-    
+
     this.budgetId = parseInt(this.activatedRoute.snapshot.params['budgetId']);
     let budgetDetailUrl = "/budget/detail/" + this.budgetId;
     let worksViewUrl = "/work";
     if(budgetDetailUrl == this.router.url){
       this.options = true;
-      
+
     }else if(worksViewUrl == this.router.url){
       this.workService.getWorks().subscribe(res =>{
         this.works = res;
@@ -52,7 +53,7 @@ export class WorkListComponent {
     }
   }
 
- 
+
   //Card
   handleView($Event: Work) {
     this.workController.setWorkModel($Event);
@@ -65,7 +66,7 @@ export class WorkListComponent {
     }else{
       alert("Debe ir al presupuesto para poder editarlo.");
     }
-   
+
   }
   handleDelete($Event: Work) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -78,7 +79,7 @@ export class WorkListComponent {
       if (result) {
         this.workService.deleteWork($Event.workId).subscribe({
           next: ()=>{
-            this.utils.reaload()
+            this.budgetController.setReload(true);
           }
         });
       }
