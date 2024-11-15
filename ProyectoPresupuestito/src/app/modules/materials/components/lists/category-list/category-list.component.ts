@@ -27,47 +27,47 @@ export class CategoryListComponent {
    private materialController = inject(MaterialControllerService);
    private utils = inject(UtilsService);
    categories : Category[]=[]
- 
- 
+
+
    ngOnInit(): void {
      this.categoryService.getCategories().subscribe(
-       {  
-         next: x => this.categories = x,  
-         
+       {
+         next: x => this.categories = x,
+
        }
      )
-     
+
    }
- 
+
    seleccionar($Event : Category){
      this.materialController.setCategory($Event);
-   } 
- 
+   }
+
    editar($Event : Category){
-     
+
      this.materialController.setEditMode(true);
      this.materialController.setCategory($Event);
      this.modalService.openModal<CategoryFormComponent,Category>(CategoryFormComponent);
    }
- 
+
    eliminar($Event : Category){
      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
        data: {
          mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.categoryName}?`
        }
      });
- 
+
      dialogRef.afterClosed().subscribe(result => {
        if (result) {
          this.categoryService.deleteCategory($Event.categoryId).subscribe(
           {
             next: ()=>{
-              this.utils.reaload()
+              this.materialController.setAviso(true)
             }
           }
          );
        }
      });
- 
+
    }
 }

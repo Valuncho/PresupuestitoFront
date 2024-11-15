@@ -12,6 +12,7 @@ import { BudgetSearchComponent } from "../budget-search/budget-search.component"
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 import { LoadingService } from '../../../../core/utils/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {BudgetControllerService} from "../../../../core/controllers/budget-controller.service";
 /**
  * @class BudgetListComponent
  *
@@ -31,7 +32,8 @@ export class BudgetListComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private budgetService = inject(BudgetService);
-  private loadingService = inject(LoadingService)
+  private budgetController = inject(BudgetControllerService);
+
 
 
 
@@ -47,26 +49,25 @@ export class BudgetListComponent {
   pipe = new DatePipe('en-US');
   ngOnInit(){
 
+  this.getData()
+    this.budgetController.getReload().subscribe({
+      next: (res) =>{
+        if(res) this.getData()
+      }
+    })
 
-    this.clientId = parseInt(this.activatedRoute.snapshot.params['clientId']);
-    const clientUrl = "/client/detail/"+this.clientId;
-    if(this.router.url == clientUrl){
-      this.options = true;
-    }else{
-      this.budgetService.getBudgets().subscribe(
-        {
 
-          next: res => {
-            this.budgets = res;
+  }
+  getData(){
+    this.budgetService.getBudgets().subscribe(
+      {
 
-          }
+        next: res => {
+          this.budgets = res;
+
         }
-      )
-
-
-    }
-
-
+      }
+    )
   }
   //BudgetCard
   handleView($Event : any){

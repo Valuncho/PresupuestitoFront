@@ -12,11 +12,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
 import { UtilsService } from '../../../../core/utils/utils.service';
+import {ClientControllerService} from "../../../../core/controllers/client-controller.service";
 
 
 /**
  * @class ClientListComponent
- * 
+ *
  * Listado de la entidad cliente, con buscador y paginación.
  *
  */
@@ -36,26 +37,30 @@ export class ClientListComponent {
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
   private clientService = inject(ClientService);
-  private utils =inject(UtilsService);
+  private clientController = inject(ClientControllerService);
+
   //Properties
   options : boolean = false;
   clients : Client[] = [];
 
   clientId = 0;
-  
+
   //Pagination
   page = 1
   pageSize = 5
 
 
   ngOnInit(): void {
-    this.clientService.getClients().subscribe({  
-      next: x => this.clients = x,  
-    })
 
+  this.clientController.getReload().subscribe({
+    next:(Res)=>{
+      if(Res) this.getData()
+    }
+  })
+  this.getData()
     this.activatedRoute.paramMap.subscribe(params => {
-      this.clientId = Number(params.get('clientId'));   
-      
+      this.clientId = Number(params.get('clientId'));  
+
     });
 
     let url = "/budget/new/" + this.clientId;
@@ -66,6 +71,11 @@ export class ClientListComponent {
     }
   }
 
+getData(){
+  this.clientService.getClients().subscribe({
+    next: x => this.clients = x,
+  })
+}
 //BudgetForm
   addClientHandler(){
     this.modalService.openModal<ClientFormComponent,Client>(ClientFormComponent);
@@ -81,14 +91,14 @@ export class ClientListComponent {
     this.router.navigate(['/budget/new/',$Event.clientId]);
   }
 
-  handleViewClient($Event : Client){    
+  handleViewClient($Event : Client){
     this.closeModal()
     this.router.navigate(['/client/detail/',$Event.clientId]);
   }
 
   handleEditClient($Event : Client){
     this.closeModal()
-    this.router.navigate(['/client/edit/',$Event.clientId]);    
+    this.router.navigate(['/client/edit/',$Event.clientId]);
   }
 
   handleDeleteClient($Event : Client){
@@ -104,14 +114,14 @@ export class ClientListComponent {
         const client = this.clientService.getClientById($Event.clientId)!;
         this.clientService.deleteClient($Event.clientId).subscribe(
           {
-            next: () => this.router.navigate(['/client'])
+            next: () => this.clientController.setReload(true)
           }
         );
-        
+
       }
     });
 
-  } 
+  }
 
   //Pagination
   pageChange(page: number) {
@@ -119,3 +129,4 @@ export class ClientListComponent {
   }
 
 }
+

@@ -34,18 +34,25 @@ export class MaterialListComponent {
   page : number = 1
 
   ngOnInit(): void {
-    this.materialService.getMaterials().subscribe(
-      {  
-        next: x => this.materials = x,  
+    this.getData()
+    this.materialController.getAviso().subscribe({
+      next : (Res) =>{
+        if(Res)this.getData()
       }
-    )
+    })
   }
- 
- 
+
+ getData(){
+   this.materialService.getMaterials().subscribe(
+     {
+       next: x => this.materials = x,
+     }
+   )
+ }
   //Card
   seleccionar($Event : Material){
     this.materialController.setMaterial($Event);
-  } 
+  }
   editar($Event : Material){
     this.materialController.setEditMode(true);
     this.materialController.setMaterial($Event);
@@ -62,10 +69,10 @@ export class MaterialListComponent {
       if (result) {
         this.materialService.deleteMaterial($Event.materialId).subscribe(   {
           next: ()=>{
-            this.utils.reaload()
+            this.materialController.setAviso(true)
           }
         });
-        
+
       }
     });
   }

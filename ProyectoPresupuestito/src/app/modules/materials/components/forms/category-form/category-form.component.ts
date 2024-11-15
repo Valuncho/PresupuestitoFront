@@ -19,7 +19,7 @@ export class CategoryFormComponent {
   private materialController = inject(MaterialControllerService);
   private utils = inject(UtilsService);
   //Properties
-  
+
   newCategory : Category = this.materialController.getEmptyCategory();
   isEdit : boolean = this.materialController.getEditMode();
   CategoryForm : FormGroup = new FormGroup({
@@ -58,14 +58,12 @@ export class CategoryFormComponent {
     if(!this.isEdit){
       this.categoryService.postCategory(this.newCategory).subscribe({
         next: ()=>{
-          this.utils.reaload()
           this.materialController.setAviso(true);
         }
       });
     }else{
       this.categoryService.putCategory(this.newCategory).subscribe({
         next: ()=>{
-          this.utils.reaload()
           this.materialController.setAviso(true);
         }
       });

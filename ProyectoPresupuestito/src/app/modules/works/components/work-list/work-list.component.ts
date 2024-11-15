@@ -94,11 +94,6 @@ export class WorkListComponent {
     this.modalService.openModal(WorkFormComponent);
   }
 
-  goToWorkArea(){
-    this.router.navigate(['/work/edit']);
-  }
-  onSaveWorksHandler() {
-    this.router.navigate(['/budget/detail',this.budgetId]);
-  }
+
 
 }

@@ -156,17 +156,17 @@ export class BudgetFormComponent {
     if(this.isEdit){
       this.budgetService.putBudget(this.currentBudget).subscribe({
         next: ()=>{
-          this.utils.reaload()
+          this.budgetController.setReload(true)
         }
       });
     }else{
       this.budgetService.postBudget(this.currentBudget).subscribe({
         next: ()=>{
-          this.utils.reaload()
+          this.budgetController.setReload(true)
         }
       });
     }
-    this.setUp();
+
   }
 
   toBudget(){

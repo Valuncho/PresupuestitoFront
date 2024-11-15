@@ -101,13 +101,13 @@ getData(){
     if(!this.isEdit){
       this.materialService.postMaterial(this.newMaterial).subscribe(   {
         next: ()=>{
-          this.utils.reaload()
+          this.materialController.setAviso(true)
         }
       });
     }else{
       this.materialService.putMaterial(this.newMaterial).subscribe(   {
         next: ()=>{
-          this.utils.reaload()
+          this.materialController.setAviso(true)
         }
       });
       this.materialController.setEditMode(false);

@@ -52,7 +52,7 @@ export class SubcategoryListComponent {
       if (result) {
         this.subcategoryService.deleteSubCategory($Event.subCategoryMaterialId).subscribe({
           next: ()=>{
-            this.utils.reaload()
+            this.materialController.setAviso(true)
           }
         });
       }

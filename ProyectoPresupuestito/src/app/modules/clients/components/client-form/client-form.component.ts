@@ -51,6 +51,10 @@ export class ClientFormComponent {
     });
     this.setUp();
   }
+
+  ngOnDestroy(){
+    this.clientController.setReload(false)
+  }
   setUp(){
     this.closeModal()
     this.clientForm.reset();
@@ -99,13 +103,13 @@ export class ClientFormComponent {
     if(this.isEdit){
       this.clientService.putClient(this.clientDto).subscribe({
         next: ()=>{
-          this.utils.reaload()
+          this.clientController.setReload(true)
         }
       });
     }else{
       this.clientService.postClient(this.clientDto).subscribe({
         next: ()=>{
-          this.utils.reaload()
+          this.clientController.setReload(true)
         }
       });
 

@@ -86,14 +86,13 @@ export class SubcategoryFormComponent {
     if(!this.isEdit){
       this.subCategoryService.postSubCategory(this.newSubCategory).subscribe({
         next: ()=>{
-          this.utils.reaload()
+
           this.materialController.setAviso(true)
         }
       });
     }else{
       this.subCategoryService.putSubCategory(this.newSubCategory).subscribe({
         next: ()=>{
-          this.utils.reaload()
           this.materialController.setAviso(true)
         }
       });
