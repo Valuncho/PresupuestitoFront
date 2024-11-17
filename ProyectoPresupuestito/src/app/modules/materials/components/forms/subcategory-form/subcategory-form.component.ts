@@ -9,6 +9,7 @@ import { CategoryService } from '../../../../../core/services/category.service';
 import { UtilsService } from '../../../../../core/utils/utils.service';
 import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import {ModalService} from "../../../../../core/utils/modal.service";
 
 @Component({
   selector: 'app-subcategory-form',
@@ -22,7 +23,7 @@ export class SubcategoryFormComponent {
   private subCategoryService = inject(SubcategoryService);
   private categoryService = inject(CategoryService);
   private materialController = inject(MaterialControllerService);
-  private utils = inject(UtilsService);
+  private modal =inject(ModalService);
   //Properties
   @Input() reload : boolean = false;
   newSubCategory : SubCategoryMaterialRequest = this.materialController.getEmptySubCategoryRequest();
@@ -59,7 +60,9 @@ export class SubcategoryFormComponent {
 
     }
   }
-
+ngOnDestroy(){
+    this.materialController.setAviso(false)
+}
   getData(){
     this.categoryService.getCategories().subscribe({
       next: (res) => {
@@ -87,17 +90,23 @@ export class SubcategoryFormComponent {
       this.subCategoryService.postSubCategory(this.newSubCategory).subscribe({
         next: ()=>{
 
-          this.materialController.setAviso(true)
+          this.closeForm()
         }
       });
     }else{
       this.subCategoryService.putSubCategory(this.newSubCategory).subscribe({
         next: ()=>{
-          this.materialController.setAviso(true)
+      this.closeForm()
         }
       });
       this.materialController.setEditMode(false);
     }
   }
 
+  closeForm(){
+    this.modal.closeModal();
+    this.materialController.setAviso(true)
+
+
+  }
 }

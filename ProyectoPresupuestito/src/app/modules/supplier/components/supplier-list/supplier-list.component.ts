@@ -26,7 +26,7 @@ export class SupplierListComponent {
     private supplierService = inject(SupplierService);
     private supplierController = inject(SupplierControllerService);
     //Properties
-    suppliers : any = [];
+    suppliers : any= [];
 
     //Pagination
     page = 1
@@ -41,17 +41,14 @@ export class SupplierListComponent {
         }
         }
       )
+
       this.getData()
-
-
-
     }
 
     getData(){
-      this.suppliers = 2
+
       this.supplierService.getSuppliers().subscribe(res =>{
         this.suppliers = res
-
       })
     }
 
@@ -75,7 +72,7 @@ export class SupplierListComponent {
         if (result) {
             this.supplierService.deleteSupplier($Event.supplierId).subscribe(
             {
-                next: () => this.router.navigate(['/supplier'])
+                next: ()=>{this.supplierController.setReload(true)}
             }
             );
 

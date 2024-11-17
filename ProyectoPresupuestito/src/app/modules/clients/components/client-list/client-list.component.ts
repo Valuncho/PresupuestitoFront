@@ -63,9 +63,7 @@ export class ClientListComponent {
 
     });
 
-    let url = "/budget/new/" + this.clientId;
-    let url2 = "/budget";
-    if(this.router.url == url || this.router.url == url2){
+    if(this.router.url.includes("budget")){
       this.options = true;
 
     }

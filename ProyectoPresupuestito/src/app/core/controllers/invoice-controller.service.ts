@@ -17,6 +17,18 @@ import {InvoiceRequest} from "../request/invoiceRequest";
 })
 export class InvoiceControllerService {
 
+  private aviso : BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
+
+  public getAviso() : Observable<boolean>{
+    return  this.aviso.asObservable();
+  }
+
+  public setAviso(aviso : boolean){
+    this.aviso.next(aviso);
+  }
+
+
+
   private invoice: BehaviorSubject<InvoiceRequest | undefined> = new BehaviorSubject<InvoiceRequest | undefined>(undefined);
   private invoiceModel: BehaviorSubject<Invoice | undefined> = new BehaviorSubject<Invoice | undefined>(undefined);
   private invoiceId: BehaviorSubject<number > = new BehaviorSubject<number >(0);

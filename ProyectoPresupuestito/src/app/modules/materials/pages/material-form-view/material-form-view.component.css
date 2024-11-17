@@ -1,5 +1,7 @@
 article{
   margin: 10px;
+  justify-content: space-around;
+  height: 60vh;
 }
 
 section{

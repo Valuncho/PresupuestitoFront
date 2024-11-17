@@ -14,7 +14,7 @@ import { UtilsService } from '../../../../core/utils/utils.service';
 @Component({
     selector: 'app-supplier-form',
     standalone: true,
-    imports: [CommonModule,SupplierFormComponent,SupplierListComponent,ReactiveFormsModule],
+    imports: [CommonModule,SupplierListComponent,ReactiveFormsModule],
     templateUrl: './supplier-form.component.html',
     styleUrl: './supplier-form.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -101,14 +101,12 @@ export class SupplierFormComponent {
     if(this.isEdit){
         this.supplierService.putSupplier(this.supplierDto).subscribe({
         next: ()=>{
-            this.utils.reaload()
             this.supplierController.setReload(true)
         }
         });
     }else{
         this.supplierService.postSupplier(this.supplierDto).subscribe({
         next: ()=>{
-            this.utils.reaload()
             this.supplierController.setReload(true)
         }
     });

@@ -17,7 +17,7 @@ import { EmployeeRequest } from '../../../../core/request/employeeRequest';
     styleUrl: './employee-form.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeFormComponent { 
+export class EmployeeFormComponent {
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private EmployeeControllerService = inject(EmployeeControllerService)
@@ -42,7 +42,7 @@ export class EmployeeFormComponent {
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe(params => {
-            this.employeeId = Number(params.get('employeeId'));   
+            this.employeeId = Number(params.get('employeeId'));  
             this.onEditHandler()
         });
         this.setUp();
@@ -94,16 +94,16 @@ export class EmployeeFormComponent {
         if(this.isEdit){
         this.EmployeeService.putEmployee(this.employeeDto).subscribe({
             next: ()=>{
-            this.utils.reaload()
+            //this.utils.reaload()
             }
         });
         }else{
         this.EmployeeService.postEmployee(this.employeeDto).subscribe({
             next: ()=>{
-            this.utils.reaload()
+            //this.utils.reaload()
             }
         });
-        
+
         }
     this.setUp();
     }

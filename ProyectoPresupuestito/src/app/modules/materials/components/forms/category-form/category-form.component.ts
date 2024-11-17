@@ -4,6 +4,7 @@ import { Category } from '../../../../../core/model/Category';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { UtilsService } from '../../../../../core/utils/utils.service';
 import { CategoryService } from '../../../../../core/services/category.service';
+import {ModalService} from "../../../../../core/utils/modal.service";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class CategoryFormComponent {
   //Utils
   private categoryService = inject(CategoryService);
   private materialController = inject(MaterialControllerService);
-  private utils = inject(UtilsService);
+  private modal =inject(ModalService);
   //Properties
 
   newCategory : Category = this.materialController.getEmptyCategory();
@@ -58,17 +59,22 @@ export class CategoryFormComponent {
     if(!this.isEdit){
       this.categoryService.postCategory(this.newCategory).subscribe({
         next: ()=>{
-          this.materialController.setAviso(true);
+          this.closeForm()
         }
       });
     }else{
       this.categoryService.putCategory(this.newCategory).subscribe({
         next: ()=>{
-          this.materialController.setAviso(true);
+          this.closeForm()
         }
       });
       this.materialController.setEditMode(false);
     }
   }
 
+
+  closeForm(){
+    this.modal.closeModal();
+    this.materialController.setAviso(true);
+  }
 }

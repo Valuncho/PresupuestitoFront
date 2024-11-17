@@ -30,15 +30,25 @@ export class CategoryListComponent {
 
 
    ngOnInit(): void {
-     this.categoryService.getCategories().subscribe(
-       {
-         next: x => this.categories = x,
-
+     this.materialController.getAviso().subscribe({
+       next: value => {
+         if(value){
+           this.getData()
+         }
        }
-     )
+     })
+
+    this.getData()
 
    }
+getData(){
+  this.categoryService.getCategories().subscribe(
+    {
+      next: x => this.categories = x,
 
+    }
+  )
+}
    seleccionar($Event : Category){
      this.materialController.setCategory($Event);
    }

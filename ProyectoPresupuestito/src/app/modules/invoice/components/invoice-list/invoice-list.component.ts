@@ -36,7 +36,6 @@ import {UtilsService} from "../../../../core/utils/utils.service";
     private modalService = inject(ModalService);
     private invoiceService = inject(InvoiceService);
     private invoiceController = inject(InvoiceControllerService);
-    private utils = inject(UtilsService);
     private activatedRoute = inject(ActivatedRoute);
     //Properties
     options : boolean = false;
@@ -44,6 +43,13 @@ import {UtilsService} from "../../../../core/utils/utils.service";
     @Input() invoices! : Invoice[];
 
     ngOnInit(): void {
+      this.invoiceController.getAviso().subscribe({
+        next: value => {
+          if (value) {
+            this.getData()
+          }
+        }
+      })
  this.getData()
 
     }
@@ -86,7 +92,7 @@ getData(){
             const Supplier = this.invoiceService.getInvoiceById($Event.invoiceId)!;
             this.invoiceService.deleteInvoice($Event.invoiceId).subscribe(
             {
-                next: () =>       this.utils.reaload()
+                next: () =>       this.invoiceController.setAviso(true)
             }
             );
 

@@ -28,12 +28,22 @@ export class SubcategoryListComponent {
 
 
   ngOnInit(): void {
-    this.subcategoryService.getSubCategories().subscribe(res=>{
-      this.subCategories = res;
+
+    this.materialController.getAviso().subscribe({
+      next: value => {
+        if (value){
+          this.getData()
+        }
+      }
     })
 
+  this.getData()
   }
-
+getData(){
+  this.subcategoryService.getSubCategories().subscribe(res=>{
+    this.subCategories = res;
+  })
+}
 
   editar($Event : SubCategoryMaterial){
     this.materialController.setEditMode(true);

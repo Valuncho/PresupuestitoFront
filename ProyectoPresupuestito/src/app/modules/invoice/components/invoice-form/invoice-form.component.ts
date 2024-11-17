@@ -7,6 +7,7 @@ import { Invoice } from '../../../../core/model/Invoice';
 import { InvoiceService } from '../../../../core/services/invoice.service';
 import {UtilsService} from "../../../../core/utils/utils.service";
 import {InvoiceRequest} from "../../../../core/request/invoiceRequest";
+import {ModalService} from "../../../../core/utils/modal.service";
 
 
 @Component({
@@ -22,7 +23,7 @@ import {InvoiceRequest} from "../../../../core/request/invoiceRequest";
     private activatedRoute = inject(ActivatedRoute);
     private invoiceControllerService = inject(InvoiceControllerService)
     private invoiceService = inject(InvoiceService);
-    private utils = inject(UtilsService);
+    private modal = inject(ModalService);
     //Properties
     currentInvoice : InvoiceRequest =this.invoiceControllerService.getEmptyInvoice();
     invoiceId? : number;
@@ -91,19 +92,24 @@ import {InvoiceRequest} from "../../../../core/request/invoiceRequest";
         if(this.isEdit){
         this.invoiceService.putInvoice(this.currentInvoice).subscribe({
           next: ()=>{
-            this.utils.reaload()
+            this.closeForm()
+
           }
         });
         }else{
         this.invoiceService.postInvoice(this.currentInvoice).subscribe({
           next: ()=>{
-            this.utils.reaload()
+            this.closeForm()
           }
         });
         }
 
         this.setUp();
     }
+  closeForm(){
+    this.modal.closeModal();
+    this.invoiceControllerService.setAviso(true);
+  }
 
     toInvoiceRequest(){
     this.currentInvoice.date = this.invoiceForm.get('date')?.value;
