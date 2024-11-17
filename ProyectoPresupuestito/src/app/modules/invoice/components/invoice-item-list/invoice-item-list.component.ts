@@ -4,11 +4,11 @@ import { InvoiceItemCardComponent } from '../invoice-item-card/invoice-item-card
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
-import { ItemService } from '../../../../core/services/item.service';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { InvoiceItem } from '../../../../core/model/invoiceItem';
 import { InvoiceItemFormComponent } from '../invoice-item-form/invoice-item-form.component';
 import { InvoiceControllerService } from '../../../../core/controllers/invoice-controller.service';
+import {InvoiceItemService} from "../../../../core/services/invoice-item.service";
 
 @Component({
   selector: 'app-invoice-item-list',
@@ -21,7 +21,7 @@ export class InvoiceItemListComponent {
   //Utils
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
-  private itemService = inject(ItemService);
+  private itemService = inject(InvoiceItemService);
   private materialController = inject(MaterialControllerService);
   private invoiceController = inject(InvoiceControllerService);
 
@@ -51,7 +51,7 @@ export class InvoiceItemListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.itemService.deleteItem($Event.invoiceItemId).subscribe({
+        this.itemService.deleteInvoiceItem($Event.invoiceItemId).subscribe({
           next: () => {
             this.invoiceController.setAviso(true);
           },
