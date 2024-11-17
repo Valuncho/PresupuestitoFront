@@ -4,20 +4,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MaterialCardComponent } from '../../cards/material-card/material-card.component';
 import { Material } from '../../../../../core/model/Material';
 import { MaterialService } from '../../../../../core/services/material.service';
-import { MaterialSearchComponent } from "../../material-search/material-search.component";
 import { MaterialFormComponent } from '../../forms/material-form/material-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalService } from '../../../../../core/utils/modal.service';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
-import { UtilsService } from '../../../../../core/utils/utils.service';
+
 import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-material-list',
   standalone: true,
-  imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, MaterialSearchComponent, TextCardComponent],
+  imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, TextCardComponent],
   templateUrl: './material-list.component.html',
   styleUrl: './material-list.component.css'
 })

@@ -3,81 +3,71 @@ import { CategoryCardComponent } from '../../cards/category-card/category-card.c
 import { Category } from '../../../../../core/model/Category';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../../components/confirmation-dialog/confirmation-dialog.component';
-import { MaterialService } from '../../../../../core/services/material.service';
 import { ModalService } from '../../../../../core/utils/modal.service';
 import { CategoryFormComponent } from '../../forms/category-form/category-form.component';
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { CategoryService } from '../../../../../core/services/category.service';
-import { UtilsService } from '../../../../../core/utils/utils.service';
-
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [CategoryCardComponent,TextCardComponent],
+  imports: [CategoryCardComponent, TextCardComponent],
   templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css'
+  styleUrl: './category-list.component.css',
 })
 export class CategoryListComponent {
-   //Utils
-   private dialog = inject(MatDialog);
-   private modalService = inject(ModalService);
-   private categoryService = inject(CategoryService);
-   private materialController = inject(MaterialControllerService);
-   private utils = inject(UtilsService);
-   categories : Category[]=[]
+  //Utils
+  private dialog = inject(MatDialog);
+  private modalService = inject(ModalService);
+  private categoryService = inject(CategoryService);
+  private materialController = inject(MaterialControllerService);
 
+  categories: Category[] = [];
 
-   ngOnInit(): void {
-     this.materialController.getAviso().subscribe({
-       next: value => {
-         if(value){
-           this.getData()
-         }
-       }
-     })
+  ngOnInit(): void {
+    this.materialController.getAviso().subscribe({
+      next: (value) => {
+        if (value) {
+          this.getData();
+        }
+      },
+    });
 
-    this.getData()
+    this.getData();
+  }
+  getData() {
+    this.categoryService.getCategories().subscribe({
+      next: (x) => (this.categories = x),
+    });
+  }
+  seleccionar($Event: Category) {
+    this.materialController.setCategory($Event);
+  }
 
-   }
-getData(){
-  this.categoryService.getCategories().subscribe(
-    {
-      next: x => this.categories = x,
+  editar($Event: Category) {
+    this.materialController.setEditMode(true);
+    this.materialController.setCategory($Event);
+    this.modalService.openModal<CategoryFormComponent, Category>(
+      CategoryFormComponent
+    );
+  }
 
-    }
-  )
-}
-   seleccionar($Event : Category){
-     this.materialController.setCategory($Event);
-   }
+  eliminar($Event: Category) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.categoryName}?`,
+      },
+    });
 
-   editar($Event : Category){
-
-     this.materialController.setEditMode(true);
-     this.materialController.setCategory($Event);
-     this.modalService.openModal<CategoryFormComponent,Category>(CategoryFormComponent);
-   }
-
-   eliminar($Event : Category){
-     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-       data: {
-         mensaje: `¿Estás seguro de que deseas eliminar el rubro: ${$Event.categoryName}?`
-       }
-     });
-
-     dialogRef.afterClosed().subscribe(result => {
-       if (result) {
-         this.categoryService.deleteCategory($Event.categoryId).subscribe(
-          {
-            next: ()=>{
-              this.materialController.setAviso(true)
-            }
-          }
-         );
-       }
-     });
-
-   }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.categoryService.deleteCategory($Event.categoryId).subscribe({
+          next: () => {
+            this.materialController.setAviso(true);
+          },
+        });
+      }
+    });
+  }
 }

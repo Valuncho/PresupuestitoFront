@@ -8,7 +8,7 @@ import { ConfirmationDialogComponent } from '../../../../../components/confirmat
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SubcategoryService } from '../../../../../core/services/subcategory.service';
-import {UtilsService} from "../../../../../core/utils/utils.service";
+
 
 @Component({
   selector: 'app-subcategory-list',
@@ -23,7 +23,7 @@ export class SubcategoryListComponent {
   private modalService = inject(ModalService);
   private materialController = inject(MaterialControllerService);
   private subcategoryService = inject(SubcategoryService);
-  private utils = inject(UtilsService);
+
   subCategories : SubCategoryMaterial[] = []
 
 

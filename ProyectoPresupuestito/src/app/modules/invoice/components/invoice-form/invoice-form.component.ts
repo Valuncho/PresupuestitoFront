@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceControllerService } from '../../../../core/controllers/invoice-controller.service';
-import { Invoice } from '../../../../core/model/Invoice';
 import { InvoiceService } from '../../../../core/services/invoice.service';
-import {UtilsService} from "../../../../core/utils/utils.service";
 import {InvoiceRequest} from "../../../../core/request/invoiceRequest";
 import {ModalService} from "../../../../core/utils/modal.service";
 

@@ -5,13 +5,11 @@ import { ClientService } from '../../../../core/services/client.service';
 import { ModalService } from '../../../../core/utils/modal.service';
 import { Client } from '../../../../core/model/Client';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog.component';
-import { ClientSearchComponent } from "../client-search/client-search.component";
 import { ClientCardComponent } from '../client-card/client-card.component';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { TextCardComponent } from '../../../../components/text-card/text-card.component';
-import { UtilsService } from '../../../../core/utils/utils.service';
 import {ClientControllerService} from "../../../../core/controllers/client-controller.service";
 
 
@@ -24,7 +22,7 @@ import {ClientControllerService} from "../../../../core/controllers/client-contr
 @Component({
   selector: 'app-client-list',
   standalone: true,
-  imports: [ClientSearchComponent, ClientCardComponent, NgxPaginationModule, CommonModule, TextCardComponent],
+  imports: [ClientCardComponent, NgxPaginationModule, CommonModule, TextCardComponent],
   templateUrl: './client-list.component.html',
   styleUrl: './client-list.component.css',
 

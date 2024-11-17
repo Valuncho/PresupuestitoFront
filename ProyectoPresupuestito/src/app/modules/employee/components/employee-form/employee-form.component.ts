@@ -6,7 +6,7 @@ import { EmployeeService } from '../../../../core/services/employee.service';
 
 import { Employee } from '../../../../core/model/Employee';
 import { EmployeeControllerService } from '../../../../core/controllers/employee-controller.service';
-import { UtilsService } from '../../../../core/utils/utils.service';
+
 import { EmployeeRequest } from '../../../../core/request/employeeRequest';
 
 @Component({
@@ -22,7 +22,7 @@ export class EmployeeFormComponent {
     private activatedRoute = inject(ActivatedRoute);
     private EmployeeControllerService = inject(EmployeeControllerService)
     private EmployeeService = inject(EmployeeService);
-    private utils = inject(UtilsService);
+
     //Properties
     currentEmployee : Employee = this.EmployeeControllerService.getEmptyEmployee();
     employeeDto : EmployeeRequest =this.currentEmployee.oPerson;
