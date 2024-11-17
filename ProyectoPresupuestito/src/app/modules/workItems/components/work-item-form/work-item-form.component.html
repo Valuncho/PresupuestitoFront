@@ -4,18 +4,33 @@
     }@else {
         <legend class="List-title">Agregar material:</legend>
     }
-    
-    <fieldset>
+
+  @if(itemForm.invalid && itemForm.dirty){
+    <div class="invalid">
+      @if (itemForm.get('material')?.invalid){
+        <p>Debe seleccionar un material.</p>
+      }
+      @if (itemForm.get('quantity')?.invalid){
+        <p>Debe ingresar números positivos superiores a 0.</p>
+      }
+
+    </div>
+  }
+
+  <fieldset>
         <label for="material">Material</label>
-        <input type="text" name="material" id="material" (click)="openMaterialList()" placeholder="Seleccionar material"  formControlName="material">
+        <input type="text" name="material" id="material" (click)="openMaterialList()" placeholder="Seleccionar material"  formControlName="material" readonly>
         <input type="hidden" name="idMaterial">
         <label for="quantity">Cantidad:</label>
         <input type="number" name="quantity" id="quantity" formControlName="quantity">
     </fieldset>
-    @if(edit){
-        <button class="Boton1" type="submit">Editar</button>
+  <fieldset class="Botones">
+  <button  type="submit" [disabled]="!canSubmit" [class.disactive]="!canSubmit">
+    @if (edit) {
+      Actualizar
     }@else {
-        <button class="Boton1" type="submit">Agregar</button>
+      Guardar
     }
-    
+  </button>
+  </fieldset>
 </form>

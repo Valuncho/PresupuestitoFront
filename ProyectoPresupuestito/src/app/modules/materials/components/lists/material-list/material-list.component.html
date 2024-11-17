@@ -1,6 +1,11 @@
 <div class="List">
+  @if (showMessage){
+    <div class="Message">
+      <p>Una vez seleccionado el material presione fuera del listado para volver atrás.</p>
+    </div>
+
+  }
   <h3 class="List-title">Listado de materiales</h3>
- 
   <div>
     @for (material of materials | paginate:{ itemsPerPage: items,
     currentPage: page }; track material.materialId; let idx = $index) {
@@ -20,5 +25,5 @@
     nextLabel="Siguiente"
     (pageChange)="pageChange($event)"
   />
-  
+
 </div>

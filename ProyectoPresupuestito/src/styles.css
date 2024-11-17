@@ -89,7 +89,13 @@ button {
     border: none;
 }
 
-
+.List .Message{
+  background-color: var(--cerezo);
+  border-radius: 10px 10px 0 30px;
+  padding: 10px;
+  color: var(--blanquecino);
+  font-family: var(--otro);
+}
 
 /*Forms*/
 

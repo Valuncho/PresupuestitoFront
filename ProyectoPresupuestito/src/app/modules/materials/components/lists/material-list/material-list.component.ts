@@ -12,6 +12,7 @@ import { ConfirmationDialogComponent } from '../../../../../components/confirmat
 import { TextCardComponent } from '../../../../../components/text-card/text-card.component';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { UtilsService } from '../../../../../core/utils/utils.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-material-list',
@@ -24,17 +25,19 @@ export class MaterialListComponent {
   //Utils
   private dialog = inject(MatDialog);
   private modalService = inject(ModalService);
+  private router = inject(Router);
   private materialService = inject(MaterialService);
   private materialController = inject(MaterialControllerService);
-  private utils = inject(UtilsService);
+
   //Properties
   materials : Material[] = []
-
-  items : number = 5
+  showMessage = false
+  items : number = 7
   page : number = 1
 
   ngOnInit(): void {
     this.getData()
+    this.toggleMessage()
     this.materialController.getAviso().subscribe({
       next : (Res) =>{
         if(Res)this.getData()
@@ -48,6 +51,12 @@ export class MaterialListComponent {
        next: x => this.materials = x,
      }
    )
+ }
+
+ toggleMessage(){
+    if(this.router.url.includes("detail")){
+      this.showMessage = true
+    }
  }
   //Card
   seleccionar($Event : Material){

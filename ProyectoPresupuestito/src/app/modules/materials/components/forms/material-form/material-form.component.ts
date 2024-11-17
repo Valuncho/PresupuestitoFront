@@ -27,11 +27,6 @@ export class MaterialFormComponent {
   private materialService = inject(MaterialService);
   private subCategoryService = inject(SubcategoryService);
   private materialController = inject(MaterialControllerService);
-  private supplierService = inject(SupplierService);
-  private modalService = inject(ModalService);
-  private utils = inject(UtilsService);
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
   //Properties
 
   newMaterial :  MaterialRequest = this.materialController.getEmptyMaterialRequest();

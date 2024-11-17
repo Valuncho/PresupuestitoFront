@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {FormGroup, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MaterialControllerService } from '../../../../core/controllers/material-controller.service';
 import { WorkControllerService } from '../../../../core/controllers/work-controller.service';
@@ -39,10 +39,10 @@ export class InvoiceItemFormComponent {
   edit : boolean = false;
   itemForm : FormGroup = new FormGroup({
     id : new FormControl(0),
-    material : new FormControl(''),
-    idmaterial : new FormControl(0),
-    quantity : new FormControl(0),
-    price: new FormControl(0)
+    material : new FormControl('', Validators.required),
+    idmaterial : new FormControl(0, Validators.required),
+    quantity : new FormControl(1,[Validators.min(0), Validators.required]),
+    price: new FormControl(10, [Validators.min(0), Validators.required])
   });
 
 
@@ -71,6 +71,19 @@ ngOnInit(): void {
     this.MaterialSubscription.unsubscribe();
     this.ItemSubscription.unsubscribe();
   }
+  get canSubmit(){
+    let  flag : boolean = false;
+    if(
+      this.itemForm.get('material')?.valid &&
+      this.itemForm.get('quantity')?.valid &&
+      this.itemForm.get('price')?.valid
+
+    ){
+      flag = true;
+    }
+    return flag;
+  }
+
 
 toEdit(item : InvoiceItem){
     this.materialController.setMaterial(item.oMaterial)
