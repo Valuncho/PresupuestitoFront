@@ -48,27 +48,40 @@ export class InvoiceDetailComponent {
 
     ngOnInit(): void {
         this.invoiceId = Number(this.activatedRoute.snapshot.params['invoicedId']);
-
-        this.invoiceController.setInvoiceId(this.invoiceId);
-        this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
+        this.invoiceController.getAviso().subscribe({
+          next: value =>
           {
-            next: (invoiceRes)=>{
-              
-              this.currentInvoice = invoiceRes.value;
-              this.total=this.calculateTotal()
-
-              this.supplierService.getSupplierById(invoiceRes.value.oSupplier.supplierId).subscribe(
-                {
-                  next : (supplierRes) =>{
-                    this.currentSupplier = supplierRes.value;
-                  }
-                }
-              )
+            if (value){
+              this.getData()
             }
+
           }
-        )
-        
-       
+        })
+        this.getData()
+        this.invoiceController.setInvoiceId(this.invoiceId);
+
+
+
+    }
+
+    getData(){
+      this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
+        {
+          next: (invoiceRes)=>{
+
+            this.currentInvoice = invoiceRes.value;
+            this.total=this.calculateTotal()
+
+            this.supplierService.getSupplierById(invoiceRes.value.oSupplier.supplierId).subscribe(
+              {
+                next : (supplierRes) =>{
+                  this.currentSupplier = supplierRes.value;
+                }
+              }
+            )
+          }
+        }
+      )
     }
 
     calculateTotal(): number {
