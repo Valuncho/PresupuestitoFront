@@ -10,6 +10,7 @@ import { MaterialService } from '../../../../../core/services/material.service';
 import { MaterialControllerService } from '../../../../../core/controllers/material-controller.service';
 import { SubcategoryService } from '../../../../../core/services/subcategory.service';
 import { MaterialRequest } from '../../../../../core/request/materialRequest';
+import {ModalService} from "../../../../../core/utils/modal.service";
 
 @Component({
   selector: 'app-material-form',
@@ -23,6 +24,8 @@ export class MaterialFormComponent {
   private materialService = inject(MaterialService);
   private subCategoryService = inject(SubcategoryService);
   private materialController = inject(MaterialControllerService);
+  private modal = inject(ModalService);
+
   //Properties
 
   newMaterial: MaterialRequest =
@@ -84,17 +87,21 @@ export class MaterialFormComponent {
     if (!this.isEdit) {
       this.materialService.postMaterial(this.newMaterial).subscribe({
         next: () => {
-          this.materialController.setAviso(true);
+          this.closeForm()
         },
       });
     } else {
       this.materialService.putMaterial(this.newMaterial).subscribe({
         next: () => {
-          this.materialController.setAviso(true);
+          this.closeForm()
         },
       });
       this.materialController.setEditMode(false);
     }
+  }
+  closeForm() {
+    this.modal.closeModal();
+    this.materialController.setAviso(true);
   }
 
   toMaterialRequest() {
