@@ -9,19 +9,19 @@ import { MatTooltip } from '@angular/material/tooltip';
   standalone: true,
   imports: [CommonModule, MatTooltip, ButtonCardComponent],
   templateUrl: './invoice-item-card.component.html',
-  styleUrl: './invoice-item-card.component.css'
+  styleUrls: ['./invoice-item-card.component.css', "../../../../styles/Card.css"]
 })
 export class InvoiceItemCardComponent {
   @Input() Item?: InvoiceItem;
 
-  
+
   @Output() isEdit = new EventEmitter<InvoiceItem>();
   @Output() isDeleted = new EventEmitter<InvoiceItem>();
   botones: Array<{  icon: string }> =[];
 
   ngOnInit(){
     this.botones = [
-      
+
       {  icon: 'edit' },
       {  icon: 'delete' },
     ];

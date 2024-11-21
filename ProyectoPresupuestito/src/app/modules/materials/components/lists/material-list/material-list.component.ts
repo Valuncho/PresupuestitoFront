@@ -18,7 +18,7 @@ import {Router} from "@angular/router";
   standalone: true,
   imports: [NgxPaginationModule, CommonModule, MaterialCardComponent, TextCardComponent],
   templateUrl: './material-list.component.html',
-  styleUrl: './material-list.component.css'
+  styleUrls: ['./material-list.component.css', "../../../../../styles/List.css"]
 })
 export class MaterialListComponent {
   //Utils

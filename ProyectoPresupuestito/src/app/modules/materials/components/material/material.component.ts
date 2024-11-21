@@ -7,22 +7,22 @@ import { MaterialControllerService } from '../../../../core/controllers/material
   standalone: true,
   imports: [],
   templateUrl: './material.component.html',
-  styleUrl: './material.component.css'
+  styleUrls: ['./material.component.css', "../../../../styles/Detail.css"]
 })
 export class MaterialComponent {
   //Util
   private materialController = inject(MaterialControllerService);
   material : Material = this.materialController.getEmptyMaterial();
-  
+
 ngAfterViewInit(): void {
-  
-  
+
+
   this.materialController.getMaterial().subscribe(
       {
         next : res =>{this.material = res!;},
       }
-        
-  
+
+
   )
 }
 }

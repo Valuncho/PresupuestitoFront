@@ -1,0 +1,93 @@
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--gris);
+  width:  50vh;
+  max-height: 76vh;
+  margin: auto;
+  padding: 1em;
+  border-radius: 10px 10px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+legend{
+  text-decoration: underline;
+  font-family: var(--titulo);
+  margin-bottom: 6px;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 1em;
+}
+
+.Botones {
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+form label {
+  font-family: var(--otro);
+}
+
+form input,
+form textarea,
+form select {
+  font-family: var(--otro);
+  border: none;
+  border-radius: 8px;
+  background-color: var(--arce);
+  padding: 10px;
+  margin: 8px;
+  width: 90%;
+}
+
+form textarea {
+  resize: vertical;
+}
+
+form .dateHandler{
+  display:flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+form .invalid{
+  color: var(--negro);
+  background-color: rgba(255, 0, 0, 50%);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 4px ;
+}
+form .invalid p{
+  text-align: left;
+  text-indent: 4px;
+  font-family: var(--otro);
+}
+form .invalid p::before{
+  content: "#";
+
+}
+
+.disactive{
+  background-color: var(--blanquecino);
+  color:var(--negro);
+}
+
+@media only screen and (max-width: 950px) {
+  form{
+    border-radius: 5%;
+    min-width: 50vh;
+    max-width: 40vw;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+
+  form{
+    min-width: 80vw;
+  }
+
+}

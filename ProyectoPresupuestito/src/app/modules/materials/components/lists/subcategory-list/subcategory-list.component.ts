@@ -15,7 +15,7 @@ import { SubcategoryService } from '../../../../../core/services/subcategory.ser
   standalone: true,
   imports: [SubCategoryCardComponent,TextCardComponent],
   templateUrl: './subcategory-list.component.html',
-  styleUrl: './subcategory-list.component.css'
+  styleUrls: ['./subcategory-list.component.css', "../../../../../styles/List.css"]
 })
 export class SubcategoryListComponent {
   //Utils

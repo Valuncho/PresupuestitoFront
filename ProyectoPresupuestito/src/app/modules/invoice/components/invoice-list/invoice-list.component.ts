@@ -23,7 +23,7 @@ import { InvoiceRequest } from '../../../../core/request/invoiceRequest';
     TextCardComponent,
   ],
   templateUrl: './invoice-list.component.html',
-  styleUrl: './invoice-list.component.css',
+  styleUrls: ['./invoice-list.component.css', "../../../../styles/List.css"]
 })
 export class InvoiceListComponent {
   //Utils

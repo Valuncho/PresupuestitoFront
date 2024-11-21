@@ -1,0 +1,21 @@
+.Details {
+  background-color: var(--gris);
+  padding: 1em;
+  border-radius: 10px 10px;
+  margin: 1em;
+}
+
+.Details h4 {
+  margin: 10px;
+}
+
+.Details-title{
+  text-decoration: underline;
+  font-family: var(--titulo);
+  margin-bottom: 6px;
+}
+.Details p{
+    font-family: var(--dato);
+    text-align: left;
+    line-height: 1.1em;
+}

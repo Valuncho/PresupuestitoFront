@@ -9,7 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [CommonModule, ButtonCardComponent,MatTooltipModule],
   templateUrl: './budget-card.component.html',
-  styleUrl: './budget-card.component.css'
+  styleUrls: ['./budget-card.component.css', "../../../../styles/Card.css"]
 })
 export class BudgetCardComponent {
   @Input() Budget!: Budget;
@@ -17,7 +17,7 @@ export class BudgetCardComponent {
   @Output() isEdit = new EventEmitter<Budget>();
   @Output() isDeleted = new EventEmitter<Budget>();
   botones: Array<{ icon: string }> =[];
- 
+
 
   ngOnInit(){
     this.botones = [
@@ -25,9 +25,9 @@ export class BudgetCardComponent {
       {icon: 'edit'},
       {icon: 'delete'}
     ];
-    
+
   }
-  
+
   select(){
     this.isSelect.emit(this.Budget);
   }
@@ -38,5 +38,5 @@ export class BudgetCardComponent {
   deleteC(){
     this.isDeleted.emit(this.Budget);
   }
-  
+
 }

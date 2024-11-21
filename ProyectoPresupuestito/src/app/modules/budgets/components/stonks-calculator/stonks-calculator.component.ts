@@ -7,7 +7,7 @@ import {CurrencyPipe} from "@angular/common";
   standalone: true,
   imports: [ReactiveFormsModule, CurrencyPipe],
   templateUrl: './stonks-calculator.component.html',
-  styleUrl: './stonks-calculator.component.css'
+  styleUrls: ["../../../../styles/Form.css",'./stonks-calculator.component.css']
 })
 export class StonksCalculatorComponent {
   @Input() budgetCost : number = 0;

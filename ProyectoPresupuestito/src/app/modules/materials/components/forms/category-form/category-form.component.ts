@@ -15,7 +15,7 @@ import { ModalService } from '../../../../../core/utils/modal.service';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './category-form.component.html',
-  styleUrl: './category-form.component.css',
+  styleUrls: ['./category-form.component.css', "../../../../../styles/Form.css"]
 })
 export class CategoryFormComponent {
   //Utils

@@ -18,8 +18,8 @@ import { SupplierRequest } from '../../../../core/request/supplierRequest';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './supplier-form.component.html',
-  styleUrl: './supplier-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./supplier-form.component.css', "../../../../styles/Form.css"]
+  
 })
 export class SupplierFormComponent {
   private router = inject(Router);

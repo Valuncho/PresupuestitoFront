@@ -19,7 +19,7 @@ import { ModalService } from '../../../../../core/utils/modal.service';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './subcategory-form.component.html',
-  styleUrl: './subcategory-form.component.css',
+  styleUrls: ['./subcategory-form.component.css', "../../../../../styles/Form.css"]
 })
 export class SubcategoryFormComponent {
   //Utils

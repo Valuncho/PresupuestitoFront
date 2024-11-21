@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './work.component.html',
-  styleUrl: './work.component.css'
+  styleUrls: ['./work.component.css', "../../../../styles/Detail.css"]
 })
 export class WorkComponent {
   @Input()  work! : Work;

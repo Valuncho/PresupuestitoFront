@@ -7,9 +7,9 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './budget.component.html',
-  styleUrl: './budget.component.css'
+  styleUrls: ['./budget.component.css', "../../../../styles/Detail.css"]
 })
 export class BudgetComponent {
  @Input()  budget! : Budget;
-  
+
 }

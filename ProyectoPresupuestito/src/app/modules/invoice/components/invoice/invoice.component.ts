@@ -8,13 +8,13 @@ import { forEach } from 'lodash';
     standalone: true,
     imports: [CommonModule],
     templateUrl: './invoice.component.html',
-    styleUrl: './invoice.component.css',
+  styleUrls: ['./invoice.component.css', "../../../../styles/Detail.css"]
 })
-export class InvoiceComponent { 
+export class InvoiceComponent {
     @Input() invoice! : Invoice;
       //Debe ser implementado en el backend
     @Input() total : number = 0;
 
-   
+
 
 }

@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './text-card.component.html',
-  styleUrl: './text-card.component.css'
+  styleUrls: ['./text-card.component.css', "../../styles/Card.css"]
 })
 export class TextCardComponent {
 @Input() message : string = ""

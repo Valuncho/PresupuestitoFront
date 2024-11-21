@@ -28,7 +28,7 @@ import { ModalService } from '../../../../core/utils/modal.service';
     MatNativeDateModule,
   ],
   templateUrl: './work-form.component.html',
-  styleUrl: './work-form.component.css',
+  styleUrls: ['./work-form.component.css', "../../../../styles/Form.css"]
 })
 export class WorkFormComponent {
   //Utils

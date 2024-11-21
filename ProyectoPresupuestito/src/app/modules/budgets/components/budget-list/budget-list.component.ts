@@ -24,7 +24,7 @@ import {BudgetControllerService} from "../../../../core/controllers/budget-contr
   standalone: true,
   imports: [BudgetComponent, BudgetCardComponent, NgxPaginationModule, BudgetSearchComponent, TextCardComponent, CommonModule],
   templateUrl: './budget-list.component.html',
-  styleUrl: './budget-list.component.css'
+  styleUrls: ['./budget-list.component.css', "../../../../styles/List.css"]
 })
 export class BudgetListComponent {
   //Utils

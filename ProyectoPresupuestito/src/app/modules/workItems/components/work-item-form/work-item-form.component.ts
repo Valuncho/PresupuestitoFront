@@ -21,7 +21,7 @@ import { BudgetControllerService } from '../../../../core/controllers/budget-con
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './work-item-form.component.html',
-  styleUrl: './work-item-form.component.css',
+  styleUrls: ['./work-item-form.component.css', "../../../../styles/Form.css"]
 })
 export class WorkItemFormComponent {
   //Utils

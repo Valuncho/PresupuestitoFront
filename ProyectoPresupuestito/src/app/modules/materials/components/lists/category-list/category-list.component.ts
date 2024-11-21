@@ -14,7 +14,7 @@ import { CategoryService } from '../../../../../core/services/category.service';
   standalone: true,
   imports: [CategoryCardComponent, TextCardComponent],
   templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css',
+  styleUrls: ['./category-list.component.css', "../../../../../styles/List.css"]
 })
 export class CategoryListComponent {
   //Utils

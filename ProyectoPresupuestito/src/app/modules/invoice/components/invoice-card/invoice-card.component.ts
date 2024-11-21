@@ -9,7 +9,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     standalone: true,
     imports: [CommonModule,ButtonCardComponent,MatTooltip],
     templateUrl: './invoice-card.component.html',
-    styleUrl: './invoice-card.component.css',
+  styleUrls: ['./invoice-card.component.css', "../../../../styles/Card.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InvoiceCardComponent {
@@ -22,7 +22,7 @@ export class InvoiceCardComponent {
     @Output() isDeleted = new EventEmitter<Invoice>();
     botones: Array<{ icon: string }> =[];
     //{ url: '/client/editar/'+this.IdClient+'', icon: 'edit' },
-    
+
     ngOnInit(){
         this.botones = [
             {icon: 'visibility'},
@@ -35,7 +35,7 @@ export class InvoiceCardComponent {
 
     constructor() {
     }
-    
+
     Action(){
         this.action.emit(this.Invoice)
     }

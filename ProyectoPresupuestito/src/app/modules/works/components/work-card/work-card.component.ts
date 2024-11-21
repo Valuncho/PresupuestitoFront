@@ -9,11 +9,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [CommonModule, ButtonCardComponent, MatTooltipModule],
   templateUrl: './work-card.component.html',
-  styleUrl: './work-card.component.css'
+  styleUrls: ['./work-card.component.css', "../../../../styles/Card.css"]
 })
 export class WorkCardComponent {
 
-  
+
   @Input() Work: Work | undefined;
   @Output() isClick = new EventEmitter<Work>();
   @Output() isEdit = new EventEmitter<Work>();

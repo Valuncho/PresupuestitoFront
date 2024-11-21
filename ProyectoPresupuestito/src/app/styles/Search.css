@@ -1,0 +1,55 @@
+
+.Searcher {
+  border-radius: 15px;
+  background-color: var(--nogal);
+  padding: 1em;
+  color: var(--blanquecino);
+
+}
+.Searcher .Interior{
+  display: flex;
+  justify-content: space-evenly;
+
+  border-bottom: 1px solid var(--negro);
+}
+.Searcher .Interior:hover{
+  border-bottom: 1px solid var(--blanquecino);
+}
+.Searcher input[type="text"] {
+  background: none;
+  border: none;
+
+  width: 50%;
+  padding: 4px;
+  color: var(--blanquecino);
+  text-decoration: underline;
+}
+
+.Searcher input[type="text"]:focus {
+  border-bottom: 1px solid var(--blanquecino);
+  outline: none;
+  width: 50%;
+  padding: 4px;
+  color: var(--blanquecino);
+  text-decoration: underline;
+}
+
+.Searcher-button {
+  background-color: var(--blanquecino);
+  border: none;
+  border-radius: 5px;
+}
+
+.Searcher-button:hover {
+  background-color: var(--blanquecino);
+  color: var(--nogal);
+}
+
+.Searcher select{
+  color: var(--blanquecino);
+  background: var(--nogal);
+  border: none;
+  border-radius: 5px;
+  height: 2em;
+  width: 10em;
+}

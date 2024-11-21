@@ -1,0 +1,49 @@
+.List {
+  background-color: var(--gris);
+  padding: 1em;
+  border-radius: 10px 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: visible;
+  height: 75vh;
+  max-width: 50vw;
+  min-width: 20vw;
+}
+
+.List .CardContainer {
+  overflow: hidden;
+  overflow-y: visible;
+}
+
+.List-title {
+  text-decoration: underline;
+  font-family: var(--titulo);
+  margin-bottom: 6px;
+}
+
+.List .Message{
+  background-color: var(--cerezo);
+  border-radius: 10px 10px 0 30px;
+  padding: 10px;
+  color: var(--blanquecino);
+  font-family: var(--otro);
+}
+
+@media only screen and (max-width: 950px) {
+  .List{
+    margin-bottom: 1rem;
+    border-radius: 5%;
+    min-width: 50vh;
+    max-width: 40vw;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+
+  .List{
+    max-width: 80vw;
+  }
+
+}
+

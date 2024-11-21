@@ -1,6 +1,8 @@
 section{
   align-items: center;
+  height: 80vh;
 }
+
 .Menu{
   margin: 20px;
   background-color: var(--gris);
@@ -8,7 +10,7 @@ section{
   width: 20%;
   display: flex;
   flex-direction:column ;
-  
+
 }
 
 .Menu h2{
@@ -45,9 +47,13 @@ button:hover{
   text-decoration: underline var(--abedul);
   background-color: var(--blanquecino);
 }
+img{
+  max-width: 50vw;
+  max-height: 50vh;
+}
 
 @media only screen and (max-width: 900px) {
-  
+
   .Menu {
       min-width: 50vh;
       max-width: 40vw;

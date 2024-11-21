@@ -1,0 +1,53 @@
+/*Detalles*/
+.Componente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  max-width: 40vw;
+  padding: 1em;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: var(--gris);
+}
+.Componente div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.Componente .Interior{
+  align-items: flex-start;
+  background-color: var(--arce);
+  padding: 1em;
+  border-radius: 10px;
+  width: auto;
+}
+
+
+.ItemTable{
+  width: 200%;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.ItemTable thead{
+  font-size: large;
+}
+
+.ItemTable tbody td{
+  text-align: center;
+}
+
+h3{
+    font-family: var(--titulo);
+    font-weight: bolder;
+    letter-spacing: 1px;
+}
+
+.Componente p {
+    font-family: var(--dato);
+    text-align: left;
+    line-height: 1.3em;
+}

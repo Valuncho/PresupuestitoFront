@@ -20,7 +20,7 @@ import { InvoiceItemService } from '../../../../core/services/invoice-item.servi
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './invoice-item-form.component.html',
-  styleUrl: './invoice-item-form.component.css',
+  styleUrls: ['./invoice-item-form.component.css', "../../../../styles/Form.css"]
 })
 export class InvoiceItemFormComponent {
   //Utils

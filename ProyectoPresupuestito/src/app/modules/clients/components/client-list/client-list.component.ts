@@ -24,7 +24,7 @@ import {ClientControllerService} from "../../../../core/controllers/client-contr
   standalone: true,
   imports: [ClientCardComponent, NgxPaginationModule, CommonModule, TextCardComponent],
   templateUrl: './client-list.component.html',
-  styleUrl: './client-list.component.css',
+  styleUrls: ['./client-list.component.css', "../../../../styles/List.css"]
 
 })
 

@@ -18,20 +18,23 @@
     padding: 0;
     margin: 0;
     user-select: none;
-
 }
 
-body {
-    height: 100vh;
-    width: 100vw;
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: var(--nogal);
+}
+::-webkit-scrollbar-thumb{
+    background: var(--arce);
+    border-radius: 1px;
 }
 
 main {
-
     display: flex;
     flex-direction: column;
-    width: 100vw;
-    height: 100vh;
 }
 
 section {
@@ -48,240 +51,12 @@ article {
     display: flex;
     flex-direction: column;
 }
-/*Listados*/
-.List {
-    background-color: var(--gris);
-    padding: 1em;
-    border-radius: 10px 10px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    overflow-y: visible;
-    height: 75vh;
-    max-width: 50vw;
-    min-width: 20vw;
-}
-
-.List .CardContainer {
-    overflow: hidden;
-    overflow-y: visible;
-}
-
-.Details {
-    background-color: var(--gris);
-    padding: 1em;
-    border-radius: 10px 10px;
-    margin: 1em;
-}
-
-.Details h4 {
-    margin: 10px;
-}
-
-.Details-title,
-.List-title {
-    text-decoration: underline;
-    font-family: var(--titulo);
-    margin-bottom: 6px;
-}
-
-button {
-    border: none;
-}
-
-.List .Message{
-  background-color: var(--cerezo);
-  border-radius: 10px 10px 0 30px;
-  padding: 10px;
-  color: var(--blanquecino);
-  font-family: var(--otro);
-}
-
-/*Forms*/
-
-form {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--gris);
-    width:  50vh;
-    margin: auto;
-    padding: 1em;
-    border-radius: 10px 10px;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
-fieldset {
-    display: flex;
-    flex-direction: column;
-    border: none;
-    padding: 1em;
-}
-
-.Botones {
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-
-form label {
-    font-family: var(--otro);
-}
-
-form input,
-form textarea,
-form select {
-    font-family: var(--otro);
-    border: none;
-    border-radius: 8px;
-    background-color: var(--arce);
-    padding: 10px;
-    margin: 8px;
-    width: 90%;
-}
-
-form textarea {
-    resize: vertical;
-}
-
-form .dateHandler{
-  display:flex;
-  flex-flow: row nowrap;
-  align-items: center;
-}
-
-form .invalid{
-    color: var(--negro);
-    background-color: rgba(255, 0, 0, 50%);
-    border-radius: 5px;
-    padding: 5px;
-    margin: 4px ;
-}
-form .invalid p{
-    text-align: left;
-    text-indent: 4px;
-    font-family: var(--otro);
-}
-form .invalid p::before{
-    content: "#";
-
-}
-
-.disactive{
-    background-color: var(--blanquecino);
-    color:var(--negro);
-}
-
-
-
-/*Detalles*/
-.Componente {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-overflow: auto;
-    max-width: 40vw;
-    padding: 1em;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: var(--gris);
-}
-.Componente div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.Componente .Interior{
-    align-items: flex-start;
-    background-color: var(--arce);
-    padding: 1em;
-    border-radius: 10px;
-    width: auto;
-}
-
-
-.ItemTable{
-    width: 200%;
-    max-height: 50vh;
-    overflow: auto;
-}
-
-.ItemTable thead{
-    font-size: large;
-}
-
-.ItemTable tbody td{
-     text-align: center;
-}
-
-/*.ItemTable td{*/
-/*    border: var(--negro) 1px solid;*/
-/*    padding: 5px;*/
-
-/*}*/
-
-/*Detalles*/
-.Detalle {
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    border: 5px solid var(--cerezo);
-    text-align: center;
-    height: 40vh;
-    width: 60vw;
-}
-
-.Componente h3,
-.Detalle h3 {
-    font-family: var(--titulo);
-    font-weight: bolder;
-    letter-spacing: 1px;
-}
-
-.Detalle p,
-.Details p,
-.Componente p {
-    font-family: var(--dato);
-    text-align: left;
-    line-height: 1em;
-}
-
-.Centro {
-    height: 80vh;
-}
-
-/*BudgetDetail*/
-.Detalle {
-    height: 40vh;
-    width: 40vh;
-}
-
-/*Cards*/
-
-.Card {
-    background-color: var(--arce);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.3em;
-    border-radius: 15px;
-    margin: 10px 0;
-    font-family: var(--dato);
-}
-.Card:hover{
-    box-shadow: var(--abedul) 2px 10px 10px inset;
-}
-
-.Card-Details {
-    margin: 0 10px;
-}
-
-.Card-Options {
-    display: flex;
-}
 
 /*Botones*/
+
+button {
+  border: none;
+}
 
 .Botones button,
 .Boton1 {
@@ -310,65 +85,8 @@ overflow: auto;
 
 
 
-/*Searcher*/
 
-.Searcher {
-    border-radius: 15px;
-    background-color: var(--nogal);
-    padding: 1em;
-    color: var(--blanquecino);
-
-}
-.Searcher .Interior{
-    display: flex;
-    justify-content: space-evenly;
-
-    border-bottom: 1px solid var(--negro);
-}
-.Searcher .Interior:hover{
-    border-bottom: 1px solid var(--blanquecino);
-}
-.Searcher input[type="text"] {
-    background: none;
-    border: none;
-
-    width: 50%;
-    padding: 4px;
-    color: var(--blanquecino);
-    text-decoration: underline;
-}
-
-.Searcher input[type="text"]:focus {
-    border-bottom: 1px solid var(--blanquecino);
-    outline: none;
-    width: 50%;
-    padding: 4px;
-    color: var(--blanquecino);
-    text-decoration: underline;
-}
-
-.Searcher-button {
-    background-color: var(--blanquecino);
-    border: none;
-    border-radius: 5px;
-}
-
-.Searcher-button:hover {
-    background-color: var(--blanquecino);
-    color: var(--nogal);
-}
-
-.Searcher select{
-    color: var(--blanquecino);
-    background: var(--nogal);
-    border: none;
-    border-radius: 5px;
-    height: 2em;
-    width: 10em;
-}
-
-
-
+/*Responsive*/
 
 @media only screen and (max-width: 950px) {
     main section, article{
@@ -376,12 +94,6 @@ overflow: auto;
         align-items: center;
     }
 
-
-    .List, .Componente, form {
-        min-width: 50vh;
-        max-width: 40vw;
-
-    }
     .Details{
         min-width: 300px;
     }
@@ -394,12 +106,6 @@ overflow: auto;
     .Card, .Componente{
         padding: 5px;
         flex-direction: column;
-    }
-    .List, form, .Componente {
-
-        max-width: none;
-        min-width: 260px;
-        border-radius: 10px;
     }
 
 

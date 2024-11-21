@@ -17,7 +17,7 @@ import { BudgetControllerService } from '../../../../core/controllers/budget-con
   standalone: true,
   imports: [WorkCardComponent, CommonModule, TextCardComponent],
   templateUrl: './work-list.component.html',
-  styleUrl: './work-list.component.css',
+  styleUrls: ['./work-list.component.css', "../../../../styles/List.css"]
 })
 export class WorkListComponent {
   //Utils

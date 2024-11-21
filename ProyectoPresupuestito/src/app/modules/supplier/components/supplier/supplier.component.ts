@@ -7,7 +7,7 @@ import { Supplier } from '../../../../core/model/Supplier';
     standalone: true,
     imports: [CommonModule],
     templateUrl: './supplier.component.html',
-    styleUrl: './supplier.component.css',
+  styleUrls: ['./supplier.component.css', "../../../../styles/Detail.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SupplierComponent {

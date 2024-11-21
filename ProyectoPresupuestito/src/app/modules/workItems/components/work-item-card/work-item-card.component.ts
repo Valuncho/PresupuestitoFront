@@ -8,19 +8,19 @@ import { ButtonCardComponent } from '../../../../components/button-card/button-c
   standalone: true,
   imports: [MatTooltip, ButtonCardComponent],
   templateUrl: './work-item-card.component.html',
-  styleUrl: './work-item-card.component.css'
+  styleUrls: ['./work-item-card.component.css', "../../../../styles/Card.css"]
 })
 export class WorkItemCardComponent {
   @Input() Item?: Item;
 
-  
+
   @Output() isEdit = new EventEmitter<Item>();
   @Output() isDeleted = new EventEmitter<Item>();
   botones: Array<{  icon: string }> =[];
 
   ngOnInit(){
     this.botones = [
-      
+
       {  icon: 'edit' },
       {  icon: 'delete' },
     ];

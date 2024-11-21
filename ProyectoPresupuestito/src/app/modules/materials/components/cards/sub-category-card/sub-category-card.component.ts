@@ -8,11 +8,11 @@ import {MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [ButtonCardComponent, MatTooltipModule],
   templateUrl: './sub-category-card.component.html',
-  styleUrl: './sub-category-card.component.css'
+  styleUrls: ['./sub-category-card.component.css', "../../../../../styles/Card.css"]
 })
 export class SubCategoryCardComponent {
   @Input() Subcategory?: SubCategoryMaterial;
-  
+
 
   @Output() isEdit = new EventEmitter<SubCategoryMaterial>();
   @Output() isDeleted = new EventEmitter<SubCategoryMaterial>();

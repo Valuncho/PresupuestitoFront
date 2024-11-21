@@ -16,7 +16,7 @@ import { MaterialRequest } from '../../../../../core/request/materialRequest';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './material-form.component.html',
-  styleUrl: './material-form.component.css',
+  styleUrls: ['./material-form.component.css', "../../../../../styles/Form.css"]
 })
 export class MaterialFormComponent {
   //Utils

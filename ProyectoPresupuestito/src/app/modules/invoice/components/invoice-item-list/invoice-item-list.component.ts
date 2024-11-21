@@ -15,7 +15,7 @@ import {InvoiceItemService} from "../../../../core/services/invoice-item.service
   standalone: true,
   imports: [TextCardComponent, InvoiceItemCardComponent],
   templateUrl: './invoice-item-list.component.html',
-  styleUrl: './invoice-item-list.component.css',
+  styleUrls: ['./invoice-item-list.component.css', "../../../../styles/List.css"]
 })
 export class InvoiceItemListComponent {
   //Utils

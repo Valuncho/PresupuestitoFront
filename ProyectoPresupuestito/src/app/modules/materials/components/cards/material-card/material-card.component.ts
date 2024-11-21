@@ -8,11 +8,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [ButtonCardComponent, MatTooltipModule],
   templateUrl: './material-card.component.html',
-  styleUrl: './material-card.component.css'
+  styleUrls: ['./material-card.component.css', "../../../../../styles/Card.css"]
 })
 export class MaterialCardComponent {
   @Input() Material?: Material;
-  
+
   @Output() isClick = new EventEmitter<Material>();
   @Output() isEdit = new EventEmitter<Material>();
   @Output() isDeleted = new EventEmitter<Material>();

@@ -45,7 +45,7 @@ import { BudgetControllerService } from '../../../../core/controllers/budget-con
     MatNativeDateModule,
   ],
   templateUrl: './budget-form.component.html',
-  styleUrl: './budget-form.component.css',
+  styleUrls: ['./budget-form.component.css', "../../../../styles/Form.css"]
 })
 export class BudgetFormComponent {
   //Utils

@@ -18,7 +18,7 @@ import { ModalService } from '../../../../core/utils/modal.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './client-form.component.html',
-  styleUrl: './client-form.component.css',
+  styleUrls: ['./client-form.component.css', "../../../../styles/Form.css"]
 })
 export class ClientFormComponent {
   //Utils

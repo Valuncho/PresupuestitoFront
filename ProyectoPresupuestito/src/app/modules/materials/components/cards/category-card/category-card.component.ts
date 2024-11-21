@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [ButtonCardComponent, MatTooltipModule],
   templateUrl: './category-card.component.html',
-  styleUrl: './category-card.component.css'
+  styleUrls: ['./category-card.component.css', "../../../../../styles/Card.css"]
 })
 export class CategoryCardComponent {
   @Input() Category?: Category;

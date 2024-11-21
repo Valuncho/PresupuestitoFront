@@ -16,5 +16,5 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
 export class AppComponent {
   private loadingService = inject(LoadingService);
   isLoading$ = this.loadingService.loading$;
-  
+
 }

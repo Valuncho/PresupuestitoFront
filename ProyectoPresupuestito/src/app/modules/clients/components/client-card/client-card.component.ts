@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { Person } from '../../../../core/model/Person';
 import { ButtonCardComponent } from '../../../../components/button-card/button-card.component';
 import { Client } from '../../../../core/model/Client';
-import { MatTooltipModule } from '@angular/material/tooltip'; 
+import { MatTooltipModule } from '@angular/material/tooltip';
 /**
  * @class ClientCardComponent
- * 
+ *
  * Tarjeta de la entidad cliente, con información básica, y botones para:
  * -Crear un presupuesto nuevo,
  * -Seleccionarlo o ver más detalles,
@@ -19,7 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [CommonModule, ButtonCardComponent, MatTooltipModule ],
   templateUrl: './client-card.component.html',
-  styleUrl: './client-card.component.css'
+  styleUrls: ['./client-card.component.css', "../../../../styles/Card.css"]
 })
 export class ClientCardComponent {
 
@@ -27,7 +27,7 @@ export class ClientCardComponent {
 
   @Output() isView = new EventEmitter<Client>();
   @Output() action = new EventEmitter<Client>();
-  
+
   @Output() isEdit = new EventEmitter<Client>();
   @Output() isDeleted = new EventEmitter<Client>();
   botones: Array<{ icon: string }> =[];
@@ -39,11 +39,11 @@ export class ClientCardComponent {
       {icon: 'delete'},
       {icon: 'edit_note'},
       {icon: 'Check'}
-      
+
     ];
-    
+
   }
- 
+
   newBudget(){
     this.action.emit(this.Client)
   }
@@ -58,7 +58,7 @@ export class ClientCardComponent {
   deleteC(){
     this.isDeleted.emit(this.Client);
   }
-  
+
 
 }
 

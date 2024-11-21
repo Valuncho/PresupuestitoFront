@@ -20,8 +20,7 @@ import { SupplierControllerService } from '../../../../core/controllers/supplier
     MatProgressSpinnerModule,
   ],
   templateUrl: './supplier-list.component.html',
-  styleUrl: './supplier-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./supplier-list.component.css', "../../../../styles/List.css"]
 })
 export class SupplierListComponent {
   private router = inject(Router);

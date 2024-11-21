@@ -13,7 +13,7 @@ import {ModalService} from "../../../../core/utils/modal.service";
     standalone: true,
     imports: [CommonModule,ReactiveFormsModule],
     templateUrl: './invoice-form.component.html',
-    styleUrl: './invoice-form.component.css'
+  styleUrls: ['./invoice-form.component.css', "../../../../styles/Form.css"]
     })
     export class invoiceFormComponent {
     //Utils

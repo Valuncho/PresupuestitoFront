@@ -10,10 +10,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     standalone: true,
     imports: [CommonModule,ButtonCardComponent,MatTooltipModule],
     templateUrl: './supplierCard.component.html',
-    styleUrl: './supplierCard.component.css',
+  styleUrls: ['./supplierCard.component.css', "../../../../styles/Card.css"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SupplierCardComponent { 
+export class SupplierCardComponent {
     @Input() supplier: Supplier | undefined;
     @Output() isView = new EventEmitter<Supplier>();
     @Output() action = new EventEmitter<Supplier>();
@@ -22,7 +22,7 @@ export class SupplierCardComponent {
     @Output() isDeleted = new EventEmitter<Supplier>();
     botones: Array<{ icon: string }> =[];
     //{ url: '/client/editar/'+this.IdClient+'', icon: 'edit' },
-    
+
     ngOnInit(){
         this.botones = [
             {icon: 'visibility'},

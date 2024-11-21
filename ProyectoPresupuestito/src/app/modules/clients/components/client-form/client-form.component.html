@@ -3,11 +3,11 @@
 
     @if (clientForm.invalid && clientForm.dirty) {
       <div class="invalid">
-        
+
         @if (clientForm.get('name')?.invalid && clientForm.get('lastName')?.invalid) {
           <p>El nombre y apellido es obligatorio.</p>
         }
-        
+
         @if (clientForm.get('direction')?.invalid) {
           <p>La dirección de entrega es obligatoria.</p>
         }
@@ -19,7 +19,7 @@
         @if(clientForm.get('mail')?.invalid ){
           <p>Ingrese un correo eléctronico válido.</p>
         }
-        
+
         @if(clientForm.get('dni')?.invalid ){
           <p>El dni debe ser mínimo de 7 caracteres y máximo 10.</p>
           <p>Debe ir sin puntos.</p>
@@ -29,15 +29,17 @@
           <p>El dni debe ser mínimo de 10 caracteres y máximo 13.</p>
           <p>Debe ir sin puntos ni guiones.</p>
         }
-    
+
       </div>
-    }     
+    }
+
+
     @if (isEdit) {
       <legend class="List-title">Actualizar cliente</legend>
     }@else {
       <legend class="List-title">Cargar cliente</legend>
     }
-    
+
     <label for="name">Nombre:</label>
     <input type="text" name="name" id="name" placeholder="Nombre..." formControlName="name">
     <label for="lastName">Apellido:</label>
@@ -55,7 +57,7 @@
   </fieldset>
   <fieldset class="Botones">
     <button type="reset" (click)="resetForm($event)">Limpiar</button>
-    
+
     <button type="submit" [disabled]="!canSubmit" [class.disactive]="!canSubmit">
       @if (isEdit) {
         Actualizar
